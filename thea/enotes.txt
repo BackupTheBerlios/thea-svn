@@ -86,3 +86,11 @@ Date: 31 Janv. 2005.
 Even shared 3rd party libraries could be wrapped in modules, at 
 compilation time, they should be placed in the lib/ directory and 
 indicated in the nbproject/project.properties file.
+
+Date: 02 Fev. 2005.
+====================
+
+Writing necessary classes for the Ontology Explorer Settings.
+- OntologyExplorerSettings: extends SystemOption
+- OntologyExplorerSettingsBeanInfo: extends SimpleBeanInfo and 
+allow initialization of OntologyExplorerSettings instances.

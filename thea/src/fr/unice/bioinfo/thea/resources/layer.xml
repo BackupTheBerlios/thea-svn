@@ -35,6 +35,9 @@ Microsystems, Inc. All Rights Reserved.
       <file name="fr-unice-bioinfo-thea-ontologyexplorer-actions-OntologyExplorerAction.instance">
         <attr name="name" stringvalue="fr-unice-bioinfo-thea-ontologyexplorer-actions-OntologyExplorerAction"/>
       </file>
+      <file name="fr-unice-bioinfo-thea-ontologyexplorer-actions-ViewOntologyExplorerSettingsAction.instance">
+        <attr name="name" stringvalue="fr-unice-bioinfo-thea-ontologyexplorer-actions-ViewOntologyExplorerSettingsAction"/>
+      </file>
     </folder>
     <folder name="Help">
       <file name="fr-unice-bioinfo-thea.welcome.ShowWelcomePageAction.instance">
@@ -42,7 +45,7 @@ Microsystems, Inc. All Rights Reserved.
       </file>
     </folder>
   </folder>
-  <folder name="Windows2">
+  <!--folder name="Windows2">
     <file name="WindowManager.wswmgr" url="Windows2/WindowManager.wswmgr"/>
     <folder name="Modes">
       <file name="explorer.wsmode" url="Windows2/Modes/explorer.wsmode"/>
@@ -66,7 +69,7 @@ Microsystems, Inc. All Rights Reserved.
       <file name="ontologyexplorer.settings" url="Windows2/Components/ontologyexplorer.settings"/>
       <file name="welcomepanel.settings" url="Windows2/Components/welcomepanel.settings"/>
     </folder>
-  </folder>
+  </folder-->
   <!-- Config Toolbars -->
   <folder name="Toolbars">
     <file name="File_hidden"/>

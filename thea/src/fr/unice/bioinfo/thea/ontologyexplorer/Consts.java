@@ -17,10 +17,10 @@ public class Consts {
     private static ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
             .getResourceFactory();
 
-    private static Resource subsumeProperty = resourceFactory
+    public static Resource subsumeProperty = resourceFactory
             .getProperty("SUBSUMED_BY");
 
-    private static Resource partofProperty = resourceFactory
+    public static Resource partofProperty = resourceFactory
             .getProperty("CONTAINS");
 
     private static Resource goannotationProperty = resourceFactory

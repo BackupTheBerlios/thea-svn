@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.Iterator;
 
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
@@ -31,19 +32,40 @@ public class WelcomeComponent extends TopComponent {
     // A WelcomeComponent instance to use with the
     // Singleton Pattern.
     private static WelcomeComponent welcomeComponent = null;
+    /** A hint to the window system for generating a unique id */
+    private static final String PREFERRED_ID = "welcomecomponent"; // NOI18N
 
     /**
      * Return an instance of the WelcomeComponent class using the Singleton
      * Pattern.
      * @return welcomeComponent - WelcomeComponent Instance.
      */
-    public static WelcomeComponent getWelcomeComponent() {
-        if (welcomeComponent == null) {
-            welcomeComponent = new WelcomeComponent();
+    public static WelcomeComponent getInstance() {
+        //look for an open instance
+        Iterator opened = TopComponent.getRegistry().getOpened().iterator();
+        while (opened.hasNext()) {
+            Object tc = opened.next();
+            if (tc instanceof WelcomeComponent) {
+                return (WelcomeComponent) tc;
+            }
         }
-        return welcomeComponent;
+        // none found, make a new one
+        return new WelcomeComponent();
     }
-
+    
+    /* (non-Javadoc)
+     * @see org.openide.windows.TopComponent#preferredID()
+     */
+    protected String preferredID() {
+        return PREFERRED_ID;
+    }
+    
+    /* (non-Javadoc)
+     * @see org.openide.windows.TopComponent#getPersistenceType()
+     */
+    public int getPersistenceType() {
+        return super.PERSISTENCE_NEVER;
+    }
     private void initComponents() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());

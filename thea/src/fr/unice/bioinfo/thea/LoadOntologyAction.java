@@ -18,26 +18,26 @@ import fr.unice.bioinfo.thea.ontologyexplorer.actions.OntologyExplorerAction;
  * @author SAÏD, EL KASMI.
  */
 public class LoadOntologyAction extends SystemAction {
-    
-    private static final String NAME = 
-        NbBundle.getMessage( LoadOntologyAction.class, 
-                "LBL_LoadOntologyAction_Name" ); // NOI18N
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        return NAME;
+        return NbBundle.getMessage(LoadOntologyAction.class,
+                "LBL_LoadOntologyAction_Name"); // NOI18N;
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
      * @see org.openide.util.actions.SystemAction#iconResource()
      */
     protected String iconResource() {
         return "fr/unice/bioinfo/thea/resources/open24.gif";
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
      * @see org.openide.util.HelpCtx.Provider#getHelpCtx()
      */
     public HelpCtx getHelpCtx() {
@@ -50,8 +50,7 @@ public class LoadOntologyAction extends SystemAction {
      */
     public void actionPerformed(ActionEvent arg0) {
         LoadOntologyDialogDescriptor descriptor = new LoadOntologyDialogDescriptor();
-        Dialog dialog = DialogDisplayer.getDefault().createDialog(
-                descriptor);
+        Dialog dialog = DialogDisplayer.getDefault().createDialog(descriptor);
         dialog.show();
         // After the wizard finish
         if (descriptor.getValue() == WizardDescriptor.FINISH_OPTION) {
@@ -59,16 +58,24 @@ public class LoadOntologyAction extends SystemAction {
             LoadOntologySettings loadOntologySettings = (LoadOntologySettings) LoadOntologySettings
                     .findObject(LoadOntologySettings.class, true);
             // Get a Connection:
-            Connection connection = ConnectionManager.initConnection(loadOntologySettings);
-            if(connection == null){
+            Connection connection = ConnectionManager
+                    .initConnection(loadOntologySettings);
+            if (connection == null) {
                 // no connection established, make the user try again
-                NotifyDescriptor d = new NotifyDescriptor.Message(
-                        "No JDBC Connection established, please try again",
+                NotifyDescriptor d = new NotifyDescriptor.Message(NbBundle
+                        .getMessage(LoadOntologyAction.class,
+                                "MSG_ConnectionError"),
                         NotifyDescriptor.INFORMATION_MESSAGE);
                 DialogDisplayer.getDefault().notify(d);
-            }else if(connection != null){
+            } else if (connection != null) {
                 // Enable the "Ontology Explorer" menu item
-                (SystemAction.get(OntologyExplorerAction.class)).setEnabled(true);
+                (SystemAction.get(OntologyExplorerAction.class))
+                        .setEnabled(true);
+                //                TopComponent tc = OntologyExplorer.getDefault();
+                //                if (!tc.isOpened())
+                //                    tc.open();
+                //                tc.requestActive();
+                //                ((OntologyExplorer)tc).explorOntology();
             }
         }
     }

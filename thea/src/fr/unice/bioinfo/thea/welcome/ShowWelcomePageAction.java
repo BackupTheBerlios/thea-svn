@@ -30,7 +30,7 @@ public class ShowWelcomePageAction extends SystemAction {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        WelcomeComponent welcome = WelcomeComponent.getWelcomeComponent();
+        WelcomeComponent welcome = WelcomeComponent.getInstance();
         welcome.open();
         welcome.requestActive();
     }

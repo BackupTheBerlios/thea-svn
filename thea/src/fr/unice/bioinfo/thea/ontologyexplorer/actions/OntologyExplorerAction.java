@@ -41,10 +41,11 @@ public class OntologyExplorerAction extends SystemAction {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        TopComponent tc = OntologyExplorer.getDefault();
+        TopComponent tc = OntologyExplorer.getInstance();
         if (!tc.isOpened())
             tc.open();
         tc.requestActive();
+        ((OntologyExplorer)tc).explorOntology();
     }
     
     /* (non-Javadoc)
