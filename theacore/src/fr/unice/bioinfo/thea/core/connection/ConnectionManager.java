@@ -6,8 +6,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import org.openide.DialogDisplayer;
+import org.openide.ErrorManager;
 import org.openide.WizardDescriptor;
+import org.openide.util.Lookup;
 import org.openide.windows.IOProvider;
+import org.openide.windows.InputOutput;
 
 import fr.unice.bioinfo.thea.core.connection.wizard.ConnectionDialogDescriptor;
 
@@ -28,11 +31,11 @@ import fr.unice.bioinfo.thea.core.connection.wizard.ConnectionDialogDescriptor;
  * @author SAÏD, EL KASMI.
  */
 public class ConnectionManager {
-    
+
     /** JDBC Connection */
     private static Connection connection = null;
 
-    /** Create a JDBC Connection.*/
+    /** Create a JDBC Connection. */
     private static void createConnection() {
         // reset connection
         connection = null;
@@ -47,8 +50,13 @@ public class ConnectionManager {
         try {
             Class.forName(dataBaseDriver);
         } catch (ClassNotFoundException cnfe) {
-            System.out.println("Driver not loaded: " + cnfe.toString());
-            cnfe.printStackTrace();
+            IOProvider ioProvider = (IOProvider) Lookup.getDefault().lookup(
+                    IOProvider.class);
+            InputOutput io = ioProvider.getIO("ConnectionManager", true);
+            io.getOut().println("Driver not loaded ... ");
+            //            IOProvider.getDefault().getStdOut().println(
+            //                    "Driver not loaded ... ");
+            ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, cnfe);
             return;
         }
         // Get the connection
@@ -56,10 +64,19 @@ public class ConnectionManager {
             connection = DriverManager.getConnection(dataBaseUrl, username,
                     password);
         } catch (SQLException sqle) {
-            IOProvider.getDefault().getStdOut().println(
-                    "Connection not created: " + sqle.toString());
-            //System.out.println("Connection not created: "+sqle.toString());
-            sqle.printStackTrace();
+            //            OutputWindow ow = OutputWindow.getDefault ();
+            //            Mode mode = WindowManager.getDefault().findMode ("output");
+            //            mode.dockInto (ow);
+            //            OutputWriter oWr = new NbIOProvider().getStdOut ();
+            //            oWr.println("Connection not created ...");
+
+            IOProvider ioProvider = (IOProvider) Lookup.getDefault().lookup(
+                    IOProvider.class);
+            InputOutput io = ioProvider.getIO("ConnectionManager", true);
+            io.getOut().println("Connection not created: ");
+            //            IOProvider.getDefault().getStdOut().println(
+            //                    "Connection not created ...");
+            ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, sqle);
             return;
         }
     }
@@ -81,12 +98,6 @@ public class ConnectionManager {
             createConnection();
             if (connection == null) {
                 b = false;
-                // no connection established, make the user try again
-                //                NotifyDescriptor d = new NotifyDescriptor.Message(NbBundle
-                //                        .getMessage(ConnectionManager.class,
-                //                                "MSG_ConnectionError"),
-                //                        NotifyDescriptor.INFORMATION_MESSAGE);
-                //                DialogDisplayer.getDefault().notify(d);
             } else if (connection != null) {
                 b = true;
             }
