@@ -53,7 +53,7 @@
   </target>
   <target name="jar" depends="compile">
     <jar basedir="${classes.dir}" jarfile="${generated.dir}/thea-datamodel.jar">
-      <fileset dir="${classes.dir}"/>
+      <!--fileset dir="${classes.dir}"/-->
     </jar>
   </target>
 </project>
