@@ -25,11 +25,13 @@ public class HibernateUtil {
     static {
         try {
             // Create the SessionFactory
+            System.out.println("HibernateUtil: BIGIN");
             Configuration cfg = new Configuration()
                     .addClass(fr.unice.bioinfo.allonto.datamodel.Node.class);
             cfg.setInterceptor(new DbInterceptor());
             sessionFactory = cfg.buildSessionFactory();
         } catch (HibernateException ex) {
+            System.out.println("HibernateUtil: Create session pb");
             throw new RuntimeException("Configuration problem: "
                     + ex.getMessage(), ex);
         }

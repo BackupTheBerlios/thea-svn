@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project basedir="." default="compile" name="thea">
+<project basedir="." default="compile" name="thea-persistence">
 
   <!-- set global properties for this build -->
   <property name="src.dir" value="src"/>
@@ -63,8 +63,13 @@
   </target>
 
   <target name="jar" depends="compile">
+  	<copy todir="${classes.dir}">
+  		<fileset dir="${src.dir}">
+  			<exclude name="**/*.java"/>
+  		</fileset>
+  	</copy>
     <jar basedir="${classes.dir}" jarfile="${generated.dir}/thea-persistence.jar">
-      <fileset dir="${classes.dir}"/>
+    	<fileset dir="${conf.dir}"/>
     </jar>
   </target>
 </project>
