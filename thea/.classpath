@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-3.1.6-bin.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/wspace/thea-project/commons/lib/cglib-full-2.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/wspace/thea-project/commons/lib/commons-collections-2.1.jar"/>
+	<classpathentry kind="lib" path="C:/wspace/thea-project/commons/lib/commons-discovery-0.2.jar"/>
+	<classpathentry kind="lib" path="C:/wspace/thea-project/commons/lib/commons-logging-1.0.3.jar"/>
+	<classpathentry kind="lib" path="C:/wspace/thea-project/commons/lib/dom4j-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/wspace/thea-project/commons/lib/ehcache-0.7.jar"/>
+	<classpathentry kind="lib" path="C:/wspace/thea-project/commons/lib/hibernate2.jar"/>
+	<classpathentry kind="lib" path="C:/wspace/thea-project/commons/lib/jta.jar"/>
+	<classpathentry kind="lib" path="C:/wspace/thea-project/commons/lib/junit.jar"/>
+	<classpathentry kind="lib" path="C:/wspace/thea-project/commons/lib/log4j-1.2.8.jar"/>
+	<classpathentry kind="lib" path="C:/wspace/thea-project/commons/lib/odmg-3.0.jar"/>
+	<classpathentry kind="lib" path="C:/netbeans-4.0/platform4/core/core.jar"/>
+	<classpathentry kind="lib" path="C:/netbeans-4.0/platform4/core/openide.jar"/>
+	<classpathentry kind="lib" path="C:/netbeans-4.0/platform4/core/openide-loaders.jar"/>
+	<classpathentry kind="lib" path="C:/netbeans-4.0/platform4/core/org-netbeans-swing-plaf.jar"/>
+	<classpathentry kind="lib" path="C:/netbeans-4.0/platform4/core/updater.jar"/>
+	<classpathentry kind="lib" path="C:/netbeans-4.0/thea/modules/fr-unice-bioinfo-allonto.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

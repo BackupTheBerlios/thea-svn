@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+                Sun Public License Notice
+
+The contents of this file are subject to the Sun Public License
+Version 1.0 (the "License"). You may not use this file except in
+compliance with the License. A copy of the License is available at
+http://www.sun.com/
+
+The Original Code is NetBeans. The Initial Developer of the Original
+Code is Sun Microsystems, Inc. Portions Copyright 1997-2004 Sun
+Microsystems, Inc. All Rights Reserved.
+-->
+
+<!DOCTYPE filesystem PUBLIC '-//NetBeans//DTD Filesystem 1.0//EN' 'http://www.netbeans.org/dtds/filesystem-1_0.dtd'>
+<filesystem>
+  <folder name="Menu">
+    <folder name="File">
+      <file name="fr-unice-bioinfo-thea.LoadOntologyAction.instance">
+        <attr name="name" stringvalue="fr-unice-bioinfo-thea.LoadOntologyAction"/>
+      </file>
+      <file name="org-openide-actions-SaveAction.instance_hidden"/>
+      <file name="org-openide-actions-SaveAllAction.instance_hidden"/>
+      <file name="org-netbeans-core-actions-RefreshAllFilesystemsAction.instance_hidden"/>
+      <attr
+        name="org-netbeans-core-actions-RefreshAllFilesystemsAction.instance/Separator3.instance" boolvalue="false"/>
+      <file name="org-openide-actions-PageSetupAction.instance_hidden"/>
+      <file name="org-openide-actions-PrintAction.instance_hidden"/>
+      <attr name="org-openide-actions-PrintAction.instance/Separator4.instance" boolvalue="false"/>
+    </folder>
+    <file name="BuildProject_hidden"/>
+    <file name="Edit_hidden"/>
+    <folder name="View">
+      <file name="org-netbeans-core-actions-HTMLViewAction.instance_hidden"/>
+      <file name="fr-unice-bioinfo-thea-ontologyexplorer-actions-OntologyExplorerAction.instance">
+        <attr name="name" stringvalue="fr-unice-bioinfo-thea-ontologyexplorer-actions-OntologyExplorerAction"/>
+      </file>
+    </folder>
+    <folder name="Help">
+      <file name="fr-unice-bioinfo-thea.welcome.ShowWelcomePageAction.instance">
+        <attr name="name" stringvalue="fr-unice-bioinfo-thea.welcome.ShowWelcomePageAction"/>
+      </file>
+    </folder>
+  </folder>
+  <folder name="Windows2">
+    <file name="WindowManager.wswmgr" url="Windows2/WindowManager.wswmgr"/>
+    <folder name="Modes">
+      <file name="explorer.wsmode" url="Windows2/Modes/explorer.wsmode"/>
+      <folder name="explorer">
+        <file name="ontologyexplorer.wstcref" url="Windows2/Modes/explorer/ontologyexplorer.wstcref"/>
+      </folder>
+      <file name="properties.wsmode" url="Windows2/Modes/properties.wsmode"/>
+      <folder name="properties">
+        <file name="properties.wstcref" url="Windows2/Modes/properties/properties.wstcref"/>
+      </folder>
+      <file name="editor.wsmode" url="Windows2/Modes/editor.wsmode"/>
+      <folder name="editor">
+        <file name="welcomepanel.wstcref" url="Windows2/Modes/editor/welcomepanel.wstcref"/>
+      </folder>
+      <file name="output.wsmode" url="Windows2/Modes/output.wsmode"/>
+      <folder name="output">
+        <file name="output.wstcref" url="Windows2/Modes/output/output.wstcref"/>
+      </folder>
+    </folder>
+    <folder name="Components">
+      <file name="ontologyexplorer.settings" url="Windows2/Components/ontologyexplorer.settings"/>
+      <file name="welcomepanel.settings" url="Windows2/Components/welcomepanel.settings"/>
+    </folder>
+  </folder>
+  <!-- Config Toolbars -->
+  <folder name="Toolbars">
+    <file name="File_hidden"/>
+    <file name="Edit_hidden"/>
+    <folder name="Thea">
+      <file name="fr-unice-bioinfo-thea.LoadOntologyAction.instance">
+        <attr name="name" stringvalue="fr-unice-bioinfo-thea.LoadOntologyAction"/>
+      </file>
+    </folder>
+    <!-- specify toolbar configuration for platform ui. -->
+    <file name="Standard.xml" url="Standard.xml">
+      <attr name="SystemFileSystem.localizingBundle" stringvalue="org.netbeans.core.Bundle"/>
+    </file>
+  </folder>
+  <!-- End Toolbars Configuration -->
+</filesystem>
