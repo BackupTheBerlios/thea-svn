@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd" >
+    
+<hibernate-mapping>
+
+<class 
+    name="fr.unice.bioinfo.allonto.datamodel.Node" 
+    table="node">
+
+    <id name="id"
+        type="java.lang.Integer"
+        column="id"
+        unsaved-value="0">
+        <generator class="native" />
+    </id>
+    <!--discriminator column="classtype" type="string"/-->
+    <joined-subclass name="fr.unice.bioinfo.allonto.datamodel.Resource" table="resource">
+      <key column ="id"/>
+      <property name="acc" type="string" column="acc"/>
+      <map name="arcs" cascade="save-update"
+           lazy="true" outer-join="true"
+           table="arc">
+          <key column="source_id"/>
+          <index-many-to-many column="property_id" class="fr.unice.bioinfo.allonto.datamodel.Resource"/>
+          <many-to-many column="target_id" class="fr.unice.bioinfo.allonto.datamodel.Node"/>
+      </map>
+      <joined-subclass name="fr.unice.bioinfo.allonto.datamodel.ContextSwitch" table="contextswitch">
+        <key column ="id"/>
+      </joined-subclass>
+      <joined-subclass name="fr.unice.bioinfo.allonto.datamodel.Property" table="property">
+        <key column ="id"/>
+      </joined-subclass>
+      <joined-subclass name="fr.unice.bioinfo.allonto.datamodel.Context" table="context">
+        <key column ="id"/>
+      </joined-subclass>
+    </joined-subclass>
+    <joined-subclass name="fr.unice.bioinfo.allonto.datamodel.Connector" table="connector">
+      <key column ="id"/>
+      <set name="targets"  lazy="true" table="connector2node" outer-join="true" >
+        <key column="connector_id"/>
+        <many-to-many column="target_id" class="fr.unice.bioinfo.allonto.datamodel.Node"/>
+      </set>
+    </joined-subclass>
+    <joined-subclass name="fr.unice.bioinfo.allonto.datamodel.StringValue" table="stringvalue">
+      <key column ="id"/>
+      <property name="value" type="string" column="value"/>
+    </joined-subclass>
+
+    <!-- associations -->
+
+</class>
+</hibernate-mapping>
