@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="branding" default="netbeans" basedir=".">
+	
+	<import file="../nbbuild/module-scripts/projectized.xml"/>
+	
+	<property name="shell.script" value="thea.sh"/>
+	<property name="batch.script" value="thea.bat"/>
+	
+	<target name="files-init" depends="basic-init">
+		<patternset id="module.files">
+			<include name="${module.jar}"/>
+			<include name="${javahelp.jar}" if="has.javahelp"/>
+			<include name="${nb.system.dir}/Modules/${code.name.base.dashes}.xml"/>
+
+
+			<include name="${nb.lib.dir}/locale/core_thea.jar"/>
+			<include name="${nb.modules.dir}/locale/org-netbeans-core-windows_thea.jar"/>
+		</patternset>
+	</target>
+
+	<target name="netbeans-extra" depends="init,shellscript">
+		<mkdir dir="${netbeans.dest.dir}/${cluster.dir}/${nb.lib.dir}/locale"/>
+		<mkdir dir="${netbeans.dest.dir}/${cluster.dir}/${nb.modules.dir}/locale"/>
+
+		<jar destfile="${netbeans.dest.dir}/${cluster.dir}/${nb.lib.dir}/locale/core_thea.jar" 
+             basedir="core"/>
+		<jar destfile="${netbeans.dest.dir}/${cluster.dir}/${nb.modules.dir}/locale/org-netbeans-core-windows_thea.jar" 
+             basedir="core-windows"/>
+	</target>
+
+	
+	<!--  ============= Writes scripts ============   -->
+	<target name="shellscript" depends="init">
+		<echo message="Writing startup shell script..."/>
+
+		<property name="bin.dir" value="${netbeans.dest.dir}/${cluster.dir}/bin"/>
+
+
+		<mkdir dir="${bin.dir}"/>
+
+		<echo file="${bin.dir}/${shell.script}">#!/bin/sh
+	NETBEANS_HOME=${netbeans.dest.dir}
+	CLUSTER=${clustername}
+
+	$NETBEANS_HOME/platform4/lib/nbexec 
+			--userdir ~/.thea 
+			--branding thea --clusters 
+			-ui com.jgoodies.plaf.plastic.PlasticXPLookAndFeel 
+			-J-DPlastic.defaultTheme=DesertBlue $NETBEANS_HOME/$CLUSTER 
+	        </echo>
+
+		<!-- make sure the shell script is executable -->
+		<chmod dir="${bin.dir}" 
+	               perm="+x" 
+	               includes="${shell.script}"/>
+
+		<echo file="${bin.dir}/${batch.script}">@echo off
+	set NETBEANS_HOME=${netbeans.dest.dir}
+	set CLUSTER=${clustername}
+	set PATH=%PATH%;%NETBEANS_HOME%\%CLUSTER%\lib
+
+	%NETBEANS_HOME%\platform4\lib\nbexec.exe -J-Xmx500M -J-Dhibernate.max_fetch_depth=0 -J-Dfr.unice.bioinfo.allonto.datamodel.ResourceFactory=fr.unice.bioinfo.allonto.persistence.PersistentResourceFactory --userdir %NETBEANS_HOME%\.thea --branding thea --clusters %NETBEANS_HOME%\%CLUSTER%
+	        </echo>
+	</target>
+
+</project>
