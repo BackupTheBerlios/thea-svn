@@ -62,7 +62,7 @@
     </junit>
   </target>
 
-  <target name="jar" depends="compile, schemaexport">
+  <target name="jar" depends="compile">
     <jar basedir="${classes.dir}" jarfile="${generated.dir}/thea-persistence.jar">
       <fileset dir="${classes.dir}"/>
     </jar>
