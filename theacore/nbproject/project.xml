@@ -70,6 +70,7 @@ Microsystems, Inc. All Rights Reserved.
         <package>fr.unice.bioinfo.thea.core</package>
         <package>fr.unice.bioinfo.thea.core.connection</package>
         <package>fr.unice.bioinfo.thea.core.connection.wizard</package>
+        <package>fr.unice.bioinfo.thea.core.util</package>
       </public-packages>
     </data>
   </configuration>
