@@ -56,7 +56,7 @@ public class ConnectionSettings extends SystemOption {
     public static final String PROP_DATABASE_URL = "dataBaseUrl";// NOI18N
 
     /** User name */
-    private static String username = "uname";
+    private static String username = "";
 
     /** Property name for username */
     public static final String PROP_USERNAME = "username";// NOI18N
