@@ -69,7 +69,7 @@
   		</fileset>
   	</copy>
     <jar basedir="${classes.dir}" jarfile="${generated.dir}/thea-persistence.jar">
-    	<fileset dir="${conf.dir}"/>
+    	<!--fileset dir="${conf.dir}"/-->
     </jar>
   </target>
 </project>
