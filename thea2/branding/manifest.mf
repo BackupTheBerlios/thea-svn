@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+OpenIDE-Module: fr.unice.bioinfo.thea.branding/1
+OpenIDE-Module-Specification-Version: 1.0
+OpenIDE-Module-Layer: fr/unice/bioinfo/thea/branding/resources/layer.xml
+OpenIDE-Module-Localizing-Bundle: fr/unice/bioinfo/thea/branding/resources/Bundle.properties
+OpenIDE-Module-Build-Version: @BUILD_NUMBER_SUBST@
+
