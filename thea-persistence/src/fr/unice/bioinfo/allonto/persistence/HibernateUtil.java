@@ -12,10 +12,9 @@ import net.sf.hibernate.*;
 import net.sf.hibernate.cfg.*;
 
 /**
- * Utilities method for Hibernate.
- * Allways call the 
- * <code>public static createSession(Connection connection)</code>
- * method to create a session before trying to get using the 
+ * Utilities method for Hibernate. Allways call the
+ * <code>public static createSession(Connection connection)</code> method to
+ * create a session before trying to get using the
  * <code>public static Session currentSession()</code> method.
  */
 public class HibernateUtil {
@@ -25,13 +24,12 @@ public class HibernateUtil {
     static {
         try {
             // Create the SessionFactory
-            System.out.println("HibernateUtil: BIGIN");
-            Configuration cfg = new Configuration()
-                    .addClass(fr.unice.bioinfo.allonto.datamodel.Node.class);
+            Configuration cfg = new Configuration().
+                    addClass(fr.unice.bioinfo.allonto.datamodel.Node.class)
             cfg.setInterceptor(new DbInterceptor());
             sessionFactory = cfg.buildSessionFactory();
         } catch (HibernateException ex) {
-            System.out.println("HibernateUtil: Create session pb");
+            System.out.println("HibernateUtil: Create SessionFactory exception: "+ex.toString());
             throw new RuntimeException("Configuration problem: "
                     + ex.getMessage(), ex);
         }
@@ -55,7 +53,9 @@ public class HibernateUtil {
 
     /**
      * Create a session using a user-defined Connection.
-     * @param connection JDBC Connection.
+     * 
+     * @param connection
+     *            JDBC Connection.
      */
     public static void createSession(Connection connection) throws HibernateException {
         Session s = (Session) session.get();
