@@ -63,7 +63,7 @@ public class NewClAction extends NodeAction {
                     // A name is allways required
                     if ((cdf == null) || (tdf == null)) {
                         b.append(bundle
-                                .getString("NewClassificationDialog_NoName")); //NOI18N
+                                .getString("NewClassificationDialog_NoFile")); //NOI18N
                     }
 
                     // Show a dialog with errors if any
