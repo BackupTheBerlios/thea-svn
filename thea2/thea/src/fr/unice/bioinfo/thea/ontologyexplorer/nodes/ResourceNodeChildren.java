@@ -71,7 +71,11 @@ public class ResourceNodeChildren extends Children.Keys {
      * @see org.openide.nodes.Children#addNotify()
      */
     protected void addNotify() {
-        setKeys(updateKeys(resource));
+        Set keys = findSubResources(this.resource);
+        if(keys != null){
+            setKeys(keys);
+            }
+        
     }
 
     /*
@@ -88,7 +92,7 @@ public class ResourceNodeChildren extends Children.Keys {
      */
     protected Node[] createNodes(Object key) {
         Resource r = (Resource) key;
-        ResourceNode rn = new ResourceNode(r, updateKeys(r));
+        ResourceNode rn = new ResourceNode(r);
         // associate an icon dependening on the relation
         // between the children's resource and the parent's one
         ResourceNode p = (ResourceNode) getNode();
@@ -127,7 +131,7 @@ public class ResourceNodeChildren extends Children.Keys {
      * @param resource Resource
      * @return List of keys.
      */
-    private Set updateKeys(Resource resource) {
+    private Set findSubResources(Resource resource) {
         try {
             Session sess = HibernateUtil.currentSession();
             if (!sess.isConnected()) {
@@ -141,51 +145,3 @@ public class ResourceNodeChildren extends Children.Keys {
         return childs;
     }
 }
-
-//propertySupport.addPropertyChangeListener(listener);
-//
-//final Object k = key;
-//RequestProcessor.getDefault().post(new Runnable() {
-//    public void run () {
-//        Resource r = (Resource) k;
-//        ResourceNode rn = new ResourceNode(r, updateKeys(r));
-//        // associate an icon dependening on the relation
-//        // between the children's resource and the parent's one
-//        ResourceNode p = (ResourceNode) getNode();
-//        
-//        final ResourceNodeInfo rni = (ResourceNodeInfo) p
-//        .getCookie(ResourceNodeInfo.class);
-//        if (p != null) {
-//            try {
-//                HibernateUtil.createSession(rni.getConnection());
-//                Session sess = HibernateUtil.currentSession();
-//                if (!sess.isConnected()) {
-//                    sess.reconnect();
-//                }
-//            } catch (HibernateException e) {
-//                e.printStackTrace();
-//            }
-//            Set pchilds = resource.getTargets(Consts.partofProperty);
-//            if (pchilds != null) {
-//                if (pchilds.contains(r)) {
-//                    rn
-//                            .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/partOfIcon");
-//                }
-//            }
-//            Set ichilds = resource.getTargets(Consts.subsumeProperty);
-//            if (ichilds != null) {
-//                if (ichilds.contains(r)) {
-//                    rn
-//                            .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/isAIcon");
-//                }
-//            }
-//        }
-//        children.add(rn);
-//        setCh(children);
-//    }
-//    }, 0);
-//
-//
-////return new Node[] { (Node) rn };
-//
-//return new Node[] { createWaitNode() }
