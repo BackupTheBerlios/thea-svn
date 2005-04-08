@@ -8,6 +8,7 @@ import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Query;
 import net.sf.hibernate.Session;
 
+import org.openide.ErrorManager;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
@@ -54,11 +55,12 @@ public class ExploreOntologyAction extends NodeAction {
         Resource root = null;
         try {
 
-            ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-                    .getResourceFactory();
             // Create a Session using a Connection
             HibernateUtil.createSession(dbc.getConnection());
             Session sess = HibernateUtil.currentSession();
+
+            ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
+                    .getResourceFactory();
 
             Query q = sess
                     .createQuery("select res from Resource res, StringValue sv where res.arcs[:name] = sv and sv.value = :nm");
@@ -70,14 +72,17 @@ public class ExploreOntologyAction extends NodeAction {
             root = (Resource) result.iterator().next();
 
         } catch (StackOverflowError s) {
-            s.printStackTrace(System.err);
+            ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, s);
         } catch (HibernateException he) {
-            he.printStackTrace(System.err);
+            ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, he);
+        } catch (NullPointerException npe) {
+            ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, npe);
         }
+
         Set childs = ((Resource) root).getTargets(Consts.getListOfProperties());
 
         //Build a root node and set the root context
-        ResourceNode rootNode = new ResourceNode(root, childs);
+        ResourceNode rootNode = new ResourceNode(root);
         ResourceNodeInfo rni = new ResourceNodeInfo();
         rni.setConnection(dbc.getConnection());
         rootNode.setInfo(rni);
