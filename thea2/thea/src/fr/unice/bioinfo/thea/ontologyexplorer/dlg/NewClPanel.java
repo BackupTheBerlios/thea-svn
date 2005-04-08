@@ -57,9 +57,9 @@ public class NewClPanel extends JPanel {
     public static final int SEL_IGNORED_ROWS = 2;
     public static final int SEL_GENE_LABELS = 3;
     public static final int SEL_COLUMNS_LABELS = 4;
-    public static String[] format = { "Undefined", "Eisen (gtr & cdt files)",
+    public static String[] format = { "Eisen (gtr & cdt files)",//NOI18N
             "New Hampshire (newick)", //NOI18N
-            "Sota", "xml", "Unclustered data" //NOI18N
+            "Sota", "Unclustered data" //NOI18N
     };
 
     /** selected data format. */
