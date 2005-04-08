@@ -33,6 +33,15 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         // using the resource one
         setName(resource.getName());
     }
+    public ResourceNode(Resource resource) {
+        super((resource == null) ? Children.LEAF : new ResourceNodeChildren(
+                resource));
+        this.resource = resource;
+        // Set system name and display name of this node
+        // using the resource one
+        setName(resource.getName()+" ("+resource.getId()+")");
+        //setName(""+resource.getId());
+    }
 
     /** Returns vookie */
     public ResourceNodeInfo getInfo() {
