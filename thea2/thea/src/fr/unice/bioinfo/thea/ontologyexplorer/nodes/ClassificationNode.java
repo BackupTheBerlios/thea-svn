@@ -33,7 +33,7 @@ public class ClassificationNode extends AbstractNode implements Node.Cookie {
         setName(name);
 
         // Add a nice icon
-        setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/ClassificationFolderIcon"); //NOI18N
+        setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/ClassificationNodeIcon"); //NOI18N
 
         // Set the display name: The display name comes from user input
         setDisplayName(name);
