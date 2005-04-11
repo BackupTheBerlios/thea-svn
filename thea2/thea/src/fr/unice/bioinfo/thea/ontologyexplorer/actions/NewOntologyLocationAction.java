@@ -20,6 +20,7 @@ import org.openide.util.actions.NodeAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 import fr.unice.bioinfo.thea.ontologyexplorer.dlg.NewOntologyPanel;
+import fr.unice.bioinfo.thea.ontologyexplorer.infos.OntologyNodeInfo;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologiesRootNode;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
 
@@ -110,6 +111,9 @@ public class NewOntologyLocationAction extends NodeAction {
 
                     //Create a node that represents an Ontology
                     OntologyNode on = new OntologyNode(name, hint, dbc);
+                    // Create its nodeInfo
+                    OntologyNodeInfo oni = new OntologyNodeInfo();
+                    on.setNodeInfo(oni);
 
                     try {
                         if ((dbc.getConnection() == null)
