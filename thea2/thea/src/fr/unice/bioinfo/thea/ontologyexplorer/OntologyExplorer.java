@@ -71,7 +71,7 @@ public class OntologyExplorer extends TopComponent implements Provider,
         beanTreeView = new BeanTreeView();
 
         // Make the root node hidden
-        beanTreeView.setRootVisible(false);
+        beanTreeView.setRootVisible(true);
         setLayout(new BorderLayout());
         add(beanTreeView, BorderLayout.CENTER);
     }
