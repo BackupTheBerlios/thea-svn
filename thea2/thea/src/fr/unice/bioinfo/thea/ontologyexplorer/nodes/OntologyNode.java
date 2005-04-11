@@ -6,22 +6,28 @@ import java.util.ResourceBundle;
 
 import javax.swing.Action;
 
+import org.openide.actions.PropertiesAction;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
+import org.openide.nodes.Node;
+import org.openide.nodes.PropertySupport;
+import org.openide.nodes.Sheet;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
+import org.openide.util.actions.SystemAction;
 
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ConnectAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.DeleteOntologyNodeAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.DisconnectAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ExploreOntologyAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
+import fr.unice.bioinfo.thea.ontologyexplorer.infos.OntologyNodeInfo;
 
 /**
  * A node that represents an Ontology inside the <i>Ontology Explorer </i>.
  * @author Saïd El Kasmi.
  */
-public class OntologyNode extends AbstractNode {
+public class OntologyNode extends AbstractNode implements Node.Cookie {
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.nodes.Bundle"); //NOI18N
@@ -30,6 +36,8 @@ public class OntologyNode extends AbstractNode {
      * A flag that indicates if the ontology represented by this node is loaded.
      */
     private boolean connected = false;
+
+    private OntologyNodeInfo nodeInfo;
 
     /** A {@link DatabaseConnection}to allow loading ontology from a Database */
     private DatabaseConnection connection;
@@ -93,6 +101,14 @@ public class OntologyNode extends AbstractNode {
         }
     }
 
+    /*
+     * (non-Javadoc)
+     * @see org.openide.nodes.Node#getPreferredAction()
+     */
+    public Action getPreferredAction() {
+        return SystemAction.get(PropertiesAction.class);
+    }
+
     /**
      * @return Returns the connection.
      */
@@ -117,8 +133,30 @@ public class OntologyNode extends AbstractNode {
         return connected;
     }
 
+    /** Sets a name */
+    public void setName(String name) {
+        super.setName(name);
+        //nodeInfo.setName(name);
+    }
+
+    /** Returns cookies for this node */
+    public Node.Cookie getCookie(Class klas) {
+        if (klas.isInstance(nodeInfo))
+            return nodeInfo;
+        return super.getCookie(klas);
+    }
+
+    /** Creates properties sheet for this node. */
+    protected Sheet createSheet() {
+        Sheet sheet = super.createSheet();
+        Sheet.Set props = Sheet.createPropertiesSet();
+        sheet.put(props);
+        props.put(new PropertySupport.Name(this));
+        return sheet;
+    }
+
     /**
-     * @param b The connected to set.
+     * @param b Sets the connection status.
      */
     public void setConnected(boolean b) {
         this.connected = b;
@@ -134,5 +172,15 @@ public class OntologyNode extends AbstractNode {
             //setShortDescription(getShortDescription() + " Disconnected");
             // //NOI18N
         }
+    }
+
+    /** Returns cookie */
+    public OntologyNodeInfo getNodeInfo() {
+        return nodeInfo;
+    }
+
+    /** Sets a cookie */
+    public void setNodeInfo(OntologyNodeInfo nodeInfo) {
+        this.nodeInfo = nodeInfo;
     }
 }
