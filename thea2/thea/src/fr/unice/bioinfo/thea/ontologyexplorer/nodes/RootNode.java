@@ -26,7 +26,7 @@ public class RootNode extends AbstractNode implements Comparable {
         setName("RootNode"); //NOI18N
 
         // Add a nice icon
-        //setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/RootNodeIcon");
+        setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/empty");
 
         // Set the display name
         setDisplayName("");//NOI18N
