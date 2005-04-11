@@ -35,8 +35,7 @@ public class ClassificationsRootNode extends AbstractNode implements Comparable 
         setName("classifications"); //NOI18N
 
         // Add a nice icon
-        //setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/RootNodeIcon");
-        // //NOI18N
+        setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/ClassificationsNodeIcon");//NOI18N
         // Set the display name
         setDisplayName(bundle.getString("LBL_ClassificationsRootNode_Name")); //NOI18N
 
