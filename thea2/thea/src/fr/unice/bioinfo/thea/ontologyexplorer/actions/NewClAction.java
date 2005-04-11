@@ -133,7 +133,7 @@ public class NewClAction extends NodeAction {
                         exc.printStackTrace();
                     }
 
-                    // IF cdfNode and tdfNode are succefukky created:
+                    // IF cdfNode and tdfNode are succefully created:
                     if ((cdfNode != null) && (tdfNode != null)) {
                         cn.getChildren().add(new Node[] { cdfNode, tdfNode });
                     }
