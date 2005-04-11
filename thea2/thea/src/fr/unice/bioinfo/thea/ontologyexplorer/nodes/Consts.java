@@ -25,6 +25,8 @@ public class Consts {
 
     private static Resource goannotationProperty = resourceFactory
             .getProperty("GOANNOTATION");
+    private static Resource derivedInProperty = resourceFactory
+    .getProperty("DERIVED_IN");
     
     private static Resource subClassOf = resourceFactory
     .getProperty("http://www.w3.org/2000/01/rdf-schema#subClassOf");
@@ -32,6 +34,7 @@ public class Consts {
     public static Set getListOfProperties() {
         properties.add(subsumeProperty);
         properties.add(partofProperty);
+        properties.add(derivedInProperty);
         
         //properties.add(subClassOf);
         return properties;
