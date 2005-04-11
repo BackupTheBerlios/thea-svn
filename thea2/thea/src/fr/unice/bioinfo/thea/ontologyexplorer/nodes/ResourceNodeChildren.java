@@ -1,12 +1,8 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.nodes;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.Set;
-import java.util.TreeSet;
 
 import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Session;
@@ -27,24 +23,6 @@ public class ResourceNodeChildren extends Children.Keys {
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.nodes.Bundle"); //NOI18N;
 
-    /** Children */
-    private TreeSet children = new TreeSet();
-
-    private transient PropertyChangeSupport propertySupport = new PropertyChangeSupport(
-            this);
-
-    // PropertyChangeListener
-    private PropertyChangeListener listener = new PropertyChangeListener() {
-        public void propertyChange(PropertyChangeEvent event) {
-            if (event.getPropertyName().equals("finished")) { //NOI18N
-                remove(getNodes()); //remove wait node
-                nodes = getCh(); // change children ...
-                refresh(); // ... and refresh them
-                removeListener(); // Remove the listener at the end
-            }
-        }
-    };
-
     /** Resource associated with this children. */
     private Resource resource;
 
@@ -53,29 +31,16 @@ public class ResourceNodeChildren extends Children.Keys {
         this.resource = resource;
     }
 
-    private TreeSet getCh() {
-        return children;
-    }
-
-    private void setCh(TreeSet children) {
-        this.children = children;
-    }
-
-    /** Removes the listener after nodes' creation */
-    private void removeListener() {
-        propertySupport.removePropertyChangeListener(listener);
-    }
-
     /*
      * (non-Javadoc)
      * @see org.openide.nodes.Children#addNotify()
      */
     protected void addNotify() {
         Set keys = findSubResources(this.resource);
-        if(keys != null){
+        if (keys != null) {
             setKeys(keys);
-            }
-        
+        }
+
     }
 
     /*

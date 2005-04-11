@@ -4,9 +4,13 @@ import java.util.Set;
 
 import javax.swing.Action;
 
+import org.openide.actions.PropertiesAction;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
 import org.openide.nodes.Node;
+import org.openide.nodes.PropertySupport;
+import org.openide.nodes.Sheet;
+import org.openide.util.actions.SystemAction;
 
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
@@ -39,11 +43,11 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         this.resource = resource;
         // Set system name and display name of this node
         // using the resource one
-        setName(resource.getName()+" ("+resource.getId()+")");
-        //setName(""+resource.getId());
+        //setName(resource.getName()+" ("+resource.getId()+")");
+        setName(""+resource.getId());
     }
 
-    /** Returns vookie */
+    /** Returns cookie */
     public ResourceNodeInfo getInfo() {
         return info;
     }
@@ -71,12 +75,28 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
             return info;
         return super.getCookie(klas);
     }
+    
+    /** Creates properties sheet for this node. */
+    protected Sheet createSheet() {
+        Sheet sheet = super.createSheet();
+        Sheet.Set props = Sheet.createPropertiesSet();
+        sheet.put(props);
+        props.put(new PropertySupport.Name(this));
+        return sheet;
+    }
 
+    /*
+     * (non-Javadoc)
+     * @see org.openide.nodes.Node#getPreferredAction()
+     */
+    public Action getPreferredAction() {
+        return SystemAction.get(PropertiesAction.class);
+    }
     /*
      * (non-Javadoc)
      * @see org.openide.nodes.Node#getActions(boolean)
      */
     public Action[] getActions(boolean arg0) {
-        return super.getActions(arg0);
+        return null;
     }
 }
