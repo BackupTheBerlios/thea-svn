@@ -13,6 +13,7 @@ import org.openide.util.NbBundle;
 
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
+import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 
 /**
  * @author Saïd El Kasmi
@@ -58,6 +59,9 @@ public class ResourceNodeChildren extends Children.Keys {
     protected Node[] createNodes(Object key) {
         Resource r = (Resource) key;
         ResourceNode rn = new ResourceNode(r);
+        ResourceNodeInfo rni = new ResourceNodeInfo();
+        //rni.setConnection(dbc.getConnection());
+        rn.setInfo(rni);
         // associate an icon dependening on the relation
         // between the children's resource and the parent's one
         ResourceNode p = (ResourceNode) getNode();

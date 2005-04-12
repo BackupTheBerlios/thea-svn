@@ -1,5 +1,8 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.nodes;
 
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.Action;
@@ -12,7 +15,9 @@ import org.openide.nodes.PropertySupport;
 import org.openide.nodes.Sheet;
 import org.openide.util.actions.SystemAction;
 
+import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
+import fr.unice.bioinfo.allonto.datamodel.StringValue;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 
 /**
@@ -37,6 +42,7 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         // using the resource one
         setName(resource.getName());
     }
+
     public ResourceNode(Resource resource) {
         super((resource == null) ? Children.LEAF : new ResourceNodeChildren(
                 resource));
@@ -44,7 +50,7 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         // Set system name and display name of this node
         // using the resource one
         //setName(resource.getName()+" ("+resource.getId()+")");
-        setName(""+resource.getId());
+        setName("" + resource.getId());
     }
 
     /** Returns cookie */
@@ -55,15 +61,37 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
     /** Sets cookie */
     public void setInfo(ResourceNodeInfo info) {
         this.info = info;
+        info.setName(getName());
+        //processNodeInfo(info);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see java.beans.FeatureDescriptor#setName(java.lang.String)
-     */
-    public void setName(String newname) {
-        super.setName(newname);
-        //info.setName(newname);
+    private void processNodeInfo(final ResourceNodeInfo info) {
+        //        RequestProcessor.getDefault().post(new Runnable() {
+        //            public void run() {
+        Iterator mapIt = ((Resource) resource).getArcs().entrySet().iterator();
+        String accessor;
+        Resource resource;
+        Entity e;
+        Map.Entry entry;
+        while (mapIt.hasNext()) {
+            entry = (Map.Entry) mapIt.next();
+            e = (Entity) entry.getValue();
+            // Since values in the Map are not all instances of
+            // StringValue,
+            // do tests using the instanceof operator
+            if (e instanceof StringValue) {
+                resource = (Resource) entry.getKey();
+                accessor = resource.getAcc();
+                info.setProperty(accessor, ((StringValue) e).getValue());
+            }
+        }
+        
+        /* FROM HERE */
+        
+        /* TO HERE: DRAFT*/
+        
+        //            }
+        //        }, 0);
     }
 
     /*
@@ -75,13 +103,35 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
             return info;
         return super.getCookie(klas);
     }
-    
+
     /** Creates properties sheet for this node. */
     protected Sheet createSheet() {
         Sheet sheet = super.createSheet();
+        // Create properties of node
         Sheet.Set props = Sheet.createPropertiesSet();
-        sheet.put(props);
         props.put(new PropertySupport.Name(this));
+        sheet.put(props);
+
+        // Create properties extracted from the ontology
+        Sheet.Set advanced = new Sheet.Set();
+        advanced.setDisplayName("Resource properties");//NOI18N
+        advanced.setName("advanced");//NOI18N
+        advanced.setShortDescription("Properties from Ontology");//NOI18N
+        processNodeInfo(info);
+        Enumeration enum = info.keys();
+        while (enum.hasMoreElements()) {
+            String key = (String) enum.nextElement();
+            // name property is already build in the properties sub sheet
+            if (key.equals(ResourceNodeInfo.NAME)) {
+                continue;
+            }
+            advanced.put(new ResourcePropertySupport(key, String.class, key,
+                    "", info, false));//NOI18N
+        }
+
+        // Add advanced properties
+        sheet.put(advanced);
+
         return sheet;
     }
 
@@ -92,11 +142,12 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
     public Action getPreferredAction() {
         return SystemAction.get(PropertiesAction.class);
     }
+
     /*
      * (non-Javadoc)
      * @see org.openide.nodes.Node#getActions(boolean)
      */
     public Action[] getActions(boolean arg0) {
-        return null;
+        return super.getActions(arg0);
     }
 }
