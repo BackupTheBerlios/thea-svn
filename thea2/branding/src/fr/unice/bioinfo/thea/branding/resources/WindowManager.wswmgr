@@ -42,6 +42,5 @@
     <active-mode name="explorer"/>
     <toolbar configuration="Standard" preferred-icon-size="16"/>
     <tc-list>
-  <tc-id id="output"/>
     </tc-list>
 </windowmanager>
