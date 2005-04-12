@@ -30,19 +30,19 @@ import org.openide.windows.WindowManager;
  * @author Claude Pasquier.
  * @author Saïd El Kasmi.
  */
-public class SelectionViewer extends TopComponent implements SelectionListener {
+public class SelectionEditor extends TopComponent implements SelectionListener {
     /** generated Serialized Version UID */
     static final long serialVersionUID = 8011348427057189911L;
 
     /** Singleton instance */
-    private static SelectionViewer DEFAULT = null;
+    private static SelectionEditor DEFAULT = null;
 
     /** preferred ID */
     private String PREFERRED_ID = "selectionviewer";
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.classificationviewer.selection.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.editor.selection.Bundle"); //NOI18N;
 
     /** A {@link JTabbedPane}used to hold multiples selections. */
     private JTabbedPane tabbedPane;
@@ -56,10 +56,10 @@ public class SelectionViewer extends TopComponent implements SelectionListener {
     /**
      * Creates a swing compoenents that extends {@link TopCompoenent}
      */
-    public SelectionViewer() {
+    public SelectionEditor() {
         setName(bundle.getString("LBL_SelectionComponent_Name")); // NOI18N
         setIcon(Utilities
-                .loadImage("fr/unice/bioinfo/thea/classificationviewer/resources/SelectionViewer16.png"));
+                .loadImage("fr/unice/bioinfo/thea/editor/resources/SelectionEditor16.gif"));
         // Make background white
         setBackground(Color.WHITE);
         // Initialize map
@@ -71,55 +71,6 @@ public class SelectionViewer extends TopComponent implements SelectionListener {
         tabbedPane.setBackground(Color.WHITE);
         setLayout(new BorderLayout());
         add(BorderLayout.CENTER, tabbedPane);
-    }
-
-    /**
-     * Allows static access to the unique Instance of the <i>SelectionViewer
-     * </i> class.
-     */
-    public static SelectionViewer getInstance() {
-        if (DEFAULT == null) {
-            DEFAULT = new SelectionViewer();
-        }
-
-        return DEFAULT;
-    }
-
-    /**
-     * Finds existing instance of this class and return it.
-     */
-    public static SelectionViewer findDefault() {
-        if (DEFAULT == null) {
-            if (SwingUtilities.isEventDispatchThread()) {
-                TopComponent tc = WindowManager.getDefault().findTopComponent(
-                        "selectionviewer"); // NOI18N
-
-                if (tc != null) {
-                    DEFAULT = (SelectionViewer) tc;
-                }
-            } else {
-                try {
-                    SwingUtilities.invokeAndWait(new Runnable() {
-                        public void run() {
-                            TopComponent tc = WindowManager.getDefault()
-                                    .findTopComponent("selectionviewer"); // NOI18N
-
-                            if (tc != null) {
-                                DEFAULT = (SelectionViewer) tc;
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    ErrorManager.getDefault().notify(e);
-                }
-            }
-        }
-
-        if (DEFAULT == null) {
-            SelectionViewer.getInstance();
-        }
-
-        return DEFAULT;
     }
 
     /*
