@@ -65,10 +65,11 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
     private ClassificationNodeInfo cni;
     /** A Canvas to draw into */
     private CECanvas canvas;
-    /** A window to show selected nodes of the classification tree*/
+    /** A window to show selected nodes of the classification tree */
     private SelectionEditor selectionEditor;
 
     public CEditor(ClassificationNodeInfo cni) {
+        super();
         this.cni = cni;
         // Give a title to this window
         setName(cni.getName());
@@ -83,6 +84,8 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
         canvas.addTreeSelectionListener(this);
         // Create the selection editor and dok it in the explorer mode
         selectionEditor = new SelectionEditor();
+        selectionEditor.setName(selectionEditor.getName() + "[" + cni.getName()
+                + "]");//NOI18N
         canvas.addSelectionListener(selectionEditor);
         Mode m = WindowManager.getDefault().findMode("explorer");//NOI18N
         if (m != null) {
@@ -95,7 +98,7 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
         scrollPane.getViewport().setBackground(Color.WHITE);
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
-
+        // Load classification
         load();
     }
 
@@ -103,7 +106,16 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
     protected String preferredID() {
         return PREFERRED_ID;
     }
-
+    /** Implements what to do when this window's closed */
+    protected void componentClosed() {
+        super.componentClosed();
+        // close the selection editor attached to this window
+        selectionEditor.close();
+    }
+    /** Mange persistence for this windows*/
+    public int getPersistenceType() {
+        return super.PERSISTENCE_ALWAYS;
+    }
     public void load() {
         Node rootNode = canvas.getTreeRoot();
         File cf = cni.getCFile();
@@ -477,5 +489,9 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
 
     public CECanvas getCanvas() {
         return canvas;
+    }
+
+    public SelectionEditor getSelectionEditor() {
+        return selectionEditor;
     }
 }
