@@ -38,7 +38,7 @@ public class SelectionEditor extends TopComponent implements SelectionListener {
     private static SelectionEditor DEFAULT = null;
 
     /** preferred ID */
-    private String PREFERRED_ID = "selectionviewer";
+    private String PREFERRED_ID = "selectioneditor";
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
@@ -86,7 +86,7 @@ public class SelectionEditor extends TopComponent implements SelectionListener {
      * @see org.openide.windows.TopComponent#getPersistenceType()
      */
     public int getPersistenceType() {
-        return super.PERSISTENCE_ALWAYS;
+        return super.PERSISTENCE_NEVER;
     }
 
     /*
