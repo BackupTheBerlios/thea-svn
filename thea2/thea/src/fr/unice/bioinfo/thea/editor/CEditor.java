@@ -26,6 +26,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.openide.util.NbBundle;
+import org.openide.util.Utilities;
 import org.openide.windows.TopComponent;
 
 import fr.unice.bioinfo.thea.editor.dlg.ZoomingPanel;
@@ -66,6 +67,9 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
         this.cni = cni;
         // Give a title to this window
         setName(cni.getName());
+        // Icon
+        setIcon(Utilities
+                .loadImage("fr/unice/bioinfo/thea/editor/resources/ClassificationNodeIcon.gif"));//NOI18N
         // build the scroll pane and fit the CECanvas
         // into it
         canvas = new CECanvas();
