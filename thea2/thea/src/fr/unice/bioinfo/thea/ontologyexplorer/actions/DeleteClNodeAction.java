@@ -1,14 +1,19 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
+import org.openide.windows.TopComponent;
 
+import fr.unice.bioinfo.thea.editor.CEditor;
+import fr.unice.bioinfo.thea.editor.selection.SelectionEditor;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
+import fr.unice.bioinfo.thea.ontologyexplorer.infos.ClassificationNodeInfo;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationNode;
 
 /**
@@ -34,10 +39,28 @@ public class DeleteClNodeAction extends NodeAction {
         if (!(node instanceof ClassificationNode)) {
             return;
         }
-
+        // Get its parent
         Node parent = node.getParentNode();
+        // Remove its children
         node.getChildren().remove(node.getChildren().getNodes());
+        // Close the windows that edit the classification if any:
+        final ClassificationNodeInfo cni = (ClassificationNodeInfo) node
+        .getCookie(ClassificationNodeInfo.class);
+        
         parent.getChildren().remove(new Node[] { node });
+        // This commented bloc is used to close
+        // The window that edits the classif. It caused 
+        // an ecpetion
+//        Iterator opened = TopComponent.getRegistry().getOpened().iterator();
+//        while (opened.hasNext()) {
+//            Object tc = opened.next();
+//            if (tc instanceof CEditor) {
+//                CEditor ce = (CEditor) tc;
+//                if(ce.getName().equals(cni.getName())){
+//                    ce.close();
+//                    }
+//            }
+//        }
 
         try {
             node.destroy();
