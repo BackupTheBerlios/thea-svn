@@ -106,6 +106,10 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
     protected String preferredID() {
         return PREFERRED_ID;
     }
+    /** This windows can be closed*/
+    public boolean canClose() {
+        return true;
+    }
     /** Implements what to do when this window's closed */
     protected void componentClosed() {
         super.componentClosed();
