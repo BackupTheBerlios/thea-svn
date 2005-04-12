@@ -23,9 +23,11 @@ import org.openide.ErrorManager;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
+import org.openide.windows.Mode;
 import org.openide.windows.WindowManager;
 
 import fr.unice.bioinfo.thea.editor.dlg.ZoomingPanel;
+import fr.unice.bioinfo.thea.editor.selection.SelectionEditor;
 
 /**
  * A Factory that builds popup menus corresponding to actions on nodes. An
@@ -76,6 +78,26 @@ public class PopupFactory {
             }
         });
         popup.add(menuItem);
+        
+        // Add a menu to show the Selection Editor
+        menuItem = new JMenuItem(bundle.getString("LBL_SelectionWindowAction"));
+        menuItem
+                .setIcon(new ImageIcon(
+                        Utilities
+                                .loadImage("fr/unice/bioinfo/thea/editor/resources/SelectionEditor16.gif")));
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SelectionEditor se = editor.getSelectionEditor();
+                Mode m = WindowManager.getDefault().findMode("explorer");//NOI18N
+                if (m != null) {
+                    m.dockInto(se);
+                }
+                se.open();
+                se.requestActive();
+            }
+        });
+        popup.add(menuItem);
+        popup.addSeparator();
 
         // Add ClassificationViewerSettings menu
         //        menuItem = new JMenuItem(bundle.getString(
