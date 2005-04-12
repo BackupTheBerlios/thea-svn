@@ -1,10 +1,15 @@
 package fr.unice.bioinfo.thea;
 
+import java.util.Iterator;
+
 import org.openide.modules.ModuleInstall;
 import org.openide.nodes.Children;
 import org.openide.nodes.Node;
 import org.openide.util.RequestProcessor;
+import org.openide.windows.TopComponent;
 
+import fr.unice.bioinfo.thea.editor.CEditor;
+import fr.unice.bioinfo.thea.editor.selection.SelectionEditor;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologiesRootNode;
@@ -51,5 +56,19 @@ public class TheaModule extends ModuleInstall {
             }
 
         });
+        // Close opend TopComponents:
+        Iterator opened = TopComponent.getRegistry().getOpened().iterator();
+        while (opened.hasNext()) {
+            Object tc = opened.next();
+            if (tc instanceof CEditor) {
+                CEditor e = (CEditor) tc;
+                e.close();
+            }
+            if (tc instanceof SelectionEditor) {
+                SelectionEditor se = (SelectionEditor) tc;
+                se.close();
+            }
+        }
+
     }
 }
