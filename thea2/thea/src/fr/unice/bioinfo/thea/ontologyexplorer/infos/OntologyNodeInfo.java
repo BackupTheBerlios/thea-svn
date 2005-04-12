@@ -8,11 +8,11 @@ import org.openide.nodes.Node;
 /**
  * @author Saïd El Kasmi
  */
-public class ResourceNodeInfo extends Hashtable implements Node.Cookie {
+public class OntologyNodeInfo extends Hashtable implements Node.Cookie {
     // Serial Version UID for serialization
-    static final long serialVersionUID = 1176243907461868244L;
+    static final long serialVersionUID = 117624370716568244L;
     public static final String NAME = "name"; //NOI18N
-    public static final String CONNECTION = "conection"; //NOI18N
+    public static final String CONNECTION = "connection"; //NOI18N
 
     /*
      * (non-Javadoc)
@@ -31,16 +31,6 @@ public class ResourceNodeInfo extends Hashtable implements Node.Cookie {
             remove(key);
 
         return old;
-    }
-    
-    /** Called by property editor */
-    public Object getProperty(String key) {
-        return get(key);
-    }
-
-    /** Called by property editor */
-    public void setProperty(String key, Object obj) {
-        put(key, obj);
     }
 
     /** Returns the name */
@@ -61,5 +51,15 @@ public class ResourceNodeInfo extends Hashtable implements Node.Cookie {
     /** Sets a JDBC Connection */
     public void setConnection(Connection con) {
         put(CONNECTION, con);
+    }
+
+    /** Called by property editor */
+    public Object getProperty(String key) {
+        return get(key);
+    }
+
+    /** Called by property editor */
+    public void setProperty(String key, Object obj) {
+        put(key, obj);
     }
 }
