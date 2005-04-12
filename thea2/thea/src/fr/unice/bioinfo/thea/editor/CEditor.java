@@ -27,9 +27,12 @@ import javax.swing.event.ChangeListener;
 
 import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
+import org.openide.windows.Mode;
 import org.openide.windows.TopComponent;
+import org.openide.windows.WindowManager;
 
 import fr.unice.bioinfo.thea.editor.dlg.ZoomingPanel;
+import fr.unice.bioinfo.thea.editor.selection.SelectionEditor;
 import fr.unice.bioinfo.thea.editor.settings.CESettings;
 import fr.unice.bioinfo.thea.editor.util.Consts;
 import fr.unice.bioinfo.thea.editor.util.Discretization;
@@ -62,6 +65,8 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
     private ClassificationNodeInfo cni;
     /** A Canvas to draw into */
     private CECanvas canvas;
+    /** A window to show selected nodes of the classification tree*/
+    private SelectionEditor selectionEditor;
 
     public CEditor(ClassificationNodeInfo cni) {
         this.cni = cni;
@@ -76,6 +81,15 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
         scrollPane = new JScrollPane(canvas);
         canvas.activate(true);
         canvas.addTreeSelectionListener(this);
+        // Create the selection editor and dok it in the explorer mode
+        selectionEditor = new SelectionEditor();
+        canvas.addSelectionListener(selectionEditor);
+        Mode m = WindowManager.getDefault().findMode("explorer");//NOI18N
+        if (m != null) {
+            m.dockInto(selectionEditor);
+        }
+        selectionEditor.open();
+        selectionEditor.requestActive();
         // Put the canvas in a JScrollPane
         scrollPane.setBackground(Color.WHITE);
         scrollPane.getViewport().setBackground(Color.WHITE);
