@@ -20,6 +20,7 @@
       <file name="explorer.wsmode" url="explorer.wsmode"/>
       <folder name="explorer">
         <file name="ontologyexplorer.wstcref" url="ontologyexplorer.wstcref"/>
+        <file name="selectioneditor.wstcref" url="selectioneditor.wstcref"/>
       </folder>
     </folder>
     <folder name="Components">
