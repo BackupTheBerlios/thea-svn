@@ -288,11 +288,11 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      */
     public void paint(Graphics g) {
         this.context = ((Graphics2D) g).getFontRenderContext();
-        draw(g, true);
+        draw(g);
         super.paint(g);
     }
 
-    public void draw(Graphics g, boolean doClipping) {
+    public void draw(Graphics g) {
         if (rootNode == null) {
             return;
         }
@@ -330,7 +330,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         nodeToInClipState.clear();
         nodeToDetailedState.clear();
         drawNode(getRootNode(), (Graphics2D) g, frc, 15, 5, treeWidth - 30,
-                height - 10, doClipping);
+                height - 10);
         nodeToArea.put(getRootNode(), new Rectangle2D.Double(0, 5,
                 treeWidth - 15, height - 10));
         //displayInfo((Graphics2D) g, frc);
@@ -525,14 +525,13 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * @return the vertical position of the horizontal bar
      */
     private double drawNode(Node n, Graphics2D g, FontRenderContext frc,
-            double x, double y, double width, double height, boolean doClipping) {
+            double x, double y, double width, double height) {
         Color c = g.getColor();
         if (n == hnode) {
             highlightNode(n, g);
         }
         nodeToArea.put(n, new Rectangle2D.Double(x, y, width, height));
-        if (doClipping
-                && !g.hitClip((int) x, (int) y, (int) width + 1,
+        if (!g.hitClip((int) x, (int) y, (int) width + 1,
                         (int) height + 1)) {
             setNotDetailed(n, true);
             setInClip(n, false);
@@ -567,7 +566,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             double childHeight = (double) childLeaves / (double) leaves;
             double newy = height * childHeight;
             double centery = drawNode(child, g, frc, x + branchLength, posy,
-                    width - branchLength, newy, doClipping);
+                    width - branchLength, newy);
             if (centery < miny) {
                 miny = centery;
             }
