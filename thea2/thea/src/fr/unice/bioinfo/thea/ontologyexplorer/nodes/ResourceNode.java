@@ -85,11 +85,6 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
                 info.setProperty(accessor, ((StringValue) e).getValue());
             }
         }
-        
-        /* FROM HERE */
-        
-        /* TO HERE: DRAFT*/
-        
         //            }
         //        }, 0);
     }
