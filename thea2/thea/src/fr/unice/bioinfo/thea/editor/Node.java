@@ -63,7 +63,6 @@ public class Node implements PropertyChangeListener {
     private int numberOfLeaves = -1;
     /** The length of the branch. */
     private double branchLength = 0;
-
     /**
      * Each node has a label that may be used for display. The label could be
      * the name given in a classification or extracted from a database
