@@ -32,6 +32,26 @@ public class Node implements PropertyChangeListener {
     public static final String NAME = "name";//NOI18N
     /** Annotations of this node */
     public static final String ANNOTATIONS = "annotations";//NOI18N
+    /***/
+    public static final String MEASURES = "measures";//NOI18N
+    /***/
+    public static final String NB_MEASURES = "nbMeasures";//NOI18N
+    /***/
+    public static final String USER_ANNOTATIONS = "userAnnotations";//NOI18N
+    /***/
+    public static final String ANNOTATION = "annotation";//NOI18N
+    /***/
+    public static final String MIN_MEASURE = "minMeasure";//NOI18N
+    /***/
+    public static final String MAX_MEASURE = "maxMeasure";//NOI18N
+    /***/
+    public static final String UNDER_EXP_DECILES = "underExpDeciles";//NOI18N
+    /***/
+    public static final String OVER_EXP_DECILES = "overExpDeciles";//NOI18N
+    /***/
+    public static final String FROZEN = "frozen";//NOI18N
+    /***/
+    public static final String ID_IN_CLASSIF = "idInClassif";//NOI18N
 
     /** Node's children. This contains only direct children. */
     private List children = null;
@@ -349,23 +369,6 @@ public class Node implements PropertyChangeListener {
         return (parent.getDistanceToAncestor(ancestor, useBranchLength) + bl);
     }
 
-    //    /**
-    //     * Returns the list of all leaf nodes that are descendant of this one.
-    //     * @return java.util.List List of leaves.
-    //     */
-    //    public List getLeaves() {
-    //        //lnodes = new LinkedList();
-    //        if (this.isLeaf()) {
-    //            lnodes.add(this);
-    //        } else {
-    //            Iterator iterator = getChildren().iterator();
-    //            while (iterator.hasNext()) {
-    //                lnodes.addAll(((Node) iterator.next()).getLeaves());
-    //            }
-    //        }
-    //        System.out.println("lnodes.size = "+lnodes.size());
-    //        return lnodes;
-    //    }
     /**
      * Returns the number of leaf nodes rooted at this node.
      * @return int Number of leaf nodes rooted at this node.
@@ -520,40 +523,40 @@ public class Node implements PropertyChangeListener {
         return userData.get(key);
     }
 
-    public void setUserData(Map m) {
-        userData = m;
-    }
+    //    public void setUserData(Map m) {
+    //        userData = m;
+    //    }
 
-    /**
-     * Getter for userData
-     * @return the map of serialisable user data
-     */
-    public Map getUserData() {
-        Map m = new HashMap();
-        Iterator it = userData.keySet().iterator();
+    //    /**
+    //     * Getter for userData
+    //     * @return the map of serialisable user data
+    //     */
+    //    public Map getUserData() {
+    //        Map m = new HashMap();
+    //        Iterator it = userData.keySet().iterator();
+    //
+    //        while (it.hasNext()) {
+    //            String key = (String) it.next();
+    //
+    //            if (serializableUserData.contains(key)) {
+    //                m.put(key, userData.get(key));
+    //            }
+    //        }
+    //
+    //        return m;
+    //    }
 
-        while (it.hasNext()) {
-            String key = (String) it.next();
+    //    public Node getRoot() {
+    //        return getRoot(this);
+    //    }
 
-            if (serializableUserData.contains(key)) {
-                m.put(key, userData.get(key));
-            }
-        }
-
-        return m;
-    }
-
-    public Node getRoot() {
-        return getRoot(this);
-    }
-
-    public Node getRoot(Node node) {
-        if (node.getParent() == null) {
-            return node;
-        }
-
-        return getRoot(node.getParent());
-    }
+    //    public Node getRoot(Node node) {
+    //        if (node.getParent() == null) {
+    //            return node;
+    //        }
+    //
+    //        return getRoot(node.getParent());
+    //    }
 
     public static void setSerializableUserData(String key, boolean b) {
         if (b) {
@@ -563,14 +566,14 @@ public class Node implements PropertyChangeListener {
         }
     }
 
-    public static void setSerializableUserData(Set s) {
-        System.err.println("set called with " + s);
-        serializableUserData = new HashSet(s);
-    }
+    //    public static void setSerializableUserData(Set s) {
+    //        System.err.println("set called with " + s);
+    //        serializableUserData = new HashSet(s);
+    //    }
 
-    public static Set getSerializableUserData() {
-        return serializableUserData;
-    }
+    //    public static Set getSerializableUserData() {
+    //        return serializableUserData;
+    //    }
 
     //    /**
     //     * Indicates if the node is a leaf

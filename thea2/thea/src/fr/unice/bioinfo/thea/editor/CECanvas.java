@@ -354,12 +354,12 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * @param g The graphics context
      */
     private void displayInfo(Graphics2D g) {
-        TextLayout layout = new TextLayout(getRootNode().getNumberOfLeaves()
+        TextLayout tl = new TextLayout(getRootNode().getNumberOfLeaves()
                 + " leaves", Consts.INFO_FONT, context);
-        layout.draw(g, 0, 20);
-        layout = new TextLayout("depth=" + getRootNode().getDepth(),
+        tl.draw(g, 0, 20);
+        tl = new TextLayout("depth=" + getRootNode().getDepth(),
                 Consts.INFO_FONT, context);
-        layout.draw(g, 0, 40);
+        tl.draw(g, 0, 40);
     }
 
     /**
