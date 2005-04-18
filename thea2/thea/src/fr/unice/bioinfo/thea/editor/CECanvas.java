@@ -683,7 +683,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         while (iter.hasNext()) {
             List param = (List) iter.next();
             String annot = (String) param.get(0);
-            NodeLayoutAttr layoutAttr = (NodeLayoutAttr) param.get(1);
+            NodeLayoutSupport layoutAttr = (NodeLayoutSupport) param.get(1);
             Font font = null;
             if (layoutAttr != null) {
                 font = layoutAttr.getFont();
@@ -710,7 +710,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
                 .rint(currentY), Math.rint(maxWidth), Math.rint(layHeight));
         for (int i = 0; i < nbLines; i++) {
             TextLayout layout = (TextLayout) layouts.get(i);
-            NodeLayoutAttr layoutAttr = (NodeLayoutAttr) layoutsAttr.get(i);
+            NodeLayoutSupport layoutAttr = (NodeLayoutSupport) layoutsAttr.get(i);
             Color backColor = null;
             if (layoutAttr != null) {
                 backColor = layoutAttr.getBgColor();
@@ -798,7 +798,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         while (iter.hasNext()) {
             List param = (List) iter.next();
             String annot = (String) param.get(0);
-            NodeLayoutAttr layoutAttr = (NodeLayoutAttr) param.get(1);
+            NodeLayoutSupport layoutAttr = (NodeLayoutSupport) param.get(1);
             Font font = null;
             if (layoutAttr != null) {
                 font = layoutAttr.getFont();
@@ -841,7 +841,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
         for (int i = 0; i < nbLines; i++) {
             TextLayout layout = (TextLayout) layouts.get(i);
-            NodeLayoutAttr layoutAttr = (NodeLayoutAttr) layoutsAttr.get(i);
+            NodeLayoutSupport layoutAttr = (NodeLayoutSupport) layoutsAttr.get(i);
             Color backColor = null;
             if (layoutAttr != null) {
                 backColor = layoutAttr.getBgColor();
@@ -1714,7 +1714,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * @param node The node which has to be changed
      * @param detail The detailed state
      */
-    public void setLayout(Node node, NodeLayoutAttr nodeLayout) {
+    public void setLayout(Node node, NodeLayoutSupport nodeLayout) {
         nodeToLayout.put(node, nodeLayout);
     }
 
@@ -1722,8 +1722,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * Gets the layout attributes of a node
      * @param node The node for which attributes are requested
      */
-    public NodeLayoutAttr getLayout(Node node) {
-        return (NodeLayoutAttr) nodeToLayout.get(node);
+    public NodeLayoutSupport getLayout(Node node) {
+        return (NodeLayoutSupport) nodeToLayout.get(node);
     }
 
     public void setNodeToLayout(Map m) {
