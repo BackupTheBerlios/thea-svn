@@ -53,7 +53,7 @@ import fr.unice.bioinfo.thea.editor.util.Discretization;
  */
 public class CECanvas extends JComponent implements PropertyChangeListener {
     /** the image used to show that a branch is collapsed */
-    private static Image collapsedImage = null;
+    private static Image expandImage = null;
 
     /** Tree's rootNode node. */
     private Node rootNode;
@@ -186,8 +186,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         alignTerminalNodes = settings.isAlignTerminalNodes();
         showExpressionValues = settings.isShowExpressionValues();
         // Collapse Icon
-        collapsedImage = Utilities
-                .loadImage("fr/unice/bioinfo/thea/editor/resources/collapsed.gif");
+        expandImage = Utilities
+                .loadImage("fr/unice/bioinfo/thea/editor/resources/expand.gif");
         // Register this as a listener to changes in that instance
         settings.addPropertyChangeListener(this);
         // Initialize the list that contains selections' listeners
@@ -827,7 +827,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             branchLengthFactor = n.getBranchLength();
         }
         Rectangle2D area = null;
-        maxWidth += collapsedImage.getWidth(null);
+        maxWidth += expandImage.getWidth(null);
         if (alignTerminalNodes) {
             area = new Rectangle2D.Double(Math.rint(((x + width) - maxWidth)),
                     Math.rint(currentY), Math.rint(maxWidth), Math
@@ -902,9 +902,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         if (isSelected(n)) {
             g.setColor(Consts.SELECTED_BACKGROUND);
             g.draw(new Line2D.Double(area.getMaxX()
-                    - collapsedImage.getWidth(null), area.getMaxY(), area
+                    - expandImage.getWidth(null), area.getMaxY(), area
                     .getMaxX()
-                    - collapsedImage.getWidth(null), area.getMinY()));
+                    - expandImage.getWidth(null), area.getMinY()));
         } else {
             g.setColor(Color.black);
         }
@@ -928,9 +928,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
                     .rint(y + (height / 2))));
         }
         if (getCollapsed(n)) {
-            g.drawImage(collapsedImage, (int) (area.getMaxX() - collapsedImage
+            g.drawImage(expandImage, (int) (area.getMaxX() - expandImage
                     .getWidth(null)), (int) ((area.getMinY() + (area
-                    .getHeight() / 2)) - (collapsedImage.getHeight(null) / 2)),
+                    .getHeight() / 2)) - (expandImage.getHeight(null) / 2)),
                     null);
         }
         g.setColor(c);
