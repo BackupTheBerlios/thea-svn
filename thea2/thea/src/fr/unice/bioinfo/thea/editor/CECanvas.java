@@ -52,11 +52,11 @@ import fr.unice.bioinfo.thea.editor.util.Discretization;
  * @author Saïd El kasmi.
  */
 public class CECanvas extends JComponent implements PropertyChangeListener {
-    
+
     //
     private FontRenderContext context;
     //
-    
+
     /** the image used to show that a branch is collapsed */
     private Image expandImage = null;
 
@@ -292,14 +292,13 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         super.paint(g);
     }
 
-    public void draw(Graphics g) {
+    private void draw(Graphics g) {
         if (rootNode == null) {
             return;
         }
-        FontRenderContext frc = ((Graphics2D) g).getFontRenderContext();
         labelMaxWidth = computeLabelMaxWidth(getRootNode(), (Graphics2D) g,
-                Consts.TERMINAL_FONT, frc);
-        TextLayout layout = new TextLayout("X", Consts.TERMINAL_FONT, frc);
+                Consts.TERMINAL_FONT);
+        TextLayout layout = new TextLayout("X", Consts.TERMINAL_FONT, context);
         labelHeight = layout.getBounds().getHeight();
         double treeWidth = getWidth();
         double selWidth = getWidth();
@@ -325,11 +324,11 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
         if (baseBranchLength == -1) {
             baseBranchLength = computeBaseBranchLength(getRootNode(),
-                    treeWidth - 25, (Graphics2D) g, Consts.TERMINAL_FONT, frc);
+                    treeWidth - 25, (Graphics2D) g, Consts.TERMINAL_FONT);
         }
         nodeToInClipState.clear();
         nodeToDetailedState.clear();
-        drawNode(getRootNode(), (Graphics2D) g, frc, 15, 5, treeWidth - 30,
+        drawNode(getRootNode(), (Graphics2D) g, 15, 5, treeWidth - 30,
                 height - 10);
         nodeToArea.put(getRootNode(), new Rectangle2D.Double(0, 5,
                 treeWidth - 15, height - 10));
@@ -352,14 +351,13 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     /**
      * Display various data about the displayed tree
      * @param g The graphics context
-     * @param frc The font render context
      */
-    private void displayInfo(Graphics2D g, FontRenderContext frc) {
+    private void displayInfo(Graphics2D g) {
         TextLayout layout = new TextLayout(getRootNode().countLeaves()
-                + " leaves", Consts.INFO_FONT, frc);
+                + " leaves", Consts.INFO_FONT, context);
         layout.draw(g, 0, 20);
         layout = new TextLayout("depth=" + getRootNode().getDepth(),
-                Consts.INFO_FONT, frc);
+                Consts.INFO_FONT, context);
         layout.draw(g, 0, 40);
     }
 
@@ -517,28 +515,26 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * (x, y, width, height)
      * @param n The node to be displayed
      * @param g The graphics context
-     * @param frc The font render context
      * @param x The horizontal position of the node
      * @param y The vertical position of the node
      * @param width The width of the area used to display the node
      * @param height The height of the area used to display the node
      * @return the vertical position of the horizontal bar
      */
-    private double drawNode(Node n, Graphics2D g, FontRenderContext frc,
-            double x, double y, double width, double height) {
+    private double drawNode(Node n, Graphics2D g, double x, double y,
+            double width, double height) {
         Color c = g.getColor();
         if (n == hnode) {
             highlightNode(n, g);
         }
         nodeToArea.put(n, new Rectangle2D.Double(x, y, width, height));
-        if (!g.hitClip((int) x, (int) y, (int) width + 1,
-                        (int) height + 1)) {
+        if (!g.hitClip((int) x, (int) y, (int) width + 1, (int) height + 1)) {
             setNotDetailed(n, true);
             setInClip(n, false);
             return y + (height / 2);
         }
         if (isTerminal(n)) {
-            drawTerminalNode(n, g, frc, x, y, width, height);
+            drawTerminalNode(n, g, x, y, width, height);
 
             return y + (height / 2);
         }
@@ -565,8 +561,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             int childLeaves = countTerminals(child);
             double childHeight = (double) childLeaves / (double) leaves;
             double newy = height * childHeight;
-            double centery = drawNode(child, g, frc, x + branchLength, posy,
-                    width - branchLength, newy);
+            double centery = drawNode(child, g, x + branchLength, posy, width
+                    - branchLength, newy);
             if (centery < miny) {
                 miny = centery;
             }
@@ -600,10 +596,10 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         double maxLabelHeight = Math.min((y + (height / 2)) - miny, maxy - y
                 - (height / 2));
         // the maximum width available to write the label
-        drawNonTerminalNode(n, g, frc, x + (branchLength * 0.2), (Math
+        drawNonTerminalNode(n, g, x + (branchLength * 0.2), (Math
                 .rint((miny + maxy) / 2))
-                - (maxLabelHeight / 2), /* maxLabelWidth */
-        width, maxLabelHeight);
+                - (maxLabelHeight / 2), width, /* maxLabelWidth */
+        maxLabelHeight);
         g.setColor(c);
         return (miny + maxy) / 2;
     }
@@ -653,14 +649,13 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * Displays the label of a non terminal node
      * @param n The node to be displayed
      * @param g The graphics context
-     * @param frc The font render context
      * @param x The horizontal position of the node
      * @param y The vertical position of the node
      * @param width The width of the area used to display the node
      * @param height The height of the area used to display the node
      */
-    private void drawNonTerminalNode(Node n, Graphics2D g, FontRenderContext frc,
-            double x, double y, double width, double height) {
+    private void drawNonTerminalNode(Node n, Graphics2D g, double x, double y,
+            double width, double height) {
         List annotations = (List) n.getUserData("userAnnotations");
         if (annotations == null) {
             annotations = new Vector();
@@ -696,11 +691,11 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             if (font == null) {
                 font = Consts.NON_TERMINAL_FONT;
             }
-            TextLayout layout = new TextLayout(annot, font, frc);
+            TextLayout layout = new TextLayout(annot, font, context);
             double labelNormalWidth = layout.getBounds().getWidth();
             while ((labelNormalWidth > width) && (annot.length() > 0)) {
                 annot = annot.substring(0, annot.length() - 1);
-                layout = new TextLayout(annot, font, frc);
+                layout = new TextLayout(annot, font, context);
                 labelNormalWidth = layout.getBounds().getWidth();
             }
             layouts.add(layout);
@@ -757,14 +752,13 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * Displays the label of a terminal node
      * @param n The node to be displayed
      * @param g The graphics context
-     * @param frc The font render context
      * @param x The horizontal position of the node
      * @param y The vertical position of the node
      * @param width The width of the area used to display the node
      * @param height The height of the area used to display the node
      */
-    private void drawTerminalNode(Node n, Graphics2D g, FontRenderContext frc,
-            double x, double y, double width, double height) {
+    private void drawTerminalNode(Node n, Graphics2D g, double x, double y,
+            double width, double height) {
         boolean boxed = terminalBoxed;
         List annotations = (List) n.getUserData("userAnnotations");
         if (annotations == null) {
@@ -812,11 +806,11 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             if (font == null) {
                 font = Consts.TERMINAL_FONT;
             }
-            TextLayout layout = new TextLayout(annot, font, frc);
+            TextLayout layout = new TextLayout(annot, font, context);
             double labelNormalWidth = layout.getBounds().getWidth();
             while ((labelNormalWidth > width) && (annot.length() > 0)) {
                 annot = annot.substring(0, annot.length() - 1);
-                layout = new TextLayout(annot, font, frc);
+                layout = new TextLayout(annot, font, context);
                 labelNormalWidth = layout.getBounds().getWidth();
             }
             layouts.add(layout);
@@ -961,14 +955,13 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * @return The maximum width occupied on the screen by the label of this
      *         node or all its subnodes
      */
-    public double computeLabelMaxWidth(Node n, Graphics2D g, Font f,
-            FontRenderContext frc) {
+    public double computeLabelMaxWidth(Node n, Graphics2D g, Font f) {
         String label = getNodeLabel(n);
         if (label.equals("")) {
             return 0;
         }
         if (isTerminal(n)) {
-            TextLayout layout = new TextLayout(label, f, frc);
+            TextLayout layout = new TextLayout(label, f, context);
             Rectangle2D bounds = layout.getBounds();
 
             return bounds.getWidth();
@@ -979,14 +972,13 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
 
         while (it.hasNext()) {
             Node child = (Node) it.next();
-            maxWidth = Math.max(computeLabelMaxWidth(child, g, f, frc),
-                    maxWidth);
+            maxWidth = Math.max(computeLabelMaxWidth(child, g, f), maxWidth);
         }
         return maxWidth;
     }
 
     public double computeBaseBranchLength(Node n, double width, Graphics2D g,
-            Font f, FontRenderContext frc) {
+            Font f) {
         if (isTerminal(n)) {
             double depth = n.getDistanceToAncestor(rootNode, showBranchLength);
             if (depth == 0) {
@@ -996,7 +988,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             if (label.equals("")) {
                 return width / depth;
             }
-            TextLayout layout = new TextLayout(label, f, frc);
+            TextLayout layout = new TextLayout(label, f, context);
             Rectangle2D bounds = layout.getBounds();
             return (width - bounds.getWidth()) / depth;
         }
@@ -1006,7 +998,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         while (it.hasNext()) {
             Node child = (Node) it.next();
             baseBranchLength = Math.min(computeBaseBranchLength(child, width,
-                    g, f, frc), baseBranchLength);
+                    g, f), baseBranchLength);
         }
         return baseBranchLength;
     }
