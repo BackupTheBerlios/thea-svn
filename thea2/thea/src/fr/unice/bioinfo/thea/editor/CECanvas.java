@@ -52,8 +52,13 @@ import fr.unice.bioinfo.thea.editor.util.Discretization;
  * @author Saïd El kasmi.
  */
 public class CECanvas extends JComponent implements PropertyChangeListener {
+    
+    //
+    private FontRenderContext context;
+    //
+    
     /** the image used to show that a branch is collapsed */
-    private static Image expandImage = null;
+    private Image expandImage = null;
 
     /** Tree's rootNode node. */
     private Node rootNode;
@@ -282,11 +287,12 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * @param g The graphics context
      */
     public void paint(Graphics g) {
-        paint(g, true);
+        this.context = ((Graphics2D) g).getFontRenderContext();
+        draw(g, true);
         super.paint(g);
     }
 
-    public void paint(Graphics g, boolean doClipping) {
+    public void draw(Graphics g, boolean doClipping) {
         if (rootNode == null) {
             return;
         }
@@ -323,7 +329,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
         nodeToInClipState.clear();
         nodeToDetailedState.clear();
-        paintNode(getRootNode(), (Graphics2D) g, frc, 15, 5, treeWidth - 30,
+        drawNode(getRootNode(), (Graphics2D) g, frc, 15, 5, treeWidth - 30,
                 height - 10, doClipping);
         nodeToArea.put(getRootNode(), new Rectangle2D.Double(0, 5,
                 treeWidth - 15, height - 10));
@@ -518,11 +524,11 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * @param height The height of the area used to display the node
      * @return the vertical position of the horizontal bar
      */
-    private double paintNode(Node n, Graphics2D g, FontRenderContext frc,
+    private double drawNode(Node n, Graphics2D g, FontRenderContext frc,
             double x, double y, double width, double height, boolean doClipping) {
         Color c = g.getColor();
         if (n == hnode) {
-            high(n, g);
+            highlightNode(n, g);
         }
         nodeToArea.put(n, new Rectangle2D.Double(x, y, width, height));
         if (doClipping
@@ -533,7 +539,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             return y + (height / 2);
         }
         if (isTerminal(n)) {
-            paintTerminal(n, g, frc, x, y, width, height);
+            drawTerminalNode(n, g, frc, x, y, width, height);
 
             return y + (height / 2);
         }
@@ -560,7 +566,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             int childLeaves = countTerminals(child);
             double childHeight = (double) childLeaves / (double) leaves;
             double newy = height * childHeight;
-            double centery = paintNode(child, g, frc, x + branchLength, posy,
+            double centery = drawNode(child, g, frc, x + branchLength, posy,
                     width - branchLength, newy, doClipping);
             if (centery < miny) {
                 miny = centery;
@@ -595,7 +601,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         double maxLabelHeight = Math.min((y + (height / 2)) - miny, maxy - y
                 - (height / 2));
         // the maximum width available to write the label
-        paintNonTerminal(n, g, frc, x + (branchLength * 0.2), (Math
+        drawNonTerminalNode(n, g, frc, x + (branchLength * 0.2), (Math
                 .rint((miny + maxy) / 2))
                 - (maxLabelHeight / 2), /* maxLabelWidth */
         width, maxLabelHeight);
@@ -603,7 +609,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         return (miny + maxy) / 2;
     }
 
-    public void high(Node n, Graphics2D g) {
+    public void highlightNode(Node n, Graphics2D g) {
         Point2D.Double posN = (Point2D.Double) nodeToPosition.get(n);
         Rectangle2D.Double rectN = (Rectangle2D.Double) nodeToArea.get(n);
         Rectangle2D.Double rectNDisp = new Rectangle2D.Double();
@@ -654,7 +660,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * @param width The width of the area used to display the node
      * @param height The height of the area used to display the node
      */
-    private void paintNonTerminal(Node n, Graphics2D g, FontRenderContext frc,
+    private void drawNonTerminalNode(Node n, Graphics2D g, FontRenderContext frc,
             double x, double y, double width, double height) {
         List annotations = (List) n.getUserData("userAnnotations");
         if (annotations == null) {
@@ -758,7 +764,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * @param width The width of the area used to display the node
      * @param height The height of the area used to display the node
      */
-    private void paintTerminal(Node n, Graphics2D g, FontRenderContext frc,
+    private void drawTerminalNode(Node n, Graphics2D g, FontRenderContext frc,
             double x, double y, double width, double height) {
         boolean boxed = terminalBoxed;
         List annotations = (List) n.getUserData("userAnnotations");
@@ -935,138 +941,6 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
         g.setColor(c);
     }
-
-    /**
-     * Displays the label of a terminal node
-     * @param n The node to be displayed
-     * @param g The graphics context
-     * @param frc The font render context
-     * @param x The horizontal position of the node
-     * @param y The vertical position of the node
-     * @param width The width of the area used to display the node
-     * @param height The height of the area used to display the node
-     */
-    private void paintTerminal2(Node n, Graphics2D g, FontRenderContext frc,
-            double x, double y, double width, double height) {
-        String label = getNodeLabel(n);
-        if (label.equals("")) {
-            return;
-        }
-        NodeLayoutAttr layoutAttr = getLayout(n);
-        Font font = null;
-        if (layoutAttr != null) {
-            font = layoutAttr.getFont();
-        }
-        if (font == null) {
-            font = Consts.TERMINAL_FONT;
-        }
-        TextLayout layout = new TextLayout(label, font, frc);
-        Rectangle2D bounds = layout.getBounds();
-        bounds.setRect((bounds.getX() + x + width) - bounds.getWidth(), bounds
-                .getY()
-                + y + (height / 2) + (bounds.getHeight() / 2), bounds
-                .getWidth(), bounds.getHeight());
-        float oneLineHeight = layout.getAscent() + layout.getDescent()
-                + layout.getLeading();
-        double branchLengthFactor = 1;
-        if (showBranchLength) {
-            branchLengthFactor = n.getBranchLength();
-        }
-        if (alignTerminalNodes) {
-            bounds = new Rectangle2D.Double(Math.rint((x + width)
-                    - layout.getAdvance()), Math.rint((y + (height / 2))
-                    - (oneLineHeight / 2)), Math.rint(layout.getAdvance()),
-                    Math.rint(oneLineHeight));
-        } else {
-            bounds = new Rectangle2D.Double(Math.rint(x
-                    + (baseBranchLength * (double) branchLengthFactor)), Math
-                    .rint((y + (height / 2)) - (oneLineHeight / 2)), Math
-                    .rint(layout.getAdvance()), Math.rint(oneLineHeight));
-        }
-        Color c = g.getColor();
-        Color fontColor = null;
-        if (layoutAttr != null) {
-            fontColor = layoutAttr.getColor();
-        }
-        if (fontColor == null) {
-            fontColor = Consts.TERMINAL_COLOR;
-        }
-        Color backColor = null;
-        if (layoutAttr != null) {
-            backColor = layoutAttr.getBgColor();
-        }
-        if (backColor == null) {
-            backColor = Consts.TERMINAL_BACKGROUND;
-        }
-        boolean boxed = terminalBoxed;
-        if (isSelected(n)) {
-            if (Consts.SELECTED_COLOR != null) {
-                fontColor = Consts.SELECTED_COLOR;
-            }
-            if (Consts.SELECTED_BACKGROUND != null) {
-                backColor = Consts.SELECTED_BACKGROUND;
-            }
-        } else {
-            g.setColor(Color.black);
-        }
-        if (getCollapsed(n)) {
-            g.setColor(Color.yellow);
-            g.fill(bounds);
-        } else {
-            if (backColor != null) {
-                g.setColor(backColor);
-                g.fill(bounds);
-            }
-            if (boxed) {
-                g.setColor(Color.black);
-                g.draw(bounds);
-            }
-        }
-        g.setColor(fontColor);
-        if (alignTerminalNodes) {
-            layout.draw(g, (float) (Math
-                    .rint((x + width) - layout.getAdvance())), (float) (Math
-                    .rint((y + (height / 2)) - (oneLineHeight / 2)
-                            + layout.getAscent())));
-        } else {
-            layout.draw(g, (float) (Math.rint(x
-                    + (baseBranchLength * (double) branchLengthFactor))),
-                    (float) (Math.rint((y + (height / 2)) - (oneLineHeight / 2)
-                            + layout.getAscent())));
-        }
-        if (isSelected(n)) {
-            g.setColor(Consts.SELECTED_BACKGROUND);
-        } else {
-            g.setColor(Color.black);
-        }
-        if (alignTerminalNodes) {
-            g.draw(new Line2D.Double(Math.rint(x), Math.rint(y + (height / 2)),
-                    Math.rint((x + width) - bounds.getWidth()), Math.rint(y
-                            + (height / 2))));
-            nodeToPosition.put(n, new Point2D.Double(Math.rint((x + width)
-                    - bounds.getWidth()), Math.rint(y + (height / 2))));
-        } else {
-            g
-                    .draw(new Line2D.Double(
-                            Math.rint(x),
-                            Math.rint(y + (height / 2)),
-                            Math
-                                    .rint(x
-                                            + (baseBranchLength * (double) branchLengthFactor)),
-                            Math.rint(y + (height / 2))));
-            nodeToPosition.put(n, new Point2D.Double(Math.rint(x
-                    + (baseBranchLength * (double) branchLengthFactor)), Math
-                    .rint(y + (height / 2))));
-        }
-        g.setColor(c);
-        return;
-    }
-
-    //    public void setDefaultFont(Font f) {
-    //        terminalFont = f;
-    //        nonTerminalFont = f;
-    //        infoFont = f;
-    //    }
 
     public void activate(boolean b) {
         if (b) {
@@ -1928,7 +1802,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * Highlight the area surrounding the node
      * @param n The node which has to be highlighted
      */
-    public void highlight(Node n) {
+    public void highlightSurroundingArea(Node n) {
         if (hnode == n) {
             return;
         }
@@ -2098,7 +1972,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * @param zoomy The vertical zoom factor
      */
     public void zoom(double zoomx, double zoomy) {
-        highlight(null);
+        highlightSurroundingArea(null);
         Dimension currentSize = getSize();
         int width = (int) currentSize.getWidth();
         int height = (int) currentSize.getHeight();
@@ -2229,7 +2103,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             }
             Point2D p = (Point2D) e.getPoint();
             Node n = locateNode(getRootNode(), p);
-            highlight(n);
+            highlightSurroundingArea(n);
         }
 
         /**
@@ -2242,7 +2116,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             if (n != null) {
                 return;
             }
-            highlight(null);
+            highlightSurroundingArea(null);
             if (popupMenu != null) {
                 popupMenu.setVisible(false);
             }
