@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -63,7 +64,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     /** Tree's rootNode node. */
     private Node rootNode;
 
-    /** The stack of roots */
+    /** contains the list of all root nodes in the classification. */
     private Stack roots;
 
     /** Size of a branch in percentage of the remaining width */
@@ -298,8 +299,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
         labelMaxWidth = computeLabelMaxWidth(getRootNode(), (Graphics2D) g,
                 Consts.TERMINAL_FONT);
-        TextLayout layout = new TextLayout("X", Consts.TERMINAL_FONT, context);
-        labelHeight = layout.getBounds().getHeight();
+        TextLayout tl = new TextLayout("X", Consts.TERMINAL_FONT, context);
+        labelHeight = tl.getBounds().getHeight();
         double treeWidth = getWidth();
         double selWidth = getWidth();
         double height = getHeight();
@@ -353,7 +354,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * @param g The graphics context
      */
     private void displayInfo(Graphics2D g) {
-        TextLayout layout = new TextLayout(getRootNode().countLeaves()
+        TextLayout layout = new TextLayout(getRootNode().getNumberOfLeaves()
                 + " leaves", Consts.INFO_FONT, context);
         layout.draw(g, 0, 20);
         layout = new TextLayout("depth=" + getRootNode().getDepth(),
@@ -397,7 +398,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         Iterator it = selected.getNodes().iterator();
         while (it.hasNext()) {
             Node n = (Node) it.next();
-            if (!getRootNode().isAncestor(n)) {
+            if (!getRootNode().isAncestorOf(n)) {
                 continue;
             }
             if (!isInClip(n)) {
@@ -459,7 +460,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         double posy = 0;
         while (it.hasNext()) {
             Node n = (Node) it.next();
-            if (!getRootNode().isAncestor(n) && !(getRootNode() == n)) {
+            if (!getRootNode().isAncestorOf(n) && !(getRootNode() == n)) {
                 continue;
             }
             if (!isInClip(n)) {
@@ -476,7 +477,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             measures = (List) knownNode.getUserData("measures");
             if (measures == null) {
                 measures = new Vector();
-                List listSub = knownNode.getAllLeaves();
+                List listSub = knownNode.getLeaves();
                 measures.addAll((Collection) ((Node) listSub.get(0))
                         .getUserData("measures"));
                 for (int leafCtr = 1; leafCtr < listSub.size(); leafCtr++) {
@@ -604,7 +605,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         return (miny + maxy) / 2;
     }
 
-    public void highlightNode(Node n, Graphics2D g) {
+    private void highlightNode(Node n, Graphics2D g) {
         Point2D.Double posN = (Point2D.Double) nodeToPosition.get(n);
         Rectangle2D.Double rectN = (Rectangle2D.Double) nodeToArea.get(n);
         Rectangle2D.Double rectNDisp = new Rectangle2D.Double();
@@ -710,7 +711,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
                 .rint(currentY), Math.rint(maxWidth), Math.rint(layHeight));
         for (int i = 0; i < nbLines; i++) {
             TextLayout layout = (TextLayout) layouts.get(i);
-            NodeLayoutSupport layoutAttr = (NodeLayoutSupport) layoutsAttr.get(i);
+            NodeLayoutSupport layoutAttr = (NodeLayoutSupport) layoutsAttr
+                    .get(i);
             Color backColor = null;
             if (layoutAttr != null) {
                 backColor = layoutAttr.getBgColor();
@@ -780,7 +782,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
         if (annotations.isEmpty() && getCollapsed(n)) {
             List param = new Vector();
-            param.add("[" + n.getAllLeaves().size() + "]");
+            param.add("[" + n.getLeaves().size() + "]");
 
             //boxed = true;
             param.add(getLayout(n));
@@ -841,7 +843,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
         for (int i = 0; i < nbLines; i++) {
             TextLayout layout = (TextLayout) layouts.get(i);
-            NodeLayoutSupport layoutAttr = (NodeLayoutSupport) layoutsAttr.get(i);
+            NodeLayoutSupport layoutAttr = (NodeLayoutSupport) layoutsAttr
+                    .get(i);
             Color backColor = null;
             if (layoutAttr != null) {
                 backColor = layoutAttr.getBgColor();
@@ -948,31 +951,31 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
 
     /**
      * Compute the maximum label width of subnodes of this node
-     * @param f The font
-     * @param n The rootNode of the subtree
+     * @param font The font
+     * @param node The rootNode of the subtree
      * @param g The graphics context
      * @param frc The font render context
      * @return The maximum width occupied on the screen by the label of this
      *         node or all its subnodes
      */
-    public double computeLabelMaxWidth(Node n, Graphics2D g, Font f) {
-        String label = getNodeLabel(n);
+    public double computeLabelMaxWidth(Node node, Graphics2D g, Font font) {
+        String label = getNodeLabel(node);
         if (label.equals("")) {
             return 0;
         }
-        if (isTerminal(n)) {
-            TextLayout layout = new TextLayout(label, f, context);
-            Rectangle2D bounds = layout.getBounds();
+        if (isTerminal(node)) {
+            TextLayout tl = new TextLayout(label, font, context);
+            Rectangle2D bounds = tl.getBounds();
 
             return bounds.getWidth();
         }
         double maxWidth = 0;
-        List childs = n.getChildren();
-        Iterator it = childs.iterator();
 
+        List children = node.getChildren();
+        Iterator it = children.iterator();
         while (it.hasNext()) {
             Node child = (Node) it.next();
-            maxWidth = Math.max(computeLabelMaxWidth(child, g, f), maxWidth);
+            maxWidth = Math.max(computeLabelMaxWidth(child, g, font), maxWidth);
         }
         return maxWidth;
     }
@@ -1028,8 +1031,11 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         expValMaxMeasure = 0;
         expValUnderExpDeciles = null;
         expValOverExpDeciles = null;
-        int nbMeasures = ((Integer) getTreeRoot().getUserData("nbMeasures"))
-                .intValue();
+        Object o = getTreeRoot().getUserData("nbMeasures");
+        if(o == null){
+            System.out.println("o est null");
+            }
+        int nbMeasures = ((Integer) o).intValue();
         if (nbMeasures > 0) {
             expValMinMeasure = ((Double) getTreeRoot()
                     .getUserData("minMeasure")).doubleValue();
@@ -1048,11 +1054,12 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
                 Iterator it2 = ns.getNodes().iterator();
                 while (it2.hasNext()) {
                     Node node = (Node) it2.next();
-                    if (rootNode.isAncestor(node)) {
+                    if (rootNode.isAncestorOf(node)) {
                         countSelected++;
                     }
                 }
-                String localHits = countSelected + "/" + rootNode.countLeaves();
+                String localHits = countSelected + "/"
+                        + rootNode.getNumberOfLeaves();
                 String selId = (String) ns.getUserData("selId");
                 SelectionEvent e = new SelectionEvent(this, selId, null, null,
                         null, localHits, null);
@@ -1070,11 +1077,12 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             while (it.hasNext()) {
                 Node node = (Node) it.next();
 
-                if (rootNode.isAncestor(node)) {
+                if (rootNode.isAncestorOf(node)) {
                     countSelected++;
                 }
             }
-            String localHits = countSelected + "/" + rootNode.countLeaves();
+            String localHits = countSelected + "/"
+                    + rootNode.getNumberOfLeaves();
             String selId = String.valueOf(nbSel);
             SelectionEvent e = new SelectionEvent(this, selId, null, null,
                     null, localHits, null);
@@ -1134,27 +1142,11 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     }
 
     /**
-     * Sets the highlighting mode to a new mode choosen by users.
-     * @param mode The new highlighting mode.
-     */
-    public void setHmode(int mode) {
-        hmode = mode;
-    }
-
-    /**
      * Setter for the current popupMenu
      * @param n The current popupMenu
      */
     public void setPopupMenu(JPopupMenu pop) {
         popupMenu = pop;
-    }
-
-    /**
-     * Setter for alignTerminalNodes
-     * @param b a boolean indicating if terminal nodes has to be aligned
-     */
-    public void setAlignTerminalNodes(boolean b) {
-        alignTerminalNodes = b;
     }
 
     /**
@@ -1204,9 +1196,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         collapsedNodes = s;
     }
 
-    public Set getCollapsedNodes() {
-        return collapsedNodes;
-    }
+    //    public Set getCollapsedNodes() {
+    //        return collapsedNodes;
+    //    }
 
     /**
      * Sets all nodes as non selected
@@ -1283,13 +1275,13 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     /**
      * Send a selection event
      */
-    public void sendSelectionEvent() {
+    private void sendSelectionEvent() {
         Node localRoot = getRootNode();
         String selId = String.valueOf(nbSel);
         String globalHits = getSelectedLeaves(true).size() + "/"
-                + getTreeRoot().countLeaves();
+                + getTreeRoot().getNumberOfLeaves();
         String localHits = getSelectedLeaves(false).size() + "/"
-                + localRoot.countLeaves();
+                + localRoot.getNumberOfLeaves();
         SelectionEvent e = new SelectionEvent(this, selId, selectionName,
                 "Current", Consts.SELECTED_COLOR, Consts.SELECTED_BACKGROUND,
                 globalHits, localHits, getSelectedLeaves(true));
@@ -1453,7 +1445,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     public List getSelectedLeaves(boolean wholeTreeSearch) {
         Node searchSubtree = (wholeTreeSearch ? getTreeRoot() : getRootNode());
         List selectedLeaves = new Vector();
-        Iterator iterator = searchSubtree.getAllLeaves().iterator();
+        Iterator iterator = searchSubtree.getLeaves().iterator();
         while (iterator.hasNext()) {
             Node n = (Node) iterator.next();
             if (isSelected(n)) {
@@ -1601,15 +1593,16 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     /**
      * Find a node from a position using rectangular areas
      * @param node The node to search
-     * @param pos A position from which a corresponding node is to be searched
+     * @param position A position from which a corresponding node is to be
+     *        searched
      * @return The corresponding node
      */
-    public Node locateNode(Node node, Point2D pos) {
+    private Node locateNode(Node node, Point2D position) {
         Rectangle2D area = (Rectangle2D) nodeToArea.get(node);
         if (area == null) {
             return null;
         }
-        if (!area.contains(pos)) {
+        if (!area.contains(position)) {
             return null;
         }
         if (getCollapsed(node)) {
@@ -1621,7 +1614,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
         Iterator iterator = childNodes.iterator();
         while (iterator.hasNext()) {
-            Node n = locateNode((Node) iterator.next(), pos);
+            Node n = locateNode((Node) iterator.next(), position);
             if (n != null) {
                 return n;
             }
@@ -1661,21 +1654,21 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         return terminals;
     }
 
-    /**
-     * Resets the position of the node and all its childs to null
-     * @param node The node to reset
-     */
-    public void clearPosition(Node node) {
-        nodeToPosition.put(node, null);
-        nodeToArea.put(node, null);
-        if (node.isLeaf()) {
-            return;
-        }
-        Iterator iterator = node.getChildren().iterator();
-        while (iterator.hasNext()) {
-            clearPosition((Node) iterator.next());
-        }
-    }
+    //    /**
+    //     * Resets the position of the node and all its childs to null
+    //     * @param node The node to reset
+    //     */
+    //    public void clearPosition(Node node) {
+    //        nodeToPosition.put(node, null);
+    //        nodeToArea.put(node, null);
+    //        if (node.isLeaf()) {
+    //            return;
+    //        }
+    //        Iterator iterator = node.getChildren().iterator();
+    //        while (iterator.hasNext()) {
+    //            clearPosition((Node) iterator.next());
+    //        }
+    //    }
 
     /**
      * Sets the detailed state of a node and all its childs
@@ -1710,15 +1703,6 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     }
 
     /**
-     * Sets the layout attributes of a node
-     * @param node The node which has to be changed
-     * @param detail The detailed state
-     */
-    public void setLayout(Node node, NodeLayoutSupport nodeLayout) {
-        nodeToLayout.put(node, nodeLayout);
-    }
-
-    /**
      * Gets the layout attributes of a node
      * @param node The node for which attributes are requested
      */
@@ -1730,17 +1714,13 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         nodeToLayout = m;
     }
 
-    public Map getNodeToLayout() {
-        return nodeToLayout;
-    }
-
     /**
      * Indicates if the node is not paint du to a lack of space on the display
      * area
      * @param n The node to check
      * @return A flag indicating if the parameter node is not painted
      */
-    public boolean isNotDetailed(Node n) {
+    private boolean isNotDetailed(Node n) {
         Object notDetailed = nodeToDetailedState.get(n);
         if (notDetailed == null) {
             return false;
@@ -1758,18 +1738,17 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * @return The list of leaves
      */
     public List getAllVisibleLeaves(Node n) {
-        Vector leavesList = new Vector();
-        List childNodes = n.getChildren();
+        List vnodes /* visible nodes */= new LinkedList();
+        List children = n.getChildren();
         if (isTerminal(n)) {
-            leavesList.add(n);
+            vnodes.add(n);
         } else {
-            Iterator iterator = childNodes.iterator();
-
+            Iterator iterator = children.iterator();
             while (iterator.hasNext()) {
-                leavesList.addAll(getAllVisibleLeaves((Node) iterator.next()));
+                vnodes.addAll(getAllVisibleLeaves((Node) iterator.next()));
             }
         }
-        return leavesList;
+        return vnodes;
     }
 
     /**
@@ -1793,7 +1772,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * Highlight the area surrounding the node
      * @param n The node which has to be highlighted
      */
-    public void highlightSurroundingArea(Node n) {
+    private void highlightSurroundingArea(Node n) {
         if (hnode == n) {
             return;
         }

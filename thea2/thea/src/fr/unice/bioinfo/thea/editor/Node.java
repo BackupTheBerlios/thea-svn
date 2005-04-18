@@ -1,12 +1,14 @@
 package fr.unice.bioinfo.thea.editor;
 
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,19 +26,412 @@ import fr.unice.bioinfo.thea.editor.settings.CESettings;
  * @author Saïd El kasmi.
  */
 public class Node implements PropertyChangeListener {
-    /**
-     * Flag that indicates this node's name corresponds the one from the
-     * classification.
-     */
-    public static String CLASSIFICATION_ID = "Classification ID";
+
+    //BEGIN FACTORING
+    /** this node's name property. */
+    public static final String NAME = "name";//NOI18N
+    /** Annotations of this node */
+    public static final String ANNOTATIONS = "annotations";//NOI18N
+
+    /** Node's children. This contains only direct children. */
+    private List children = null;
+    /** A collection that contains all properties of this node. */
+    private Hashtable properties = null;
+    /** The parent of this node. */
+    private Node parent = null;
+    /** Number of leaf nodes that have this node as a root node. */
+    private int numberOfLeaves = -1;
+    /** The length of the branch. */
+    private double branchLength = 0;
 
     /**
-     * Flag that indicates this node's name corresponds the one from the used DB
+     * Each node has a label that may be used for display. The label could be
+     * the name given in a classification or extracted from a database
+     * (ontology). Whene a node is created, the label is by default the name of
+     * this node in the used classification.
      */
-    public static String DB_KEY = "DataBase Key";
+    private String label;
+    /** This node's layout support. */
+    private NodeLayoutSupport layoutSupport;
+    /**
+     * The position of this node when it is drown in a Swing component inside
+     * the classifiaction editor.
+     */
+    private Point2D position;
+    /** The area ( a rectangle ) this node is drawn into. */
+    private Rectangle2D.Double area;
+    /** Flag to store this node's collapsed/uncollapsed state. */
+    private boolean collapsed = false;
+    /** Flag to determine if this node is terminal. */
+    private boolean terminal = false;
+    /** Flag to determine if this node's state is detailed. */
+    private boolean detailed = false;
+    /** Flag indicating if the node is in the clipping area */
+    private boolean inClipArea = false;
+    /** Terminal nodes (non hidden nodes) that are descendant of that node. */
+    private int terminals;
+    /** Flag that indicates if this node is selected. */
+    private boolean selected = false;
+    /**
+     * Flag ndicating if the node is collapsed, or a descendant of a collapsed
+     * node.
+     */
+    private boolean hidden = false;
 
-    /** Flag that indicates this node's name corresponds the one from ?? */
-    public static String SYMBOL = "Symbol";
+    /** Creates a node using a given list of children. */
+    public Node(List children) {
+        this();
+        this.children = children;
+    }
+
+    /** Creates a node. */
+    public Node() {
+        // instanciate properties list
+        this.properties = new Hashtable();
+        // Creates this node's layout support
+        this.layoutSupport = new NodeLayoutSupport();
+    }
+
+    /** Returns <i>True </i> if this node is collapsed. <i>False </i>otherwise. */
+    public boolean isCollapsed() {
+        return collapsed;
+    }
+
+    /** Sets collapsed/uncollapsed state for this node. */
+    public void setCollapsed(boolean collapsed) {
+        this.collapsed = collapsed;
+    }
+
+    /** Returns <i>True </i> if this node is terminal. <i>False </i>otherwise. */
+    public boolean isTerminal() {
+        return ((this.isLeaf()) || this.isCollapsed());
+    }
+
+    /** Give terminal/not terminal state for this node. */
+    public void setTerminal(boolean terminal) {
+        this.terminal = terminal;
+    }
+
+    /** Returns the area occuped by this node. */
+    public Rectangle2D.Double getArea() {
+        return area;
+    }
+
+    /** Sets the area for this node. */
+    public void setArea(Rectangle2D.Double area) {
+        this.area = area;
+    }
+
+    /** Returns the position of this node. */
+    public Point2D getPosition() {
+        return position;
+    }
+
+    /** Sets the position of this node. */
+    public void setPosition(Point2D position) {
+        this.position = position;
+    }
+
+    /** Returns the branch length. */
+    public double getBranchLength() {
+        return branchLength;
+    }
+
+    /** Sets the branch length. */
+    public void setBranchLength(double branchLength) {
+        this.branchLength = branchLength;
+    }
+
+    /** Tells wether this node's state is detailed or not. */
+    public boolean isDetailed() {
+        return detailed;
+    }
+
+    /** Stets detailed/undetaile state of this node. */
+    public void setDetailed(boolean detailed) {
+        this.detailed = detailed;
+        if (this.isLeaf())
+            return;
+        Iterator iterator = this.getChildren().iterator();
+        while (iterator.hasNext()) {
+            ((Node) iterator.next()).setDetailed(detailed);
+        }
+    }
+
+    /**
+     * Returns <i>True </i>if this node is in the clip area. <i>False
+     * </i>otherwise.
+     */
+    public boolean isInClipArea() {
+        return inClipArea;
+    }
+
+    /** Tells this node and its children if they are in the clip area. */
+    public void setInClipArea(boolean inClipArea) {
+        this.inClipArea = inClipArea;
+        if (this.isLeaf())
+            return;
+        Iterator iterator = this.getChildren().iterator();
+        while (iterator.hasNext()) {
+            ((Node) iterator.next()).setInClipArea(inClipArea);
+        }
+    }
+
+    /**
+     * Returns <i>True </i> if this node is collapsed or a descendant of a
+     * collapsed one.
+     */
+    public boolean isHidden() {
+        if (this.isCollapsed()) {
+            hidden = true;
+        }
+        if (this.parent == null) {
+            hidden = false;
+        }
+        hidden = parent.isHidden();
+        return hidden;
+    }
+
+    /** Setter for this node's hidden/not hidden state. */
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
+    }
+
+    /**
+     * Counts and returns terminals (non hidden nodes) that are descendant of
+     * this node.
+     * @return int Number if terminal nodes.
+     */
+    public int getTerminals() {
+        if (this.isTerminal()) {
+            terminals = 1;
+            return terminals;
+        }
+        Iterator iterator = this.getChildren().iterator();
+        while (iterator.hasNext()) {
+            terminals += ((Node) iterator.next()).getTerminals();
+        }
+        return terminals;
+    }
+
+    /***/
+    public void setTerminals(int terminals) {
+        this.terminals = terminals;
+    }
+
+    /**
+     * Returns <i>True </i>if this node is selected by the user. <i>False
+     * </i>otherwise.
+     */
+    public boolean isSelected() {
+        return selected;
+    }
+
+    /** Sets selected/unioselected state. */
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    /** returns this node's layout support. */
+    public NodeLayoutSupport getLayoutSupport() {
+        return layoutSupport;
+    }
+
+    /** Attach a layout support to this node. */
+    public void setLayoutSupport(NodeLayoutSupport nls) {
+        this.layoutSupport = nls;
+    }
+
+    /**
+     * Adds a child to the this node's children list.
+     * @param aChild A child to add.
+     */
+    public void addChild(Node aChild) {
+        children.add(aChild);
+        aChild.setParent(this);
+    }
+
+    /**
+     * Remove the given node from this node's children list.
+     * @param aChild The child to remove.
+     */
+    public void removeChild(Node aChild) {
+        aChild.setParent(null);
+        children.remove(aChild);
+    }
+
+    /**
+     * Returns this node's children list.
+     * @return java.util.List This node's children.
+     */
+    public List getChildren() {
+        return children;
+    }
+
+    /**
+     * Sets this node's children list.
+     * @param children Children.
+     */
+    public void setChildren(List children) {
+        this.children = children;
+        Iterator iterator = children.iterator();
+        while (iterator.hasNext()) {
+            Node aChild = (Node) iterator.next();
+            aChild.setParent(this);
+        }
+    }
+
+    /**
+     * Sets the parent of this node.
+     * @param parent The parent of this node.
+     */
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
+
+    /**
+     * Returns the parent of this node.
+     * @return fr.unice.bioinfo.thea.cle.model.Node This node's parent.
+     */
+    public Node getParent() {
+        return parent;
+    }
+
+    /**
+     * Returns this node's label.
+     * @return java.lang.String The current label of this node.
+     */
+    public String getLabel() {
+        return label;
+    }
+
+    /**
+     * Returns list of properties of this node.
+     * @return java.util.Hashtable Properties of this node.
+     */
+    public Hashtable getProperties() {
+        return properties;
+    }
+
+    /**
+     * Adds a property to this node's properties list.
+     * @param key The name of tht property.
+     * @param value The value of the property.
+     */
+    public void addProperty(Object key, Object value) {
+        properties.put(key, value);
+    }
+
+    /**
+     * Returns a property from this node's properties list using the given key
+     * as a property name.
+     * @param key The name of tht property.
+     * @return java.lang.Object A property associated the given key.
+     */
+    public Object getProperty(Object key) {
+        return properties.get(key);
+    }
+
+    /**
+     * Computes the distance from an ancestor to this node
+     * @param ancestor the ancestor (if ancestor is null, root is assumed)
+     * @param useBranchLength a flag specifying if branch lengths has to be used
+     * @return The distance between an ancestor's node and the current node
+     */
+    public double getDistanceToAncestor(Node ancestor, boolean useBranchLength) {
+        double bl = (useBranchLength ? branchLength : 1);
+        if (parent == null) {
+            return 0;
+        }
+        if (parent == ancestor) {
+            return bl;
+        }
+        return (parent.getDistanceToAncestor(ancestor, useBranchLength) + bl);
+    }
+
+    //    /**
+    //     * Returns the list of all leaf nodes that are descendant of this one.
+    //     * @return java.util.List List of leaves.
+    //     */
+    //    public List getLeaves() {
+    //        //lnodes = new LinkedList();
+    //        if (this.isLeaf()) {
+    //            lnodes.add(this);
+    //        } else {
+    //            Iterator iterator = getChildren().iterator();
+    //            while (iterator.hasNext()) {
+    //                lnodes.addAll(((Node) iterator.next()).getLeaves());
+    //            }
+    //        }
+    //        System.out.println("lnodes.size = "+lnodes.size());
+    //        return lnodes;
+    //    }
+    /**
+     * Returns the number of leaf nodes rooted at this node.
+     * @return int Number of leaf nodes rooted at this node.
+     */
+    public int getNumberOfLeaves() {
+        if (numberOfLeaves != -1) {
+            return numberOfLeaves;
+        }
+        if (children == null) {
+            return 1;
+        }
+        int counter = 0;
+        Iterator iterator = children.iterator();
+        while (iterator.hasNext()) {
+            counter += ((Node) iterator.next()).getNumberOfLeaves();
+        }
+        numberOfLeaves = counter;
+        return numberOfLeaves;
+    }
+
+    /**
+     * Returns wether this node is an ancestor of given node.
+     * @param node the node looking for an ancestor
+     * @return boolean <i>True </i>if this node is the ancestor of <i>node </i>.
+     *         <i>False otherwise.
+     */
+    public boolean isAncestorOf(Node node) {
+        if (node == null) {
+            return false;
+        }
+        if (node.getParent() == this) {
+            return true;
+        }
+        return isAncestorOf(node.getParent());
+    }
+
+    /**
+     * Returns wether this node is leaf or not.
+     * @return boolean <i>True </i>if this node is leaf. <i>False </i>otherwise.
+     */
+    public boolean isLeaf() {
+        return (children == null);
+    }
+
+    /**
+     * Move the specified node (which must be present in the list of children at
+     * the end of the list.
+     * @param aChild the child node to move at the end.
+     */
+    public void moveChildAtEnd(Node aChild) {
+        children.remove(aChild);
+        children.add(aChild);
+    }
+
+    /**
+     * Move the specified node (which must be present in the list of children at
+     * the specified position.
+     * @param aChild the child node to move
+     * @param newPosition the new position of the given child.
+     */
+    public void moveChild(Node aChild, int newPosition) {
+        children.remove(aChild);
+        children.add(newPosition, aChild);
+    }
+
+    //END FACTORING
 
     /** indicates if the userData with a specified key should be saved */
     private static Set serializableUserData = new HashSet();
@@ -47,34 +442,22 @@ public class Node implements PropertyChangeListener {
     /** Annotion consists of associating an {@link Entity}to this node. */
     private Entity entity;
 
-    /** The parent of the node. */
-    private Node parent;
-
-    /** Children of this node. */
-    private List children;
-
     /** The name of the node. */
-    private String name;
+    private String name = null;
     private String clName;
 
-    /** The length of the branch. */
-    private double branchLength;
-
-    /** The number of leaves */
-    private int leavesCount = -1;
-
     /** User data associated with this node */
-    private Map userData;
+    private Map userData = new HashMap();
 
-    /**
-     * Creates a Node.
-     */
-    public Node() {
-        init();
-
-        //      register itseld as a listener for settings
-        CESettings.getInstance().addPropertyChangeListener(this);
-    }
+    //    /**
+    //     * Creates a Node.
+    //     */
+    //    public Node() {
+    //        init();
+    //
+    //        // register itseld as a listener for settings
+    //        CESettings.getInstance().addPropertyChangeListener(this);
+    //    }
 
     /**
      * Associate an {@link Entity}to this node.
@@ -99,7 +482,7 @@ public class Node implements PropertyChangeListener {
         children = null;
         name = null;
         branchLength = 0;
-        leavesCount = -1;
+        numberOfLeaves = -1;
         userData = new HashMap();
     }
 
@@ -115,79 +498,6 @@ public class Node implements PropertyChangeListener {
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * Setter for branchLength
-     * @param length The value for branchLength
-     */
-    public void setBranchLength(double length) {
-        branchLength = length;
-    }
-
-    /**
-     * Getter for branchLength
-     * @return The branch length for the node
-     */
-    public double getBranchLength() {
-        return branchLength;
-    }
-
-    /**
-     * Setter for children
-     * @param l The list of childs
-     */
-    public void setChildren(List l) {
-        children = l;
-
-        Iterator iterator = children.iterator();
-
-        while (iterator.hasNext()) {
-            Node n = (Node) iterator.next();
-            n.setParent(this);
-        }
-    }
-
-    /**
-     * Adds a new child
-     * @param node The child to be added
-     */
-    public void addChild(Node node) {
-        children.add(node);
-        node.setParent(this);
-    }
-
-    /**
-     * Removing a child
-     * @param node The child to be removed
-     */
-    public void removeChild(Node node) {
-        children.remove(node);
-        node.setParent(null);
-    }
-
-    /**
-     * Returns the list of direct children of this node.
-     * @return The list of childs
-     */
-    public List getChildren() {
-        return children;
-    }
-
-    /**
-     * Setter for parent
-     * @param node The parent node
-     */
-    private void setParent(Node node) {
-        this.parent = node;
-    }
-
-    /**
-     * Getter for parent
-     * @return The node's parent
-     */
-    public Node getParent() {
-        return parent;
     }
 
     /**
@@ -262,123 +572,122 @@ public class Node implements PropertyChangeListener {
         return serializableUserData;
     }
 
-    /**
-     * Indicates if the node is a leaf
-     * @return True if this node has no child
-     */
-    public boolean isLeaf() {
-        return (children == null);
-    }
+    //    /**
+    //     * Indicates if the node is a leaf
+    //     * @return True if this node has no child
+    //     */
+    //    public boolean isLeaf() {
+    //        return (children == null);
+    //    }
+
+    //    /**
+    //     * Indicates if the node is an ancestor of the parameter node
+    //     * @param node The node that has to be searched in the descendant of the
+    //     * current node
+    //     * @return A boolean indicating if this node is ancestor of <b>node </b>
+    //     */
+    //    public boolean isAncestorOf(Node node) {
+    //        if (node == null) {
+    //            return false;
+    //        }
+    //
+    //        if (node.getParent() == this) {
+    //            return true;
+    //        }
+    //
+    //        return isAncestorOf(node.getParent());
+    //    }
+
+    //    /**
+    //     * Count leaves that are descendant of that node
+    //     * @return The number of leaves rooted to this node
+    //     */
+    //    public int getNumberOfLeaves() {
+    //        if (numberOfLeaves != -1) {
+    //            return numberOfLeaves;
+    //        }
+    //
+    //        if (children == null) {
+    //            return 1;
+    //        }
+    //
+    //        int leaves = 0;
+    //        Iterator iterator = children.iterator();
+    //
+    //        while (iterator.hasNext()) {
+    //            leaves += ((Node) iterator.next()).getNumberOfLeaves();
+    //        }
+    //
+    //        numberOfLeaves = leaves;
+    //
+    //        return leaves;
+    //    }
+
+    //    /**
+    //     * Count descendants of that node
+    //     * @return The number of descendants of this node
+    //     */
+    //    public int countDescendants() {
+    //        if (children == null) {
+    //            return 1;
+    //        }
+    //
+    //        int descendants = 0;
+    //        Iterator iterator = children.iterator();
+    //
+    //        while (iterator.hasNext()) {
+    //            descendants += ((Node) iterator.next()).countDescendants();
+    //        }
+    //
+    //        return descendants + 1;
+    //    }
 
     /**
-     * Indicates if the node is an ancestor of the parameter node
-     * @param node The node that has to be searched in the descendant of the
-     *        current node
-     * @return A boolean indicating if this node is ancestor of <b>node </b>
+     * Returns the list of all leaf nodes that are descendant of this one.
+     * @return java.util.List List of leaves.
      */
-    public boolean isAncestor(Node node) {
-        if (node == null) {
-            return false;
-        }
-
-        if (node.getParent() == this) {
-            return true;
-        }
-
-        return isAncestor(node.getParent());
+    public List getLeaves() {
+        List lnodes = new LinkedList();
+        collectLeaves(lnodes);
+        return lnodes;
     }
 
-    /**
-     * Count leaves that are descendant of that node
-     * @return The number of leaves rooted to this node
-     */
-    public int countLeaves() {
-        if (leavesCount != -1) {
-            return leavesCount;
-        }
-
-        if (children == null) {
-            return 1;
-        }
-
-        int leaves = 0;
-        Iterator iterator = children.iterator();
-
-        while (iterator.hasNext()) {
-            leaves += ((Node) iterator.next()).countLeaves();
-        }
-
-        leavesCount = leaves;
-
-        return leaves;
-    }
-
-    /**
-     * Count descendants of that node
-     * @return The number of descendants of this node
-     */
-    public int countDescendants() {
-        if (children == null) {
-            return 1;
-        }
-
-        int descendants = 0;
-        Iterator iterator = children.iterator();
-
-        while (iterator.hasNext()) {
-            descendants += ((Node) iterator.next()).countDescendants();
-        }
-
-        return descendants + 1;
-    }
-
-    /**
-     * Return the list of all leaves that are descendant of that node
-     * @return The list of leaves
-     */
-    public List getAllLeaves() {
-        Vector leavesList = new Vector();
-        collectAllLeaves(leavesList);
-
-        return leavesList;
-    }
-
-    private void collectAllLeaves(List leavesList) {
+    /** Collects all leaf nodes that are descendant of this one. */
+    private void collectLeaves(List l) {
         if (isLeaf()) {
-            leavesList.add(this);
+            l.add(this);
         } else {
             Iterator iterator = getChildren().iterator();
-
             while (iterator.hasNext()) {
-                ((Node) iterator.next()).collectAllLeaves(leavesList);
+                ((Node) iterator.next()).collectLeaves(l);
             }
         }
     }
 
-    /**
-     * Return the list of all nodes that are descendant of that node
-     * @return The list of nodes
-     */
-    public Collection getAllChildNodes() {
-        Collection childs = new HashSet();
-        collectAllChildNodes(childs);
-
-        return childs;
-    }
-
-    private void collectAllChildNodes(Collection childs) {
-        childs.add(this);
-
-        if (isLeaf()) {
-            return;
-        }
-
-        Iterator iterator = getChildren().iterator();
-
-        while (iterator.hasNext()) {
-            ((Node) iterator.next()).collectAllChildNodes(childs);
-        }
-    }
+    //    /**
+    //     * Return the list of all nodes that are descendant of that node
+    //     * @return The list of nodes
+    //     */
+    //    public Collection getAllChildNodes() {
+    //        Collection childs = new HashSet();
+    //        collectAllChildNodes(childs);
+    //
+    //        return childs;
+    //    }
+    //
+    //    private void collectAllChildNodes(Collection childs) {
+    //        childs.add(this);
+    //
+    //        if (isLeaf()) {
+    //            return;
+    //        }
+    //
+    //        Iterator iterator = getChildren().iterator();
+    //
+    //        while (iterator.hasNext()) {
+    //            ((Node) iterator.next()).collectAllChildNodes(childs);
+    //        }
+    //    }
 
     /**
      * Get the depth of this node
@@ -392,46 +701,24 @@ public class Node implements PropertyChangeListener {
         return (parent.getDepth() + 1);
     }
 
-    /**
-     * Move the specified node (which must be present in the list of childs at
-     * the end of the list
-     * @param child the child node to move at the end
-     */
-    public void moveChildAtEnd(Node child) {
-        children.remove(child);
-        children.add(child);
-    }
-
-    /**
-     * Move the specified node (which must be present in the list of childs at
-     * the specified position
-     * @param child the child node to move
-     */
-    public void moveChild(Node child, int newPosition) {
-        children.remove(child);
-        children.add(newPosition, child);
-    }
-
-    /**
-     * Compute the distance from an ancestor to this node
-     * @param ancestor the ancestor (if ancestor is null, root is assumed)
-     * @param b useBranchLength a flag specifying if branch lengths has to be
-     *        used
-     * @return The distance between an ancestor's node and the current node
-     */
-    public double getDistanceToAncestor(Node ancestor, boolean useBranchLength) {
-        double bl = (useBranchLength ? branchLength : 1);
-
-        if (parent == null) {
-            return 0;
-        }
-
-        if (parent == ancestor) {
-            return bl;
-        }
-
-        return (parent.getDistanceToAncestor(ancestor, useBranchLength) + bl);
-    }
+    //    /**
+    //     * Compute the distance from an ancestor to this node
+    //     * @param ancestor the ancestor (if ancestor is null, root is assumed)
+    //     * @param b useBranchLength a flag specifying if branch lengths has to be
+    //     * used
+    //     * @return The distance between an ancestor's node and the current node
+    //     */
+    //    public double getDistanceToAncestor(Node ancestor, boolean
+    // useBranchLength) {
+    //        double bl = (useBranchLength ? branchLength : 1);
+    //        if (parent == null) {
+    //            return 0;
+    //        }
+    //        if (parent == ancestor) {
+    //            return bl;
+    //        }
+    //        return (parent.getDistanceToAncestor(ancestor, useBranchLength) + bl);
+    //    }
 
     /**
      * Find the nodes that match the string

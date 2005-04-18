@@ -25,6 +25,7 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.openide.ErrorManager;
 import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
 import org.openide.windows.Mode;
@@ -159,7 +160,7 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
                         indexOfFirstIgnoredRow, indexOfLastIgnoredRow,
                         indexOfFirstIgnoredColumn, indexOfLastIgnoredColumn,
                         indexOfGeneColumn, indexOfTitleRow, nbColumns);
-                Iterator it = rootNode.getAllLeaves().iterator();
+                Iterator it = rootNode.getLeaves().iterator();
 
                 while (it.hasNext()) {
                     Node leaf = (Node) it.next();
@@ -186,7 +187,7 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
                         indexOfFirstIgnoredRow, indexOfLastIgnoredRow,
                         indexOfFirstIgnoredColumn, indexOfLastIgnoredColumn,
                         indexOfGeneColumn, indexOfTitleRow, nbColumns);
-                Iterator it = rootNode.getAllLeaves().iterator();
+                Iterator it = rootNode.getLeaves().iterator();
 
                 while (it.hasNext()) {
                     Node leaf = (Node) it.next();
@@ -232,7 +233,8 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
                 bis = new BufferedInputStream(new FileInputStream(cf));
             } catch (IOException ioe) {
                 System.err.println("Could not open the file " + cf.toString());
-                System.exit(1);
+                //System.exit(1);
+                ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL,ioe);
             }
 
             XMLDecoder d = new XMLDecoder(bis);
@@ -301,7 +303,7 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
          * argument to root node. It should be placed inside the class Node
          * since it works on the comportment of a Node instance.
          */
-        List leaves = node.getAllLeaves();
+        List leaves = node.getLeaves();
         if (leaves == null) {
             return;
         }
