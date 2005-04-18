@@ -33,13 +33,13 @@ public class Consts {
             new Color(192, 192, 192), new Color(64, 0, 0) };
 
     /** The font used to draw labels of terminal nodes */
-    public static Font TERMINAL_FONT = new Font("SansSerif", Font.PLAIN, 10);
+    public static Font TERMINAL_FONT = new Font("monospaced", Font.PLAIN, 12);
 
     /** The font used to draw labels of non terminal nodes */
-    public static Font NON_TERMINAL_FONT = new Font("SansSerif", Font.PLAIN, 10);
+    public static Font NON_TERMINAL_FONT = new Font("monospaced", Font.PLAIN, 12);
 
     /** The font used to draw info strings */
-    public static Font INFO_FONT = new Font("SansSerif", Font.PLAIN, 10);
+    public static Font INFO_FONT = new Font("monospaced", Font.PLAIN, 12);
 
     /** The font used to draw labels of selected nodes */
     public static Font selectedFont;
