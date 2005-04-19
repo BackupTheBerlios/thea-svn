@@ -1136,8 +1136,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         roots.push(getRootNode());
         setRootNode(n);
         zoom(1, 1);
-        invalidate();
-        repaint();
+        //        invalidate();
+        //        repaint();
+        update();
     }
 
     /** Pop a rootNode */
@@ -1145,8 +1146,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         Node n = (Node) roots.pop();
         setRootNode(n);
         zoom(1, 1);
-        invalidate();
-        repaint();
+        //        invalidate();
+        //        repaint();
+        update();
     }
 
     /** Pop all roots */
@@ -1157,8 +1159,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
         setRootNode(n);
         zoom(1, 1);
-        invalidate();
-        repaint();
+        //        invalidate();
+        //        repaint();
+        update();
     }
 
     /**
@@ -1204,13 +1207,18 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     public void addCollapsedNode(Node aNode) {
         collapsedNodes.add(aNode);
         zoom(1, 1);
-        invalidate();
-        repaint();
+        //        invalidate();
+        //        repaint();
+        update();
     }
 
     /** Removes the given node from the list of collapsed nodes. */
     public void removeCollapsedNode(Node aNode) {
         collapsedNodes.remove(aNode);
+        zoom(1, 1);
+        //        invalidate();
+        //        repaint();
+        update();
     }
 
     //    /**
@@ -1404,15 +1412,17 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         clearSelected();
         setSelected(sel.getNodes(), 1, (String) sel.getUserData("selName"));
         removeSelection(sel);
-        invalidate();
-        repaint();
+        //        invalidate();
+        //        repaint();
+        update();
     }
 
     public void copySelectionToCurrent(NodeSet sel) {
         clearSelected();
         setSelected(sel.getNodes(), 1, (String) sel.getUserData("selName"));
-        invalidate();
-        repaint();
+        //        invalidate();
+        //        repaint();
+        update();
     }
 
     public void unionSelectionWithCurrent(NodeSet sel) {
@@ -1427,8 +1437,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             }
         }
         setSelected(sel.getNodes(), 1, newSelectionName);
-        invalidate();
-        repaint();
+        //        invalidate();
+        //        repaint();
+        update();
     }
 
     public void intersectSelectionWithCurrent(NodeSet sel) {
@@ -1446,8 +1457,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         currentSel.retainAll(sel.getNodes());
         clearSelected();
         setSelected(currentSel, 1, newSelectionName);
-        invalidate();
-        repaint();
+        //        invalidate();
+        //        repaint();
+        update();
     }
 
     /**
@@ -1904,8 +1916,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
         setRootNode(parentNode);
         zoom(1, 1);
-        invalidate();
-        repaint();
+        //        invalidate();
+        //        repaint();
+        update();
     }
 
     /**
@@ -1934,8 +1947,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         selectionsList.add(selectionToKeep);
         nbSel++;
         clearSelected();
-        invalidate();
-        repaint();
+        //        invalidate();
+        //        repaint();
+        update();
     }
 
     public void removeSelection(NodeSet sel) {
@@ -1948,8 +1962,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         if (selectionsList.contains(sel)) {
             selectionsList.remove(sel);
         }
-        invalidate();
-        repaint();
+        //        invalidate();
+        //        repaint();
+        update();
     }
 
     public void groupSelection(NodeSet sel) {
@@ -1971,8 +1986,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             }
             nodesToGroup.remove(node);
         }
-        invalidate();
-        repaint();
+        //        invalidate();
+        //        repaint();
+        update();
     }
 
     /**
@@ -2019,8 +2035,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     public void searchString(String s) {
         clearSelected();
         setSelected(getTreeRoot().findMatchingNodes(s, true), 1, s);
-        invalidate();
-        repaint();
+        //        invalidate();
+        //        repaint();
+        update();
     }
 
     /**
@@ -2031,8 +2048,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     public void searchStringCaseSensitive(String s) {
         clearSelected();
         setSelected(getTreeRoot().findMatchingNodes(s, false), 1, s);
-        invalidate();
-        repaint();
+        //        invalidate();
+        //        repaint();
+        update();
     }
 
     /**
@@ -2042,8 +2060,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     public void searchPattern(Pattern p) {
         clearSelected();
         setSelected(getTreeRoot().findMatchingNodes(p), 1, p.toString());
-        invalidate();
-        repaint();
+        //        invalidate();
+        //        repaint();
+        update();
     }
 
     /**
@@ -2154,6 +2173,11 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             showExpressionValues = CESettings.getInstance()
                     .isShowExpressionValues();
         }
+        repaint();
+    }
+
+    private void update() {
+        invalidate();
         repaint();
     }
 }
