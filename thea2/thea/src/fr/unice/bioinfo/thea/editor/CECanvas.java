@@ -403,7 +403,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             if (!getRootNode().isAncestorOf(n)) {
                 continue;
             }
-            if (!isInClip(n)) {
+//            if (!isInClip(n)) {
+            if (!n.isInClipArea()) {
                 continue;
             }
             Rectangle2D.Double area = (Rectangle2D.Double) nodeToArea.get(n);
@@ -468,7 +469,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             if (!getRootNode().isAncestorOf(n) && !(getRootNode() == n)) {
                 continue;
             }
-            if (!isInClip(n)) {
+//            if (!isInClip(n)) {
+            if (!n.isInClipArea()) {
                 continue;
             }
             Rectangle2D.Double area = (Rectangle2D.Double) nodeToArea.get(n);
@@ -536,7 +538,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         nodeToArea.put(n, new Rectangle2D.Double(x, y, width, height));
         if (!g.hitClip((int) x, (int) y, (int) width + 1, (int) height + 1)) {
             setNotDetailed(n, true);
-            setInClip(n, false);
+//            setInClip(n, false);
+            n.setInClipArea(false);
             return y + (height / 2);
         }
         //        if (isTerminal(n)) {
@@ -1707,21 +1710,21 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
     }
 
-    /**
-     * Sets the flag indicating if the node is in the clipping area
-     * @param node The node which has to be changed
-     * @param inClip The inClip state
-     */
-    public void setInClip(Node node, boolean inClip) {
-        nodeToInClipState.put(node, new Boolean(inClip));
-        if (node.isLeaf()) {
-            return;
-        }
-        Iterator iterator = node.getChildren().iterator();
-        while (iterator.hasNext()) {
-            setInClip((Node) iterator.next(), inClip);
-        }
-    }
+//    /**
+//     * Sets the flag indicating if the node is in the clipping area
+//     * @param node The node which has to be changed
+//     * @param inClip The inClip state
+//     */
+//    public void setInClip(Node node, boolean inClip) {
+//        nodeToInClipState.put(node, new Boolean(inClip));
+//        if (node.isLeaf()) {
+//            return;
+//        }
+//        Iterator iterator = node.getChildren().iterator();
+//        while (iterator.hasNext()) {
+//            setInClip((Node) iterator.next(), inClip);
+//        }
+//    }
 
     /**
      * Gets the layout attributes of a node
@@ -1774,22 +1777,22 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     //        return vnodes;
     //    }
 
-    /**
-     * Indicates if the node is in the clipping area
-     * @param n The node to check
-     * @return A flag indicating if the parameter node is in the clipping area
-     */
-    public boolean isInClip(Node n) {
-        Object inClip = nodeToInClipState.get(n);
-        if (inClip == null) {
-            return true;
-        }
-        if (inClip.equals(Boolean.TRUE)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+//    /**
+//     * Indicates if the node is in the clipping area
+//     * @param n The node to check
+//     * @return A flag indicating if the parameter node is in the clipping area
+//     */
+//    public boolean isInClip(Node n) {
+//        Object inClip = nodeToInClipState.get(n);
+//        if (inClip == null) {
+//            return true;
+//        }
+//        if (inClip.equals(Boolean.TRUE)) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
     /**
      * Highlight the area surrounding the node

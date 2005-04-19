@@ -188,8 +188,9 @@ public class Node implements PropertyChangeListener {
     /** Tells this node and its children if they are in the clip area. */
     public void setInClipArea(boolean inClipArea) {
         this.inClipArea = inClipArea;
-        if (this.isLeaf())
+        if (this.isLeaf()){
             return;
+        }
         Iterator iterator = this.getChildren().iterator();
         while (iterator.hasNext()) {
             ((Node) iterator.next()).setInClipArea(inClipArea);
