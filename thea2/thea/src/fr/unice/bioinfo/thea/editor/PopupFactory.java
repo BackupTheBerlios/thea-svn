@@ -165,7 +165,9 @@ public class PopupFactory {
             menuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
 //                    tc.addCollapsedNode(n, !tc.getCollapsed(n));
-                    tc.addCollapsedNode(n, !n.isCollapsed());
+//                    tc.addCollapsedNode(n, !n.isCollapsed());
+                    n.setCollapsed(!n.isCollapsed());
+                    tc.addCollapsedNode(n);
                 }
             });
             popup.add(menuItem);

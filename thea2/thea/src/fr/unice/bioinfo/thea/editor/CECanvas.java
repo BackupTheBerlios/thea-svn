@@ -1198,6 +1198,20 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         invalidate();
         repaint();
     }
+    
+    /** Adds the given node to the list of collapsed nodes. */
+    public void addCollapsedNode(Node aNode) {
+        collapsedNodes.add(aNode);
+        
+        Node nodeToUpdate = aNode;
+        while (nodeToUpdate != null) {
+            nodeToNbTerminals.remove(nodeToUpdate);
+            nodeToUpdate = nodeToUpdate.getParent();
+        }
+        zoom(1, 1);
+        invalidate();
+        repaint();
+    }
 
     /** Removes the given node from the list of collapsed nodes. */
     public void removeCollapsedNode(Node aNode) {
