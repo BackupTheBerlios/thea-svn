@@ -143,14 +143,15 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     /** The map between nodes and their detailed states */
     private Map nodeToDetailedState;
 
-    /** The map between nodes and their localisation or not into the windows area */
-    private Map nodeToInClipState;
+    //    /** The map between nodes and their localisation or not into the windows
+    // area */
+    //    private Map nodeToInClipState;
 
     /** The map between nodes and their layout */
     private Map nodeToLayout;
 
-    /** The map between nodes and their number of displayable childs */
-    private Map nodeToNbTerminals;
+    //    /** The map between nodes and their number of displayable childs */
+    //    private Map nodeToNbTerminals;
 
     /** The name of the selection */
     private String selectionName;
@@ -231,9 +232,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         nodeToPosition = new HashMap();
         nodeToArea = new HashMap();
         nodeToDetailedState = new HashMap();
-        nodeToInClipState = new HashMap();
+        //        nodeToInClipState = new HashMap();
         nodeToLayout = new HashMap();
-        nodeToNbTerminals = new HashMap();
+        //        nodeToNbTerminals = new HashMap();
         expValNbMeasures = 0;
         expValColumnWidth = 0;
         expValMinMeasure = 0;
@@ -326,7 +327,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             baseBranchLength = computeBaseBranchLength(getRootNode(),
                     treeWidth - 25, (Graphics2D) g, Consts.TERMINAL_FONT);
         }
-        nodeToInClipState.clear();
+        //        nodeToInClipState.clear();
         nodeToDetailedState.clear();
         drawNode(getRootNode(), (Graphics2D) g, 15, 5, treeWidth - 30,
                 height - 10);
@@ -403,7 +404,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             if (!getRootNode().isAncestorOf(n)) {
                 continue;
             }
-//            if (!isInClip(n)) {
+            //            if (!isInClip(n)) {
             if (!n.isInClipArea()) {
                 continue;
             }
@@ -469,7 +470,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             if (!getRootNode().isAncestorOf(n) && !(getRootNode() == n)) {
                 continue;
             }
-//            if (!isInClip(n)) {
+            //            if (!isInClip(n)) {
             if (!n.isInClipArea()) {
                 continue;
             }
@@ -538,7 +539,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         nodeToArea.put(n, new Rectangle2D.Double(x, y, width, height));
         if (!g.hitClip((int) x, (int) y, (int) width + 1, (int) height + 1)) {
             setNotDetailed(n, true);
-//            setInClip(n, false);
+            //            setInClip(n, false);
             n.setInClipArea(false);
             return y + (height / 2);
         }
@@ -675,7 +676,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             annotations = new Vector(annotations);
         }
         boolean lastAnnotIsCurrentLabel = false;
-//        String label = getNodeLabel(n);
+        //        String label = getNodeLabel(n);
         String label = n.getLabel();
         if (!label.equals("")) {
             List param = new Vector();
@@ -782,7 +783,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             boxed = true;
         }
         boolean lastAnnotIsCurrentLabel = false;
-//        String label = getNodeLabel(n);
+        //        String label = getNodeLabel(n);
         String label = n.getLabel();
         if (!label.equals("")) {
             if (annotations.size() > 0) {
@@ -974,7 +975,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      *         node or all its subnodes
      */
     public double computeLabelMaxWidth(Node node, Graphics2D g, Font font) {
-//        String label = getNodeLabel(node);
+        //        String label = getNodeLabel(node);
         String label = node.getLabel();
         if (label.equals("")) {
             return 0;
@@ -1005,7 +1006,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             if (depth == 0) {
                 return Double.MAX_VALUE;
             }
-//            String label = getNodeLabel(n);
+            //            String label = getNodeLabel(n);
             String label = n.getLabel();
             if (label.equals("")) {
                 return width / depth;
@@ -1025,20 +1026,20 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         return baseBranchLength;
     }
 
-//    private String getNodeLabel(Node n) {
-//        String label = n.getName();
-//        if (label == null) {
-//            label = "";
-//        }
-//        if (CESettings.getInstance().isShowAnnotation()) {
-//            String annotation = (String) n.getUserData("annotation");
-//
-//            if (annotation != null) {
-//                label += (" " + annotation);
-//            }
-//        }
-//        return label;
-//    }
+    //    private String getNodeLabel(Node n) {
+    //        String label = n.getName();
+    //        if (label == null) {
+    //            label = "";
+    //        }
+    //        if (CESettings.getInstance().isShowAnnotation()) {
+    //            String annotation = (String) n.getUserData("annotation");
+    //
+    //            if (annotation != null) {
+    //                label += (" " + annotation);
+    //            }
+    //        }
+    //        return label;
+    //    }
 
     /**
      * Setter for rootNode
@@ -1180,34 +1181,28 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
     }
 
-    /** Adds the given node to the list of collapsed nodes. */
-    public void addCollapsedNode(Node aNode, boolean b) {
-        aNode.setCollapsed(b);
-        if (b) {
-            collapsedNodes.add(aNode);
-        } else {
-            collapsedNodes.remove(aNode);
-        }
-        Node nodeToUpdate = aNode;
+    //    /** Adds the given node to the list of collapsed nodes. */
+    //    public void addCollapsedNode(Node aNode, boolean b) {
+    //        aNode.setCollapsed(b);
+    //        if (b) {
+    //            collapsedNodes.add(aNode);
+    //        } else {
+    //            collapsedNodes.remove(aNode);
+    //        }
+    //        Node nodeToUpdate = aNode;
+    //
+    //        while (nodeToUpdate != null) {
+    //            nodeToNbTerminals.remove(nodeToUpdate);
+    //            nodeToUpdate = nodeToUpdate.getParent();
+    //        }
+    //        zoom(1, 1);
+    //        invalidate();
+    //        repaint();
+    //    }
 
-        while (nodeToUpdate != null) {
-            nodeToNbTerminals.remove(nodeToUpdate);
-            nodeToUpdate = nodeToUpdate.getParent();
-        }
-        zoom(1, 1);
-        invalidate();
-        repaint();
-    }
-    
     /** Adds the given node to the list of collapsed nodes. */
     public void addCollapsedNode(Node aNode) {
         collapsedNodes.add(aNode);
-        
-        Node nodeToUpdate = aNode;
-        while (nodeToUpdate != null) {
-            nodeToNbTerminals.remove(nodeToUpdate);
-            nodeToUpdate = nodeToUpdate.getParent();
-        }
         zoom(1, 1);
         invalidate();
         repaint();
@@ -1728,21 +1723,21 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
     }
 
-//    /**
-//     * Sets the flag indicating if the node is in the clipping area
-//     * @param node The node which has to be changed
-//     * @param inClip The inClip state
-//     */
-//    public void setInClip(Node node, boolean inClip) {
-//        nodeToInClipState.put(node, new Boolean(inClip));
-//        if (node.isLeaf()) {
-//            return;
-//        }
-//        Iterator iterator = node.getChildren().iterator();
-//        while (iterator.hasNext()) {
-//            setInClip((Node) iterator.next(), inClip);
-//        }
-//    }
+    //    /**
+    //     * Sets the flag indicating if the node is in the clipping area
+    //     * @param node The node which has to be changed
+    //     * @param inClip The inClip state
+    //     */
+    //    public void setInClip(Node node, boolean inClip) {
+    //        nodeToInClipState.put(node, new Boolean(inClip));
+    //        if (node.isLeaf()) {
+    //            return;
+    //        }
+    //        Iterator iterator = node.getChildren().iterator();
+    //        while (iterator.hasNext()) {
+    //            setInClip((Node) iterator.next(), inClip);
+    //        }
+    //    }
 
     /**
      * Gets the layout attributes of a node
@@ -1795,22 +1790,22 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     //        return vnodes;
     //    }
 
-//    /**
-//     * Indicates if the node is in the clipping area
-//     * @param n The node to check
-//     * @return A flag indicating if the parameter node is in the clipping area
-//     */
-//    public boolean isInClip(Node n) {
-//        Object inClip = nodeToInClipState.get(n);
-//        if (inClip == null) {
-//            return true;
-//        }
-//        if (inClip.equals(Boolean.TRUE)) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
+    //    /**
+    //     * Indicates if the node is in the clipping area
+    //     * @param n The node to check
+    //     * @return A flag indicating if the parameter node is in the clipping area
+    //     */
+    //    public boolean isInClip(Node n) {
+    //        Object inClip = nodeToInClipState.get(n);
+    //        if (inClip == null) {
+    //            return true;
+    //        }
+    //        if (inClip.equals(Boolean.TRUE)) {
+    //            return true;
+    //        } else {
+    //            return false;
+    //        }
+    //    }
 
     /**
      * Highlight the area surrounding the node
