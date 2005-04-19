@@ -431,6 +431,21 @@ public class Node implements PropertyChangeListener {
         children.remove(aChild);
         children.add(newPosition, aChild);
     }
+    
+    /** Returns the list of all visible leaves that are descendant of this node.*/
+    public List getVisibleLeaves() {
+        List vnodes = new LinkedList();
+        List children = this.getChildren();
+        if (this.isTerminal()) {
+            vnodes.add(this);
+        } else {
+            Iterator iterator = children.iterator();
+            while (iterator.hasNext()) {
+                vnodes.addAll(((Node) iterator.next()).getVisibleLeaves());
+            }
+        }
+        return vnodes;
+    }
 
     //END FACTORING
 

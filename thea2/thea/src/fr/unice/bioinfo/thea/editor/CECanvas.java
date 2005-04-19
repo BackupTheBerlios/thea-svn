@@ -21,7 +21,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -344,7 +343,10 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             }
         }
         if (showExpressionValues && (expValNbMeasures > 0)) {
-            drawExpressions((Graphics2D) g, getAllVisibleLeaves(getRootNode()),
+            //            drawExpressions((Graphics2D) g,
+            // getAllVisibleLeaves(getRootNode()),
+            //                    selWidth);
+            drawExpressions((Graphics2D) g, getRootNode().getVisibleLeaves(),
                     selWidth);
         }
     }
@@ -1751,25 +1753,26 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
     }
 
-    /**
-     * Return the list of all visible leaves that are descendant of the
-     * parameter node
-     * @return The list of leaves
-     */
-    public List getAllVisibleLeaves(Node n) {
-        List vnodes /* visible nodes */= new LinkedList();
-        List children = n.getChildren();
-        //        if (isTerminal(n)) {
-        if (n.isTerminal()) {
-            vnodes.add(n);
-        } else {
-            Iterator iterator = children.iterator();
-            while (iterator.hasNext()) {
-                vnodes.addAll(getAllVisibleLeaves((Node) iterator.next()));
-            }
-        }
-        return vnodes;
-    }
+    //    /**
+    //     * Return the list of all visible leaves that are descendant of the
+    //     * parameter node
+    //     * @return The list of leaves
+    //     */
+    //    public List getAllVisibleLeaves(Node n) {
+    //        List vnodes /* visible nodes */= new LinkedList();
+    //        List children = n.getChildren();
+    //        // if (isTerminal(n)) {
+    //        if (n.isTerminal()) {
+    //            vnodes.add(n);
+    //        } else {
+    //            Iterator iterator = children.iterator();
+    //            while (iterator.hasNext()) {
+    //                vnodes.addAll(getAllVisibleLeaves((Node) iterator.next()));
+    //            }
+    //        }
+    //        System.out.println(n.getVisibleLeaves().size()+" ;"+vnodes.size());
+    //        return vnodes;
+    //    }
 
     /**
      * Indicates if the node is in the clipping area
