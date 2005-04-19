@@ -417,11 +417,13 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
                     g.fill(new Rectangle2D.Double(Math.rint(x), Math
                             .rint(area.y), Math.rint(width), 1));
                 }
-            } else if (isHidden(n)) {
+//            } else if (isHidden(n)) {
+            } else if (n.isHidden()) {
                 do {
                     n = n.getParent();
 //                } while ((n != null) && !getCollapsed(n) && isHidden(n));
-                } while ((n != null) && !n.isCollapsed() && isHidden(n));
+//                } while ((n != null) && !n.isCollapsed() && isHidden(n));
+                } while ((n != null) && !n.isCollapsed() && n.isHidden());
 
                 if (n != null) {
                     area = (Rectangle2D.Double) nodeToArea.get(n);
@@ -1551,21 +1553,21 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     //        }
     //    }
 
-    /**
-     * Indicates if the node is collapsed, or a descendant of a collapsed node
-     * @param n The node to check
-     * @return The hidden state of the parameter node
-     */
-    private boolean isHidden(Node n) {
-//        if (getCollapsed(n)) {
-        if (n.isCollapsed()) {
-            return true;
-        }
-        if (n.getParent() == null) {
-            return false;
-        }
-        return isHidden(n.getParent());
-    }
+//    /**
+//     * Indicates if the node is collapsed, or a descendant of a collapsed node
+//     * @param n The node to check
+//     * @return The hidden state of the parameter node
+//     */
+//    private boolean isHidden(Node n) {
+////        if (getCollapsed(n)) {
+//        if (n.isCollapsed()) {
+//            return true;
+//        }
+//        if (n.getParent() == null) {
+//            return false;
+//        }
+//        return isHidden(n.getParent());
+//    }
 
     /**
      * Find a node from a position
