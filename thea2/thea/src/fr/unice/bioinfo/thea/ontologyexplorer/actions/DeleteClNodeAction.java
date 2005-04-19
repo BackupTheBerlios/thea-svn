@@ -1,17 +1,13 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
-import org.openide.windows.TopComponent;
 
-import fr.unice.bioinfo.thea.editor.CEditor;
-import fr.unice.bioinfo.thea.editor.selection.SelectionEditor;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ClassificationNodeInfo;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationNode;

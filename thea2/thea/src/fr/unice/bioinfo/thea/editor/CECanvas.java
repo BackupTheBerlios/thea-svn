@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 import java.util.Vector;
-import java.util.regex.Pattern;
 
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
@@ -2028,42 +2027,42 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         revalidate();
     }
 
-    /**
-     * Search the nodes in the tree with a label equals to a string
-     * @param s The string to search
-     */
-    public void searchString(String s) {
-        clearSelected();
-        setSelected(getTreeRoot().findMatchingNodes(s, true), 1, s);
-        //        invalidate();
-        //        repaint();
-        update();
-    }
+    //    /**
+    //     * Search the nodes in the tree with a label equals to a string
+    //     * @param s The string to search
+    //     */
+    //    public void searchString(String s) {
+    //        clearSelected();
+    //        setSelected(getTreeRoot().findMatchingNodes(s, true), 1, s);
+    //        // invalidate();
+    //        // repaint();
+    //        update();
+    //    }
 
-    /**
-     * Search the nodes in the tree with a label equals (case sensitive) to a
-     * string
-     * @param s The string to search
-     */
-    public void searchStringCaseSensitive(String s) {
-        clearSelected();
-        setSelected(getTreeRoot().findMatchingNodes(s, false), 1, s);
-        //        invalidate();
-        //        repaint();
-        update();
-    }
+    //    /**
+    //     * Search the nodes in the tree with a label equals (case sensitive) to a
+    //     * string
+    //     * @param s The string to search
+    //     */
+    //    public void searchStringCaseSensitive(String s) {
+    //        clearSelected();
+    //        setSelected(getTreeRoot().findMatchingNodes(s, false), 1, s);
+    //        // invalidate();
+    //        // repaint();
+    //        update();
+    //    }
 
-    /**
-     * Search the nodes in the tree with a label corresponding to a pattern
-     * @param p The pattern to search
-     */
-    public void searchPattern(Pattern p) {
-        clearSelected();
-        setSelected(getTreeRoot().findMatchingNodes(p), 1, p.toString());
-        //        invalidate();
-        //        repaint();
-        update();
-    }
+    //    /**
+    //     * Search the nodes in the tree with a label corresponding to a pattern
+    //     * @param p The pattern to search
+    //     */
+    //    public void searchPattern(Pattern p) {
+    //        clearSelected();
+    //        setSelected(getTreeRoot().findMatchingNodes(p), 1, p.toString());
+    //        // invalidate();
+    //        // repaint();
+    //        update();
+    //    }
 
     /**
      * A class dealing with mouse inputs

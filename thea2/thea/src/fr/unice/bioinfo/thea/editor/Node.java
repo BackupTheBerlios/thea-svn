@@ -12,9 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.thea.editor.settings.CESettings;
@@ -736,66 +733,66 @@ public class Node implements PropertyChangeListener {
     //        return (parent.getDistanceToAncestor(ancestor, useBranchLength) + bl);
     //    }
 
-    /**
-     * Find the nodes that match the string
-     * @param s The string to be matched
-     * @param ignoreCase true to perform a case insensitive search
-     * @return a List holding all matched nodes
-     */
-    public List findMatchingNodes(String s, boolean ignoreCase) {
-        List matches = new Vector();
+    //    /**
+    //     * Find the nodes that match the string
+    //     * @param s The string to be matched
+    //     * @param ignoreCase true to perform a case insensitive search
+    //     * @return a List holding all matched nodes
+    //     */
+    //    public List findMatchingNodes(String s, boolean ignoreCase) {
+    //        List matches = new Vector();
+    //
+    //        if (ignoreCase && s.equalsIgnoreCase(name)) {
+    //            matches.add(this);
+    //        } else if (!ignoreCase && s.equals(name)) {
+    //            matches.add(this);
+    //        }
+    //
+    //        if (children == null) {
+    //            return matches;
+    //        }
+    //
+    //        // lookup child nodes
+    //        Iterator iterator = children.iterator();
+    //
+    //        while (iterator.hasNext()) {
+    //            List l = ((Node) iterator.next()).findMatchingNodes(s, ignoreCase);
+    //            matches.addAll(l);
+    //        }
+    //
+    //        return matches;
+    //    }
 
-        if (ignoreCase && s.equalsIgnoreCase(name)) {
-            matches.add(this);
-        } else if (!ignoreCase && s.equals(name)) {
-            matches.add(this);
-        }
-
-        if (children == null) {
-            return matches;
-        }
-
-        // lookup child nodes
-        Iterator iterator = children.iterator();
-
-        while (iterator.hasNext()) {
-            List l = ((Node) iterator.next()).findMatchingNodes(s, ignoreCase);
-            matches.addAll(l);
-        }
-
-        return matches;
-    }
-
-    /**
-     * Find the nodes that match a pattern
-     * @param p The pattern to match
-     * @return A List holding all matched nodes
-     */
-    public List findMatchingNodes(Pattern p) {
-        List matches = new Vector();
-
-        if (name != null) {
-            Matcher m = p.matcher(name);
-
-            if (m.matches()) {
-                matches.add(this);
-            }
-        }
-
-        if (children == null) {
-            return matches;
-        }
-
-        // lookup child nodes
-        Iterator iterator = children.iterator();
-
-        while (iterator.hasNext()) {
-            List l = ((Node) iterator.next()).findMatchingNodes(p);
-            matches.addAll(l);
-        }
-
-        return matches;
-    }
+//    /**
+//     * Find the nodes that match a pattern
+//     * @param p The pattern to match
+//     * @return A List holding all matched nodes
+//     */
+//    public List findMatchingNodes(Pattern p) {
+//        List matches = new Vector();
+//
+//        if (name != null) {
+//            Matcher m = p.matcher(name);
+//
+//            if (m.matches()) {
+//                matches.add(this);
+//            }
+//        }
+//
+//        if (children == null) {
+//            return matches;
+//        }
+//
+//        // lookup child nodes
+//        Iterator iterator = children.iterator();
+//
+//        while (iterator.hasNext()) {
+//            List l = ((Node) iterator.next()).findMatchingNodes(p);
+//            matches.addAll(l);
+//        }
+//
+//        return matches;
+//    }
 
     /**
      * Extracts string values. String values are simply properties of the entity
