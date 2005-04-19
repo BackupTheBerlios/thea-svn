@@ -675,7 +675,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             annotations = new Vector(annotations);
         }
         boolean lastAnnotIsCurrentLabel = false;
-        String label = getNodeLabel(n);
+//        String label = getNodeLabel(n);
+        String label = n.getLabel();
         if (!label.equals("")) {
             List param = new Vector();
             param.add(label);
@@ -781,7 +782,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             boxed = true;
         }
         boolean lastAnnotIsCurrentLabel = false;
-        String label = getNodeLabel(n);
+//        String label = getNodeLabel(n);
+        String label = n.getLabel();
         if (!label.equals("")) {
             if (annotations.size() > 0) {
                 lastAnnotIsCurrentLabel = true;
@@ -972,7 +974,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      *         node or all its subnodes
      */
     public double computeLabelMaxWidth(Node node, Graphics2D g, Font font) {
-        String label = getNodeLabel(node);
+//        String label = getNodeLabel(node);
+        String label = node.getLabel();
         if (label.equals("")) {
             return 0;
         }
@@ -1002,7 +1005,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             if (depth == 0) {
                 return Double.MAX_VALUE;
             }
-            String label = getNodeLabel(n);
+//            String label = getNodeLabel(n);
+            String label = n.getLabel();
             if (label.equals("")) {
                 return width / depth;
             }
@@ -1021,20 +1025,20 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         return baseBranchLength;
     }
 
-    private String getNodeLabel(Node n) {
-        String label = n.getName();
-        if (label == null) {
-            label = "";
-        }
-        if (CESettings.getInstance().isShowAnnotation()) {
-            String annotation = (String) n.getUserData("annotation");
-
-            if (annotation != null) {
-                label += (" " + annotation);
-            }
-        }
-        return label;
-    }
+//    private String getNodeLabel(Node n) {
+//        String label = n.getName();
+//        if (label == null) {
+//            label = "";
+//        }
+//        if (CESettings.getInstance().isShowAnnotation()) {
+//            String annotation = (String) n.getUserData("annotation");
+//
+//            if (annotation != null) {
+//                label += (" " + annotation);
+//            }
+//        }
+//        return label;
+//    }
 
     /**
      * Setter for rootNode

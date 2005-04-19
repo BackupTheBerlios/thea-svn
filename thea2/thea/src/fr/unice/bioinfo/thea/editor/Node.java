@@ -69,7 +69,7 @@ public class Node implements PropertyChangeListener {
      * (ontology). Whene a node is created, the label is by default the name of
      * this node in the used classification.
      */
-    private String label;
+    private String label = null;
     /** This node's layout support. */
     private NodeLayoutSupport layoutSupport;
     /**
@@ -321,7 +321,20 @@ public class Node implements PropertyChangeListener {
      * @return java.lang.String The current label of this node.
      */
     public String getLabel() {
+        if (label == null) {
+            label = this.getName();
+        }
         return label;
+    }
+    
+    /** Sets the name of this node.*/
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /** Returns this nodes's name.*/
+    public String getName() {
+        return name;
     }
 
     /**
@@ -491,31 +504,17 @@ public class Node implements PropertyChangeListener {
         return entity;
     }
 
-    /**
-     * Initialize this node.
-     */
-    private void init() {
-        parent = null;
-        children = null;
-        name = null;
-        branchLength = 0;
-        numberOfLeaves = -1;
-        userData = new HashMap();
-    }
-
-    /**
-     * Give a nome to this node.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * returns this node's name.
-     */
-    public String getName() {
-        return name;
-    }
+//    /**
+//     * Initialize this node.
+//     */
+//    private void init() {
+//        parent = null;
+//        children = null;
+//        name = null;
+//        branchLength = 0;
+//        numberOfLeaves = -1;
+//        userData = new HashMap();
+//    }
 
     /**
      * Setter for userData. Allows external application to associate data with
