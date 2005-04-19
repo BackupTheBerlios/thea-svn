@@ -420,7 +420,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             } else if (isHidden(n)) {
                 do {
                     n = n.getParent();
-                } while ((n != null) && !getCollapsed(n) && isHidden(n));
+//                } while ((n != null) && !getCollapsed(n) && isHidden(n));
+                } while ((n != null) && !n.isCollapsed() && isHidden(n));
 
                 if (n != null) {
                     area = (Rectangle2D.Double) nodeToArea.get(n);
@@ -548,7 +549,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
         List childs = n.getChildren();
         Iterator it = childs.iterator();
-        int leaves = countTerminals(n);
+//        int leaves = countTerminals(n);
+        int leaves = n.getTerminals();
         double posy = y;
         double miny = Double.MAX_VALUE;
         double maxy = Double.MIN_VALUE;
@@ -559,7 +561,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
                 setNotDetailed(child, true);
                 continue;
             }
-            int childLeaves = countTerminals(child);
+//            int childLeaves = countTerminals(child);
+            int childLeaves = child.getTerminals();
             double childHeight = (double) childLeaves / (double) leaves;
             double newy = height * childHeight;
             double centery = drawNode(child, g, x + branchLength, posy, width
@@ -780,7 +783,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             param.add(getLayout(n));
             annotations.add(param);
         }
-        if (annotations.isEmpty() && getCollapsed(n)) {
+//        if (annotations.isEmpty() && getCollapsed(n)) {
+        if (annotations.isEmpty() && n.isCollapsed()) {
             List param = new Vector();
             param.add("[" + n.getLeaves().size() + "]");
 
@@ -929,7 +933,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
                     + (baseBranchLength * (double) branchLengthFactor)), Math
                     .rint(y + (height / 2))));
         }
-        if (getCollapsed(n)) {
+//        if (getCollapsed(n)) {
+        if (n.isCollapsed()) {
             g.drawImage(expandImage, (int) (area.getMaxX() - expandImage
                     .getWidth(null)), (int) ((area.getMinY() + (area
                     .getHeight() / 2)) - (expandImage.getHeight(null) / 2)),
@@ -1161,18 +1166,15 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
     }
 
-    /**
-     * Set the collapsed state of a node
-     * @param n The node to update
-     * @param b The new collapsed state of the node
-     */
-    public void setCollapsed(Node n, boolean b) {
+    /** Adds the given node to the list of collapsed nodes.*/
+    public void addCollapsedNode(Node aNode, boolean b) {
+        aNode.setCollapsed(b);
         if (b) {
-            collapsedNodes.add(n);
+            collapsedNodes.add(aNode);
         } else {
-            collapsedNodes.remove(n);
+            collapsedNodes.remove(aNode);
         }
-        Node nodeToUpdate = n;
+        Node nodeToUpdate = aNode;
 
         while (nodeToUpdate != null) {
             nodeToNbTerminals.remove(nodeToUpdate);
@@ -1182,15 +1184,19 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         invalidate();
         repaint();
     }
+    /** Removes the given node from the list of collapsed nodes.*/
+    public void removeCollapsedNode(Node aNode){
+        collapsedNodes.remove(aNode);
+        }
 
-    /**
-     * Get the collapsed state of a node
-     * @param n The node to get the value
-     * @return The collapsed state of the parameter node
-     */
-    public boolean getCollapsed(Node n) {
-        return collapsedNodes.contains(n);
-    }
+//    /**
+//     * Get the collapsed state of a node
+//     * @param n The node to get the value
+//     * @return The collapsed state of the parameter node
+//     */
+//    public boolean getCollapsed(Node n) {
+//        return collapsedNodes.contains(n);
+//    }
 
     public void setCollapsedNodes(Set s) {
         collapsedNodes = s;
@@ -1551,7 +1557,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * @return The hidden state of the parameter node
      */
     private boolean isHidden(Node n) {
-        if (getCollapsed(n)) {
+//        if (getCollapsed(n)) {
+        if (n.isCollapsed()) {
             return true;
         }
         if (n.getParent() == null) {
@@ -1574,7 +1581,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         if (position.distance(pos) < 5) {
             return node;
         }
-        if (getCollapsed(node)) {
+//        if (getCollapsed(node)) {
+        if (node.isCollapsed()) {
             return null;
         }
         if (node.isLeaf()) {
@@ -1605,7 +1613,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         if (!area.contains(position)) {
             return null;
         }
-        if (getCollapsed(node)) {
+//        if (getCollapsed(node)) {
+        if (node.isCollapsed()) {
             return node;
         }
         List childNodes = node.getChildren();
@@ -1627,32 +1636,36 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      * @param node The node to check
      * @return A flag indicating if the parameter node is terminal
      */
-    public boolean isTerminal(Node node) {
-        return ((node.isLeaf()) || getCollapsed(node));
+    private boolean isTerminal(Node node) {
+//        return ((node.isLeaf()) || getCollapsed(node));
+        return ((node.isLeaf()) || node.isCollapsed());
     }
 
-    /**
-     * Count terminals (non hidden nodes) that are descendant of that node
-     * @param node The node to check
-     * @return The number of terminals that are childs of the parameter node
-     */
-    public int countTerminals(Node node) {
-        Integer count = (Integer) nodeToNbTerminals.get(node);
-        if (count != null) {
-            return count.intValue();
-        }
-        if (isTerminal(node)) {
-            nodeToNbTerminals.put(node, new Integer(1));
-            return 1;
-        }
-        int terminals = 0;
-        Iterator iterator = node.getChildren().iterator();
-        while (iterator.hasNext()) {
-            terminals += countTerminals((Node) iterator.next());
-        }
-        nodeToNbTerminals.put(node, new Integer(terminals));
-        return terminals;
-    }
+//    /**
+//     * Count terminals (non hidden nodes) that are descendant of that node
+//     * @param node The node to check
+//     * @return The number of terminals that are childs of the parameter node
+//     */
+//    private int countTerminals(Node node) {
+//        int t = node.getTerminals();
+//        
+//        Integer count = (Integer) nodeToNbTerminals.get(node);
+//        if (count != null) {
+//            return count.intValue();
+//        }
+//        if (isTerminal(node)) {
+//            nodeToNbTerminals.put(node, new Integer(1));
+//            return 1;
+//        }
+//        int terminals = 0;
+//        Iterator iterator = node.getChildren().iterator();
+//        while (iterator.hasNext()) {
+//            terminals += countTerminals((Node) iterator.next());
+//        }
+//        nodeToNbTerminals.put(node, new Integer(terminals));
+//        System.out.println("node.getTerminals() = "+t+".terminals = "+terminals);
+//        return terminals;
+//    }
 
     //    /**
     //     * Resets the position of the node and all its childs to null

@@ -202,13 +202,12 @@ public class Node implements PropertyChangeListener {
      */
     public boolean isHidden() {
         if (this.isCollapsed()) {
-            hidden = true;
+            return true;
         }
         if (this.parent == null) {
-            hidden = false;
+            return false;
         }
-        hidden = parent.isHidden();
-        return hidden;
+        return parent.isHidden();
     }
 
     /** Setter for this node's hidden/not hidden state. */
@@ -223,9 +222,9 @@ public class Node implements PropertyChangeListener {
      */
     public int getTerminals() {
         if (this.isTerminal()) {
-            terminals = 1;
-            return terminals;
+            return 1;
         }
+        terminals = 0;
         Iterator iterator = this.getChildren().iterator();
         while (iterator.hasNext()) {
             terminals += ((Node) iterator.next()).getTerminals();
@@ -233,7 +232,7 @@ public class Node implements PropertyChangeListener {
         return terminals;
     }
 
-    /***/
+    /** Sets the number of terminal nodes. */
     public void setTerminals(int terminals) {
         this.terminals = terminals;
     }

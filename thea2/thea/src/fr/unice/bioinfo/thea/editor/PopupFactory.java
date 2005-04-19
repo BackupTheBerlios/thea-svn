@@ -156,12 +156,16 @@ public class PopupFactory {
 
         // collapse and Uncollapse
         if (!n.isLeaf()) {
-            menuItem = new JMenuItem(tc.getCollapsed(n) ? bundle
+//            menuItem = new JMenuItem(tc.getCollapsed(n) ? bundle
+//                    .getString("LBL_UncollapseAction_Name") : bundle
+//                    .getString("LBL_CollapseAction_Name"));
+            menuItem = new JMenuItem(n.isCollapsed() ? bundle
                     .getString("LBL_UncollapseAction_Name") : bundle
                     .getString("LBL_CollapseAction_Name"));
             menuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    tc.setCollapsed(n, !tc.getCollapsed(n));
+//                    tc.addCollapsedNode(n, !tc.getCollapsed(n));
+                    tc.addCollapsedNode(n, !n.isCollapsed());
                 }
             });
             popup.add(menuItem);
