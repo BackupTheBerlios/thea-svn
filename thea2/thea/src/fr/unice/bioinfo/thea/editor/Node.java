@@ -169,7 +169,7 @@ public class Node implements PropertyChangeListener {
     /** Stets detailed/undetaile state of this node. */
     public void setDetailed(boolean detailed) {
         this.detailed = detailed;
-        if (this.isLeaf()){
+        if (this.isLeaf()) {
             return;
         }
         Iterator iterator = this.getChildren().iterator();
@@ -462,6 +462,28 @@ public class Node implements PropertyChangeListener {
         return vnodes;
     }
 
+    /**
+     * Returns the list of all leaf nodes that are descendant of this one.
+     * @return java.util.List List of leaves.
+     */
+    public List getLeaves() {
+        List lnodes = new LinkedList();
+        collectLeaves(lnodes);
+        return lnodes;
+    }
+
+    /** Collects all leaf nodes that are descendant of this one. */
+    private void collectLeaves(List l) {
+        if (isLeaf()) {
+            l.add(this);
+        } else {
+            Iterator iterator = getChildren().iterator();
+            while (iterator.hasNext()) {
+                ((Node) iterator.next()).collectLeaves(l);
+            }
+        }
+    }
+
     //END FACTORING
 
     /** indicates if the userData with a specified key should be saved */
@@ -520,28 +542,6 @@ public class Node implements PropertyChangeListener {
             serializableUserData.add(key);
         } else {
             serializableUserData.remove(key);
-        }
-    }
-
-    /**
-     * Returns the list of all leaf nodes that are descendant of this one.
-     * @return java.util.List List of leaves.
-     */
-    public List getLeaves() {
-        List lnodes = new LinkedList();
-        collectLeaves(lnodes);
-        return lnodes;
-    }
-
-    /** Collects all leaf nodes that are descendant of this one. */
-    private void collectLeaves(List l) {
-        if (isLeaf()) {
-            l.add(this);
-        } else {
-            Iterator iterator = getChildren().iterator();
-            while (iterator.hasNext()) {
-                ((Node) iterator.next()).collectLeaves(l);
-            }
         }
     }
 

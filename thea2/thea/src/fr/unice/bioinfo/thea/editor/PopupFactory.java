@@ -78,7 +78,7 @@ public class PopupFactory {
             }
         });
         popup.add(menuItem);
-        
+
         // Add a menu to show the Selection Editor
         menuItem = new JMenuItem(bundle.getString("LBL_SelectionWindowAction"));
         menuItem
@@ -156,23 +156,23 @@ public class PopupFactory {
 
         // collapse and Uncollapse
         if (!n.isLeaf()) {
-//            menuItem = new JMenuItem(tc.getCollapsed(n) ? bundle
-//                    .getString("LBL_UncollapseAction_Name") : bundle
-//                    .getString("LBL_CollapseAction_Name"));
+            //            menuItem = new JMenuItem(tc.getCollapsed(n) ? bundle
+            //                    .getString("LBL_UncollapseAction_Name") : bundle
+            //                    .getString("LBL_CollapseAction_Name"));
             menuItem = new JMenuItem(n.isCollapsed() ? bundle
                     .getString("LBL_UncollapseAction_Name") : bundle
                     .getString("LBL_CollapseAction_Name"));
             menuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-//                    tc.addCollapsedNode(n, !tc.getCollapsed(n));
-//                    tc.addCollapsedNode(n, !n.isCollapsed());
+                    //                    tc.addCollapsedNode(n, !tc.getCollapsed(n));
+                    //                    tc.addCollapsedNode(n, !n.isCollapsed());
                     boolean b = !n.isCollapsed();
                     n.setCollapsed(b);
-                    if(b == true){
+                    if (b == true) {
                         tc.collapseNode(n);
-                        }else{
-                            tc.uncollapsNode(n);
-                            }
+                    } else {
+                        tc.uncollapseNode(n);
+                    }
                 }
             });
             popup.add(menuItem);
