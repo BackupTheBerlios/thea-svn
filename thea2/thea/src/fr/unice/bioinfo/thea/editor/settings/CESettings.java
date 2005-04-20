@@ -236,7 +236,7 @@ public class CESettings extends SystemOption {
      */
 
     /** Highlighting mode property */
-    private static int highlightingMode = 2;
+    private static int highlightingMode = 1;
 
     /*
      * The following variables corresponds to Score Calculation Panel

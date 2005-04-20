@@ -168,7 +168,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     /** Creates a JComponent to draw into it. */
     public CECanvas() {
         super();
-        setBackground(Color.CYAN);
+        setBackground(Color.WHITE);
         treeSelectionListeners = new HashSet();
         // Get the CESettings instance
         CESettings settings = CESettings.getInstance();
