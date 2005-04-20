@@ -247,7 +247,7 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
             d.close();
             collectInfo(rootNode);
             canvas.init();
-            canvas.setRootNode(rootNode);
+            canvas.setCurrentRootNode(rootNode);
             canvas.setRoots(roots);
             canvas.setNodeToLayout(nodeToLayout);
             canvas.setSelectionsList(selectionsList);
@@ -262,7 +262,7 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
         }
 
         canvas.init();
-        canvas.setRootNode(rootNode);
+        canvas.setCurrentRootNode(rootNode);
 
         //viewerComponent.setShowBranchLength(ClassificationViewerSettings.getInstance().isShowBranchLength());
         // the showBranchLength flag is a property initialized from

@@ -179,7 +179,7 @@ public class PopupFactory {
         }
 
         // dispplay whole tree
-        if (tc.getTreeRoot() != tc.getRootNode()) {
+        if (tc.getTreeRoot() != tc.getCurrentRootNode()) {
             menuItem = new JMenuItem(bundle
                     .getString("LBL_PreviousTreeAction_Name"));
             menuItem
@@ -195,7 +195,7 @@ public class PopupFactory {
         }
 
         // One level up
-        if (tc.getTreeRoot() != tc.getRootNode()) {
+        if (tc.getTreeRoot() != tc.getCurrentRootNode()) {
             menuItem = new JMenuItem(bundle
                     .getString("LBL_OneLevelUpAction_Name"));
             menuItem
@@ -211,7 +211,7 @@ public class PopupFactory {
         }
 
         // sub-tree
-        if (tc.getRootNode() != n) {
+        if (tc.getCurrentRootNode() != n) {
             menuItem = new JMenuItem(bundle.getString("LBL_SubTreeAction_Name"));
             menuItem
                     .setIcon(new ImageIcon(
