@@ -435,16 +435,16 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
             return;
         }
 
-        Node n = (Node) e.getSelected();
+        Node aNode = (Node) e.getSelected();
         String selectionName = canvas.getSelectionName();
         canvas.setSelectionName("Manual Selection");
 
         if (event.isControlDown()) {
-            canvas.setSelected(n, 0);
+            canvas.setSelected(aNode, 0);
         } else if (event.isShiftDown()) {
-            canvas.setSelected(n, -1);
+            canvas.setSelected(aNode, -1);
         } else {
-            canvas.setSelected(n, 1);
+            canvas.setSelected(aNode, 1);
         }
 
         List tas = (List) ((Node) e.getSelected()).getUserData("termAndScore");

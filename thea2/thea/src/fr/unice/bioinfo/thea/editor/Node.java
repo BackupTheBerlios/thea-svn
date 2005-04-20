@@ -80,7 +80,10 @@ public class Node implements PropertyChangeListener {
     private boolean collapsed = false;
     /** Flag to determine if this node is terminal. */
     private boolean terminal = false;
-    /** Flag to determine if this node's state is detailed. */
+    /**
+     * Flag that indicates if this node is not paint due to a lack of space on
+     * the display area.
+     */
     private boolean detailed = false;
     /** Flag indicating if the node is in the clipping area */
     private boolean inClipArea = false;
@@ -166,8 +169,9 @@ public class Node implements PropertyChangeListener {
     /** Stets detailed/undetaile state of this node. */
     public void setDetailed(boolean detailed) {
         this.detailed = detailed;
-        if (this.isLeaf())
+        if (this.isLeaf()){
             return;
+        }
         Iterator iterator = this.getChildren().iterator();
         while (iterator.hasNext()) {
             ((Node) iterator.next()).setDetailed(detailed);
@@ -185,7 +189,7 @@ public class Node implements PropertyChangeListener {
     /** Tells this node and its children if they are in the clip area. */
     public void setInClipArea(boolean inClipArea) {
         this.inClipArea = inClipArea;
-        if (this.isLeaf()){
+        if (this.isLeaf()) {
             return;
         }
         Iterator iterator = this.getChildren().iterator();
@@ -243,7 +247,7 @@ public class Node implements PropertyChangeListener {
         return selected;
     }
 
-    /** Sets selected/unioselected state. */
+    /** Sets selected/unselected state. */
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
@@ -323,13 +327,13 @@ public class Node implements PropertyChangeListener {
         }
         return label;
     }
-    
-    /** Sets the name of this node.*/
+
+    /** Sets the name of this node. */
     public void setName(String name) {
         this.name = name;
     }
 
-    /** Returns this nodes's name.*/
+    /** Returns this nodes's name. */
     public String getName() {
         return name;
     }
@@ -442,8 +446,8 @@ public class Node implements PropertyChangeListener {
         children.remove(aChild);
         children.add(newPosition, aChild);
     }
-    
-    /** Returns the list of all visible leaves that are descendant of this node.*/
+
+    /** Returns the list of all visible leaves that are descendant of this node. */
     public List getVisibleLeaves() {
         List vnodes = new LinkedList();
         List children = this.getChildren();
@@ -476,16 +480,6 @@ public class Node implements PropertyChangeListener {
     /** User data associated with this node */
     private Map userData = new HashMap();
 
-    //    /**
-    //     * Creates a Node.
-    //     */
-    //    public Node() {
-    //        init();
-    //
-    //        // register itseld as a listener for settings
-    //        CESettings.getInstance().addPropertyChangeListener(this);
-    //    }
-
     /**
      * Associate an {@link Entity}to this node.
      */
@@ -500,18 +494,6 @@ public class Node implements PropertyChangeListener {
     public Entity getEntity() {
         return entity;
     }
-
-//    /**
-//     * Initialize this node.
-//     */
-//    private void init() {
-//        parent = null;
-//        children = null;
-//        name = null;
-//        branchLength = 0;
-//        numberOfLeaves = -1;
-//        userData = new HashMap();
-//    }
 
     /**
      * Setter for userData. Allows external application to associate data with
@@ -533,41 +515,6 @@ public class Node implements PropertyChangeListener {
         return userData.get(key);
     }
 
-    //    public void setUserData(Map m) {
-    //        userData = m;
-    //    }
-
-    //    /**
-    //     * Getter for userData
-    //     * @return the map of serialisable user data
-    //     */
-    //    public Map getUserData() {
-    //        Map m = new HashMap();
-    //        Iterator it = userData.keySet().iterator();
-    //
-    //        while (it.hasNext()) {
-    //            String key = (String) it.next();
-    //
-    //            if (serializableUserData.contains(key)) {
-    //                m.put(key, userData.get(key));
-    //            }
-    //        }
-    //
-    //        return m;
-    //    }
-
-    //    public Node getRoot() {
-    //        return getRoot(this);
-    //    }
-
-    //    public Node getRoot(Node node) {
-    //        if (node.getParent() == null) {
-    //            return node;
-    //        }
-    //
-    //        return getRoot(node.getParent());
-    //    }
-
     public static void setSerializableUserData(String key, boolean b) {
         if (b) {
             serializableUserData.add(key);
@@ -575,85 +522,6 @@ public class Node implements PropertyChangeListener {
             serializableUserData.remove(key);
         }
     }
-
-    //    public static void setSerializableUserData(Set s) {
-    //        System.err.println("set called with " + s);
-    //        serializableUserData = new HashSet(s);
-    //    }
-
-    //    public static Set getSerializableUserData() {
-    //        return serializableUserData;
-    //    }
-
-    //    /**
-    //     * Indicates if the node is a leaf
-    //     * @return True if this node has no child
-    //     */
-    //    public boolean isLeaf() {
-    //        return (children == null);
-    //    }
-
-    //    /**
-    //     * Indicates if the node is an ancestor of the parameter node
-    //     * @param node The node that has to be searched in the descendant of the
-    //     * current node
-    //     * @return A boolean indicating if this node is ancestor of <b>node </b>
-    //     */
-    //    public boolean isAncestorOf(Node node) {
-    //        if (node == null) {
-    //            return false;
-    //        }
-    //
-    //        if (node.getParent() == this) {
-    //            return true;
-    //        }
-    //
-    //        return isAncestorOf(node.getParent());
-    //    }
-
-    //    /**
-    //     * Count leaves that are descendant of that node
-    //     * @return The number of leaves rooted to this node
-    //     */
-    //    public int getNumberOfLeaves() {
-    //        if (numberOfLeaves != -1) {
-    //            return numberOfLeaves;
-    //        }
-    //
-    //        if (children == null) {
-    //            return 1;
-    //        }
-    //
-    //        int leaves = 0;
-    //        Iterator iterator = children.iterator();
-    //
-    //        while (iterator.hasNext()) {
-    //            leaves += ((Node) iterator.next()).getNumberOfLeaves();
-    //        }
-    //
-    //        numberOfLeaves = leaves;
-    //
-    //        return leaves;
-    //    }
-
-    //    /**
-    //     * Count descendants of that node
-    //     * @return The number of descendants of this node
-    //     */
-    //    public int countDescendants() {
-    //        if (children == null) {
-    //            return 1;
-    //        }
-    //
-    //        int descendants = 0;
-    //        Iterator iterator = children.iterator();
-    //
-    //        while (iterator.hasNext()) {
-    //            descendants += ((Node) iterator.next()).countDescendants();
-    //        }
-    //
-    //        return descendants + 1;
-    //    }
 
     /**
      * Returns the list of all leaf nodes that are descendant of this one.
@@ -677,31 +545,6 @@ public class Node implements PropertyChangeListener {
         }
     }
 
-    //    /**
-    //     * Return the list of all nodes that are descendant of that node
-    //     * @return The list of nodes
-    //     */
-    //    public Collection getAllChildNodes() {
-    //        Collection childs = new HashSet();
-    //        collectAllChildNodes(childs);
-    //
-    //        return childs;
-    //    }
-    //
-    //    private void collectAllChildNodes(Collection childs) {
-    //        childs.add(this);
-    //
-    //        if (isLeaf()) {
-    //            return;
-    //        }
-    //
-    //        Iterator iterator = getChildren().iterator();
-    //
-    //        while (iterator.hasNext()) {
-    //            ((Node) iterator.next()).collectAllChildNodes(childs);
-    //        }
-    //    }
-
     /**
      * Get the depth of this node
      * @return The number of getParent() to perform in order to reach the root
@@ -713,86 +556,6 @@ public class Node implements PropertyChangeListener {
 
         return (parent.getDepth() + 1);
     }
-
-    //    /**
-    //     * Compute the distance from an ancestor to this node
-    //     * @param ancestor the ancestor (if ancestor is null, root is assumed)
-    //     * @param b useBranchLength a flag specifying if branch lengths has to be
-    //     * used
-    //     * @return The distance between an ancestor's node and the current node
-    //     */
-    //    public double getDistanceToAncestor(Node ancestor, boolean
-    // useBranchLength) {
-    //        double bl = (useBranchLength ? branchLength : 1);
-    //        if (parent == null) {
-    //            return 0;
-    //        }
-    //        if (parent == ancestor) {
-    //            return bl;
-    //        }
-    //        return (parent.getDistanceToAncestor(ancestor, useBranchLength) + bl);
-    //    }
-
-    //    /**
-    //     * Find the nodes that match the string
-    //     * @param s The string to be matched
-    //     * @param ignoreCase true to perform a case insensitive search
-    //     * @return a List holding all matched nodes
-    //     */
-    //    public List findMatchingNodes(String s, boolean ignoreCase) {
-    //        List matches = new Vector();
-    //
-    //        if (ignoreCase && s.equalsIgnoreCase(name)) {
-    //            matches.add(this);
-    //        } else if (!ignoreCase && s.equals(name)) {
-    //            matches.add(this);
-    //        }
-    //
-    //        if (children == null) {
-    //            return matches;
-    //        }
-    //
-    //        // lookup child nodes
-    //        Iterator iterator = children.iterator();
-    //
-    //        while (iterator.hasNext()) {
-    //            List l = ((Node) iterator.next()).findMatchingNodes(s, ignoreCase);
-    //            matches.addAll(l);
-    //        }
-    //
-    //        return matches;
-    //    }
-
-//    /**
-//     * Find the nodes that match a pattern
-//     * @param p The pattern to match
-//     * @return A List holding all matched nodes
-//     */
-//    public List findMatchingNodes(Pattern p) {
-//        List matches = new Vector();
-//
-//        if (name != null) {
-//            Matcher m = p.matcher(name);
-//
-//            if (m.matches()) {
-//                matches.add(this);
-//            }
-//        }
-//
-//        if (children == null) {
-//            return matches;
-//        }
-//
-//        // lookup child nodes
-//        Iterator iterator = children.iterator();
-//
-//        while (iterator.hasNext()) {
-//            List l = ((Node) iterator.next()).findMatchingNodes(p);
-//            matches.addAll(l);
-//        }
-//
-//        return matches;
-//    }
 
     /**
      * Extracts string values. String values are simply properties of the entity

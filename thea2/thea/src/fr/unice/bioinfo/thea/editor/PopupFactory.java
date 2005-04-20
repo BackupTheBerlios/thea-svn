@@ -166,8 +166,13 @@ public class PopupFactory {
                 public void actionPerformed(ActionEvent e) {
 //                    tc.addCollapsedNode(n, !tc.getCollapsed(n));
 //                    tc.addCollapsedNode(n, !n.isCollapsed());
-                    n.setCollapsed(!n.isCollapsed());
-                    tc.addCollapsedNode(n);
+                    boolean b = !n.isCollapsed();
+                    n.setCollapsed(b);
+                    if(b == true){
+                        tc.collapseNode(n);
+                        }else{
+                            tc.uncollapsNode(n);
+                            }
                 }
             });
             popup.add(menuItem);
@@ -392,7 +397,9 @@ public class PopupFactory {
                     while (it.hasNext()) {
                         n = (Node) it.next();
                         out.println(n.getName());
+                        System.out.println(n.getName());
                     }
+                    out.close();
                 } catch (java.io.IOException ioe) {
                     ErrorManager.getDefault().log(
                             "problem writing newick format");
