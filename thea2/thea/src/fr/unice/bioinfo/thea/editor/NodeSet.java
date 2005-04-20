@@ -19,19 +19,12 @@ public class NodeSet {
      * Default constructor
      */
     public NodeSet() {
-        init();
+        nodes = new Vector();
+        userData = new HashMap();
     }
 
     public NodeSet(List nodes) {
         this.nodes = nodes;
-        userData = new HashMap();
-    }
-
-    /**
-     * Initialize NodeSets
-     */
-    private void init() {
-        nodes = new Vector();
         userData = new HashMap();
     }
 
@@ -55,13 +48,13 @@ public class NodeSet {
         return userData.get(key);
     }
 
-    public void setUserData(Map m) {
-        userData = m;
-    }
+//    public void setUserData(Map m) {
+//        userData = m;
+//    }
 
-    public Map getUserData() {
-        return userData;
-    }
+//    public Map getUserData() {
+//        return userData;
+//    }
 
     /**
      * Getter for nodes
@@ -71,12 +64,12 @@ public class NodeSet {
         return nodes;
     }
 
-    /**
-     * Setter for nodes
-     * @param nodes the set of nodes
-     * @return the List of nodes
-     */
-    public void setNodes(List nodes) {
-        this.nodes = new Vector(nodes);
-    }
+//    /**
+//     * Setter for nodes
+//     * @param nodes the set of nodes
+//     * @return the List of nodes
+//     */
+//    public void setNodes(List nodes) {
+//        this.nodes = new Vector(nodes);
+//    }
 }
