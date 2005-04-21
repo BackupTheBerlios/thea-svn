@@ -52,9 +52,7 @@ import fr.unice.bioinfo.thea.editor.util.Discretization;
  */
 public class CECanvas extends JComponent implements PropertyChangeListener {
 
-    //
     private FontRenderContext context;
-    //
 
     /** the image used to show that a branch is collapsed */
     private Image expandImage = null;
@@ -63,18 +61,18 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     private Node currentRootNode = null;
 
     /** contains the list of all root nodes in the classification. */
-    private Stack roots;
+    private Stack roots = new Stack();
 
     /** Size of a branch in percentage of the remaining width */
     private double branchSize = 0.1;
 
-    private double baseBranchLength;
+    private double baseBranchLength = -1;
 
     /** The minimum amount of space between tho adjacent branchs */
     private double branchsMinimumSep = 1;
 
     /** The node currently highlighted */
-    private Node hnode;
+    private Node hnode = null;
 
     /**
      * When moving the mouse over currentRootNode nodes, they are highlighted to
@@ -90,7 +88,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     private int hmode;
 
     /** Popup menu. */
-    private JPopupMenu popupMenu;
+    private JPopupMenu popupMenu = null;
 
     /** Flag to indicate if branchs have to be drawn according to their length. */
     private boolean showBranchLength;
@@ -104,12 +102,12 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     /** The maximum width on the screen used by terminal labels */
     //private double labelMaxWidth;
     /** The standard height of a label compted from the layout of the letter 'X' */
-    private double labelHeight;
+    private double labelHeight = -1;
 
     /** The size of the component with a zoom factor of (1,1) */
-    private double currentZoomX;
+    private double currentZoomX = 1;
 
-    private double currentZoomY;
+    private double currentZoomY = 1;
 
     /** True if terminal labels are surrounded by a frame */
     private boolean terminalBoxed;
@@ -121,38 +119,38 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     private Set selectedNodes = new HashSet();
 
     /** The set of collapsed nodes */
-    private Set collapsedNodes;
+    private Set collapsedNodes = new HashSet();
 
     /** The list of successive selection lists */
     private List selectionsList = new Vector();
 
-    /** The number of selections done */
-    private int selectionsCounter;
-
     /** The map between nodes and their detailed states */
-    private Map detailedNodes;
+    private Map detailedNodes = new HashMap();
 
     /** The map between nodes and their localisation or not into the windows area */
-    private Map clippedNodes;
+    private Map clippedNodes = new HashMap();
 
     /** The map between nodes and their layout */
-    private Map nodeToLayout;
+    private Map nodeToLayout = new HashMap();
+
+    /** The number of selections done */
+    private int selectionsCounter = 0;
 
     /** The name of the selection */
     private String selectionName;
 
     /** data relative to expression values */
-    private int expValNbMeasures;
+    private int expValNbMeasures = 0;
 
-    private int expValColumnWidth;
+    private int expValColumnWidth = 0;
 
     private List expValUnderExpDeciles;
 
-    private List expValOverExpDeciles;
+    private List expValOverExpDeciles = null;
 
-    private double expValMinMeasure;
+    private double expValMinMeasure = 0;
 
-    private double expValMaxMeasure;
+    private double expValMaxMeasure = 0;
 
     /** the list of selection s */
     protected Set treeSelectionListeners;
@@ -176,55 +174,55 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         showBranchLength = settings.isShowBranchLength();
         alignTerminalNodes = settings.isAlignTerminalNodes();
         showExpressionValues = settings.isShowExpressionValues();
+        terminalBoxed = settings.isTerminalsBoxed();
+        nonTerminalBoxed = settings.isNonTerminalsBoxed();
         // Collapse Icon
         expandImage = Utilities
-                .loadImage("fr/unice/bioinfo/thea/editor/resources/expand.gif");
+                .loadImage("fr/unice/bioinfo/thea/editor/resources/expand.gif");//NOI18N
         // Register this as a listener to changes in that instance
         settings.addPropertyChangeListener(this);
         // Initialize the list that contains selections' listeners
         svl = new ArrayList();
-        init();
-        showExpressionValues = true;
+        //init();
     }
 
     public void init() {
-        currentRootNode = null;
-        roots = new Stack();
-        hnode = null;
+        //currentRootNode = null;
+        //roots = new Stack();
+        //hnode = null;
         //showAnnotation = false;
         //hmode = 1;
-        popupMenu = null;
+        //popupMenu = null;
         //showBranchLength = false;
         //alignTerminalNodes = true;
         //        labelMaxWidth = -1;
-        labelHeight = -1;
-        currentZoomX = 1;
-        currentZoomY = 1;
-        terminalBoxed = false;
-        nonTerminalBoxed = true;
-        baseBranchLength = -1;
-        collapsedNodes = new HashSet();
-        if (!selectionsList.isEmpty()) {
-            List selectionsClone = new Vector(selectionsList);
-            Iterator it = selectionsClone.iterator();
-            while (it.hasNext()) {
-                NodeSet selectionList = (NodeSet) it.next();
-                removeSelection(selectionList);
-            }
-            selectionsList.clear();
-        }
-        clearSelected();
-        selectionsCounter = 0;
+        //labelHeight = -1;
+        //currentZoomX = 1;
+        //currentZoomY = 1;
+        //nonTerminalBoxed = true;
+        //baseBranchLength = -1;
+        //collapsedNodes = new HashSet();
+        //        if (!selectionsList.isEmpty()) {
+        //            List selectionsClone = new Vector(selectionsList);
+        //            Iterator it = selectionsClone.iterator();
+        //            while (it.hasNext()) {
+        //                NodeSet selectionList = (NodeSet) it.next();
+        //                removeSelection(selectionList);
+        //            }
+        //            selectionsList.clear();
+        //        }
+        //        clearSelected();
+        //selectionsCounter = 0;
         //        nodeToPosition = new HashMap();
         //        nodeToArea = new HashMap();
-        detailedNodes = new HashMap();
-        clippedNodes = new HashMap();
-        nodeToLayout = new HashMap();
+        //detailedNodes = new HashMap();
+        //clippedNodes = new HashMap();
+        //nodeToLayout = new HashMap();
         //        nodeToNbTerminals = new HashMap();
-        expValNbMeasures = 0;
-        expValColumnWidth = 0;
-        expValMinMeasure = 0;
-        expValMaxMeasure = 0;
+        //expValNbMeasures = 0;
+        //expValColumnWidth = 0;
+        //expValMinMeasure = 0;
+        //expValMaxMeasure = 0;
     }
 
     /** Adds a new {@link SelectionListener}object. */
@@ -1006,7 +1004,10 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         return baseBranchLength;
     }
 
-    /** Sets the given node to be used as a root node for the currently displayed tree.*/
+    /**
+     * Sets the given node to be used as a root node for the currently displayed
+     * tree.
+     */
     public void setCurrentRootNode(Node aNode) {
         currentRootNode = aNode;
         expValMinMeasure = 0;
@@ -1014,9 +1015,6 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         expValUnderExpDeciles = null;
         expValOverExpDeciles = null;
         Object o = getTreeRoot().getUserData("nbMeasures");
-        if (o == null) {
-            System.out.println("o est null");
-        }
         int nbMeasures = ((Integer) o).intValue();
         if (nbMeasures > 0) {
             expValMinMeasure = ((Double) getTreeRoot()
@@ -1080,11 +1078,13 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     public Node getCurrentRootNode() {
         return currentRootNode;
     }
-    /** Sets the list of root nodes of the used classification.*/
+
+    /** Sets the list of root nodes of the used classification. */
     public void setRoots(Stack roots) {
         this.roots = roots;
     }
-    /** Returns all root nodes used in the classification.*/
+
+    /** Returns all root nodes used in the classification. */
     public Stack getRoots() {
         return roots;
     }
@@ -1116,7 +1116,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         update();
     }
 
-    /** Sets a pop-up menu for user's intercations.*/
+    /** Sets a pop-up menu for user's intercations. */
     public void setPopupMenu(JPopupMenu pop) {
         popupMenu = pop;
     }
@@ -1862,6 +1862,9 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
                 CESettings.PROP_SHOW_EXP_VALUES_SELECT)) {
             showExpressionValues = CESettings.getInstance()
                     .isShowExpressionValues();
+        } else if (e.getPropertyName().equalsIgnoreCase(
+                CESettings.PROP_TERMINALS_BOXED)) {
+            terminalBoxed = CESettings.getInstance().isTerminalsBoxed();
         }
         repaint();
     }

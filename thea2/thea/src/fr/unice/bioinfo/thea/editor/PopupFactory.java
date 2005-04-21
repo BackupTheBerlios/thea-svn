@@ -26,6 +26,7 @@ import org.openide.util.Utilities;
 import org.openide.windows.Mode;
 import org.openide.windows.WindowManager;
 
+import fr.unice.bioinfo.thea.editor.dlg.CanvasOptions;
 import fr.unice.bioinfo.thea.editor.dlg.ZoomingPanel;
 import fr.unice.bioinfo.thea.editor.selection.SelectionEditor;
 
@@ -97,42 +98,37 @@ public class PopupFactory {
             }
         });
         popup.add(menuItem);
-        popup.addSeparator();
+        //popup.addSeparator();
 
         // Add ClassificationViewerSettings menu
-        //        menuItem = new JMenuItem(bundle.getString(
-        //                    "LBL_ClassificationViewerSettingsAction_Name"));
-        //        menuItem.setIcon(new ImageIcon(Utilities.loadImage(
-        //                    "fr/unice/bioinfo/thea/CEditor/resources/Preferences16.gif")));
-        //        menuItem.addActionListener(new ActionListener() {
-        //                public void actionPerformed(ActionEvent e) {
-        //                    // create the main panel for Classification Viewer Settings
-        //                    ClassificationViewerSettingsPanel p = new
-        // ClassificationViewerSettingsPanel();
-        //
-        //                    // create the hide button
-        //                    JButton hideBtn = new JButton(NbBundle.getMessage(
-        //                                ClassificationViewerSettingsAction.class,
-        //                                "LBL_HideButton_Name"));
-        //                    hideBtn.addActionListener(new ActionListener() {
-        //                            public void actionPerformed(ActionEvent e) {
-        //                            }
-        //                        });
-        //
-        //                    Object[] options = { hideBtn };
-        //                    DialogDescriptor dd = new DialogDescriptor(p,
-        //                            NbBundle.getMessage(
-        //                                ClassificationViewerSettingsAction.class,
-        //                                "LBL_ClassificationViewerSettingsDialog_Name"),
-        //                            false, options, null,
-        //                            DialogDescriptor.DEFAULT_ALIGN,
-        //                            HelpCtx.DEFAULT_HELP, null);
-        //                    dd.setClosingOptions(new Object[] { hideBtn });
-        //                    DialogDisplayer.getDefault().createDialog(dd).show();
-        //                }
-        //            });
-        //        popup.add(menuItem);
-        //        popup.addSeparator();
+        menuItem = new JMenuItem(bundle
+                .getString("LBL_Options"));
+        menuItem
+                .setIcon(new ImageIcon(
+                        Utilities
+                                .loadImage("fr/unice/bioinfo/thea/editor/resources/Preferences16.gif")));
+        menuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // create the main panel for Classification Viewer Settings
+                CanvasOptions p = new CanvasOptions();
+
+                // create the hide button
+                JButton hideBtn = new JButton(bundle.getString("LBL_HideButton_Name"));
+                hideBtn.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                    }
+                });
+
+                Object[] options = { hideBtn };
+                DialogDescriptor dd = new DialogDescriptor(p,bundle.getString("LBL_Options"),
+                        false, options, null, DialogDescriptor.DEFAULT_ALIGN,
+                        HelpCtx.DEFAULT_HELP, null);
+                dd.setClosingOptions(new Object[] { hideBtn });
+                DialogDisplayer.getDefault().createDialog(dd).show();
+            }
+        });
+        popup.add(menuItem);
+        popup.addSeparator();
 
         // copy to profile classifier
         if ((n.isLeaf()) && (n.getUserData("measures") != null)) {

@@ -51,6 +51,12 @@ public class CESettings extends SystemOption {
     /** showBranchLength property name */
     public static final String PROP_SHOW_BRANCH_LENGTH = "showBranchLength"; // NOI18N
 
+    /** terminals boxed property name */
+    public static final String PROP_TERMINALS_BOXED = "terminalsBoxed"; // NOI18N
+    
+    /** Non terminals boxed property name */
+    public static final String PROP_NON_TERMINALS_BOXED = "nonTerminalsBoxed"; // NOI18N
+
     /** showPhysicallyAdjacent property name */
     public static final String PROP_SHOW_ADJACENT = "showPhysicallyAdjacent"; // NOI18N
 
@@ -227,6 +233,12 @@ public class CESettings extends SystemOption {
 
     /** Show length of branches property */
     private static boolean showBranchLength = false;
+
+    /** Surround terminal nodes property */
+    private static boolean terminalsBoxed = false;
+    
+    /** Surround non terminal nodes property */
+    private static boolean nonTerminalsBoxed = true;
 
     /** Show physically adjacent genes property */
     private static boolean showPhysicallyAdjacent = false;
@@ -651,6 +663,46 @@ public class CESettings extends SystemOption {
                 (!alignTerminalNodes) ? Boolean.TRUE : Boolean.FALSE,
                 alignTerminalNodes ? Boolean.TRUE : Boolean.FALSE);
     }
+    
+    /**
+     * Returns nonTerminalsBoxed
+     */
+    public boolean isNonTerminalsBoxed() {
+        return nonTerminalsBoxed;
+    }
+    
+    /**
+     * Setter for nonTerminalsBoxed
+     */
+    public void setNonTerminalsBoxed(boolean value) {
+        if (nonTerminalsBoxed == value) {
+            return;
+        }
+        nonTerminalsBoxed = value;
+        firePropertyChange(PROP_NON_TERMINALS_BOXED,
+                (!nonTerminalsBoxed) ? Boolean.TRUE : Boolean.FALSE,
+                        nonTerminalsBoxed ? Boolean.TRUE : Boolean.FALSE);
+    }
+
+    /**
+     * Returns terminalsBoxed
+     */
+    public boolean isTerminalsBoxed() {
+        return terminalsBoxed;
+    }
+
+    /**
+     * Setter for terminalsBoxed
+     */
+    public void setTerminalsBoxed(boolean value) {
+        if (terminalsBoxed == value) {
+            return;
+        }
+        terminalsBoxed = value;
+        firePropertyChange(PROP_TERMINALS_BOXED,
+                (!terminalsBoxed) ? Boolean.TRUE : Boolean.FALSE,
+                terminalsBoxed ? Boolean.TRUE : Boolean.FALSE);
+    }
 
     /**
      * Returns showBranchLength
@@ -666,7 +718,6 @@ public class CESettings extends SystemOption {
         if (showBranchLength == value) {
             return;
         }
-
         showBranchLength = value;
         firePropertyChange(PROP_SHOW_BRANCH_LENGTH,
                 (!showBranchLength) ? Boolean.TRUE : Boolean.FALSE,

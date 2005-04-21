@@ -37,6 +37,9 @@
       <folder name="OntologyExplorer">
         <file name="OESettings.settings" url="OESettings.settings"/>
       </folder>
+      <folder name="CEditor">
+        <file name="CESettings.settings" url="CESettings.settings"/>
+      </folder>
     </folder>
   </folder>
   <!-- ================ SERVICES  =============== -->
