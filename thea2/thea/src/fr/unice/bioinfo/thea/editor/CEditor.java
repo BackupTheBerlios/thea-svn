@@ -47,7 +47,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.infos.ClassificationNodeInfo;
  * The main swing GUI used by the classification viewer module. It extends the
  * {@link TopComponent}from the netbeans open API and encapsulates a {@link
  * CECanvas}object.
- * @author SAÏD, EL KASMI.
+ * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi</a>
  */
 public class CEditor extends TopComponent implements TreeSelectionListener,
         ChangeListener {
@@ -176,7 +176,7 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
             collectInfo(rootNode);
         } else if (type == Consts.TYPE_SOTA) {
             // sota format
-            rootNode = new SotaUtil().load(cf, tf);
+            rootNode = new SotaUtil().load(cf);
 
             if (rootNode == null) {
                 return;

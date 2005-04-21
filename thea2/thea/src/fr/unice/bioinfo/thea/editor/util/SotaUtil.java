@@ -15,7 +15,7 @@ import java.util.Vector;
 import fr.unice.bioinfo.thea.editor.Node;
 
 public class SotaUtil {
-    public Node load(File sotFile, File sdtFile) {
+    public Node load(File sotFile) {
         try {
             return parse(new BufferedReader(new FileReader(sotFile)));
         } catch (FileNotFoundException fnfe) {
