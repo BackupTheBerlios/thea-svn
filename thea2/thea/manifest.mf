@@ -1,5 +1,6 @@
 Manifest-Version: 1.0
 OpenIDE-Module: fr.unice.bioinfo.thea/1
+OpenIDE-Module-Install: fr/unice/bioinfo/thea/TheaModule.class
 OpenIDE-Module-Specification-Version: 1.0
 OpenIDE-Module-Layer: fr/unice/bioinfo/thea/resources/layer.xml
 OpenIDE-Module-Localizing-Bundle: fr/unice/bioinfo/thea/Bundle.properties
