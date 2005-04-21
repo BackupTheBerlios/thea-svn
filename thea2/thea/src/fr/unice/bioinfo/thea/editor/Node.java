@@ -20,7 +20,7 @@ import fr.unice.bioinfo.thea.editor.settings.CESettings;
  * A class representing a node. Each node has a link to its parent and hold the
  * list of its childs. Nodes that have no child are leaves.
  * @author Claude Pasquier
- * @author Saïd El kasmi.
+ * @author @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi</a>
  */
 public class Node implements PropertyChangeListener {
 
