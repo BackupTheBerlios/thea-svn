@@ -3,20 +3,12 @@ package fr.unice.bioinfo.thea.editor;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
-import java.beans.XMLDecoder;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.Stack;
 import java.util.Vector;
 
 import javax.swing.JPopupMenu;
@@ -25,7 +17,6 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.openide.ErrorManager;
 import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
 import org.openide.windows.Mode;
@@ -47,7 +38,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.infos.ClassificationNodeInfo;
  * The main swing GUI used by the classification viewer module. It extends the
  * {@link TopComponent}from the netbeans open API and encapsulates a {@link
  * CECanvas}object.
- * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi</a>
+ * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class CEditor extends TopComponent implements TreeSelectionListener,
         ChangeListener {
@@ -107,20 +98,24 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
     protected String preferredID() {
         return PREFERRED_ID;
     }
-    /** This windows can be closed*/
+
+    /** This windows can be closed */
     public boolean canClose() {
         return true;
     }
+
     /** Implements what to do when this window's closed */
     protected void componentClosed() {
         super.componentClosed();
         // close the selection editor attached to this window
         selectionEditor.close();
     }
-    /** Mange persistence for this windows*/
+
+    /** Mange persistence for this windows */
     public int getPersistenceType() {
         return super.PERSISTENCE_ALWAYS;
     }
+
     public void load() {
         Node rootNode = canvas.getTreeRoot();
         File cf = cni.getCFile();
@@ -227,18 +222,8 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
             rootNode.setChildren(nodes);
             collectInfo(rootNode);
         }
-        canvas.init();
         canvas.setCurrentRootNode(rootNode);
-
-        //viewerComponent.setShowBranchLength(ClassificationViewerSettings.getInstance().isShowBranchLength());
-        // the showBranchLength flag is a property initialized from
-        // common settings in CECanvas class.
-
-//        Node.setSerializableUserData("measures", true);
-//        Node.setSerializableUserData("dbKey", true);
-//        Node.setSerializableUserData("idInClassif", true);
-//        Node.setSerializableUserData("userAnnotations", true);
-//        Runtime.getRuntime().gc();
+        Runtime.getRuntime().gc();
 
         long mem2 = Runtime.getRuntime().freeMemory();
         long t2 = System.currentTimeMillis();

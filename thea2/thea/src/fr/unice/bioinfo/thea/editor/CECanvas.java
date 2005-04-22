@@ -48,7 +48,7 @@ import fr.unice.bioinfo.thea.editor.util.Discretization;
  * settings and then registers itself as a <i>PropertyChangeListener </i> to
  * listen to users preferences.
  * @author Claude Pasquier.
- * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi</a>
+ * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class CECanvas extends JComponent implements PropertyChangeListener {
 
@@ -183,46 +183,6 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         settings.addPropertyChangeListener(this);
         // Initialize the list that contains selections' listeners
         svl = new ArrayList();
-        //init();
-    }
-
-    public void init() {
-        //currentRootNode = null;
-        //roots = new Stack();
-        //hnode = null;
-        //showAnnotation = false;
-        //hmode = 1;
-        //popupMenu = null;
-        //showBranchLength = false;
-        //alignTerminalNodes = true;
-        //        labelMaxWidth = -1;
-        //labelHeight = -1;
-        //currentZoomX = 1;
-        //currentZoomY = 1;
-        //nonTerminalBoxed = true;
-        //baseBranchLength = -1;
-        //collapsedNodes = new HashSet();
-        //        if (!selectionsList.isEmpty()) {
-        //            List selectionsClone = new Vector(selectionsList);
-        //            Iterator it = selectionsClone.iterator();
-        //            while (it.hasNext()) {
-        //                NodeSet selectionList = (NodeSet) it.next();
-        //                removeSelection(selectionList);
-        //            }
-        //            selectionsList.clear();
-        //        }
-        //        clearSelected();
-        //selectionsCounter = 0;
-        //        nodeToPosition = new HashMap();
-        //        nodeToArea = new HashMap();
-        //detailedNodes = new HashMap();
-        //clippedNodes = new HashMap();
-        //nodeToLayout = new HashMap();
-        //        nodeToNbTerminals = new HashMap();
-        //expValNbMeasures = 0;
-        //expValColumnWidth = 0;
-        //expValMinMeasure = 0;
-        //expValMaxMeasure = 0;
     }
 
     /** Adds a new {@link SelectionListener}object. */
@@ -281,8 +241,6 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         if (currentRootNode == null) {
             return;
         }
-        //        labelMaxWidth = computeLabelMaxWidth(getRootNode(), (Graphics2D) g,
-        //                Consts.TERMINAL_FONT);
         TextLayout tl = new TextLayout("X", Consts.TERMINAL_FONT, context);
         labelHeight = tl.getBounds().getHeight();
         double treeWidth = getWidth();
@@ -385,18 +343,14 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             if (!getCurrentRootNode().isAncestorOf(aNode)) {
                 continue;
             }
-            //            if (!aNode.isInClipArea()) {
             if (!isNodeClipped(aNode)) {
                 continue;
             }
             Rectangle2D.Double aNodeArea = (Rectangle2D.Double) aNode.getArea();
             if (isNodeDetailed(aNode)) {
-                //            if (aNode.isDetailed()) {
                 do {
                     aNode = aNode.getParent();
                 } while ((aNode != null) && isNodeDetailed(aNode));
-                //                } while ((aNode != null) && aNode.isDetailed());
-
                 if (aNode != null) {
                     aNodeArea = (Rectangle2D.Double) aNode.getArea();
                 }
@@ -456,14 +410,12 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
                     && !(getCurrentRootNode() == aNode)) {
                 continue;
             }
-            //            if (!n.isInClipArea()) {
             if (!isNodeClipped(aNode)) {
                 continue;
             }
             Rectangle2D.Double area = (Rectangle2D.Double) aNode.getArea();
             Node knownNode = aNode;
             while (isNodeDetailed(knownNode)) {
-                //            while (knownNode.isDetailed()) {
                 knownNode = knownNode.getParent();
                 area = (Rectangle2D.Double) knownNode.getArea();
             }
@@ -526,8 +478,6 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         aNode.setArea(new Rectangle2D.Double(x, y, width, height));
         if (!g.hitClip((int) x, (int) y, (int) width + 1, (int) height + 1)) {
             detailNode(aNode, true);
-            //            aNode.setDetailed(true);
-            //aNode.setInClipArea(false);
             clipNode(aNode, false);
             return y + (height / 2);
         }
@@ -554,7 +504,6 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             Node aChild = (Node) it.next();
             if (noDetail == true) {
                 detailNode(aChild, true);
-                //                child.setDetailed(true);
                 continue;
             }
             int childLeaves = aChild.getTerminals();
@@ -663,7 +612,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
         boolean lastAnnotIsCurrentLabel = false;
         String label = aNode.getLabel();
-        if (!label.equals("")) {
+        if (!label.equals("")) {//NOI18N
             List param = new Vector();
             param.add(label);
             param.add(getLayout(aNode));
@@ -945,38 +894,6 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
     }
 
-    //    /**
-    //     * Compute the maximum label width of subnodes of this node
-    //     * @param font The font
-    //     * @param aNode The currentRootNode of the subtree
-    //     * @param g The graphics context
-    //     * @param frc The font render context
-    //     * @return The maximum width occupied on the screen by the label of this
-    //     * node or all its subnodes
-    //     */
-    //    public double computeLabelMaxWidth(Node aNode, Graphics2D g, Font font) {
-    //        String label = aNode.getLabel();
-    //        if (label.equals("")) {
-    //            return 0;
-    //        }
-    //        if (aNode.isTerminal()) {
-    //            TextLayout tl = new TextLayout(label, font, context);
-    //            Rectangle2D bounds = tl.getBounds();
-    //
-    //            return bounds.getWidth();
-    //        }
-    //        double maxWidth = 0;
-    //
-    //        List children = aNode.getChildren();
-    //        Iterator it = children.iterator();
-    //        while (it.hasNext()) {
-    //            Node aChild = (Node) it.next();
-    //            maxWidth = Math
-    //                    .max(computeLabelMaxWidth(aChild, g, font), maxWidth);
-    //        }
-    //        return maxWidth;
-    //    }
-
     public double computeBaseBranchLength(Node aNode, double width,
             Graphics2D g, Font font) {
         if (aNode.isTerminal()) {
@@ -1044,10 +961,6 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
                 SelectionEvent e = new SelectionEvent(this, selId, null, null,
                         null, localHits, null);
                 fireSelectionDone(e);
-                //                ClassifSelectionEvent event = new ClassifSelectionEvent(this,
-                //                        selId, null, null, null, localHits, null);
-                //                org.bdgp.apps.dagedit.gui.Controller.getController()
-                //                        .fireSelectionDoneInClassif(event);
             }
         }
         if (!selectedNodes.isEmpty()) {
@@ -1066,10 +979,6 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             SelectionEvent e = new SelectionEvent(this, selId, null, null,
                     null, localHits, null);
             fireSelectionDone(e);
-            //            ClassifSelectionEvent event = new ClassifSelectionEvent(this,
-            //                    selId, null, null, null, localHits, null);
-            //            org.bdgp.apps.dagedit.gui.Controller.getController()
-            //                    .fireSelectionDoneInClassif(event);
         }
         baseBranchLength = -1; // force the recalculation
     }
@@ -1153,10 +1062,6 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      */
     private void clearSelected() {
         String selId = String.valueOf(selectionsCounter);
-        //        ClassifSelectionEvent event = new ClassifSelectionEvent(this, selId);
-        //        org.bdgp.apps.dagedit.gui.Controller.getController()
-        //                .fireSelectionClearedInClassif(event);
-
         selectedNodes.clear();
         selectionName = null;
     }
@@ -1233,11 +1138,6 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
                 "Current", Consts.SELECTED_COLOR, Consts.SELECTED_BACKGROUND,
                 globalHits, localHits, getSelectedLeaves(true));
         fireSelectionDone(e);
-        //        ClassifSelectionEvent event = new ClassifSelectionEvent(this, selId,
-        //                selectionName, "Current", selectedColor, selectedBackground,
-        //                globalHits, localHits, getSelectedLeaves(true));
-        //        org.bdgp.apps.dagedit.gui.Controller.getController()
-        //                .fireSelectionDoneInClassif(event);
     }
 
     /**
@@ -1613,7 +1513,6 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         if (o == null) {
             return true;
         }
-        //        return aNode.isInClipArea();
         if (o.equals(Boolean.TRUE)) {
             return true;
         } else {
@@ -1623,7 +1522,6 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
 
     /** Adds the given node to the list of clipped nodes. */
     private void clipNode(Node aNode, boolean b) {
-        //        aNode.setInClipArea(b);
         clippedNodes.put(aNode, new Boolean(b));
         if (aNode.isLeaf()) {
             return;
@@ -1671,12 +1569,6 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
                 (Color) selectionToKeep.getUserData("color"), null, null, null);
         // fire event
         fireSelectionDone(e);
-
-        //        ClassifSelectionEvent event = new ClassifSelectionEvent(this, selID,
-        //                null, (Color) selectionToKeep.getUserData("color"), null, null,
-        //                null);
-        //        org.bdgp.apps.dagedit.gui.Controller.getController()
-        //                .fireSelectionDoneInClassif(event);
         selectionsList.add(selectionToKeep);
         selectionsCounter++;
         clearSelected();
@@ -1687,9 +1579,6 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         String selId = (String) sel.getUserData("selId");
         SelectionEvent e = new SelectionEvent(this, selId);
         fireSelectionCleared(e);
-        //        ClassifSelectionEvent event = new ClassifSelectionEvent(this, selId);
-        //        org.bdgp.apps.dagedit.gui.Controller.getController()
-        //                .fireSelectionClearedInClassif(event);
         if (selectionsList.contains(sel)) {
             selectionsList.remove(sel);
         }
@@ -1854,8 +1743,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             showBranchLength = ((Boolean) e.getNewValue()).booleanValue();
         } else if (e.getPropertyName().equalsIgnoreCase(
                 CESettings.PROP_ALIGN_TERMINAL_NODES)) {
-            alignTerminalNodes = (showBranchLength & ((Boolean) e.getNewValue())
-                    .booleanValue());
+            alignTerminalNodes = CESettings.getInstance()
+                    .isAlignTerminalNodes();
         } else if (e.getPropertyName().equalsIgnoreCase(
                 CESettings.PROP_HIDE_SIMILAR_ANNOTATION)) {
         } else if (e.getPropertyName().equalsIgnoreCase(
