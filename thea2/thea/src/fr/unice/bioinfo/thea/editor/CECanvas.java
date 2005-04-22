@@ -48,7 +48,7 @@ import fr.unice.bioinfo.thea.editor.util.Discretization;
  * settings and then registers itself as a <i>PropertyChangeListener </i> to
  * listen to users preferences.
  * @author Claude Pasquier.
- * @author Saïd El kasmi.
+ * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi</a>
  */
 public class CECanvas extends JComponent implements PropertyChangeListener {
 

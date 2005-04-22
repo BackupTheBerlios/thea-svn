@@ -27,6 +27,7 @@ import org.openide.windows.Mode;
 import org.openide.windows.WindowManager;
 
 import fr.unice.bioinfo.thea.editor.dlg.CanvasOptions;
+import fr.unice.bioinfo.thea.editor.dlg.ProfileClassifierPanel;
 import fr.unice.bioinfo.thea.editor.dlg.ZoomingPanel;
 import fr.unice.bioinfo.thea.editor.selection.SelectionEditor;
 
@@ -140,6 +141,20 @@ public class PopupFactory {
                                     .loadImage("fr/unice/bioinfo/thea/editor/resources/Copy16.gif")));
             menuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    ProfileClassifierPanel p = new ProfileClassifierPanel(n);
+//                  create the hide button
+                    JButton hideBtn = new JButton(bundle.getString("LBL_HideButton_Name"));
+                    hideBtn.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                        }
+                    });
+
+                    Object[] options = { hideBtn };
+                    DialogDescriptor dd = new DialogDescriptor(p,n.getName(),
+                            false, options, null, DialogDescriptor.DEFAULT_ALIGN,
+                            HelpCtx.DEFAULT_HELP, null);
+                    dd.setClosingOptions(new Object[] { hideBtn });
+                    DialogDisplayer.getDefault().createDialog(dd).show();
                 }
             });
 
@@ -147,7 +162,7 @@ public class PopupFactory {
              * Profile Classifier doesn't exists yet
              */
 
-            //popup.add(menuItem);
+            popup.add(menuItem);
         }
 
         // collapse and Uncollapse
