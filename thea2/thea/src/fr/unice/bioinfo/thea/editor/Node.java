@@ -5,13 +5,11 @@ import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.thea.editor.settings.CESettings;
@@ -20,7 +18,7 @@ import fr.unice.bioinfo.thea.editor.settings.CESettings;
  * A class representing a node. Each node has a link to its parent and hold the
  * list of its childs. Nodes that have no child are leaves.
  * @author Claude Pasquier
- * @author @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi</a>
+ * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class Node implements PropertyChangeListener {
 
@@ -486,8 +484,8 @@ public class Node implements PropertyChangeListener {
 
     //END FACTORING
 
-    /** indicates if the userData with a specified key should be saved */
-    private static Set serializableUserData = new HashSet();
+    //    /** indicates if the userData with a specified key should be saved */
+    //    private static Set serializableUserData = new HashSet();
 
     /** Contains properties which could be visible from the GUI */
     private Hashtable /* to store all string values */strings;
@@ -537,13 +535,13 @@ public class Node implements PropertyChangeListener {
         return userData.get(key);
     }
 
-    public static void setSerializableUserData(String key, boolean b) {
-        if (b) {
-            serializableUserData.add(key);
-        } else {
-            serializableUserData.remove(key);
-        }
-    }
+    //    public static void setSerializableUserData(String key, boolean b) {
+    //        if (b) {
+    //            serializableUserData.add(key);
+    //        } else {
+    //            serializableUserData.remove(key);
+    //        }
+    //    }
 
     /**
      * Get the depth of this node

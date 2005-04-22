@@ -226,41 +226,7 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
             rootNode.setUserData("idInClassif", "");
             rootNode.setChildren(nodes);
             collectInfo(rootNode);
-        } else if (type == Consts.TYPE_XML) {
-            BufferedInputStream bis = null;
-
-            try {
-                bis = new BufferedInputStream(new FileInputStream(cf));
-            } catch (IOException ioe) {
-                System.err.println("Could not open the file " + cf.toString());
-                //System.exit(1);
-                ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL,ioe);
-            }
-
-            XMLDecoder d = new XMLDecoder(bis);
-            rootNode = (Node) d.readObject();
-
-            Stack roots = (Stack) d.readObject();
-            Set collapsedNodes = new HashSet((List) d.readObject());
-            Map nodeToLayout = (HashMap) d.readObject();
-            List selectionsList = (List) d.readObject();
-            d.close();
-            collectInfo(rootNode);
-            canvas.init();
-            canvas.setCurrentRootNode(rootNode);
-            canvas.setRoots(roots);
-            canvas.setNodeToLayout(nodeToLayout);
-            canvas.setSelectionsList(selectionsList);
-            canvas.setCollapsedNodes(collapsedNodes);
-            Node.setSerializableUserData("measures", true);
-            Node.setSerializableUserData("dbKey", true);
-            Node.setSerializableUserData("idInClassif", true);
-            Node.setSerializableUserData("userAnnotations", true);
-            repaint();
-
-            return;
         }
-
         canvas.init();
         canvas.setCurrentRootNode(rootNode);
 
@@ -268,11 +234,11 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
         // the showBranchLength flag is a property initialized from
         // common settings in CECanvas class.
 
-        Node.setSerializableUserData("measures", true);
-        Node.setSerializableUserData("dbKey", true);
-        Node.setSerializableUserData("idInClassif", true);
-        Node.setSerializableUserData("userAnnotations", true);
-        Runtime.getRuntime().gc();
+//        Node.setSerializableUserData("measures", true);
+//        Node.setSerializableUserData("dbKey", true);
+//        Node.setSerializableUserData("idInClassif", true);
+//        Node.setSerializableUserData("userAnnotations", true);
+//        Runtime.getRuntime().gc();
 
         long mem2 = Runtime.getRuntime().freeMemory();
         long t2 = System.currentTimeMillis();

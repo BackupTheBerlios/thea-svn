@@ -45,7 +45,7 @@ public class Consts {
     public static Font selectedFont;
 
     /** The color used to draw labels of terminal nodes */
-    public static Color TERMINAL_COLOR = Color.black;
+    public static Color TERMINAL_COLOR = Color.magenta;
 
     /** The color used to draw labels of non terminal nodes */
     public static Color NON_TERMINAL_COLOR = Color.black;
