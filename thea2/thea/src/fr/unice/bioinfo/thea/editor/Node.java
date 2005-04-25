@@ -2,8 +2,6 @@ package fr.unice.bioinfo.thea.editor;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -12,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import fr.unice.bioinfo.allonto.datamodel.Entity;
-import fr.unice.bioinfo.thea.editor.settings.CESettings;
 
 /**
  * A class representing a node. Each node has a link to its parent and hold the
@@ -20,7 +17,7 @@ import fr.unice.bioinfo.thea.editor.settings.CESettings;
  * @author Claude Pasquier
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
-public class Node implements PropertyChangeListener {
+public class Node {
 
     //BEGIN FACTORING
     /** this node's name property. */
@@ -333,6 +330,9 @@ public class Node implements PropertyChangeListener {
 
     /** Returns this nodes's name. */
     public String getName() {
+        if (name == null) {
+            name = "";
+        }
         return name;
     }
 
@@ -490,12 +490,10 @@ public class Node implements PropertyChangeListener {
     /** Contains properties which could be visible from the GUI */
     private Hashtable /* to store all string values */strings;
 
-    /** Annotion consists of associating an {@link Entity}to this node. */
+    /** Correspending {@link Entity}to this node. */
     private Entity entity;
-
     /** The name of the node. */
     private String name = null;
-    private String clName;
 
     /** User data associated with this node */
     private Map userData = new HashMap();
@@ -602,27 +600,5 @@ public class Node implements PropertyChangeListener {
         //
         //        // Finally, save initial name
         //        clName = name;
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
-     */
-    public void propertyChange(PropertyChangeEvent e) {
-        if (e.getPropertyName().equalsIgnoreCase(CESettings.PROP_ACCESSOR)) {
-            // applay this only for leaves nodes
-            if (isLeaf()) {
-                if (entity != null) {
-                    String key = e.getNewValue().toString();
-
-                    if (!key.equalsIgnoreCase("NAME")) {
-                        // update name
-                        setName(clName + " [" + strings.get(key) + "]");
-                    } else {
-                        setName(clName);
-                    }
-                }
-            }
-        }
     }
 }
