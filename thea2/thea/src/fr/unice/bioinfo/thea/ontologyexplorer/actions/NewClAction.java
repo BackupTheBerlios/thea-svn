@@ -58,19 +58,37 @@ public class NewClAction extends NodeAction {
                 if (e.getSource() == DialogDescriptor.OK_OPTION) {
                     File cdf = panel.getClusteredDataFile();
                     File tdf = panel.getTabularDataFile();
+                    String clName = panel.getClName();
+                    String clHint = panel.getClDescription();
+                    int format = NewClPanel.getSelectedFormat();
                     StringBuffer b = new StringBuffer();
+                    // if no name is given
+                    if (clName.equalsIgnoreCase("") || (clName == null)) {//NOI18N
+                        b.append(bundle
+                                .getString("NewClassificationDialog_NoName")); //NOI18N
+                    }
 
-                    // A name is allways required
-                    if ((cdf == null) || (tdf == null)) {
+                    // if no file selected
+                    if ((cdf == null) && (tdf == null)) {
                         b.append(bundle
                                 .getString("NewClassificationDialog_NoFile")); //NOI18N
+                    }
+
+                    // when the selected format is Eisen,the two files are
+                    // required
+                    if (format == NewClPanel.TYPE_EISEN) {
+                        if ((cdf == null) || (tdf == null)) {
+                            b
+                                    .append(bundle
+                                            .getString("NewClassificationDialog_EISEN")); //NOI18N
+                        }
                     }
 
                     // Show a dialog with errors if any
                     if (b.length() > 0) {
                         String message = MessageFormat.format(bundle
-                                .getString("NewClassificationDialog_ErrMsg"),
-                                new String[] { b.toString() }); //NOI18N
+                                .getString("NewClassificationDialog_ErrMsg"),//NOI18N
+                                new String[] { b.toString() });
                         DialogDisplayer.getDefault().notify(
                                 new NotifyDescriptor.Message(message,
                                         NotifyDescriptor.INFORMATION_MESSAGE));
@@ -85,13 +103,9 @@ public class NewClAction extends NodeAction {
                     // represent the two data files
                     // and add them to a node of type ClassificationNode
 
-                    /* Classification name extracted from the file name */
-                    String clName = cdf.getName();
-                    clName = clName.substring(0, clName.indexOf("."));
-
                     // The node that represents the classification
                     ClassificationNode cn = new ClassificationNode(clName,
-                            clName);
+                            clHint);
                     // Create the ClassificationNodeInfo
                     ClassificationNodeInfo cni = ClassificationNodeInfo
                             .createClNodeInfo();

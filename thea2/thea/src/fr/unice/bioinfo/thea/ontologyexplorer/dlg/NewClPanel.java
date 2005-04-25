@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.EtchedBorder;
 
 import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
@@ -57,17 +58,25 @@ public class NewClPanel extends JPanel {
     public static final int SEL_IGNORED_ROWS = 2;
     public static final int SEL_GENE_LABELS = 3;
     public static final int SEL_COLUMNS_LABELS = 4;
-    public static String[] format = { "Eisen (gtr & cdt files)",//NOI18N
-            "New Hampshire (newick)", //NOI18N
+    
+    
+    public static String[] format = { "Eisen: GTR & CDT)",//NOI18N
+            "New Hampshire: newick", //NOI18N
             "Sota", "Unclustered data" //NOI18N
     };
 
     /** selected data format. */
-    private static int selectedFormat = TYPE_UNDEFINED;
+    private static int selectedFormat;
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); //NOI18N
+    private JComponent clSeparator;
+    private JLabel clNameLbl;
+    private JTextField clNameField;
+    private JLabel clHintLbl;
+    private JTextField clHintField;
+
     private JComponent dataSeparator;
     private JLabel cdfLbl;
     private JTextField cdfField;
@@ -106,6 +115,13 @@ public class NewClPanel extends JPanel {
                 .getString("LBL_DataSeparator")); //NOI18N
         previewSeparator = compFactory.createSeparator(bundle
                 .getString("LBL_PreviewSeparator")); //NOI18N
+        clSeparator = compFactory.createSeparator(bundle
+                .getString("LBL_ClSeparator"));//NOI18N
+        clNameLbl = new JLabel();
+        clNameField = new JTextField();
+        clHintLbl = new JLabel();
+        clHintField = new JTextField();
+
         cdfLbl = new JLabel();
         cdfField = new JTextField();
         cdfBtn = new JButton();
@@ -133,59 +149,79 @@ public class NewClPanel extends JPanel {
                 new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT,
                         FormSpec.DEFAULT_GROW),
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-                new ColumnSpec("max(default;150dlu):grow"), //NOI18N
+                new ColumnSpec("max(default;150dlu):grow"),//NOI18N
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-                new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT,
-                        FormSpec.DEFAULT_GROW) }, new RowSpec[] {
-                FormFactory.DEFAULT_ROWSPEC,
-                FormFactory.LINE_GAP_ROWSPEC,
-                FormFactory.DEFAULT_ROWSPEC,
-                FormFactory.LINE_GAP_ROWSPEC,
-                FormFactory.DEFAULT_ROWSPEC,
-                FormFactory.LINE_GAP_ROWSPEC,
-                FormFactory.DEFAULT_ROWSPEC,
-                FormFactory.LINE_GAP_ROWSPEC,
-                FormFactory.DEFAULT_ROWSPEC,
-                FormFactory.LINE_GAP_ROWSPEC,
-                new RowSpec(RowSpec.CENTER, Sizes.DEFAULT,
-                        FormSpec.DEFAULT_GROW) }));
-        add(dataSeparator, cc.xywh(1, 1, 5, 1));
+                new ColumnSpec("max(min;10px)") }, new RowSpec[] {//NOI18N
+                        FormFactory.DEFAULT_ROWSPEC,
+                        FormFactory.LINE_GAP_ROWSPEC,
+                        FormFactory.DEFAULT_ROWSPEC,
+                        FormFactory.LINE_GAP_ROWSPEC,
+                        FormFactory.DEFAULT_ROWSPEC,
+                        FormFactory.LINE_GAP_ROWSPEC,
+                        FormFactory.DEFAULT_ROWSPEC,
+                        FormFactory.LINE_GAP_ROWSPEC,
+                        FormFactory.DEFAULT_ROWSPEC,
+                        FormFactory.LINE_GAP_ROWSPEC,
+                        FormFactory.DEFAULT_ROWSPEC,
+                        FormFactory.LINE_GAP_ROWSPEC,
+                        FormFactory.DEFAULT_ROWSPEC,
+                        FormFactory.LINE_GAP_ROWSPEC,
+                        FormFactory.DEFAULT_ROWSPEC,
+                        FormFactory.LINE_GAP_ROWSPEC,
+                        new RowSpec(RowSpec.CENTER, Sizes.DEFAULT,
+                                FormSpec.DEFAULT_GROW) }));
+
+        add(clSeparator, cc.xywh(1, 1, 5, 1));
+        //      ---- clNameLbl ----
+        clNameLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+        clNameLbl.setText(bundle.getString("LBL_ClName"));//NOI18N
+        add(clNameLbl, cc.xy(1, 3));
+        clNameField.setToolTipText(bundle.getString("HINT_ClName"));
+        add(clNameField, cc.xywh(3, 3, 3, 1));
+
+        //---- clHintLbl ----
+        clHintLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+        clHintLbl.setText(bundle.getString("LBL_ClHint"));//NOI18N
+        add(clHintLbl, cc.xy(1, 5));
+        clHintField.setToolTipText(bundle.getString("HINT_ClHint"));
+        add(clHintField, cc.xywh(3, 5, 3, 1));
+        add(dataSeparator, cc.xywh(1, 7, 5, 1));
+
+        //		---- dataFormatLbl ----
+        dataFormatLbl.setHorizontalAlignment(SwingConstants.RIGHT);
+        dataFormatLbl.setText(bundle.getString("LBL_DF")); //NOI18N
+        add(dataFormatLbl, cc.xy(1, 9));
+        add(dataFormatComboBox, cc.xywh(3, 9, 3, 1));
 
         //---- cdfLbl ----
         cdfLbl.setHorizontalAlignment(SwingConstants.RIGHT);
         cdfLbl.setText(bundle.getString("LBL_CDF")); //NOI18N
-        add(cdfLbl, cc.xy(1, 3));
-        add(cdfField, cc.xy(3, 3));
+        add(cdfLbl, cc.xy(1, 11));
+        add(cdfField, cc.xy(3, 11));
 
         //---- cdfBtn ----
-        //cdfBtn.setText(bundle.getString("LBL_Browse"));
+        cdfBtn.setBorder(new EtchedBorder());
         cdfBtn
                 .setIcon(new ImageIcon(
                         Utilities
-                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/Open16.gif"))); //NOI18N
-        add(cdfBtn, cc.xy(5, 3));
+                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/BrowseIcon16.gif"))); //NOI18N
+        add(cdfBtn, cc.xy(5, 11));
 
         //---- tdfLbl ----
         tdfLbl.setHorizontalAlignment(SwingConstants.RIGHT);
         tdfLbl.setText(bundle.getString("LBL_TDF")); //NOI18N
-        add(tdfLbl, cc.xy(1, 5));
-        add(tdfField, cc.xy(3, 5));
+        add(tdfLbl, cc.xy(1, 13));
+        add(tdfField, cc.xy(3, 13));
 
         //---- tdfBtn ----
-        //tdfBtn.setText(bundle.getString("LBL_Browse"));
+        tdfBtn.setBorder(new EtchedBorder());
         tdfBtn
                 .setIcon(new ImageIcon(
                         Utilities
-                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/Open16.gif"))); //NOI18N
-        add(tdfBtn, cc.xy(5, 5));
-
-        //---- dataFormatLbl ----
-        dataFormatLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        dataFormatLbl.setText(bundle.getString("LBL_DF")); //NOI18N
-        add(dataFormatLbl, cc.xy(1, 7));
-        add(dataFormatComboBox, cc.xywh(3, 7, 3, 1));
-        add(previewSeparator, cc.xywh(1, 9, 5, 1));
-        add(previewPanel, cc.xywh(1, 11, 5, 1, CellConstraints.DEFAULT,
+                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/BrowseIcon16.gif"))); //NOI18N
+        add(tdfBtn, cc.xy(5, 13));
+        add(previewSeparator, cc.xywh(1, 15, 5, 1));
+        add(previewPanel, cc.xywh(1, 17, 5, 1, CellConstraints.DEFAULT,
                 CellConstraints.FILL));
 
     }
@@ -195,13 +231,13 @@ public class NewClPanel extends JPanel {
      */
     private void performCDFAction(File file) {
         if (file == null) {
-            cdfField.setText("");
+            cdfField.setText("");//NOI18N
 
             return;
         }
 
         if (!file.canRead()) {
-            cdfField.setText("");
+            cdfField.setText("");//NOI18N
 
             return;
         }
@@ -231,39 +267,39 @@ public class NewClPanel extends JPanel {
 
         String assoclusteredDataFileExtension = null;
 
-        if (extension.equalsIgnoreCase(".gtr")) {
+        if (extension.equalsIgnoreCase(".gtr")) {//NOI18N
             // cluster format
-            assoclusteredDataFileExtension = "cdt";
+            assoclusteredDataFileExtension = "cdt";//NOI18N
 
             if (!typeSelectionMadeByUser) {
                 dataFormatComboBox.setSelectedIndex(TYPE_EISEN);
                 selectedFormat = TYPE_EISEN;
             }
-        } else if (extension.equalsIgnoreCase(".sot")) {
+        } else if (extension.equalsIgnoreCase(".sot")) {//NOI18N
             // sota format
-            assoclusteredDataFileExtension = "sdt";
+            assoclusteredDataFileExtension = "sdt";//NOI18N
 
             if (!typeSelectionMadeByUser) {
                 dataFormatComboBox.setSelectedIndex(TYPE_SOTA);
                 selectedFormat = TYPE_SOTA;
             }
-        } else if (extension.equalsIgnoreCase(".nw")
-                || extension.equalsIgnoreCase(".nh")) {
+        } else if (extension.equalsIgnoreCase(".nw")//NOI18N
+                || extension.equalsIgnoreCase(".nh")) {//NOI18N
             // newick format
             if (!typeSelectionMadeByUser) {
                 dataFormatComboBox.setSelectedIndex(TYPE_NEWICK);
                 selectedFormat = TYPE_NEWICK;
             }
-        } else if (extension.equalsIgnoreCase(".xml")) {
+        } else if (extension.equalsIgnoreCase(".xml")) {//NOI18N
             // xml
             if (!typeSelectionMadeByUser) {
-                dataFormatComboBox.setSelectedIndex(TYPE_XML);
-                selectedFormat = TYPE_XML;
+                //                dataFormatComboBox.setSelectedIndex(TYPE_XML);
+                //                selectedFormat = TYPE_XML;
             }
         } else {
             if (!typeSelectionMadeByUser) {
-                dataFormatComboBox.setSelectedIndex(TYPE_UNDEFINED);
-                selectedFormat = TYPE_UNDEFINED;
+                //                dataFormatComboBox.setSelectedIndex(TYPE_UNDEFINED);
+                //                selectedFormat = TYPE_UNDEFINED;
             }
         }
 
@@ -274,7 +310,7 @@ public class NewClPanel extends JPanel {
         if ((selectedFormat == TYPE_EISEN) || (selectedFormat == TYPE_NEWICK)
                 || (selectedFormat == TYPE_SOTA)) {
             try {
-                File assoclusteredDataFile = new File(baseFileName + "."
+                File assoclusteredDataFile = new File(baseFileName + "."//NOI18N
                         + assoclusteredDataFileExtension);
 
                 if (assoclusteredDataFile.canRead()) {
@@ -282,7 +318,7 @@ public class NewClPanel extends JPanel {
 
                     ClPreviewPanel.previewDataFile(tabularDataFile);
                 } else {
-                    assoclusteredDataFile = new File(baseFileName + ".txt");
+                    assoclusteredDataFile = new File(baseFileName + ".txt");//NOI18N
 
                     if (assoclusteredDataFile.canRead()) {
                         tabularDataFile = assoclusteredDataFile;
@@ -312,7 +348,7 @@ public class NewClPanel extends JPanel {
         }
 
         if (!file.canRead()) {
-            tdfField.setText("");
+            tdfField.setText("");//NOI18N
 
             return;
         }
@@ -422,20 +458,6 @@ public class NewClPanel extends JPanel {
     }
 
     /**
-     * @return Returns the format.
-     */
-    public static String[] getFormat() {
-        return format;
-    }
-
-    /**
-     * @param format The format to set.
-     */
-    public static void setFormat(String[] format) {
-        NewClPanel.format = format;
-    }
-
-    /**
      * @return Returns the geneLabels.
      */
     public static int getGeneLabels() {
@@ -524,5 +546,13 @@ public class NewClPanel extends JPanel {
      */
     public static int getNbColumns() {
         return ClPreviewPanel.getNbColumns();
+    }
+
+    public String getClName() {
+        return clNameField.getText();
+    }
+
+    public String getClDescription() {
+        return clHintField.getText();
     }
 }

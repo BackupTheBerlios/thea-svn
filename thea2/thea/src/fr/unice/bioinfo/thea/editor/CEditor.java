@@ -97,7 +97,7 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
         // Load classification
         load();
     }
-    
+
     public CEditor(Node aNode) {
         this();
         //Give a title to this window
@@ -172,8 +172,10 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
 
                 while (it.hasNext()) {
                     Node leaf = (Node) it.next();
-                    leaf.setUserData("measures", geneId2Measures.get(leaf
-                            .getUserData("idInClassif")));
+                    //                    leaf.setUserData("measures", geneId2Measures.get(leaf
+                    //                            .getUserData("idInClassif")));
+                    leaf.addProperty(Node.MEASURES, geneId2Measures.get(leaf
+                            .getProperty(Node.ID_IN_CLASSIF)));
                 }
             }
 
@@ -199,8 +201,10 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
 
                 while (it.hasNext()) {
                     Node leaf = (Node) it.next();
-                    leaf.setUserData("measures", geneId2Measures.get(leaf
-                            .getUserData("idInClassif")));
+                    //                    leaf.setUserData("measures", geneId2Measures.get(leaf
+                    //                            .getUserData("idInClassif")));
+                    leaf.addProperty(Node.MEASURES, geneId2Measures.get(leaf
+                            .getProperty(Node.ID_IN_CLASSIF)));
                 }
             }
 
@@ -223,15 +227,18 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
 
                 Node node = new Node();
                 node.setName(idInClassif);
-                node.setUserData("idInClassif", idInClassif);
-                node.setUserData("measures", entry.getValue());
+                //                node.setUserData("idInClassif", idInClassif);
+                node.addProperty(Node.ID_IN_CLASSIF, idInClassif);
+                //                node.setUserData("measures", entry.getValue());
+                node.addProperty(Node.MEASURES, entry.getValue());
                 node.setBranchLength(0);
                 nodes.add(node);
             }
 
             rootNode = new Node();
             rootNode.setName("");
-            rootNode.setUserData("idInClassif", "");
+            //            rootNode.setUserData("idInClassif", "");
+            rootNode.addProperty(Node.ID_IN_CLASSIF, "");
             rootNode.setChildren(nodes);
             collectInfo(rootNode);
         }
@@ -275,9 +282,11 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
             return;
         }
         Node firstLeaf = (Node) leaves.get(0);
-        List measures = (List) firstLeaf.getUserData("measures");
+        //        List measures = (List) firstLeaf.getUserData("measures");
+        List measures = (List) firstLeaf.getProperty(Node.MEASURES);
         int nbMeasures = (measures == null) ? 0 : measures.size();
-        node.setUserData("nbMeasures", new Integer(nbMeasures));
+        //        node.setUserData("nbMeasures", new Integer(nbMeasures));
+        node.addProperty(Node.NB_MEASURES, new Integer(nbMeasures));
         if (nbMeasures == 0) {
             return;
         }
@@ -286,7 +295,8 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
 
         while (it.hasNext()) {
             Node leaf = (Node) it.next();
-            measures = (List) leaf.getUserData("measures");
+            //            measures = (List) leaf.getUserData("measures");
+            measures = (List) leaf.getProperty(Node.MEASURES);
             int nbMeas = (measures == null) ? 0 : measures.size();
             if (nbMeas != nbMeasures) {
                 System.err
@@ -294,7 +304,8 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
                 System.err.println("     => verify the file");
                 System.err.println("leaf=" + leaf.getName() + " has " + nbMeas
                         + " values");
-                node.setUserData("nbMeasures", new Integer(0));
+                //                node.setUserData("nbMeasures", new Integer(0));
+                node.addProperty(Node.NB_MEASURES, new Integer(0));
                 return;
             }
             measuresTable.addAll(measures);
@@ -339,10 +350,14 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
                     + (overExpDecileValue * i)));
         }
 
-        node.setUserData("underExpDeciles", underExpDeciles);
-        node.setUserData("overExpDeciles", overExpDeciles);
-        node.setUserData("minMeasure", Collections.min(measuresTable));
-        node.setUserData("maxMeasure", Collections.max(measuresTable));
+        //        node.setUserData("underExpDeciles", underExpDeciles);
+        node.addProperty(Node.UNDER_EXP_DECILES, underExpDeciles);
+        //        node.setUserData("overExpDeciles", overExpDeciles);
+        node.addProperty(Node.OVER_EXP_DECILES, overExpDeciles);
+        //        node.setUserData("minMeasure", Collections.min(measuresTable));
+        node.addProperty(Node.MIN_MEASURE, Collections.min(measuresTable));
+        //        node.setUserData("maxMeasure", Collections.max(measuresTable));
+        node.addProperty(Node.MAX_MEASURE, Collections.max(measuresTable));
         System.err.println("Expression values (min="
                 + Collections.min(measuresTable) + ", max="
                 + Collections.max(measuresTable) + ")");
@@ -411,7 +426,9 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
             canvas.setSelected(aNode, 1);
         }
 
-        List tas = (List) ((Node) e.getSelected()).getUserData("termAndScore");
+        //        List tas = (List) ((Node)
+        // e.getSelected()).getUserData("termAndScore");
+        List tas = (List) ((Node) e.getSelected()).getProperty("termAndScore");
 
         if (tas != null) {
             Iterator it = tas.iterator();

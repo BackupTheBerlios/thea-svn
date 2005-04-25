@@ -250,8 +250,10 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             treeWidth -= (selectionsList.size() * 10);
         }
         if (showExpressionValues) {
-            Integer nbMeasuresI = (Integer) getTreeRoot().getUserData(
-                    "nbMeasures");
+            //            Integer nbMeasuresI = (Integer) getTreeRoot().getUserData(
+            //                    "nbMeasures");
+            Integer nbMeasuresI = (Integer) getTreeRoot().getProperty(
+                    Node.NB_MEASURES);
             if ((nbMeasuresI != null) && (nbMeasuresI.intValue() > 0)) {
                 expValNbMeasures = nbMeasuresI.intValue();
                 expValColumnWidth = (int) treeWidth / 5 / expValNbMeasures;
@@ -421,15 +423,19 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
             }
             posy = area.y;
             List measures = null;
-            measures = (List) knownNode.getUserData("measures");
+            //            measures = (List) knownNode.getUserData("measures");
+            measures = (List) knownNode.getProperty(Node.MEASURES);
             if (measures == null) {
                 measures = new Vector();
                 List listSub = knownNode.getLeaves();
+                //                measures.addAll((Collection) ((Node) listSub.get(0))
+                //                        .getUserData("measures"));
                 measures.addAll((Collection) ((Node) listSub.get(0))
-                        .getUserData("measures"));
+                        .getProperty(Node.MEASURES));
                 for (int leafCtr = 1; leafCtr < listSub.size(); leafCtr++) {
                     Node leaf = (Node) listSub.get(leafCtr);
-                    List leafMeasure = (List) leaf.getUserData("measures");
+                    //                    List leafMeasure = (List) leaf.getUserData("measures");
+                    List leafMeasure = (List) leaf.getProperty(Node.MEASURES);
                     for (int i = 0; i < leafMeasure.size(); i++) {
                         double measure = ((Double) leafMeasure.get(i))
                                 .doubleValue();
@@ -442,7 +448,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
                     measures.set(i, new Double(sum / listSub.size()));
                 }
                 System.err.println();
-                knownNode.setUserData("measures", measures);
+                //                knownNode.setUserData("measures", measures);
+                knownNode.addProperty(Node.MEASURES, measures);
             }
             Iterator iter = measures.iterator();
             int ctr = 0;
@@ -604,7 +611,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
      */
     private void drawNonTerminalNode(Node aNode, Graphics2D g, double x,
             double y, double width, double height) {
-        List annotations = (List) aNode.getUserData("userAnnotations");
+        //        List annotations = (List) aNode.getUserData("userAnnotations");
+        List annotations = (List) aNode.getProperty(Node.USER_ANNOTATIONS);
         if (annotations == null) {
             annotations = new Vector();
         } else {
@@ -708,7 +716,8 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     private void drawTerminalNode(Node aNode, Graphics2D g, double x, double y,
             double width, double height) {
         boolean boxed = terminalBoxed;
-        List annotations = (List) aNode.getUserData("userAnnotations");
+        //        List annotations = (List) aNode.getUserData("userAnnotations");
+        List annotations = (List) aNode.getProperty(Node.USER_ANNOTATIONS);
         if (annotations == null) {
             annotations = new Vector();
         } else {
@@ -931,17 +940,26 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         expValMaxMeasure = 0;
         expValUnderExpDeciles = null;
         expValOverExpDeciles = null;
-        Object o = getTreeRoot().getUserData("nbMeasures");
+        //        Object o = getTreeRoot().getUserData("nbMeasures");
+        Object o = getTreeRoot().getProperty(Node.NB_MEASURES);
         int nbMeasures = ((Integer) o).intValue();
         if (nbMeasures > 0) {
-            expValMinMeasure = ((Double) getTreeRoot()
-                    .getUserData("minMeasure")).doubleValue();
-            expValMaxMeasure = ((Double) getTreeRoot()
-                    .getUserData("maxMeasure")).doubleValue();
-            expValUnderExpDeciles = (List) getTreeRoot().getUserData(
-                    "underExpDeciles");
-            expValOverExpDeciles = (List) getTreeRoot().getUserData(
-                    "overExpDeciles");
+            //            expValMinMeasure = ((Double) getTreeRoot()
+            //                    .getUserData("minMeasure")).doubleValue();
+            expValMinMeasure = ((Double) getTreeRoot().getProperty(
+                    Node.MIN_MEASURE)).doubleValue();
+            //            expValMaxMeasure = ((Double) getTreeRoot()
+            //                    .getUserData("maxMeasure")).doubleValue();
+            expValMaxMeasure = ((Double) getTreeRoot().getProperty(
+                    Node.MAX_MEASURE)).doubleValue();
+            //            expValUnderExpDeciles = (List) getTreeRoot().getUserData(
+            //                    "underExpDeciles");
+            expValUnderExpDeciles = (List) getTreeRoot().getProperty(
+                    Node.UNDER_EXP_DECILES);
+            //            expValOverExpDeciles = (List) getTreeRoot().getUserData(
+            //                    "overExpDeciles");
+            expValOverExpDeciles = (List) getTreeRoot().getProperty(
+                    Node.OVER_EXP_DECILES);
         }
         if (selectionsList != null) {
             Iterator it = selectionsList.iterator();
@@ -1589,13 +1607,16 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         List nodesToGroup = new Vector(sel.getNodes());
         while (!nodesToGroup.isEmpty()) {
             Node node = (Node) nodesToGroup.get(0);
-            Boolean frozen = (Boolean) node.getUserData("frozen");
+            //            Boolean frozen = (Boolean) node.getUserData("frozen");
+            Boolean frozen = (Boolean) node.getProperty(Node.FROZEN);
             if ((frozen == null) || frozen.equals(Boolean.FALSE)) {
                 Node parentNode = node.getParent();
                 List parentChilds = parentNode.getChildren();
                 for (int i = 0; i < parentChilds.size(); i++) {
+                    //                    frozen = (Boolean) ((Node) parentChilds.get(i))
+                    //                            .getUserData("frozen");
                     frozen = (Boolean) ((Node) parentChilds.get(i))
-                            .getUserData("frozen");
+                            .getProperty(Node.FROZEN);
                     if ((frozen == null) || frozen.equals(Boolean.FALSE)) {
                         parentNode.moveChild(node, i);
                         break;

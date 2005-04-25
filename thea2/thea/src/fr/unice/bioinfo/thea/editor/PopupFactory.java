@@ -132,7 +132,8 @@ public class PopupFactory {
         popup.addSeparator();
 
         // copy to profile classifier
-        if ((n.isLeaf()) && (n.getUserData("measures") != null)) {
+//        if ((n.isLeaf()) && (n.getUserData("measures") != null)) {
+        if ((n.isLeaf()) && (n.getProperty(Node.MEASURES) != null)) {
             menuItem = new JMenuItem(bundle
                     .getString("LBL_CopyToProfileClassifierAction_Name"));
             menuItem
@@ -370,7 +371,10 @@ public class PopupFactory {
 
                 while (it.hasNext()) {
                     Node node = (Node) it.next();
-                    node.setUserData("frozen",
+//                    node.setUserData("frozen",
+//                            frozen.equals(Boolean.TRUE) ? Boolean.FALSE
+//                                    : Boolean.TRUE);
+                    node.addProperty(Node.FROZEN,
                             frozen.equals(Boolean.TRUE) ? Boolean.FALSE
                                     : Boolean.TRUE);
                 }
@@ -423,7 +427,6 @@ public class PopupFactory {
                     while (it.hasNext()) {
                         n = (Node) it.next();
                         out.println(n.getName());
-                        System.out.println(n.getName());
                     }
                     out.close();
                 } catch (java.io.IOException ioe) {

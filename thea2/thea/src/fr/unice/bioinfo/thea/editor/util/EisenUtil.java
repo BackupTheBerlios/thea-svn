@@ -144,17 +144,22 @@ public class EisenUtil {
                         name = "";
                     }
 
-                    fatherNode.setUserData("idInClassif", name);
+//                    fatherNode.setUserData("idInClassif", name);
+                    fatherNode.addProperty(Node.ID_IN_CLASSIF, name);
                     fatherNode.setName(name);
 
                     String dbKey = (String) geneId2DbKey.get(fatherName);
 
                     if (dbKey != null) {
-                        fatherNode.setUserData("dbKey", dbKey);
-                        fatherNode.setUserData("idInClassif", dbKey);
+//                        fatherNode.setUserData("dbKey", dbKey);
+                        fatherNode.addProperty(Node.DB_KEY, dbKey);
+//                        fatherNode.setUserData("idInClassif", dbKey);
+                        fatherNode.addProperty(Node.ID_IN_CLASSIF, dbKey);
                     }
 
-                    fatherNode.setUserData("measures", geneId2Measures
+//                    fatherNode.setUserData("measures", geneId2Measures
+//                            .get(fatherName));
+                    fatherNode.addProperty(Node.MEASURES, geneId2Measures
                             .get(fatherName));
                     name2Node.put(fatherName, fatherNode);
                 }
@@ -170,17 +175,22 @@ public class EisenUtil {
                         name = "";
                     }
 
-                    child1Node.setUserData("idInClassif", name);
+//                    child1Node.setUserData("idInClassif", name);
+                    child1Node.addProperty(Node.ID_IN_CLASSIF, name);
                     child1Node.setName(name);
 
                     String dbKey = (String) geneId2DbKey.get(child1Name);
 
                     if (dbKey != null) {
-                        child1Node.setUserData("dbKey", dbKey);
-                        child1Node.setUserData("idInClassif", dbKey);
+//                        child1Node.setUserData("dbKey", dbKey);
+                        child1Node.addProperty(Node.DB_KEY, dbKey);
+//                        child1Node.setUserData("idInClassif", dbKey);
+                        child1Node.addProperty(Node.ID_IN_CLASSIF, dbKey);
                     }
 
-                    child1Node.setUserData("measures", geneId2Measures
+//                    child1Node.setUserData("measures", geneId2Measures
+//                            .get(child1Name));
+                    child1Node.addProperty(Node.MEASURES, geneId2Measures
                             .get(child1Name));
                     name2Node.put(child1Name, child1Node);
                 }
@@ -198,17 +208,22 @@ public class EisenUtil {
                         name = "";
                     }
 
-                    child2Node.setUserData("idInClassif", name);
+//                    child2Node.setUserData("idInClassif", name);
+                    child2Node.addProperty(Node.ID_IN_CLASSIF, name);
                     child2Node.setName(name);
 
                     String dbKey = (String) geneId2DbKey.get(child2Name);
 
                     if (dbKey != null) {
-                        child2Node.setUserData("dbKey", dbKey);
-                        child2Node.setUserData("idInClassif", dbKey);
+//                        child2Node.setUserData("dbKey", dbKey);
+                        child2Node.addProperty(Node.DB_KEY, dbKey);
+//                        child2Node.setUserData("idInClassif", dbKey);
+                        child2Node.addProperty(Node.ID_IN_CLASSIF, dbKey);
                     }
 
-                    child2Node.setUserData("measures", geneId2Measures
+//                    child2Node.setUserData("measures", geneId2Measures
+//                            .get(child2Name));
+                    child2Node.addProperty(Node.MEASURES, geneId2Measures
                             .get(child2Name));
                     name2Node.put(child2Name, child2Node);
                 }

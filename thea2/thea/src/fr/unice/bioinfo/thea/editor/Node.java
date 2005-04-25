@@ -19,7 +19,6 @@ import fr.unice.bioinfo.allonto.datamodel.Entity;
  */
 public class Node {
 
-    //BEGIN FACTORING
     /** this node's name property. */
     public static final String NAME = "name";//NOI18N
     /** Annotations of this node */
@@ -44,6 +43,8 @@ public class Node {
     public static final String FROZEN = "frozen";//NOI18N
     /***/
     public static final String ID_IN_CLASSIF = "idInClassif";//NOI18N
+    /***/
+    public static final String DB_KEY = "dbKey";//NOI18N
 
     /** Node's children. This contains only direct children. */
     private List children = null;
@@ -482,8 +483,6 @@ public class Node {
         }
     }
 
-    //END FACTORING
-
     //    /** indicates if the userData with a specified key should be saved */
     //    private static Set serializableUserData = new HashSet();
 
@@ -513,25 +512,25 @@ public class Node {
         return entity;
     }
 
-    /**
-     * Setter for userData. Allows external application to associate data with
-     * nodes
-     * @param key The key used to access external data
-     * @param o The object associated with this node
-     */
-    public void setUserData(String key, Object o) {
-        userData.put(key, o);
-    }
+    //    /**
+    //     * Setter for userData. Allows external application to associate data with
+    //     * nodes
+    //     * @param key The key used to access external data
+    //     * @param o The object associated with this node
+    //     */
+    //    public void setUserData(String key, Object o) {
+    //        userData.put(key, o);
+    //    }
 
-    /**
-     * Getter for userData. Allows external application to retrieve data
-     * associated with this nodes
-     * @param key The key used to access external data
-     * @return The object associated with this node
-     */
-    public Object getUserData(String key) {
-        return userData.get(key);
-    }
+    //    /**
+    //     * Getter for userData. Allows external application to retrieve data
+    //     * associated with this nodes
+    //     * @param key The key used to access external data
+    //     * @return The object associated with this node
+    //     */
+    //    public Object getUserData(String key) {
+    //        return userData.get(key);
+    //    }
 
     //    public static void setSerializableUserData(String key, boolean b) {
     //        if (b) {
