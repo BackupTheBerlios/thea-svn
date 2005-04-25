@@ -142,7 +142,7 @@ public class PopupFactory {
             menuItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     ProfileClassifierPanel p = new ProfileClassifierPanel(n);
-//                  create the hide button
+                    //create the hide button
                     JButton hideBtn = new JButton(bundle.getString("LBL_HideButton_Name"));
                     hideBtn.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
@@ -157,13 +157,28 @@ public class PopupFactory {
                     DialogDisplayer.getDefault().createDialog(dd).show();
                 }
             });
-
-            /*
-             * Profile Classifier doesn't exists yet
-             */
-
             popup.add(menuItem);
         }
+        
+        // new window
+        if (!n.isLeaf()) {
+            menuItem = new JMenuItem(bundle
+                    .getString("LBL_OpenInNewWindowAction_Name"));
+            menuItem
+                    .setIcon(new ImageIcon(
+                            Utilities
+                                    .loadImage("fr/unice/bioinfo/thea/editor/resources/New16.gif")));
+            menuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    CEditor ce = new CEditor(n);
+                    ce.open();
+                    ce.requestActive();
+                }
+            });
+            popup.add(menuItem);
+        }
+        
+        
 
         // collapse and Uncollapse
         if (!n.isLeaf()) {

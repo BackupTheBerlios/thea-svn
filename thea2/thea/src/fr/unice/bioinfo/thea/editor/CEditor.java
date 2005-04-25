@@ -60,14 +60,8 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
     /** A window to show selected nodes of the classification tree */
     private SelectionEditor selectionEditor;
 
-    public CEditor(ClassificationNodeInfo cni) {
+    private CEditor() {
         super();
-        this.cni = cni;
-        // Give a title to this window
-        setName(cni.getName());
-        // Icon
-        setIcon(Utilities
-                .loadImage("fr/unice/bioinfo/thea/editor/resources/ClassificationNodeIcon.gif"));//NOI18N
         // build the scroll pane and fit the CECanvas
         // into it
         canvas = new CECanvas();
@@ -76,8 +70,6 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
         canvas.addTreeSelectionListener(this);
         // Create the selection editor and dok it in the explorer mode
         selectionEditor = new SelectionEditor();
-        selectionEditor.setName(selectionEditor.getName() + "[" + cni.getName()
-                + "]");//NOI18N
         canvas.addSelectionListener(selectionEditor);
         Mode m = WindowManager.getDefault().findMode("explorer");//NOI18N
         if (m != null) {
@@ -90,8 +82,29 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
         scrollPane.getViewport().setBackground(Color.WHITE);
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
+    }
+
+    public CEditor(ClassificationNodeInfo cni) {
+        this();
+        this.cni = cni;
+        // Give a title to this window
+        setName(cni.getName());
+        // Icon
+        setIcon(Utilities
+                .loadImage("fr/unice/bioinfo/thea/editor/resources/ClassificationNodeIcon.gif"));//NOI18N
+        selectionEditor.setName(selectionEditor.getName() + "[" + cni.getName()
+                + "]");//NOI18N
         // Load classification
         load();
+    }
+    
+    public CEditor(Node aNode) {
+        this();
+        //Give a title to this window
+        setName(aNode.getName());
+        //Node rootNode = canvas.getTreeRoot();
+        collectInfo(aNode);
+        canvas.setCurrentRootNode(aNode);
     }
 
     /** returns the preferred ID */
