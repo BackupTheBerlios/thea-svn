@@ -41,7 +41,6 @@ public class ResourceNodeChildren extends Children.Keys {
         if (keys != null) {
             setKeys(keys);
         }
-
     }
 
     /*
@@ -64,32 +63,32 @@ public class ResourceNodeChildren extends Children.Keys {
         rn.setInfo(rni);
         // associate an icon dependening on the relation
         // between the children's resource and the parent's one
-        ResourceNode p = (ResourceNode) getNode();
-
-        if (p != null) {
-            try {
-                Session sess = HibernateUtil.currentSession();
-                if (!sess.isConnected()) {
-                    sess.reconnect();
-                }
-            } catch (HibernateException e) {
-                e.printStackTrace();
-            }
-            Set pchilds = resource.getTargets(Consts.partofProperty);
-            if (pchilds != null) {
-                if (pchilds.contains(r)) {
-                    rn
-                            .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/partOfIcon");
-                }
-            }
-            Set ichilds = resource.getTargets(Consts.subsumeProperty);
-            if (ichilds != null) {
-                if (ichilds.contains(r)) {
-                    rn
-                            .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/isAIcon");
-                }
-            }
-        }
+//        ResourceNode p = (ResourceNode) getNode();
+//
+//        if (p != null) {
+//            try {
+//                Session sess = HibernateUtil.currentSession();
+//                if (!sess.isConnected()) {
+//                    sess.reconnect();
+//                }
+//            } catch (HibernateException e) {
+//                e.printStackTrace();
+//            }
+//            Set pchilds = resource.getTargets(Consts.partofProperty);
+//            if (pchilds != null) {
+//                if (pchilds.contains(r)) {
+//                    rn
+//                            .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/partOfIcon");
+//                }
+//            }
+//            Set ichilds = resource.getTargets(Consts.subsumeProperty);
+//            if (ichilds != null) {
+//                if (ichilds.contains(r)) {
+//                    rn
+//                            .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/isAIcon");
+//                }
+//            }
+//        }
 
         return new Node[] { (Node) rn };
 

@@ -73,6 +73,9 @@ public class ExploreOntologyAction extends NodeAction {
 
             root = resourceFactory.getResource("http://www.geneontology.org/owl#GO_0008150");
             
+//            Resource subsumeProperty = resourceFactory.getResource("http://www.geneontology.org/owl#GO_0005575");
+//            System.out.println("subsumeProperty = "+subsumeProperty.getId());
+            
         } catch (StackOverflowError s) {
             ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, s);
         } catch (HibernateException he) {
@@ -80,8 +83,6 @@ public class ExploreOntologyAction extends NodeAction {
         } catch (NullPointerException npe) {
             ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, npe);
         }
-
-        Set childs = ((Resource) root).getTargets(Consts.getListOfProperties());
 
         //Build a root node and set the root context
         ResourceNode rootNode = new ResourceNode(root);
@@ -102,21 +103,17 @@ public class ExploreOntologyAction extends NodeAction {
         //Enable this action only for the OntologyNode
         nodes = OntologyExplorer.findDefault().getExplorerManager()
                 .getSelectedNodes();
-
         Node node;
-
         if ((nodes != null) && (nodes.length == 1)) {
             node = nodes[0];
         } else {
             return false;
         }
-
         if (node instanceof OntologyNode) {
             if (((OntologyNode) node).isConnected()) {
                 return true;
             }
         }
-
         return false;
     }
 

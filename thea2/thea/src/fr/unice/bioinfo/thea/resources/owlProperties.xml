@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<owlproperties>
+  <ontology.browser>
+    <root>
+      <uri>http://www.geneontology.org/owl#GO_0008150</uri>>
+      <uri>http://www.geneontology.org/owl#GO_0005575</uri>
+      <uri>http://www.geneontology.org/owl#GO_0003674</uri>
+    </root>
+    <displayed.relationship>
+      <uri>http://www.w3.org/2000/01/rdf-schema#subClassOf</uri>
+      <icon>xxx.gif</icon>
+    <displayed.relationship>
+    <displayed.relationship>
+      <uri>http://www.geneontology.org/owl#part_of</uri>
+      <icon>xxx.gif</icon>
+    </displayed.relationship>
+    <displayed.label>http://www.w3.org/2000/01/rdf-schema#label</displayed.label>
+  <ontology.browser>
+</owlproperties>
