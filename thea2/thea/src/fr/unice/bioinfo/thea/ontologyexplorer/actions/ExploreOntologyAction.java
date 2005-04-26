@@ -2,10 +2,8 @@ package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import net.sf.hibernate.HibernateException;
-import net.sf.hibernate.Query;
 import net.sf.hibernate.Session;
 
 import org.openide.ErrorManager;
@@ -21,7 +19,6 @@ import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
-import fr.unice.bioinfo.thea.ontologyexplorer.nodes.Consts;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 
