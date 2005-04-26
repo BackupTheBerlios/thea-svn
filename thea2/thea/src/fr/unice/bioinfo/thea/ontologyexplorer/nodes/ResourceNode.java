@@ -50,8 +50,8 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         this.resource = resource;
         // Set system name and display name of this node
         // using the resource one
-        //setName(resource.getName()+" ("+resource.getId()+")");
-        setName(resource.getName());
+        setName(""+resource.getId());
+        //setName(resource.getName());
     }
 
     /** Returns cookie */
