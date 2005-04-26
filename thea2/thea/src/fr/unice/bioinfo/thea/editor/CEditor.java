@@ -91,7 +91,7 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
         setName(cni.getName());
         // Icon
         setIcon(Utilities
-                .loadImage("fr/unice/bioinfo/thea/editor/resources/ClassificationNodeIcon.gif"));//NOI18N
+                .loadImage("fr/unice/bioinfo/thea/editor/resources/CEditorIcon16.gif"));//NOI18N
         selectionEditor.setName(selectionEditor.getName() + "[" + cni.getName()
                 + "]");//NOI18N
         // Load classification

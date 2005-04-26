@@ -18,6 +18,7 @@ import org.openide.util.actions.SystemAction;
 import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.StringValue;
+import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowAnnotetdGenesAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 
 /**
@@ -76,6 +77,7 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         while (mapIt.hasNext()) {
             entry = (Map.Entry) mapIt.next();
             e = (Entity) entry.getValue();
+            //System.out.println("key = " + entry.getKey());
             // Since values in the Map are not all instances of
             // StringValue,
             // do tests using the instanceof operator
@@ -143,6 +145,16 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
      * @see org.openide.nodes.Node#getActions(boolean)
      */
     public Action[] getActions(boolean arg0) {
-        return super.getActions(arg0);
+        Action[] actions = new Action[] { SystemAction
+                .get(ShowAnnotetdGenesAction.class) };
+        return actions;
+    }
+    /** Returns the resource represented by this node.*/
+    public Resource getResource() {
+        return resource;
+    }
+    /** Sets the resource represented by this node.*/
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 }
