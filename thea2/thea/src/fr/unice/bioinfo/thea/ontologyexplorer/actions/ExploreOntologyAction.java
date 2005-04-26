@@ -62,15 +62,17 @@ public class ExploreOntologyAction extends NodeAction {
             ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                     .getResourceFactory();
 
-            Query q = sess
-                    .createQuery("select res from Resource res, StringValue sv where res.arcs[:name] = sv and sv.value = :nm");
+//            Query q = sess
+//                    .createQuery("select res from Resource res, StringValue sv where res.arcs[:name] = sv and sv.value = :nm");
+//
+//            q.setString("nm", "top");
+//            q.setEntity("name", resourceFactory.getProperty("NAME"));
+//
+//            result = q.list();
+//            root = (Resource) result.iterator().next();
 
-            q.setString("nm", "top");
-            q.setEntity("name", resourceFactory.getProperty("NAME"));
-
-            result = q.list();
-            root = (Resource) result.iterator().next();
-
+            root = resourceFactory.getResource("http://www.geneontology.org/owl#GO_0008150");
+            
         } catch (StackOverflowError s) {
             ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, s);
         } catch (HibernateException he) {

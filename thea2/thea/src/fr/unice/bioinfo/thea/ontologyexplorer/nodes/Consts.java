@@ -3,6 +3,7 @@ package fr.unice.bioinfo.thea.ontologyexplorer.nodes;
 import java.util.HashSet;
 import java.util.Set;
 
+import fr.unice.bioinfo.allonto.datamodel.Property;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
@@ -18,7 +19,7 @@ public class Consts {
             .getResourceFactory();
 
     public static Resource subsumeProperty = resourceFactory
-            .getProperty("SUBSUMED_BY");
+            .getProperty("http://www.w3.org/2000/01/rdf-schema#subClassOf");
 
     public static Resource partofProperty = resourceFactory
             .getProperty("CONTAINS");
@@ -32,9 +33,9 @@ public class Consts {
     .getProperty("http://www.w3.org/2000/01/rdf-schema#subClassOf");
 
     public static Set getListOfProperties() {
-        properties.add(subsumeProperty);
-        properties.add(partofProperty);
-        properties.add(derivedInProperty);
+        properties.add(((Property)subsumeProperty).getInverse());
+        //properties.add(partofProperty);
+        //properties.add(derivedInProperty);
         
         //properties.add(subClassOf);
         return properties;
