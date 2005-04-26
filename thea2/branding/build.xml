@@ -59,7 +59,7 @@
 	set CLUSTER=${clustername}
 	set PATH=%PATH%;%NETBEANS_HOME%\%CLUSTER%\lib
 
-	%NETBEANS_HOME%\platform4\lib\nbexec.exe -ui com.jgoodies.plaf.plastic.PlasticXPLookAndFeel -J-DPlastic.defaultTheme=DesertBlue -J-Xmx500M -J-Dhibernate.max_fetch_depth=0 -J-Dfr.unice.bioinfo.allonto.datamodel.ResourceFactory=fr.unice.bioinfo.allonto.persistence.PersistentResourceFactory --userdir %NETBEANS_HOME%\.thea --branding thea --clusters %NETBEANS_HOME%\%CLUSTER%
+	%NETBEANS_HOME%\platform4\lib\nbexec.exe -ui com.jgoodies.plaf.plastic.PlasticXPLookAndFeel -J-DPlastic.defaultTheme=DesertBlue -J-Xmx500M -J-Dhibernate.dialect=net.sf.hibernate.dialect.MySQLDialect -J-Dhibernate.max_fetch_depth=0 -J-Dfr.unice.bioinfo.allonto.datamodel.ResourceFactory=fr.unice.bioinfo.allonto.persistence.PersistentResourceFactory --userdir %NETBEANS_HOME%\.thea --branding thea --clusters %NETBEANS_HOME%\%CLUSTER%
 	        </echo>
 	</target>
 
