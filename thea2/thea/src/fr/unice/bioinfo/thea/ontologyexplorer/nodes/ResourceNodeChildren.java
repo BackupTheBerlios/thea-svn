@@ -1,24 +1,51 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.nodes;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Session;
 
+import org.apache.commons.configuration.Configuration;
 import org.openide.nodes.Children;
 import org.openide.nodes.Node;
 import org.openide.util.NbBundle;
 
 import fr.unice.bioinfo.allonto.datamodel.Resource;
+import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
+import fr.unice.bioinfo.allonto.util.AllontoFactory;
+import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 
 /**
- * @author Saïd El Kasmi
+ * 
+ * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi</a>
  */
 public class ResourceNodeChildren extends Children.Keys {
+    /** List of properties to be used to compute keys.*/
+    private static Set properties = new HashSet();
+    
+    static {
+        ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
+        .getResourceFactory();
+        Configuration con = TheaConfiguration.getDefault().getConfiguration();
+        Object o = con.getProperty("ontologyexplorer.hierarchy.uri");//NOI18N
+        if (o instanceof Collection) {
+            ArrayList al = new ArrayList((Collection) o);
+            Object[] names = al.toArray();
+            for (int counter = 0; counter < al.size(); counter++) {
+                String name = (String) names[counter];
+                Resource r = resourceFactory
+                .getProperty(name);
+                properties.add(r);
+            }
+        }
+    }
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
@@ -108,8 +135,7 @@ public class ResourceNodeChildren extends Children.Keys {
         } catch (HibernateException e) {
             e.printStackTrace();
         }
-        Set childs = ((Resource) resource).getTargets(Consts
-                .getListOfProperties());
+        Set childs = ((Resource) resource).getTargets(properties);
         return childs;
     }
 }

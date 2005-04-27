@@ -3,10 +3,10 @@ package fr.unice.bioinfo.thea.ontologyexplorer.nodes;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import javax.swing.Action;
 
+import org.apache.commons.configuration.Configuration;
 import org.openide.actions.PropertiesAction;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
@@ -17,42 +17,76 @@ import org.openide.util.actions.SystemAction;
 
 import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
+import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.StringValue;
+import fr.unice.bioinfo.allonto.util.AllontoFactory;
+import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowAnnotetdGenesAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 
 /**
- * @author Saïd El Kasmi
+ * This class uses the nodes API to build a node that represents a 
+ * resource from an ontology.
+ * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi</a>
  */
 public class ResourceNode extends AbstractNode implements Node.Cookie {
 
+    static {
+        Configuration con = TheaConfiguration.getDefault().getConfiguration();
+        Object o = con.getProperty("ontologyexplorer.nodes.nodename");//NOI18N
+        nodeNameProperty = (String) o;
+    }
+
+    /** The property to use to reach for a node's display name.*/
+    private static String nodeNameProperty;
+
     private ResourceNodeInfo info;
 
+    ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
+            .getResourceFactory();
+
+    /** This node's display name. */
+    private String name = "";//NOI18N
     /** A resource associated with a node in the Ontology Explorer. */
     private Resource resource;
 
-    /** List of childs */
-    private Set targets;
+    //    /** List of childs */
+    //    private Set targets;
 
-    public ResourceNode(Resource resource, Set targets) {
-        super((targets == null) ? Children.LEAF : new ResourceNodeChildren(
-                resource));
-        this.resource = resource;
-        this.targets = targets;
-        // Set system name and display name of this node
-        // using the resource one
-        setName(resource.getName());
-    }
+    //    public ResourceNode(Resource resource, Set targets) {
+    //        super((targets == null) ? Children.LEAF : new ResourceNodeChildren(
+    //                resource));
+    //        this.resource = resource;
+    //        this.targets = targets;
+    //        // Set system name and display name of this node
+    //        // using the resource one
+    //        setDisplayName(resource.getName());
+    //    }
 
-    public ResourceNode(Resource resource) {
+    public ResourceNode(final Resource resource) {
         super((resource == null) ? Children.LEAF : new ResourceNodeChildren(
                 resource));
         this.resource = resource;
-        // Set system name and display name of this node
-        // using the resource one
-        setName(""+resource.getId());
-        //setName(resource.getName());
+
+        // Build a display name:
+
+        //        RequestProcessor.getDefault().post(new Runnable() {
+        //            public void run() {
+
+        StringValue sv = (StringValue) resource.getTarget(resourceFactory
+                .getProperty(nodeNameProperty));
+        if (sv != null) {
+            name = sv.getValue();
+        } else {
+            name = "" + resource.getId();//NOI18N
+        }
+        // Set the node name and display name:
+        setName(name);
+        setDisplayName(name);
     }
+
+    //        }, 0);
+    //    }
 
     /** Returns cookie */
     public ResourceNodeInfo getInfo() {
@@ -149,12 +183,19 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
                 .get(ShowAnnotetdGenesAction.class) };
         return actions;
     }
-    /** Returns the resource represented by this node.*/
+
+    /** Returns the resource represented by this node. */
     public Resource getResource() {
         return resource;
     }
-    /** Sets the resource represented by this node.*/
+
+    /** Sets the resource represented by this node. */
     public void setResource(Resource resource) {
         this.resource = resource;
+    }
+
+    /** Make this node destroyable.*/
+    public boolean canDestroy() {
+        return true;
     }
 }

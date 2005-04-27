@@ -1,11 +1,14 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Session;
 
+import org.apache.commons.configuration.Configuration;
 import org.openide.ErrorManager;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
@@ -16,6 +19,7 @@ import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
+import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
@@ -49,7 +53,7 @@ public class ExploreOntologyAction extends NodeAction {
         //            public void run() {
         DatabaseConnection dbc = ((OntologyNode) node).getConnection();
         List result = null;
-        Resource root = null;
+        Resource[] roots = null;
         try {
 
             // Create a Session using a Connection
@@ -59,20 +63,19 @@ public class ExploreOntologyAction extends NodeAction {
             ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                     .getResourceFactory();
 
-//            Query q = sess
-//                    .createQuery("select res from Resource res, StringValue sv where res.arcs[:name] = sv and sv.value = :nm");
-//
-//            q.setString("nm", "top");
-//            q.setEntity("name", resourceFactory.getProperty("NAME"));
-//
-//            result = q.list();
-//            root = (Resource) result.iterator().next();
+            Configuration con = TheaConfiguration.getDefault()
+                    .getConfiguration();
+            Object o = con.getProperty("ontologyexplorer.roots.uri");//NOI18N
+            if (o instanceof Collection) {
+                ArrayList al = new ArrayList((Collection) o);
+                Object[] names = al.toArray();
+                roots = new Resource[al.size()];
+                for (int counter = 0; counter < al.size(); counter++) {
+                    String name = (String) names[counter];
+                    roots[counter] = resourceFactory.getResource(name);
+                }
+            }
 
-            root = resourceFactory.getResource("http://www.geneontology.org/owl#GO_0008150");
-            
-//            Resource subsumeProperty = resourceFactory.getResource("http://www.geneontology.org/owl#GO_0005575");
-//            System.out.println("subsumeProperty = "+subsumeProperty.getId());
-            
         } catch (StackOverflowError s) {
             ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, s);
         } catch (HibernateException he) {
@@ -81,13 +84,18 @@ public class ExploreOntologyAction extends NodeAction {
             ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, npe);
         }
 
-        //Build a root node and set the root context
-        ResourceNode rootNode = new ResourceNode(root);
-        ResourceNodeInfo rni = new ResourceNodeInfo();
-        rni.setConnection(dbc.getConnection());
-        rootNode.setInfo(rni);
+        //Build root nodes and them the root context
+        ResourceNode[] rootNodes = new ResourceNode[roots.length];
+        ResourceNodeInfo[] rni = new ResourceNodeInfo[roots.length];
+        for (int cnt = 0; cnt < roots.length; cnt++) {
+            rootNodes[cnt] = new ResourceNode(roots[cnt]);
+            rni[cnt] = new ResourceNodeInfo();
+            rni[cnt].setConnection(dbc.getConnection());
+            rootNodes[cnt].setInfo(rni[cnt]);
 
-        node.getChildren().add(new Node[] { rootNode });
+            node.getChildren().add(new Node[] { rootNodes[cnt] });
+        }
+
         //            }
         //        }, 0);
     }
@@ -127,7 +135,7 @@ public class ExploreOntologyAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        return bundle.getString("LBL_ExploreOntologyAction_Name");
+        return bundle.getString("LBL_ExploreOntologyAction_Name");//NOI18N
     }
 
     /*

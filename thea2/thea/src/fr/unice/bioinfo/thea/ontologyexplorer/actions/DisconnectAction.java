@@ -1,7 +1,9 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
+import java.io.IOException;
 import java.util.ResourceBundle;
 
+import org.openide.ErrorManager;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
@@ -41,6 +43,18 @@ public class DisconnectAction extends NodeAction {
                 dbc.disconnect();
             }
         }, 0);
+
+        // Remove all the children of node
+        Node[] children = node.getChildren().getNodes();
+        for (int cnt = 0; cnt < children.length; cnt++) {
+            try {
+                children[cnt].destroy();
+            } catch (IOException e1) {
+                ErrorManager.getDefault()
+                        .notify(ErrorManager.INFORMATIONAL, e1);
+            }
+        }
+        node.getChildren().remove(node.getChildren().getNodes());
     }
 
     /*
@@ -82,7 +96,7 @@ public class DisconnectAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        return bundle.getString("LBL_DisconnectAction_Name");
+        return bundle.getString("LBL_DisconnectAction_Name");//NOI18N
     }
 
     /*

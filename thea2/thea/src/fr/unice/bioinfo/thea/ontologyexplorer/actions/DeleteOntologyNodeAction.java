@@ -3,6 +3,7 @@ package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+import org.openide.ErrorManager;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
@@ -61,8 +62,8 @@ public class DeleteOntologyNodeAction extends NodeAction {
         try {
             node.destroy();
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
+            ErrorManager.getDefault()
+            .notify(ErrorManager.INFORMATIONAL, e1);
         }
     }
 
