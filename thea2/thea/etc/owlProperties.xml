@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<owlproperties>
+	<ontologyexplorer>
+		<!-- List of root entries in the ontology.-->
+		<roots>
+			<uri>http://www.geneontology.org/owl#GO_0008150</uri>
+			<uri>http://www.geneontology.org/owl#GO_0005575</uri>
+			<uri>http://www.geneontology.org/owl#GO_0003674</uri>
+		</roots>
+		<!-- hieararchy bloc defines list of properties to be used
+			to build the tree in the ontology explorer.
+			-->
+		<hierarchy>
+			<uri>SUPERCLASS</uri>
+			<uri>http://www.unice.fr/bioinfo/owl/allonto#contains</uri>
+			<partof>http://www.unice.fr/bioinfo/owl/allonto#contains</partof>
+			<isa>SUPERCLASS</isa>
+		</hierarchy>
+		<nodes>
+			<!-- nodename tels how to create a display name for nodes -->
+			<nodename>http://www.w3.org/2000/01/rdf-schema#label</nodename>
+		</nodes>
+	</ontologyexplorer>
+</owlproperties>
