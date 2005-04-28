@@ -35,10 +35,16 @@ public class OESettings extends SystemOption {
 
     /** The last browsed directory when loading a classification */
     private static String lastBrowsedDirectory = System
-            .getProperty("user.home");
+            .getProperty("user.home");//NOI18N
+    
+    /** The configuration file for thea. */
+    private static String configFilePath = "";//NOI18N
 
     /** <i>lastBrowsedDirectory </i> property name. */
     public static final String PROP_LAST_BROWSED_DIRECTORY = "lastBrowsedDirectory"; // NOI18N
+    
+    /** <i>lastBrowsedDirectory </i> property name. */
+    public static final String PROP_CONFIG_FILE_PATH = "configFilePath"; // NOI18N
 
     /** Returns the last browsed directory. */
     public String getLastBrowsedDirectory() {
@@ -47,12 +53,23 @@ public class OESettings extends SystemOption {
 
     /** Store the last browsed directory's path. */
     public void setLastBrowsedDirectory(String value) {
-        value = (value == null) ? "" : value;
+        value = (value == null) ? "" : value;//NOI18N
         String old = getLastBrowsedDirectory();
         if (!value.equals(old)) {
             lastBrowsedDirectory = value;
             firePropertyChange(PROP_LAST_BROWSED_DIRECTORY, old, value);
         }
-
+    }
+    /** Returns the configuration file's absolute path.*/
+    public String getConfigFilePath() {
+        return configFilePath;
+    }
+    /** Sets the configuration file's absolute path.*/
+    public void setConfigFilePath(String value) {
+        String old = getConfigFilePath();
+        if (!value.equals(old)) {
+            configFilePath = value;
+            firePropertyChange(PROP_CONFIG_FILE_PATH, old, value);
+        }
     }
 }

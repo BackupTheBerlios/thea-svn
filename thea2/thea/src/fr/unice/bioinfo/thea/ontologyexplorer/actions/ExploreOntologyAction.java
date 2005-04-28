@@ -9,7 +9,9 @@ import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Session;
 
 import org.apache.commons.configuration.Configuration;
+import org.openide.DialogDisplayer;
 import org.openide.ErrorManager;
+import org.openide.NotifyDescriptor;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
@@ -27,7 +29,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 
 /**
- * @author Saïd El Kasmi
+ * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class ExploreOntologyAction extends NodeAction {
     /** Resource Bundle */
@@ -56,6 +58,18 @@ public class ExploreOntologyAction extends NodeAction {
         Resource[] roots = null;
         try {
 
+            Configuration con = TheaConfiguration.getDefault()
+                    .getConfiguration();
+            //if no configuration available,show an error dialog
+            // and return immedialtely.
+            if (con == null) {
+                DialogDisplayer.getDefault().notify(
+                        new NotifyDescriptor.Message(bundle
+                                .getString("ErrMsg_ExplorOntology"),//NOI18N
+                                NotifyDescriptor.INFORMATION_MESSAGE));
+                return;
+            }
+
             // Create a Session using a Connection
             HibernateUtil.createSession(dbc.getConnection());
             Session sess = HibernateUtil.currentSession();
@@ -63,8 +77,6 @@ public class ExploreOntologyAction extends NodeAction {
             ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                     .getResourceFactory();
 
-            Configuration con = TheaConfiguration.getDefault()
-                    .getConfiguration();
             Object o = con.getProperty("ontologyexplorer.roots.uri");//NOI18N
             if (o instanceof Collection) {
                 ArrayList al = new ArrayList((Collection) o);

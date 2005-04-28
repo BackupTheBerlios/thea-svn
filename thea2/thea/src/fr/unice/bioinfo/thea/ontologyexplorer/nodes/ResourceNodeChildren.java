@@ -23,16 +23,19 @@ import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 
 /**
- * 
- * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi</a>
+ * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class ResourceNodeChildren extends Children.Keys {
-    /** List of properties to be used to compute keys.*/
+    /** List of properties to be used to compute keys. */
     private static Set properties = new HashSet();
-    
+    /** The partof relationship property name */
+    private static String partofPropertyName;
+    /** The is a relationship property name */
+    private static String isaPropertyName;
+
     static {
         ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-        .getResourceFactory();
+                .getResourceFactory();
         Configuration con = TheaConfiguration.getDefault().getConfiguration();
         Object o = con.getProperty("ontologyexplorer.hierarchy.uri");//NOI18N
         if (o instanceof Collection) {
@@ -40,11 +43,15 @@ public class ResourceNodeChildren extends Children.Keys {
             Object[] names = al.toArray();
             for (int counter = 0; counter < al.size(); counter++) {
                 String name = (String) names[counter];
-                Resource r = resourceFactory
-                .getProperty(name);
+                Resource r = resourceFactory.getProperty(name);
                 properties.add(r);
             }
         }
+        // get the partof and is a properties names:
+        Object partof = con.getProperty("ontologyexplorer.hierarchy.partof");//NOI18N
+        partofPropertyName = (String) partof;
+        Object isa = con.getProperty("ontologyexplorer.hierarchy.isa");//NOI18N
+        isaPropertyName = (String) isa;
     }
 
     /** Resource Bundle */
@@ -53,6 +60,9 @@ public class ResourceNodeChildren extends Children.Keys {
 
     /** Resource associated with this children. */
     private Resource resource;
+
+    private ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
+            .getResourceFactory();
 
     /** Creates new ResourceChildren. */
     public ResourceNodeChildren(Resource resource) {
@@ -90,32 +100,34 @@ public class ResourceNodeChildren extends Children.Keys {
         rn.setInfo(rni);
         // associate an icon dependening on the relation
         // between the children's resource and the parent's one
-//        ResourceNode p = (ResourceNode) getNode();
-//
-//        if (p != null) {
-//            try {
-//                Session sess = HibernateUtil.currentSession();
-//                if (!sess.isConnected()) {
-//                    sess.reconnect();
-//                }
-//            } catch (HibernateException e) {
-//                e.printStackTrace();
-//            }
-//            Set pchilds = resource.getTargets(Consts.partofProperty);
-//            if (pchilds != null) {
-//                if (pchilds.contains(r)) {
-//                    rn
-//                            .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/partOfIcon");
-//                }
-//            }
-//            Set ichilds = resource.getTargets(Consts.subsumeProperty);
-//            if (ichilds != null) {
-//                if (ichilds.contains(r)) {
-//                    rn
-//                            .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/isAIcon");
-//                }
-//            }
-//        }
+        ResourceNode p = (ResourceNode) getNode();
+
+        if (p != null) {
+            try {
+                Session sess = HibernateUtil.currentSession();
+                if (!sess.isConnected()) {
+                    sess.reconnect();
+                }
+            } catch (HibernateException e) {
+                e.printStackTrace();
+            }
+            Set pchilds = resource.getTargets(resourceFactory
+                    .getProperty(partofPropertyName));
+            if (pchilds != null) {
+                if (pchilds.contains(r)) {
+                    rn
+                            .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/partOfIcon");
+                }
+            }
+            Set ichilds = resource.getTargets(resourceFactory
+                    .getProperty(isaPropertyName));
+            if (ichilds != null) {
+                if (ichilds.contains(r)) {
+                    rn
+                            .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/isAIcon");
+                }
+            }
+        }
 
         return new Node[] { (Node) rn };
 
