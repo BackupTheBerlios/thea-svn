@@ -104,7 +104,7 @@ public class ExploreOntologyAction extends NodeAction {
             rni[cnt] = new ResourceNodeInfo();
             rni[cnt].setConnection(dbc.getConnection());
             rootNodes[cnt].setInfo(rni[cnt]);
-
+            rootNodes[cnt].setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/RootResourceIcon16");
             node.getChildren().add(new Node[] { rootNodes[cnt] });
         }
 

@@ -42,7 +42,7 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
 
     private ResourceNodeInfo info;
 
-    ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
+    private ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
             .getResourceFactory();
 
     /** This node's display name. */
