@@ -82,6 +82,7 @@ public class GeneEditorCellRenderer extends DefaultTreeCellRenderer {
         }
 
         TreePath path = tree.getPathForRow(row);
+        
         return this;
     }
 }
