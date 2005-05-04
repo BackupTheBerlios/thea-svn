@@ -23,6 +23,9 @@ import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 
 /**
+ * A Java class that represents node in the ontology explorer. It 
+ * calculates dynamically keys to build children. For each key a 
+ * node is created using the <code>createNode(Object key)</code> method.
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class ResourceNodeChildren extends Children.Keys {
@@ -128,9 +131,7 @@ public class ResourceNodeChildren extends Children.Keys {
                 }
             }
         }
-
         return new Node[] { (Node) rn };
-
     }
 
     /**
