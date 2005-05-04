@@ -19,6 +19,52 @@
 		<nodes>
 			<!-- nodename tels how to create a display name for nodes -->
 			<nodename>http://www.w3.org/2000/01/rdf-schema#label</nodename>
+			<!-- the property used to extract genes annotated with a given resource-->
+			<annotates> 
+				http://www.unice.fr/bioinfo/owl/allonto#annotates</annotates>
+			<hasevidence>
+				http://www.unice.fr/bioinfo/owl/allonto#hasEvidence</hasevidence>
+			<!-- genename tels how to create a display name for an annotated gene -->
+			<genename>http://www.unice.fr/bioinfo/owl/allonto#symbol</genename>
+			<!-- property that allows access to the full name of a gene-->
+			<genefullname> 
+				http://www.unice.fr/bioinfo/owl/allonto#fullName</genefullname>
+			<!-- xrefname is the property ised to find a DB XREF-->
+			<xrefname>http://www.unice.fr/bioinfo/owl/allonto#xref</xrefname>
+			<dbname>http://www.unice.fr/bioinfo/owl/allonto#db</dbname>
+			<dbkeyname> 
+				http://www.unice.fr/bioinfo/owl/allonto#dbname</dbkeyname>
+			<!-- property used to get the database name as a string valeue-->
+			<dbsvname>http://www.unice.fr/bioinfo/owl/allonto#name</dbsvname>
 		</nodes>
 	</ontologyexplorer>
+	<!-- CODES EVIDENCES -->
+	<evidences>
+		<uri>http://www.unice.fr/bioinfo/owl/allonto#IMP</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/allonto#IC</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/allonto#IPI</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/allonto#IEP</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/allonto#NA</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/allonto#NR</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/allonto#IGI</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/allonto#ISS</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/allonto#ND</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/allonto#ASS</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/allonto#NAS</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/allonto#TAS</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/allonto#IEA</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/allonto#IDA</uri>
+	</evidences>
+	<!-- END CODE EVEIDENCES BLOC-->
+	<!-- Gene editor related properties-->
+	<geneeditor>
+		<column>
+			<name>http://www.unice.fr/bioinfo/owl/allonto#symbol</name>
+			<name>http://www.unice.fr/bioinfo/owl/allonto#fullName</name>
+			<name>http://www.unice.fr/bioinfo/owl/allonto#chromosome</name>
+			<name>http://www.unice.fr/bioinfo/owl/allonto#startPos</name>
+			<name>http://www.unice.fr/bioinfo/owl/allonto#endPos</name>
+			<name>http://www.unice.fr/bioinfo/owl/allonto#strand</name>
+		</column>
+	</geneeditor>
 </owlproperties>
