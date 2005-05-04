@@ -43,7 +43,7 @@
 	NETBEANS_HOME=${netbeans.dest.dir}
 	CLUSTER=${clustername}
 
-	$NETBEANS_HOME/platform4/lib/nbexec 
+	$NETBEANS_HOME/platform4/lib/nbexec -ui	com.jgoodies.plaf.plastic.PlasticXPLookAndFeel -J-DPlastic.defaultTheme=DesertBlue	-J-Dhibernate.dialect=net.sf.hibernate.dialect.MySQLDialect	-J-Xmx500M -J-Dhibernate.max_fetch_depth=0	-J-Dfr.unice.bioinfo.allonto.datamodel.ResourceFactory=fr.unice.bioinfo.allonto.persistence.PersistentResourceFactory --userdir $NETBEANS_HOME/.thea --branding thea --clusters $NETBEANS_HOME/$CLUSTER
 	        </echo>
 
 		<!-- make sure the shell script is executable -->
