@@ -12,8 +12,8 @@
 			-->
 		<hierarchy>
 			<uri>SUPERCLASS</uri>
-			<uri>http://www.unice.fr/bioinfo/owl/allonto#contains</uri>
-			<partof>http://www.unice.fr/bioinfo/owl/allonto#contains</partof>
+			<uri>http://www.unice.fr/bioinfo/owl/biowl#contains</uri>
+			<partof>http://www.unice.fr/bioinfo/owl/biowl#contains</partof>
 			<isa>SUPERCLASS</isa>
 		</hierarchy>
 		<nodes>
@@ -21,50 +21,50 @@
 			<nodename>http://www.w3.org/2000/01/rdf-schema#label</nodename>
 			<!-- the property used to extract genes annotated with a given resource-->
 			<annotates> 
-				http://www.unice.fr/bioinfo/owl/allonto#annotates</annotates>
+				http://www.unice.fr/bioinfo/owl/biowl#annotates</annotates>
 			<hasevidence>
-				http://www.unice.fr/bioinfo/owl/allonto#hasEvidence</hasevidence>
+				http://www.unice.fr/bioinfo/owl/biowl#hasEvidence</hasevidence>
 			<!-- genename tels how to create a display name for an annotated gene -->
-			<genename>http://www.unice.fr/bioinfo/owl/allonto#symbol</genename>
+			<genename>http://www.unice.fr/bioinfo/owl/biowl#symbol</genename>
 			<!-- property that allows access to the full name of a gene-->
 			<genefullname> 
-				http://www.unice.fr/bioinfo/owl/allonto#fullName</genefullname>
+				http://www.unice.fr/bioinfo/owl/biowl#fullName</genefullname>
 			<!-- xrefname is the property ised to find a DB XREF-->
-			<xrefname>http://www.unice.fr/bioinfo/owl/allonto#xref</xrefname>
-			<dbname>http://www.unice.fr/bioinfo/owl/allonto#db</dbname>
+			<xrefname>http://www.unice.fr/bioinfo/owl/biowl#xref</xrefname>
+			<dbname>http://www.unice.fr/bioinfo/owl/biowl#db</dbname>
 			<dbkeyname> 
-				http://www.unice.fr/bioinfo/owl/allonto#dbname</dbkeyname>
+				http://www.unice.fr/bioinfo/owl/biowl#dbname</dbkeyname>
 			<!-- property used to get the database name as a string valeue-->
-			<dbsvname>http://www.unice.fr/bioinfo/owl/allonto#name</dbsvname>
+			<dbsvname>http://www.unice.fr/bioinfo/owl/biowl#name</dbsvname>
 		</nodes>
 	</ontologyexplorer>
 	<!-- CODES EVIDENCES -->
 	<evidences>
-		<uri>http://www.unice.fr/bioinfo/owl/allonto#IMP</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/allonto#IC</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/allonto#IPI</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/allonto#IEP</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/allonto#NA</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/allonto#NR</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/allonto#IGI</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/allonto#ISS</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/allonto#ND</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/allonto#ASS</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/allonto#NAS</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/allonto#TAS</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/allonto#IEA</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/allonto#IDA</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#IMP</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#IC</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#IPI</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#IEP</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#NA</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#NR</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#IGI</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#ISS</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#ND</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#ASS</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#NAS</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#TAS</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#IEA</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#IDA</uri>
 	</evidences>
 	<!-- END CODE EVEIDENCES BLOC-->
 	<!-- Gene editor related properties-->
 	<geneeditor>
 		<column>
-			<name>http://www.unice.fr/bioinfo/owl/allonto#symbol</name>
-			<name>http://www.unice.fr/bioinfo/owl/allonto#fullName</name>
-			<name>http://www.unice.fr/bioinfo/owl/allonto#chromosome</name>
-			<name>http://www.unice.fr/bioinfo/owl/allonto#startPos</name>
-			<name>http://www.unice.fr/bioinfo/owl/allonto#endPos</name>
-			<name>http://www.unice.fr/bioinfo/owl/allonto#strand</name>
+			<name>http://www.unice.fr/bioinfo/owl/biowl#symbol</name>
+			<name>http://www.unice.fr/bioinfo/owl/biowl#fullName</name>
+			<name>http://www.unice.fr/bioinfo/owl/biowl#chromosome</name>
+			<name>http://www.unice.fr/bioinfo/owl/biowl#startPos</name>
+			<name>http://www.unice.fr/bioinfo/owl/biowl#endPos</name>
+			<name>http://www.unice.fr/bioinfo/owl/biowl#strand</name>
 		</column>
 	</geneeditor>
 </owlproperties>
