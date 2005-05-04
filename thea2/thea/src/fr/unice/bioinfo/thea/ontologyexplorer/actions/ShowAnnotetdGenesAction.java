@@ -1,7 +1,12 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
+import java.awt.Dialog;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
+import org.openide.DialogDescriptor;
+import org.openide.DialogDisplayer;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
@@ -9,6 +14,7 @@ import org.openide.util.actions.NodeAction;
 
 import fr.unice.bioinfo.thea.ontologyexplorer.GeneEditor;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
+import fr.unice.bioinfo.thea.ontologyexplorer.dlg.ShowAnnotatedGenesPanel;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 
@@ -16,6 +22,8 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class ShowAnnotetdGenesAction extends NodeAction {
+
+    private Dialog dialog;
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
@@ -33,9 +41,33 @@ public class ShowAnnotetdGenesAction extends NodeAction {
         final ResourceNodeInfo rni = (ResourceNodeInfo) node
                 .getCookie(ResourceNodeInfo.class);
 
-        GeneEditor editor = new GeneEditor(node);
-        editor.open();
-        editor.requestActive();
+        //      Create the panel
+        final ShowAnnotatedGenesPanel panel = new ShowAnnotatedGenesPanel();
+        //          Create the listener for buttons actions/ Ok/Cancel
+        ActionListener al = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == DialogDescriptor.OK_OPTION) {
+                    // close dialog
+                    closeDialog();
+                    final String[] evidences = panel.getSelectedEvidences();
+                    final String[] properties = panel.getSelectedProperties();
+                    if ((evidences == null) || (properties == null)) {
+                        return;
+                    }
+                    GeneEditor editor = new GeneEditor(node, evidences,
+                            properties);
+                    editor.open();
+                    editor.requestActive();
+                }
+            }
+        };
+        //Use DialogDescriptor to show the panel
+        DialogDescriptor descriptor = new DialogDescriptor(panel, bundle
+                .getString("LBL_EvidencesDialogTitle"), true, al); //NOI18N
+        Object[] closingOptions = { DialogDescriptor.CANCEL_OPTION };
+        descriptor.setClosingOptions(closingOptions);
+        dialog = DialogDisplayer.getDefault().createDialog(descriptor);
+        dialog.show();
     }
 
     /*
@@ -83,4 +115,10 @@ public class ShowAnnotetdGenesAction extends NodeAction {
         return false;
     }
 
+    //  Closes dialog
+    private void closeDialog() {
+        if (dialog != null) {
+            dialog.dispose();
+        }
+    }
 }

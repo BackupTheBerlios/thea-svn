@@ -36,15 +36,27 @@ public class OESettings extends SystemOption {
     /** The last browsed directory when loading a classification */
     private static String lastBrowsedDirectory = System
             .getProperty("user.home");//NOI18N
-    
+
     /** The configuration file for thea. */
     private static String configFilePath = "";//NOI18N
 
+    /** Last selected evidences */
+    private static String[] evidences = null;
+
+    /** Last selected string values properties */
+    private static String[] svnames = null;
+
     /** <i>lastBrowsedDirectory </i> property name. */
     public static final String PROP_LAST_BROWSED_DIRECTORY = "lastBrowsedDirectory"; // NOI18N
-    
+
     /** <i>lastBrowsedDirectory </i> property name. */
     public static final String PROP_CONFIG_FILE_PATH = "configFilePath"; // NOI18N
+
+    /** evidences property name */
+    public static final String PROP_EVIDENCES = "evidences"; // NOI18N
+
+    /** svnames property name */
+    public static final String PROP_SV_NAMES = "svnames"; // NOI18N
 
     /** Returns the last browsed directory. */
     public String getLastBrowsedDirectory() {
@@ -60,16 +72,40 @@ public class OESettings extends SystemOption {
             firePropertyChange(PROP_LAST_BROWSED_DIRECTORY, old, value);
         }
     }
-    /** Returns the configuration file's absolute path.*/
+
+    /** Returns the configuration file's absolute path. */
     public String getConfigFilePath() {
         return configFilePath;
     }
-    /** Sets the configuration file's absolute path.*/
+
+    /** Sets the configuration file's absolute path. */
     public void setConfigFilePath(String value) {
         String old = getConfigFilePath();
         if (!value.equals(old)) {
             configFilePath = value;
             firePropertyChange(PROP_CONFIG_FILE_PATH, old, value);
         }
+    }
+
+    /** retrurns evidences list. */
+    public String[] getEvidences() {
+        return evidences;
+    }
+
+    /** Sets evidences. */
+    public void setEvidences(String[] value) {
+        String[] old = getEvidences();
+        evidences = value;
+        firePropertyChange(PROP_EVIDENCES, old, value);
+    }
+
+    public String[] getSvnames() {
+        return svnames;
+    }
+
+    public void setSvnames(String[] value) {
+        String[] old = getSvnames();
+        evidences = value;
+        firePropertyChange(PROP_SV_NAMES, old, value);
     }
 }
