@@ -23,9 +23,9 @@ import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 
 /**
- * A Java class that represents node in the ontology explorer. It 
- * calculates dynamically keys to build children. For each key a 
- * node is created using the <code>createNode(Object key)</code> method.
+ * A Java class that represents node in the ontology explorer. It calculates
+ * dynamically keys to build children. For each key a node is created using the
+ * <code>createNode(Object key)</code> method.
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class ResourceNodeChildren extends Children.Keys {
@@ -116,21 +116,29 @@ public class ResourceNodeChildren extends Children.Keys {
             }
             Set pchilds = resource.getTargets(resourceFactory
                     .getProperty(partofPropertyName));
+            Set ichilds = resource.getTargets(resourceFactory
+                    .getProperty(isaPropertyName));
+
             if (pchilds != null) {
                 if (pchilds.contains(r)) {
                     rn
-                            .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/partOfIcon");
+                            .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/partOfIcon");//NOI18N
                 }
             }
-            Set ichilds = resource.getTargets(resourceFactory
-                    .getProperty(isaPropertyName));
+
             if (ichilds != null) {
                 if (ichilds.contains(r)) {
                     rn
-                            .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/isAIcon");
+                            .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/isAIcon");//NOI18N
                 }
             }
         }
+
+        //        RequestProcessor.getDefault().post(new Runnable() {
+        //            public void run() {
+        //            }
+        //        }, 0);
+
         return new Node[] { (Node) rn };
     }
 
