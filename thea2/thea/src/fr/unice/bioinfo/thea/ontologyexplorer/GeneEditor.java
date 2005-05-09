@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
@@ -37,7 +39,8 @@ public class GeneEditor extends TopComponent {
 
     //  Serial Version UID
     static final long serialVersionUID = 6857108441469780252L;
-
+    /** The support for firing property changes */
+    private PropertyChangeSupport propertySupport;
     /** preferred ID:ce as Classification Editor */
     private String PREFERRED_ID = "geneeditor";//NOI18N
     /** Resource Bundle */
@@ -69,6 +72,10 @@ public class GeneEditor extends TopComponent {
         this.properties = properties;
         this.resource = ((ResourceNode) node).getResource();
 
+        propertySupport = new PropertyChangeSupport(this);
+
+        propertySupport.firePropertyChange("initializing", null, null);//NOI18N
+
         // give a title to this window using the resource's name
         setName(node.getDisplayName());
         // icon
@@ -77,7 +84,9 @@ public class GeneEditor extends TopComponent {
 
         //      layout
         setLayout(new BorderLayout());
+        propertySupport.firePropertyChange("processing", null, null);//NOI18N
         add(createMainPanel(), BorderLayout.CENTER);
+        propertySupport.firePropertyChange("endprocessing", null, null);//NOI18N
     }
 
     private JPanel createMainPanel() {
@@ -136,6 +145,22 @@ public class GeneEditor extends TopComponent {
         panel.add(printBtn, cc.xy(5, 3));
         // return the panel
         return panel;
+    }
+
+    /**
+     * Add property change listener Registers a listener for the PropertyChange
+     * event.
+     */
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        propertySupport.addPropertyChangeListener(l);
+    }
+
+    /**
+     * Remove property change listener Remove a listener for the PropertyChange
+     * event.
+     */
+    public void removePropertyChangeListener(PropertyChangeListener l) {
+        propertySupport.removePropertyChangeListener(l);
     }
 
     private void performPrintBtnAction(ActionEvent e) {

@@ -304,9 +304,13 @@ public class ShowAnnotatedGenesPanel extends JPanel {
     }
 
     private void performAddEvidencesBtnAction(ActionEvent e) {
-        int index = allEvidencesList.getSelectedIndex();
-        Object o = allEvidencesModel.get(index);
-        selectedEvidencesModel.addElement(o);
+        //      Get the index of all the selected items
+        int[] selectedIx = allEvidencesList.getSelectedIndices();
+        // Get all the selected items using the indices
+        for (int i = 0; i < selectedIx.length; i++) {
+            Object o = allEvidencesModel.getElementAt(selectedIx[i]);
+            selectedEvidencesModel.addElement(o);
+        }
     }
 
     private void performRemoveEvidencesBtnAction(ActionEvent e) {
@@ -326,9 +330,13 @@ public class ShowAnnotatedGenesPanel extends JPanel {
     }
 
     private void performAddPropBtnAction(ActionEvent e) {
-        int index = allPropList.getSelectedIndex();
-        Object o = allPropModel.get(index);
-        selectedPropModel.addElement(o);
+        //      Get the index of all the selected items
+        int[] selectedIx = allPropList.getSelectedIndices();
+        // Get all the selected items using the indices
+        for (int i = 0; i < selectedIx.length; i++) {
+            Object o = allPropModel.getElementAt(selectedIx[i]);
+            selectedPropModel.addElement(o);
+        }
     }
 
     private void performRemovePropBtnAction(ActionEvent e) {
