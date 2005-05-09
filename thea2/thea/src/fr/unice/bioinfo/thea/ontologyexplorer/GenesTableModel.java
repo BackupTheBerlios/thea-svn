@@ -43,19 +43,6 @@ public class GenesTableModel extends AbstractTableModel {
 
         // get the configuration
         Configuration con = TheaConfiguration.getDefault().getConfiguration();
-        //        // get list of columns (properties)
-        //        Object o = con.getProperty("geneeditor.column.name");//NOI18N
-        //        if (o instanceof Collection) {
-        //            ArrayList al = new ArrayList((Collection) o);
-        //            Object[] names = al.toArray();
-        //            columnNames = new String[al.size()];
-        //            properties = new String[al.size()];
-        //            for (int counter = 0; counter < al.size(); counter++) {
-        //                String name = (String) names[counter];
-        //                properties[counter] = name;
-        //                columnNames[counter] = name.substring(name.indexOf("#") + 1);//NOI18N
-        //            }
-        //        }
 
         // Get the annotated genes list
         String annotatePropertyName;
@@ -71,6 +58,7 @@ public class GenesTableModel extends AbstractTableModel {
 
         LinkedList ll = new LinkedList();
         for (int cnt = 0; cnt < evidences.length; cnt++) {
+            System.out.println("evidences["+cnt+"]="+evidences[cnt]);
             ll.add(resourceFactory.getResource(evidences[cnt]));
         }
         Criterion criterion = Expression.in(resourceFactory
@@ -89,14 +77,17 @@ public class GenesTableModel extends AbstractTableModel {
             // iterate over the list of found genes
             while (iterator.hasNext()) {
                 rse = (Resource) iterator.next();
+                System.out.println(rse);
                 // for each gene: get the list of properties
                 for (int cnt = 0; cnt < properties.length; cnt++) {
                     StringValue sv = (StringValue) rse
                             .getTarget(resourceFactory
                                     .getResource(properties[cnt]));
+                    System.out.println("properties["+cnt+"]="+properties[cnt]);
                     if (sv != null) {
                         data[counter][cnt] = sv.getValue();
                     } else if (sv == null) {
+                        System.out.println("sv = null");
                         data[counter][cnt] = "";//NOI18N
                     }
                 }
