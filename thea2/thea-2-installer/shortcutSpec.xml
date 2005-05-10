@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<shortcuts>
+	
+  <skipIfNotSupported />
+  
+  <programGroup defaultName="THEA2" location="applications"/>
+  
+  <shortcut
+     name="THEA2"
+     programGroup="yes"
+     desktop="yes"
+     applications="no"
+     startMenu="no"
+     startup="no"
+     target="$INSTALL_PATH\bin\launch-thea.bat"
+     commandLine=""
+     description="THEA Launcher"
+     iconFile="$INSTALL_PATH\bin\thea.ico"
+     iconIndex="0"
+     initialState="noShow">
+   
+     <createForPack name="Core"/>
+     
+   </shortcut>
+
+   
+   <shortcut
+     name="Uninstaller"
+     programGroup="yes"
+     desktop="no"
+     applications="no"
+     startMenu="no"
+     startup="no"
+     target="$INSTALL_PATH\Uninstaller\uninstaller.jar"
+     commandLine=""
+     description="THEA2 uninstaller">
+     
+     <createForPack name="Core" />
+   </shortcut>
+   
+</shortcuts>

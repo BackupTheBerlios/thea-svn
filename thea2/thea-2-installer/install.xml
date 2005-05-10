@@ -41,6 +41,8 @@
 	<resources>
 		<res id="LicencePanel.licence" src="Licence.txt"/>
 		<res id="InfoPanel.info" src="Readme.txt"/>
+		<res src="shortcutSpec.xml" id="shortcutSpec.xml"/>
+		<res src="Unix_shortcutSpec.xml" id="Unix_shortcutSpec.xml"/>
 		<res src="border1.png" id="Installer.image.0"/>
 		<res src="border2.png" id="Installer.image.1"/>
 		<res src="border3.png" id="Installer.image.2"/>
@@ -61,6 +63,7 @@
 		<panel classname="TargetPanel"/>
 		<panel classname="PacksPanel"/>
 		<panel classname="InstallPanel"/>
+		<panel classname="ShortcutPanel"/>
 		<panel classname="FinishPanel"/>
 	</panels>
 	<!-- 
@@ -68,7 +71,7 @@
         We specify here our packs.
     -->
 	<packs>
-		<pack name="Core" required="yes" preselected="yes">
+		<pack name="Base" required="yes" preselected="yes">
 			<description>All necessary files for running thea.</description>
 			<!-- the netbeans platform -->
 			<file src="platform4" targetdir="$INSTALL_PATH"/>
@@ -81,6 +84,7 @@
 			<file src="etc" targetdir="$INSTALL_PATH" />
 			<!--  the bin directory.It contains scripts for launching thea -->
 			<file src="bin" targetdir="$INSTALL_PATH"/>
+			<file src="thea.ico" targetdir="$INSTALL_PATH/bin"/>
 			<parsable targetfile="$INSTALL_PATH/bin/launch-thea.bat"/>
 			<parsable targetfile="$INSTALL_PATH/bin/launch-thea.sh"/>
 			<!-- The file will be parsed -->
@@ -97,4 +101,6 @@
 			<!-- Reccursive adding -->
 		</pack>
 	</packs>
+	<!-- The native libraries to add -->
+	<native type="izpack" name="ShellLink.dll"/>
 </installation>
