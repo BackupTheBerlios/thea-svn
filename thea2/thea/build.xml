@@ -10,7 +10,7 @@
 			<include name="${nb.modules.dir}/ext/mysql-connector-java-3.1.6-bin.jar" />
 			<include name="${nb.modules.dir}/ext/hibernate2.jar"/>
 			<include name="${nb.modules.dir}/ext/log4j-1.2.8.jar"/>
-			<include name="${nb.modules.dir}/ext/commons-logging-1.0.3.jar"/>
+			<include name="${nb.modules.dir}/ext/commons-logging-1.0.4.jar"/>
 			<include name="${nb.modules.dir}/ext/commons-discovery-0.2.jar"/>
 			<include name="${nb.modules.dir}/ext/junit.jar"/>
 			<include name="${nb.modules.dir}/ext/dom4j-1.4.jar"/>
@@ -35,7 +35,7 @@
 				<include name="mysql-connector-java-3.1.6-bin.jar" />
 				<include name="hibernate2.jar"/>
 				<include name="log4j-1.2.8.jar"/>
-				<include name="commons-logging-1.0.3.jar"/>
+				<include name="commons-logging-1.0.4.jar"/>
 				<include name="commons-discovery-0.2.jar"/>
 				<include name="junit.jar"/>
 				<include name="dom4j-1.4.jar"/>
