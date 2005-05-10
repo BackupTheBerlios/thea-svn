@@ -41,7 +41,7 @@ public class GeneEditor extends TopComponent {
     static final long serialVersionUID = 6857108441469780252L;
     /** The support for firing property changes */
     private PropertyChangeSupport propertySupport;
-    /** preferred ID:ce as Classification Editor */
+    /** preferred ID:geneeditor */
     private String PREFERRED_ID = "geneeditor";//NOI18N
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
