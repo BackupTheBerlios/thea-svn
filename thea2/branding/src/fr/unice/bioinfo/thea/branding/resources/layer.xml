@@ -12,6 +12,7 @@
       <file name="org-openide-actions-PrintAction.instance_hidden"/>
       <attr name="org-openide-actions-PrintAction.instance/Separator4.instance" boolvalue="false"/>
     </folder>
+	<file name="Tools_hidden"/>
     <file name="BuildProject_hidden"/>
     <file name="Edit_hidden"/>
     <folder name="View_hidden">
