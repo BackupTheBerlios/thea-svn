@@ -85,6 +85,7 @@
 			<!--  the bin directory.It contains scripts for launching thea -->
 			<file src="bin" targetdir="$INSTALL_PATH"/>
 			<file src="thea.ico" targetdir="$INSTALL_PATH/bin"/>
+			<file src="thea.png" targetdir="$INSTALL_PATH/bin"/>
 			<parsable targetfile="$INSTALL_PATH/bin/launch-thea.bat"/>
 			<parsable targetfile="$INSTALL_PATH/bin/launch-thea.sh"/>
 			<!-- The file will be parsed -->
