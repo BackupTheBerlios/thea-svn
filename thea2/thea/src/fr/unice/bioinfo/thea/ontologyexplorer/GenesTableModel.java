@@ -56,6 +56,7 @@ public class GenesTableModel extends AbstractTableModel {
         //        Set genes = resource.getTargets(resourceFactory
         //                .getProperty(annotatePropertyName));
 
+        resourceFactory.setMemoryCached(true);
         LinkedList ll = new LinkedList();
         for (int cnt = 0; cnt < evidences.length; cnt++) {
             System.out.println("evidences["+cnt+"]="+evidences[cnt]);
@@ -64,8 +65,10 @@ public class GenesTableModel extends AbstractTableModel {
         Criterion criterion = Expression.in(resourceFactory
                 .getResource(hasEvidenceProperty), ll);
 
-        Set genes = resource.getTargets(resourceFactory
-                .getProperty(annotatePropertyName), criterion);
+        Resource annotateProperty = resourceFactory.getProperty(annotatePropertyName);
+        resourceFactory.setMemoryCached(false);
+        
+        Set genes = resource.getTargets(annotateProperty, criterion);
 
         // if we find a list of genes:
         if (genes != null) {
@@ -80,9 +83,12 @@ public class GenesTableModel extends AbstractTableModel {
                 System.out.println(rse);
                 // for each gene: get the list of properties
                 for (int cnt = 0; cnt < properties.length; cnt++) {
+                    resourceFactory.setMemoryCached(true);
+                    Resource accessedProperty = resourceFactory.getResource(properties[cnt]);
+                    resourceFactory.setMemoryCached(false);
+                    
                     StringValue sv = (StringValue) rse
-                            .getTarget(resourceFactory
-                                    .getResource(properties[cnt]));
+                            .getTarget(accessedProperty);
                     System.out.println("properties["+cnt+"]="+properties[cnt]);
                     if (sv != null) {
                         data[counter][cnt] = sv.getValue();
