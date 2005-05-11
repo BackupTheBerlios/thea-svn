@@ -6,14 +6,6 @@
 	<property file="${installer.properties.file}" />
 	<property name="izpack.home" value="${izh}" />
 	
-	<target name="init" depends="netbeans">
-		<copy todir="." overwrite="yes">
-			<fileset dir="${netbeans.dest.dir}/${cluster.thea.dir}"/>
-			<fileset dir="${netbeans.dest.dir}/${nb.cluster.platform.dir}"/>
-		</copy>
-	</target>
-	
-
 	<taskdef name="izpack" classpath="${izpack.home}/lib/compiler.jar" classname="com.izforge.izpack.ant.IzPackTask" />
 
 	<izpack input="install.xml" output="${installer.output}/thea2-install.jar" installerType="standard" basedir="." izPackDir="${izpack.home}/" />
