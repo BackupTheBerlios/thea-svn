@@ -17,6 +17,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.dlg.ShowAnnotatedGenesPanel;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
+import fr.unice.bioinfo.thea.ontologyexplorer.settings.OESettings;
 
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
@@ -54,6 +55,10 @@ public class ShowAnnotetdGenesAction extends NodeAction {
                     if ((evidences == null) || (properties == null)) {
                         return;
                     }
+                    // store selected data:
+                    OESettings.getInstance()
+                            .setLastSelectedEvidences(evidences);
+                    OESettings.getInstance().setLastSelectedSvnames(properties);
                     GeneEditor editor = new GeneEditor(node, evidences,
                             properties);
                     editor.open();

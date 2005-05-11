@@ -34,6 +34,7 @@ import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.Sizes;
 
 import fr.unice.bioinfo.thea.TheaConfiguration;
+import fr.unice.bioinfo.thea.ontologyexplorer.settings.OESettings;
 
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
@@ -80,6 +81,12 @@ public class ShowAnnotatedGenesPanel extends JPanel {
         initComponents();
     }
 
+    /**
+     * Create models ( instances of DefaultListModel ) for JList
+     * components. For selected evidences and properties, we try 
+     * to make selected data that the user would have selected in 
+     * the last run.
+     */
     private void createModels() {
         //      create the list's allEvidencesModel
         allEvidencesModel = new DefaultListModel();
@@ -95,12 +102,19 @@ public class ShowAnnotatedGenesPanel extends JPanel {
             for (int counter = 0; counter < al.size(); counter++) {
                 String name = (String) names[counter];
                 evidences[counter] = name;//.substring(name.indexOf("#") +
-                                          // 1);//NOI18N
+                // 1);//NOI18N
                 allEvidencesModel.addElement(evidences[counter]);
             }
         }
         // crate the model for the selected evidences list.
         selectedEvidencesModel = new DefaultListModel();
+        // add the last selected evidences to this list:
+        String[] l = OESettings.getInstance().getLastSelectedEvidences();
+        if (l != null) {
+            for (int cnt = 0; cnt < l.length; cnt++) {
+                selectedEvidencesModel.addElement(l[cnt]);
+            }
+        }
 
         // create the model for the list of available properties
         allPropModel = new DefaultListModel();
@@ -113,12 +127,19 @@ public class ShowAnnotatedGenesPanel extends JPanel {
             for (int counter = 0; counter < al.size(); counter++) {
                 String name = (String) names[counter];
                 properties[counter] = name;//.substring(name.indexOf("#") +
-                                           // 1);//NOI18N
+                // 1);//NOI18N
                 allPropModel.addElement(properties[counter]);
             }
         }
         // create the model for the selected properties list
         selectedPropModel = new DefaultListModel();
+        // add the last selected properties
+        String[] p = OESettings.getInstance().getLastSelectedSvnames();
+        if (p != null) {
+            for (int counter = 0; counter < p.length; counter++) {
+                selectedPropModel.addElement(p[counter]);
+            }
+        }
     }
 
     private void initComponents() {
@@ -309,7 +330,9 @@ public class ShowAnnotatedGenesPanel extends JPanel {
         // Get all the selected items using the indices
         for (int i = 0; i < selectedIx.length; i++) {
             Object o = allEvidencesModel.getElementAt(selectedIx[i]);
-            selectedEvidencesModel.addElement(o);
+            if (!selectedEvidencesModel.contains(o)) {
+                selectedEvidencesModel.addElement(o);
+            }
         }
     }
 
@@ -335,7 +358,9 @@ public class ShowAnnotatedGenesPanel extends JPanel {
         // Get all the selected items using the indices
         for (int i = 0; i < selectedIx.length; i++) {
             Object o = allPropModel.getElementAt(selectedIx[i]);
-            selectedPropModel.addElement(o);
+            if (!selectedPropModel.contains(o)) {
+                selectedPropModel.addElement(o);
+            }
         }
     }
 

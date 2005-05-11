@@ -40,11 +40,11 @@ public class OESettings extends SystemOption {
     /** The configuration file for thea. */
     private static String configFilePath = "";//NOI18N
 
-    /** Last selected evidences */
-    private static String[] evidences = null;
+    /** Last selected lastSelectedEvidences */
+    private static String[] lastSelectedEvidences = null;
 
     /** Last selected string values properties */
-    private static String[] svnames = null;
+    private static String[] lastSelectedSvnames = null;
 
     /** <i>lastBrowsedDirectory </i> property name. */
     public static final String PROP_LAST_BROWSED_DIRECTORY = "lastBrowsedDirectory"; // NOI18N
@@ -52,11 +52,11 @@ public class OESettings extends SystemOption {
     /** <i>lastBrowsedDirectory </i> property name. */
     public static final String PROP_CONFIG_FILE_PATH = "configFilePath"; // NOI18N
 
-    /** evidences property name */
-    public static final String PROP_EVIDENCES = "evidences"; // NOI18N
+    /** lastSelectedEvidences property name */
+    public static final String PROP_EVIDENCES = "lastSelectedEvidences"; // NOI18N
 
-    /** svnames property name */
-    public static final String PROP_SV_NAMES = "svnames"; // NOI18N
+    /** lastSelectedSvnames property name */
+    public static final String PROP_SV_NAMES = "lastSelectedSvnames"; // NOI18N
 
     /** Returns the last browsed directory. */
     public String getLastBrowsedDirectory() {
@@ -87,25 +87,25 @@ public class OESettings extends SystemOption {
         }
     }
 
-    /** retrurns evidences list. */
-    public String[] getEvidences() {
-        return evidences;
+    /** retrurns lastSelectedEvidences list. */
+    public String[] getLastSelectedEvidences() {
+        return lastSelectedEvidences;
     }
 
-    /** Sets evidences. */
-    public void setEvidences(String[] value) {
-        String[] old = getEvidences();
-        evidences = value;
+    /** Sets lastSelectedEvidences. */
+    public void setLastSelectedEvidences(String[] value) {
+        String[] old = getLastSelectedEvidences();
+        lastSelectedEvidences = value;
         firePropertyChange(PROP_EVIDENCES, old, value);
     }
 
-    public String[] getSvnames() {
-        return svnames;
+    public String[] getLastSelectedSvnames() {
+        return lastSelectedSvnames;
     }
 
-    public void setSvnames(String[] value) {
-        String[] old = getSvnames();
-        evidences = value;
+    public void setLastSelectedSvnames(String[] value) {
+        String[] old = getLastSelectedSvnames();
+        lastSelectedSvnames = value;
         firePropertyChange(PROP_SV_NAMES, old, value);
     }
 }
