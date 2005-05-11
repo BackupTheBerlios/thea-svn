@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <shortcuts>
 	
-	<programGroup defaultName="THEA2" location="applications"/>
+	<programGroup defaultName="THEA 2" location="applications"/>
 	
 	<shortcut 
-		name="THEA 2" 
+		name="THEA2" 
 		programGroup="yes" 
 		desktop="yes" 
 		applications="no" 
@@ -21,7 +21,7 @@
 		terminal="true" 
 		KdeSubstUID="false" 
 		initialState="normal">
-		<createForPack name="Core"/>
+		<createForPack name="THEA2"/>
 	</shortcut>
 	
 	<shortcut 
@@ -40,7 +40,7 @@
 		type="Application" 
 		encoding="UTF-8" 
 		description="THEA2 uninstaller">
-		<createForPack name="Core" />
+		<createForPack name="THEA2" />
 	</shortcut>
 	
 </shortcuts>
