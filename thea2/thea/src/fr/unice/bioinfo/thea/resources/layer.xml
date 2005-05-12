@@ -42,5 +42,24 @@
       </folder>
     </folder>
   </folder>
+  <folder name="xml">
+        <folder name="entities">
+            <folder name="NetBeans" >
+                <file name="DTD_JDBC_Driver_1_0" url="nbresloc:/fr/unice/bioinfo/thea/ontologyexplorer/db/driver/driver.dtd">
+                    <attr name="hint.originalPublicID" stringvalue="-//NetBeans//DTD JDBC Driver 1.0//EN"/>
+                </file>
+            </folder>
+        </folder>
+        
+        <folder name="lookups">
+            <folder name="NetBeans">
+                <file name="DTD_JDBC_Driver_1_0.instance">
+                    <attr name="instanceClass" stringvalue="fr.unice.bioinfo.thea.ontologyexplorer.db.driver.JDBCDriverConvertor"/>
+                    <attr name="instanceOf" stringvalue="org.openide.loaders.Environment.Provider"/>
+                    <attr name="instanceCreate" methodvalue="fr.unice.bioinfo.thea.ontologyexplorer.db.driver.JDBCDriverConvertor.createProvider"/>
+                </file>
+            </folder>
+        </folder>
+    </folder>
   <!-- ================ SERVICES  =============== -->
 </filesystem>
