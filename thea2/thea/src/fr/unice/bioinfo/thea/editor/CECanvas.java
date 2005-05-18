@@ -559,7 +559,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         return (miny + maxy) / 2;
     }
 
-    private void highlightNode(Node aNode, Graphics2D g) {
+    private void highlightNode(Node aNode, Graphics2D graphics) {
         Point2D.Double aNodePosition = (Point2D.Double) aNode.getPosition();
         Rectangle2D.Double aNodeArea = (Rectangle2D.Double) aNode.getArea();
         Rectangle2D.Double aNodeRectangle = new Rectangle2D.Double();
@@ -574,25 +574,25 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         }
         switch (hmode) {
         case 1:
-            g.setColor(new Color(255, 255, 223));
+            graphics.setColor(new Color(255, 255, 223));
             if (aNode != null) {
-                ((Graphics2D) g).fill(aNodeRectangle);
+                ((Graphics2D) graphics).fill(aNodeRectangle);
             }
             break;
         case 2:
-            g.setColor(new Color(0, 0, 255));
+            graphics.setColor(new Color(0, 0, 255));
             if (aNode != null) {
                 Rectangle2D.Double rect = new Rectangle2D.Double();
                 rect.setRect(aNodeRectangle);
                 rect.x += labelHeight;
                 rect.width -= labelHeight;
-                ((Graphics2D) g).draw(rect);
+                ((Graphics2D) graphics).draw(rect);
             }
             break;
         case 3:
-            g.setColor(new Color(0, 0, 255));
+            graphics.setColor(new Color(0, 0, 255));
             if (aNode != null) {
-                ((Graphics2D) g).fill(new Ellipse2D.Double(aNodePosition.x
+                ((Graphics2D) graphics).fill(new Ellipse2D.Double(aNodePosition.x
                         - labelHeight, aNodePosition.y - labelHeight,
                         labelHeight * 2, labelHeight * 2));
             }
@@ -1024,7 +1024,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
         update();
     }
 
-    /** Pop a currentRootNode */
+    
     public void popRoot() {
         Node aNode = (Node) roots.pop();
         setCurrentRootNode(aNode);
@@ -1629,7 +1629,7 @@ public class CECanvas extends JComponent implements PropertyChangeListener {
     }
 
     /**
-     * Zomm over the displat area.
+     * Zomm over the display area.
      * @param zoomx The hirozontal zoom factor.
      * @param zoomy The vertical zoom factor.
      */

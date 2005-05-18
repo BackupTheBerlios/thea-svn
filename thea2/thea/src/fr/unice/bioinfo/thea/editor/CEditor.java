@@ -415,6 +415,7 @@ public class CEditor extends TopComponent implements TreeSelectionListener,
         }
 
         Node aNode = (Node) e.getSelected();
+        
         String selectionName = canvas.getSelectionName();
         canvas.setSelectionName("Manual Selection");
 

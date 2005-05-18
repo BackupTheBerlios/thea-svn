@@ -32,12 +32,12 @@ public class ClassificationsRootNode extends AbstractNode implements Comparable 
         super(new Children.Array());
 
         // Set the bean name
-        setName("classifications"); //NOI18N
+        setName(bundle.getString("LBL_ClassificationsRootNode_Name")); //NOI18N
 
         // Add a nice icon
         setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/ClassificationsNodeIcon");//NOI18N
         // Set the display name
-        setDisplayName(bundle.getString("LBL_ClassificationsRootNode_Name")); //NOI18N
+        setDisplayName(bundle.getString("LBL_ClassificationsRootNode_DisplayName")); //NOI18N
 
         // Give a short description which is shown on the mouse rolls on
         setShortDescription(bundle

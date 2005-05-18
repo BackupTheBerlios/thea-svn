@@ -205,7 +205,7 @@ public class PopupFactory {
             popup.add(menuItem);
         }
 
-        // dispplay whole tree
+        // dispplay previous tree
         if (tc.getTreeRoot() != tc.getCurrentRootNode()) {
             menuItem = new JMenuItem(bundle
                     .getString("LBL_PreviousTreeAction_Name"));
