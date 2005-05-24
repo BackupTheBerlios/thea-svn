@@ -1,6 +1,5 @@
 package fr.unice.bioinfo.thea.classification.editor.actions;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.Collection;
 import java.util.Iterator;
@@ -14,21 +13,21 @@ import fr.unice.bioinfo.thea.classification.editor.DrawableClassification;
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
-public class FreezeAction extends GenericAction {
+public class UnfreezeAction extends GenericAction {
 
     private NodeSet selection;
-    
+
     private Boolean b;
 
-    public FreezeAction(String name, String accelerator,
-            ImageIcon icon, String shortDescription,
-            DrawableClassification drawable, NodeSet selection) {
+    public UnfreezeAction(String name, String accelerator, ImageIcon icon,
+            String shortDescription, DrawableClassification drawable,
+            NodeSet selection) {
         // call super constructor
         super(name, accelerator, icon, shortDescription, drawable);
         this.selection = selection;
         Boolean property = (Boolean) selection.getProperty(NodeSet.FROZEN);
         b = (property == null) ? Boolean.FALSE : property;
-        this.setEnabled(b.equals(Boolean.FALSE));
+        this.setEnabled(!b.equals(Boolean.FALSE));
     }
 
     /*
@@ -41,11 +40,10 @@ public class FreezeAction extends GenericAction {
         while (iterator.hasNext()) {
             Node aNode = (Node) iterator.next();
             aNode.addProperty(Node.FROZEN,
-                    b.equals(Boolean.TRUE) ? Boolean.FALSE
-                            : Boolean.TRUE);
+                    b.equals(Boolean.TRUE) ? Boolean.FALSE : Boolean.TRUE);
         }
-        selection.addProperty(NodeSet.FROZEN, Boolean.TRUE);
-        selection.addProperty(NodeSet.BG_COLOR, new Color(192, 255, 255));
+        selection.addProperty(NodeSet.FROZEN, Boolean.FALSE);
+        //ns.addProperty(NodeSet.BG_COLOR, null);
     }
 
 }

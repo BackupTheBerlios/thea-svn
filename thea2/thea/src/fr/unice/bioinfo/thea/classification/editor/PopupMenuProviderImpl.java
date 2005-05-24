@@ -202,10 +202,15 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         popup.add(createIntersectMenuItem(drawable, selection));
         // 6 - Group:
         popup.add(createGroupMenuItem(drawable, selection));
-        // 7 - Freeze
         // add a seperator:
         popup.addSeparator();
-        // 8 - Save
+        // 7 - Freeze
+        popup.add(createFreezeMenuItem(drawable, selection));
+        // 8 - Freeze
+        popup.add(createUnfreezeMenuItem(drawable, selection));
+        // add a seperator:
+        popup.addSeparator();
+        // 9 - Save
         popup.add(createSaveMenuItem(drawable, selection));
         // the popup menu ie ready,return it.
         return popup;
@@ -301,6 +306,34 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         name = bundle.getString("LBL_SaveSelectionAction");
         shortDescription = bundle.getString("HINT_SaveSelectionAction");
         accelerator = bundle.getString("ACC_SaveSelectionAction");
+        icon = new ImageIcon(
+                Utilities
+                        .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/EmptyIcon.gif"));
+        Action save = new SaveAction(name, accelerator, icon, shortDescription,
+                drawable, selection);
+        menuItem = new JMenuItem(save);
+        return menuItem;
+    }
+
+    private JMenuItem createFreezeMenuItem(DrawableClassification drawable,
+            NodeSet selection) {
+        name = bundle.getString("LBL_FreezeSelctionAction");
+        shortDescription = bundle.getString("HINT_FreezeSelctionAction");
+        accelerator = bundle.getString("ACC_FreezeSelctionAction");
+        icon = new ImageIcon(
+                Utilities
+                        .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/EmptyIcon.gif"));
+        Action save = new SaveAction(name, accelerator, icon, shortDescription,
+                drawable, selection);
+        menuItem = new JMenuItem(save);
+        return menuItem;
+    }
+
+    private JMenuItem createUnfreezeMenuItem(DrawableClassification drawable,
+            NodeSet selection) {
+        name = bundle.getString("LBL_UnfreezeSelctionAction");
+        shortDescription = bundle.getString("HINT_UnfreezeSelctionAction");
+        accelerator = bundle.getString("ACC_UnfreezeSelctionAction");
         icon = new ImageIcon(
                 Utilities
                         .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/EmptyIcon.gif"));

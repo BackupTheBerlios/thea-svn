@@ -105,7 +105,6 @@ public class CanvasMouseManager extends MouseInputAdapter {
             // and show it.
             PopupMenuProviderImpl p = new PopupMenuProviderImpl();
             p.showSelectionPopupMenu(e, drawable, selection);
-
             return;
         } else if (aNode != null) {
             // create the popup menu to show the user activates
@@ -121,6 +120,5 @@ public class CanvasMouseManager extends MouseInputAdapter {
      * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
      */
     public void mouseReleased(MouseEvent e) {
-        drawable.updateGraphics();
     }
 }
