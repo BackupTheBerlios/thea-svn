@@ -223,7 +223,7 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         accelerator = bundle.getString("ACC_DeleteSelectionAction");
         icon = new ImageIcon(
                 Utilities
-                        .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/EmptyIcon.gif"));
+                        .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/RemoveIcon16.gif"));
         Action remove = new RemoveAction(name, accelerator, icon,
                 shortDescription, drawable, selection);
         menuItem = new JMenuItem(remove);
@@ -351,9 +351,11 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
      */
     public void showNodePopupMenu(MouseEvent e,
             DrawableClassification drawable, Node aNode) {
-        JPopupMenu pm = this.getNodePopupMenu(drawable, aNode);
-        drawable.setPopupMenu(pm);
-        pm.show(e.getComponent(), e.getX(), e.getY());
+        this.getNodePopupMenu(drawable, aNode).show(e.getComponent(), e.getX(),
+                e.getY());
+        //        JPopupMenu pm = this.getNodePopupMenu(drawable, aNode);
+        //        drawable.setPopupMenu(pm);
+        //        pm.show(e.getComponent(), e.getX(), e.getY());
     }
 
     /*
@@ -364,9 +366,11 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
      */
     public void showSelectionPopupMenu(MouseEvent e,
             DrawableClassification drawable, NodeSet selection) {
-        JPopupMenu pm = this.getSelectionPopupMenu(drawable, selection);
-        drawable.setPopupMenu(pm);
-        pm.show(e.getComponent(), e.getX(), e.getY());
+        this.getSelectionPopupMenu(drawable, selection).show(e.getComponent(),
+                e.getX(), e.getY());
+        //        JPopupMenu pm = this.getSelectionPopupMenu(drawable, selection);
+        //        drawable.setPopupMenu(pm);
+        //        pm.show(e.getComponent(), e.getX(), e.getY());
     }
 
 }

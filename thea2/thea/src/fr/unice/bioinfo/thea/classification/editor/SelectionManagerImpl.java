@@ -197,6 +197,7 @@ public class SelectionManagerImpl implements SelectionManager {
      */
     public void setSelectionName(String name) {
         selectionName = name;
+        System.out.println(selectionName);
     }
 
     /*
@@ -279,10 +280,10 @@ public class SelectionManagerImpl implements SelectionManager {
         }
         NodeSet ns = new NodeSet(getSelectedLeaves(true));
         String selID = String.valueOf(nbSel);
-        
-        if(ns == null){
+
+        if (ns == null) {
             System.out.println("ns is null");
-            }
+        }
         ns.addProperty(NodeSet.COLOR, sel_color[nbSel % 18]);
         ns.addProperty(NodeSet.SEL_ID, selID);
         ns.addProperty(NodeSet.SEL_NAME, selectionName);
@@ -328,8 +329,11 @@ public class SelectionManagerImpl implements SelectionManager {
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#moveSelectionToCurrent(fr.unice.bioinfo.thea.classification.NodeSet)
      */
     public void moveSelectionToCurrent(NodeSet sel) {
-        // TODO Auto-generated method stub
-
+        removeSelectedNodes();
+        setSelected(sel.getNodes(), 1, (String) sel
+                .getProperty(NodeSet.SEL_NAME));
+        removeSelection(sel);
+        drawable.updateGraphics();
     }
 
     /*
@@ -337,8 +341,10 @@ public class SelectionManagerImpl implements SelectionManager {
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#copySelectionToCurrent(fr.unice.bioinfo.thea.classification.NodeSet)
      */
     public void copySelectionToCurrent(NodeSet sel) {
-        // TODO Auto-generated method stub
-
+        removeSelectedNodes();
+        setSelected(sel.getNodes(), 1, (String) sel
+                .getProperty(NodeSet.SEL_NAME));
+        drawable.updateGraphics();
     }
 
     /*
@@ -346,8 +352,18 @@ public class SelectionManagerImpl implements SelectionManager {
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#unionSelectionWithCurrent(fr.unice.bioinfo.thea.classification.NodeSet)
      */
     public void unionSelectionWithCurrent(NodeSet sel) {
-        // TODO Auto-generated method stub
-
+        String newSelectionName = (String) sel.getProperty(NodeSet.SEL_NAME);
+        if (selectionName.startsWith("Manual")) {
+            // use selName for the name of the union
+        } else {
+            if (newSelectionName.startsWith("Manual")) {
+                newSelectionName = selectionName;
+            } else {
+                newSelectionName = selectionName + " OR " + newSelectionName;
+            }
+        }
+        setSelected(sel.getNodes(), 1, newSelectionName);
+        drawable.updateGraphics();
     }
 
     /*
@@ -355,24 +371,66 @@ public class SelectionManagerImpl implements SelectionManager {
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#intersectSelectionWithCurrent(fr.unice.bioinfo.thea.classification.NodeSet)
      */
     public void intersectSelectionWithCurrent(NodeSet sel) {
-        // TODO Auto-generated method stub
+        String newSelectionName = (String) sel.getProperty(NodeSet.SEL_NAME);
 
+        if (selectionName.startsWith("Manual")) {
+            // use selName for the name of the union
+        } else {
+            if (newSelectionName.startsWith("Manual")) {
+                newSelectionName = selectionName;
+            } else {
+                newSelectionName = selectionName + " AND " + newSelectionName;
+            }
+        }
+
+        Collection currentSel = getSelectedLeaves(true);
+        currentSel.retainAll(sel.getNodes());
+        removeSelectedNodes();
+        setSelected(currentSel, 1, newSelectionName);
+        drawable.updateGraphics();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#removeSelection(fr.unice.bioinfo.thea.classification.NodeSet)
      */
     public void removeSelection(NodeSet selection) {
-        // TODO Auto-generated method stub
-        
+        String selId = (String) selection.getProperty(NodeSet.SEL_ID);
+        //        org.bdgp.apps.dagedit.gui.event.ClassifSelectionEvent event = new
+        // org.bdgp.apps.dagedit.gui.event.ClassifSelectionEvent(
+        //                this, selId);
+        //        org.bdgp.apps.dagedit.gui.Controller.getController()
+        //                .fireSelectionClearedInClassif(event);
+
+        if (selectionsList.contains(selection)) {
+            selectionsList.remove(selection);
+        }
+        drawable.updateGraphics();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#groupSelection(fr.unice.bioinfo.thea.classification.NodeSet)
      */
     public void groupSelection(NodeSet selection) {
-        // TODO Auto-generated method stub
-        
+        List l = new Vector(selection.getNodes());
+        while (!l.isEmpty()) {
+            Node aNode = (Node) l.get(0);
+            Boolean frozen = (Boolean) aNode.getProperty(NodeSet.FROZEN);
+            if ((frozen == null) || frozen.equals(Boolean.FALSE)) {
+                Node parent = aNode.getParent();
+                List children = parent.getChildren();
+                for (int i = 0; i < children.size(); i++) {
+                    frozen = (Boolean) ((Node) children.get(i))
+                            .getProperty(NodeSet.FROZEN);
+                    if ((frozen == null) || frozen.equals(Boolean.FALSE)) {
+                        parent.moveChild(aNode, i);
+                        break;
+                    }
+                }
+            }
+            l.remove(aNode);
+        }
     }
 
 }
