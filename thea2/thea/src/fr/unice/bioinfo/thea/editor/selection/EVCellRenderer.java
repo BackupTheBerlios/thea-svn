@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
-import fr.unice.bioinfo.thea.editor.util.Discretization;
+import fr.unice.bioinfo.thea.classification.editor.util.Discretization;
 
 /**
  * A customized cell renderer for tables used to hold selections.

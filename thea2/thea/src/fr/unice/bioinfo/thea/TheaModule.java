@@ -8,7 +8,7 @@ import org.openide.nodes.Node;
 import org.openide.util.RequestProcessor;
 import org.openide.windows.TopComponent;
 
-import fr.unice.bioinfo.thea.editor.CEditor;
+import fr.unice.bioinfo.thea.classification.editor.CEditor;
 import fr.unice.bioinfo.thea.editor.selection.SelectionEditor;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;

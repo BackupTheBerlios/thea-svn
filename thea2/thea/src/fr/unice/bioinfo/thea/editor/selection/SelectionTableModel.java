@@ -5,7 +5,7 @@ import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
-import fr.unice.bioinfo.thea.editor.Node;
+import fr.unice.bioinfo.thea.classification.Node;
 
 /**
  * A customized model for tables the Selection Viewer will create to hold
