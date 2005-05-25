@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.ImageIcon;
 
-import fr.unice.bioinfo.thea.classification.NodeSet;
+import fr.unice.bioinfo.thea.classification.Selection;
 import fr.unice.bioinfo.thea.classification.editor.DrawableClassification;
 
 /**
@@ -12,11 +12,11 @@ import fr.unice.bioinfo.thea.classification.editor.DrawableClassification;
  */
 public class SaveAction extends GenericAction {
 
-    private NodeSet selection;
+    private Selection selection;
 
     public SaveAction(String name, String accelerator,
             ImageIcon icon, String shortDescription,
-            DrawableClassification drawable, NodeSet selection) {
+            DrawableClassification drawable, Selection selection) {
         // call super constructor
         super(name, accelerator, icon, shortDescription, drawable);
         this.selection = selection;

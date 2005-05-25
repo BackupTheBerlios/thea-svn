@@ -34,7 +34,7 @@ import javax.swing.JPopupMenu;
 
 import fr.unice.bioinfo.thea.classification.Node;
 import fr.unice.bioinfo.thea.classification.NodeLayoutSupport;
-import fr.unice.bioinfo.thea.classification.NodeSet;
+import fr.unice.bioinfo.thea.classification.Selection;
 import fr.unice.bioinfo.thea.classification.editor.util.Discretization;
 
 /**
@@ -249,7 +249,7 @@ public class Canvas extends JComponent implements DrawableClassification,
             Iterator iterator = selectionsList.iterator();
             int ctr = 0;
             while (iterator.hasNext()) {
-                NodeSet selection = (NodeSet) iterator.next();
+                Selection selection = (Selection) iterator.next();
                 displaySelected((Graphics2D) graphics, selection, selWidth - 15
                         - (ctr++ * 10), 8);
             }
@@ -655,7 +655,7 @@ public class Canvas extends JComponent implements DrawableClassification,
      * @param x The horizontal position where to draw selected marks
      * @param width The width of the marks
      */
-    private void displaySelected(Graphics2D graphics, NodeSet selection,
+    private void displaySelected(Graphics2D graphics, Selection selection,
             double x, double width) {
         if (selection == null) {
             return;
@@ -666,8 +666,8 @@ public class Canvas extends JComponent implements DrawableClassification,
         if (selection.getNodes().isEmpty()) {
             return;
         }
-        Color color = (Color) selection.getProperty(NodeSet.COLOR);
-        Color bgc = (Color) selection.getProperty(NodeSet.BG_COLOR);
+        Color color = (Color) selection.getProperty(Selection.COLOR);
+        Color bgc = (Color) selection.getProperty(Selection.BG_COLOR);
         Color c = getBackground();
         if (bgc != null) {
             graphics.setColor(bgc);
@@ -989,7 +989,7 @@ public class Canvas extends JComponent implements DrawableClassification,
             Iterator it = selectionsList.iterator();
             while (it.hasNext()) {
                 int countSelected = 0;
-                NodeSet ns = (NodeSet) it.next();
+                Selection ns = (Selection) it.next();
                 Iterator it2 = ns.getNodes().iterator();
                 while (it2.hasNext()) {
                     Node node = (Node) it2.next();
@@ -999,7 +999,7 @@ public class Canvas extends JComponent implements DrawableClassification,
                 }
                 String localHits = countSelected + "/"
                         + currentRootNode.getNumberOfLeaves();
-                String selId = (String) ns.getProperty(NodeSet.SEL_ID);
+                String selId = (String) ns.getProperty(Selection.SEL_ID);
             }
         }
         if (!this.getSelectionManager().getSelectedNodes().isEmpty()) {

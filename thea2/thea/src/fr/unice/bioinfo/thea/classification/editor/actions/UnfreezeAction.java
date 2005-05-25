@@ -7,7 +7,7 @@ import java.util.Iterator;
 import javax.swing.ImageIcon;
 
 import fr.unice.bioinfo.thea.classification.Node;
-import fr.unice.bioinfo.thea.classification.NodeSet;
+import fr.unice.bioinfo.thea.classification.Selection;
 import fr.unice.bioinfo.thea.classification.editor.DrawableClassification;
 
 /**
@@ -15,17 +15,17 @@ import fr.unice.bioinfo.thea.classification.editor.DrawableClassification;
  */
 public class UnfreezeAction extends GenericAction {
 
-    private NodeSet selection;
+    private Selection selection;
 
     private Boolean b;
 
     public UnfreezeAction(String name, String accelerator, ImageIcon icon,
             String shortDescription, DrawableClassification drawable,
-            NodeSet selection) {
+            Selection selection) {
         // call super constructor
         super(name, accelerator, icon, shortDescription, drawable);
         this.selection = selection;
-        Boolean property = (Boolean) selection.getProperty(NodeSet.FROZEN);
+        Boolean property = (Boolean) selection.getProperty(Selection.FROZEN);
         b = (property == null) ? Boolean.FALSE : property;
         this.setEnabled(!b.equals(Boolean.FALSE));
     }
@@ -42,8 +42,8 @@ public class UnfreezeAction extends GenericAction {
             aNode.addProperty(Node.FROZEN,
                     b.equals(Boolean.TRUE) ? Boolean.FALSE : Boolean.TRUE);
         }
-        selection.addProperty(NodeSet.FROZEN, Boolean.FALSE);
-        //ns.addProperty(NodeSet.BG_COLOR, null);
+        selection.addProperty(Selection.FROZEN, Boolean.FALSE);
+        //ns.addProperty(Selection.BG_COLOR, null);
     }
 
 }

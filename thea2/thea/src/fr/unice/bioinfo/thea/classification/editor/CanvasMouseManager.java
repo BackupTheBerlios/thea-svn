@@ -7,7 +7,7 @@ import java.util.List;
 import javax.swing.event.MouseInputAdapter;
 
 import fr.unice.bioinfo.thea.classification.Node;
-import fr.unice.bioinfo.thea.classification.NodeSet;
+import fr.unice.bioinfo.thea.classification.Selection;
 
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
@@ -106,7 +106,7 @@ public class CanvasMouseManager extends MouseInputAdapter {
             if ((expressionColumnIndex >= ns) || (expressionColumnIndex < 0)) {
                 return;
             }
-            NodeSet selection = (NodeSet) l.get(expressionColumnIndex);
+            Selection selection = (Selection) l.get(expressionColumnIndex);
             // create the popup menu to show the user activates
             // the mouse's left button on a set of nodes.
             // and show it.

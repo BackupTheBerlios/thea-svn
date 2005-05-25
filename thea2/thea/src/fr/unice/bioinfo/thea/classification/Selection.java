@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-public class NodeSet {
+public class Selection {
 
     /***/
     public static final String COLOR = "color";//NOI18N
@@ -23,11 +23,11 @@ public class NodeSet {
     /** User data associated with this object */
     private Hashtable properties = new Hashtable();
 
-    public NodeSet() {
+    public Selection() {
         nodes = new ArrayList();
     }
 
-    public NodeSet(List nodes) {
+    public Selection(List nodes) {
         this.nodes = nodes;
     }
 

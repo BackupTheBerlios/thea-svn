@@ -3,7 +3,7 @@ package fr.unice.bioinfo.thea.classification.editor;
 import java.awt.event.MouseEvent;
 
 import fr.unice.bioinfo.thea.classification.Node;
-import fr.unice.bioinfo.thea.classification.NodeSet;
+import fr.unice.bioinfo.thea.classification.Selection;
 
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
@@ -25,8 +25,8 @@ public interface PopupMenuProvider {
      * activated on a Node from the shown tree in the classification editor.
      * @param e A {@link java.awt.event.MouseEvent}
      * @param drawable {@link Drawable}
-     * @param selection {@link NodeSet}
+     * @param selection {@link Selection}
      */
     public abstract void showSelectionPopupMenu(MouseEvent e,
-            final DrawableClassification drawable, final NodeSet selection);
+            final DrawableClassification drawable, final Selection selection);
 }

@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import fr.unice.bioinfo.thea.classification.Node;
-import fr.unice.bioinfo.thea.classification.NodeSet;
+import fr.unice.bioinfo.thea.classification.Selection;
 
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
@@ -95,17 +95,17 @@ public interface SelectionManager {
      */
     public void keepSelection();
 
-    public void groupSelection(NodeSet selection);
+    public void groupSelection(Selection selection);
 
-    public void removeSelection(NodeSet selection);
+    public void removeSelection(Selection selection);
 
-    public void moveSelectionToCurrent(NodeSet sel);
+    public void moveSelectionToCurrent(Selection sel);
 
-    public void copySelectionToCurrent(NodeSet sel);
+    public void copySelectionToCurrent(Selection sel);
 
-    public void unionSelectionWithCurrent(NodeSet sel);
+    public void unionSelectionWithCurrent(Selection sel);
 
-    public void intersectSelectionWithCurrent(NodeSet sel);
+    public void intersectSelectionWithCurrent(Selection sel);
 
     /**
      * Sets all nodes as non selected

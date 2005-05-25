@@ -12,7 +12,7 @@ import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
 
 import fr.unice.bioinfo.thea.classification.Node;
-import fr.unice.bioinfo.thea.classification.NodeSet;
+import fr.unice.bioinfo.thea.classification.Selection;
 import fr.unice.bioinfo.thea.classification.editor.actions.BackAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.ClassifierAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.CollapseAction;
@@ -205,7 +205,7 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
     }
 
     private JPopupMenu getSelectionPopupMenu(DrawableClassification drawable,
-            NodeSet selection) {
+            Selection selection) {
         popup = new JPopupMenu();
         // 1 - Remove:
         popup.add(createRemoveMenuItem(drawable, selection));
@@ -236,7 +236,7 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
     }
 
     private JMenuItem createRemoveMenuItem(DrawableClassification drawable,
-            NodeSet selection) {
+            Selection selection) {
         name = bundle.getString("LBL_DeleteSelectionAction");
         shortDescription = bundle.getString("HINT_DeleteSelectionAction");
         accelerator = bundle.getString("ACC_DeleteSelectionAction");
@@ -250,7 +250,7 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
     }
 
     private JMenuItem createMoveMenuItem(DrawableClassification drawable,
-            NodeSet selection) {
+            Selection selection) {
         name = bundle.getString("LBL_MoveToCurrentAction");
         shortDescription = bundle.getString("HINT_MoveToCurrentAction");
         accelerator = bundle.getString("ACC_MoveToCurrentAction");
@@ -265,7 +265,7 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
     }
 
     private JMenuItem createCopyMenuItem(DrawableClassification drawable,
-            NodeSet selection) {
+            Selection selection) {
         name = bundle.getString("LBL_CopyToCurrentAction");
         shortDescription = bundle.getString("HINT_CopyToCurrentAction");
         accelerator = bundle.getString("ACC_CopyToCurrentAction");
@@ -279,7 +279,7 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
     }
 
     private JMenuItem createUnionMenuItem(DrawableClassification drawable,
-            NodeSet selection) {
+            Selection selection) {
         name = bundle.getString("LBL_UnionWithCurrentAction");
         shortDescription = bundle.getString("HINT_UnionWithCurrentAction");
         accelerator = bundle.getString("ACC_UnionWithCurrentAction");
@@ -293,7 +293,7 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
     }
 
     private JMenuItem createIntersectMenuItem(DrawableClassification drawable,
-            NodeSet selection) {
+            Selection selection) {
         name = bundle.getString("LBL_IntersectWithCurrentAction");
         shortDescription = bundle.getString("HINT_IntersectWithCurrentAction");
         accelerator = bundle.getString("ACC_IntersectWithCurrentAction");
@@ -307,7 +307,7 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
     }
 
     private JMenuItem createGroupMenuItem(DrawableClassification drawable,
-            NodeSet selection) {
+            Selection selection) {
         name = bundle.getString("LBL_GroupSelectionAction");
         shortDescription = bundle.getString("HINT_GroupSelectionAction");
         accelerator = bundle.getString("ACC_GroupSelectionAction");
@@ -321,7 +321,7 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
     }
 
     private JMenuItem createSaveMenuItem(DrawableClassification drawable,
-            NodeSet selection) {
+            Selection selection) {
         name = bundle.getString("LBL_SaveSelectionAction");
         shortDescription = bundle.getString("HINT_SaveSelectionAction");
         accelerator = bundle.getString("ACC_SaveSelectionAction");
@@ -335,7 +335,7 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
     }
 
     private JMenuItem createFreezeMenuItem(DrawableClassification drawable,
-            NodeSet selection) {
+            Selection selection) {
         name = bundle.getString("LBL_FreezeSelctionAction");
         shortDescription = bundle.getString("HINT_FreezeSelctionAction");
         accelerator = bundle.getString("ACC_FreezeSelctionAction");
@@ -349,7 +349,7 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
     }
 
     private JMenuItem createUnfreezeMenuItem(DrawableClassification drawable,
-            NodeSet selection) {
+            Selection selection) {
         name = bundle.getString("LBL_UnfreezeSelctionAction");
         shortDescription = bundle.getString("HINT_UnfreezeSelctionAction");
         accelerator = bundle.getString("ACC_UnfreezeSelctionAction");
@@ -381,10 +381,10 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
      * (non-Javadoc)
      * @see fr.unice.bioinfo.thea.classification.editor.PopupMenuProvider#showSelectionPopupMenu(java.awt.event.MouseEvent,
      *      fr.unice.bioinfo.thea.classification.editor.DrawableClassification,
-     *      fr.unice.bioinfo.thea.classification.NodeSet)
+     *      fr.unice.bioinfo.thea.classification.Selection)
      */
     public void showSelectionPopupMenu(MouseEvent e,
-            DrawableClassification drawable, NodeSet selection) {
+            DrawableClassification drawable, Selection selection) {
         this.getSelectionPopupMenu(drawable, selection).show(e.getComponent(),
                 e.getX(), e.getY());
         //        JPopupMenu pm = this.getSelectionPopupMenu(drawable, selection);
