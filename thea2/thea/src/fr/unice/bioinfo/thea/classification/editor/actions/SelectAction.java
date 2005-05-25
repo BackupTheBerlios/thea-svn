@@ -29,6 +29,7 @@ public class SelectAction extends GenericAction {
      */
     public void actionPerformed(ActionEvent e) {
         drawable.getSelectionManager().keepSelection();
+        drawable.updateGraphics();
     }
 
 }

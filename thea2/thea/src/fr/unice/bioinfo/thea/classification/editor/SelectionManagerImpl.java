@@ -177,6 +177,7 @@ public class SelectionManagerImpl implements SelectionManager {
             drawable.repaintRectangle((int) rectangle.x, (int) rectangle.y,
                     (int) rectangle.width, (int) rectangle.height);
         }
+        drawable.updateGraphics();
     }
 
     /*
@@ -193,8 +194,6 @@ public class SelectionManagerImpl implements SelectionManager {
             updateSelectedState(n.getParent());
         }
         //sendSelectionEvent();
-        // repaint the whole panel
-        //repaint();
         drawable.updateGraphics();
     }
 
@@ -204,7 +203,7 @@ public class SelectionManagerImpl implements SelectionManager {
      */
     public void setSelectionName(String name) {
         selectionName = name;
-        System.out.println(selectionName);
+        //System.out.println(selectionName);
     }
 
     /*
@@ -436,6 +435,7 @@ public class SelectionManagerImpl implements SelectionManager {
             }
             l.remove(aNode);
         }
+        drawable.updateGraphics();
     }
 
     /* (non-Javadoc)

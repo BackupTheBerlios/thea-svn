@@ -61,7 +61,9 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         // 5 - Down:
         popup.add(createDownMenuItem(drawable, aNode));
         // 6 - Whole Tree:
-        popup.add(createWholeMenuItem(drawable, aNode));
+        // It causes a NullPointerException sometimes,
+        // commenting it until this bug is fixed.
+        //popup.add(createWholeMenuItem(drawable, aNode));
         // add a separator here
         popup.addSeparator();
         // 7 - Classifier:
