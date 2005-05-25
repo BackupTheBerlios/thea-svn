@@ -46,6 +46,7 @@ public class FreezeAction extends GenericAction {
         }
         selection.addProperty(NodeSet.FROZEN, Boolean.TRUE);
         selection.addProperty(NodeSet.BG_COLOR, new Color(192, 255, 255));
+        drawable.updateGraphics();
     }
 
 }

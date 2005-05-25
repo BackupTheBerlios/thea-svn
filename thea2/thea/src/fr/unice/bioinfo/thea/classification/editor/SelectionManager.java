@@ -1,5 +1,6 @@
 package fr.unice.bioinfo.thea.classification.editor;
 
+import java.beans.PropertyChangeListener;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public interface SelectionManager {
      *        </ul>
      */
     public void setSelected(Collection nodes, int state);
-    
+
     /**
      * Tels wether the given belongs the list to the list of slected nodes.
      * @param aNode The node to get the value
@@ -70,7 +71,7 @@ public interface SelectionManager {
 
     /** Returns the list of selections.*/
     public List getSelections();
-    
+
     /**
      * Returns a list of selected leaves
      * 
@@ -79,43 +80,56 @@ public interface SelectionManager {
      * @return the list of selected leaves
      */
     public List getSelectedLeaves(boolean b);
-    
+
     /**
      * Returns a list of selected leaves in the displayed tree
      * 
      * @return the list of selected leaves
      */
     public List getSelectedLeaves();
-    
+
     public int getNumberOfSelections();
-    
+
     /**
      * Memorize the last selection
      */
     public void keepSelection();
-    
+
     public void groupSelection(NodeSet selection);
-    
+
     public void removeSelection(NodeSet selection);
-    
+
     public void moveSelectionToCurrent(NodeSet sel);
-    
+
     public void copySelectionToCurrent(NodeSet sel);
-    
+
     public void unionSelectionWithCurrent(NodeSet sel);
-    
+
     public void intersectSelectionWithCurrent(NodeSet sel);
-    
+
     /**
      * Sets all nodes as non selected
      */
     public void removeSelectedNodes();
-    
+
     /**
      * Returns a collection of all selected nodes
      * 
      * @return the collection of selected nodes
      */
-    public Collection getSelectedNodes() ;
+    public Collection getSelectedNodes();
+
+    /** 
+     * Add property change listener
+     * Registers a listener for the PropertyChange event. The selection manager object
+     * should fire a PropertyChange event whenever a selection is done.
+     */
+    public void addPropertyChangeListener(PropertyChangeListener l);
+
+    /** 
+     * Remove property change listener
+     * Remove a listener for the PropertyChange event.
+     */
+    public void removePropertyChangeListener(PropertyChangeListener l);
 
 }

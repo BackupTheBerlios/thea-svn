@@ -29,6 +29,7 @@ public class IntersectAction extends GenericAction {
     public void actionPerformed(ActionEvent e) {
         drawable.getSelectionManager()
         .intersectSelectionWithCurrent(selection);
+        drawable.updateGraphics();
     }
 
 }

@@ -37,8 +37,11 @@ public class CanvasMouseManager extends MouseInputAdapter {
             return;
         }
         // get the selection's name.
-        String name = drawable.getSelectionManager().getSelectionName();
-        drawable.getSelectionManager().setSelectionName("Manual");//??
+        synchronized(drawable){
+            String name = drawable.getSelectionManager().getSelectionName();
+            drawable.getSelectionManager().setSelectionName("Manual Selection");//??
+            }
+        
         if (e.isControlDown()) {
             drawable.getSelectionManager().setSelected(aNode, 0);
         } else if (e.isShiftDown()) {

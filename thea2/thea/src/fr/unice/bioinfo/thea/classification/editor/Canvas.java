@@ -16,6 +16,8 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
@@ -52,8 +54,8 @@ public class Canvas extends JComponent implements DrawableClassification,
     /** contains the list of all currentRootNode nodes in the classification. */
     private Stack roots = new Stack();
 
-    //    /** The list of successive selection lists */
-    //    private List selectionsList = new Vector();
+    /** The list of successive selection lists */
+    private List selectionsList = new Vector();
 
     /** The maximum width on the screen used by terminal labels */
     private double labelMaxWidth;
@@ -70,7 +72,7 @@ public class Canvas extends JComponent implements DrawableClassification,
     private double baseBranchLength = -1;
 
     /** A flag to indicate if expression values has to be shown. */
-    private boolean showExpressionValues = false;
+    private boolean showExpressionValues = true;
 
     /** Flag to indicate if branchs have to be drawn according to their length. */
     private boolean showBranchLength;
@@ -141,17 +143,12 @@ public class Canvas extends JComponent implements DrawableClassification,
     private boolean nonTerminalBoxed = true;
 
     /** data relative to expression values */
-    private int expValNbMeasures;
-
-    private int expValColumnWidth;
-
+    private int expValNbMeasures = 0;
+    private int expValColumnWidth = 0;
     private List expValUnderExpDeciles;
-
     private List expValOverExpDeciles;
-
-    private double expValMinMeasure;
-
-    private double expValMaxMeasure;
+    private double expValMinMeasure = 0;
+    private double expValMaxMeasure = 0;
 
     /** Popup menu. */
     private JPopupMenu popupMenu = null;
@@ -179,6 +176,16 @@ public class Canvas extends JComponent implements DrawableClassification,
         addMouseMotionListener(standardListener);
         // create a selection manager
         selectionManager = new SelectionManagerImpl(this);
+        PropertyChangeListener selectionListener = new PropertyChangeListener() {
+            public void propertyChange(final PropertyChangeEvent event) {
+                if (event.getPropertyName().equals("selectionsList")) { //NOI18N
+                    selectionsList = (List) event.getNewValue();
+                    baseBranchLength = -1;
+                    updateGraphics();
+                }
+            }
+        };
+        this.selectionManager.addPropertyChangeListener(selectionListener);
     }
 
     /*
@@ -198,7 +205,6 @@ public class Canvas extends JComponent implements DrawableClassification,
         if (currentRootNode == null) {
             return;
         }
-        List selectionsList = null;
         FontRenderContext context = ((Graphics2D) graphics)
                 .getFontRenderContext();
 
@@ -209,7 +215,6 @@ public class Canvas extends JComponent implements DrawableClassification,
         double treeWidth = getWidth();
         double selWidth = getWidth();
         double height = getHeight();
-        selectionsList = this.getSelectionManager().getSelections();
         if (selectionsList != null) {
             treeWidth -= (selectionsList.size() * 10);
         }
@@ -240,15 +245,13 @@ public class Canvas extends JComponent implements DrawableClassification,
                 treeWidth - 30, height - 10, doClipping);
         getCurrentRootNode().setArea(
                 new Rectangle2D.Double(0, 5, treeWidth - 15, height - 10));
-        // get selectiosn list
-        selectionsList = this.getSelectionManager().getSelections();
         if (selectionsList != null) {
-            Iterator it = selectionsList.iterator();
+            Iterator iterator = selectionsList.iterator();
             int ctr = 0;
-            while (it.hasNext()) {
-                NodeSet selectionList = (NodeSet) it.next();
-                displaySelected((Graphics2D) graphics, selectionList, selWidth
-                        - 15 - (ctr++ * 10), 8);
+            while (iterator.hasNext()) {
+                NodeSet selection = (NodeSet) iterator.next();
+                displaySelected((Graphics2D) graphics, selection, selWidth - 15
+                        - (ctr++ * 10), 8);
             }
         }
         if (showExpressionValues && (expValNbMeasures > 0)) {
@@ -326,7 +329,6 @@ public class Canvas extends JComponent implements DrawableClassification,
             }
         }
         Node aNodeParent = aNode.getParent();
-        //        if (isNodeSelected(aNode.getParent())) {
         if (this.getSelectionManager().isNodeSelected(aNode.getParent())) {
             graphics.setColor(selectedBackground);
         } else {
@@ -335,7 +337,6 @@ public class Canvas extends JComponent implements DrawableClassification,
         graphics.draw(new Line2D.Double(Math.rint(x), Math
                 .rint((miny + maxy) / 2), Math.rint(x + branchLength), Math
                 .rint((miny + maxy) / 2)));
-        //        if (isNodeSelected(aNode)) {
         if (this.getSelectionManager().isNodeSelected(aNode)) {
             graphics.setColor(selectedBackground);
         } else {
@@ -503,8 +504,6 @@ public class Canvas extends JComponent implements DrawableClassification,
             graphics.setColor(Color.black);
             graphics.draw(area);
         }
-
-        //        if (isNodeSelected(aNode)) {
         if (this.getSelectionManager().isNodeSelected(aNode)) {
             graphics.setColor(selectedBackground);
             graphics.draw(new Line2D.Double(area.getMaxX()
@@ -651,24 +650,24 @@ public class Canvas extends JComponent implements DrawableClassification,
     /**
      * Draw a mark relative of the tree to show the position of selected nodes
      * @param graphics The graphics context
-     * @param selected The list of selected nodes
+     * @param selection The list of selected nodes
      * @param color The color to use to fill the area
      * @param x The horizontal position where to draw selected marks
      * @param width The width of the marks
      */
-    private void displaySelected(Graphics2D graphics, NodeSet selected,
+    private void displaySelected(Graphics2D graphics, NodeSet selection,
             double x, double width) {
-        if (selected == null) {
+        if (selection == null) {
             return;
         }
-        if (selected.getNodes() == null) {
+        if (selection.getNodes() == null) {
             return;
         }
-        if (selected.getNodes().isEmpty()) {
+        if (selection.getNodes().isEmpty()) {
             return;
         }
-        Color color = (Color) selected.getProperty(NodeSet.COLOR);
-        Color bgc = (Color) selected.getProperty(NodeSet.BG_COLOR);
+        Color color = (Color) selection.getProperty(NodeSet.COLOR);
+        Color bgc = (Color) selection.getProperty(NodeSet.BG_COLOR);
         Color c = getBackground();
         if (bgc != null) {
             graphics.setColor(bgc);
@@ -681,7 +680,7 @@ public class Canvas extends JComponent implements DrawableClassification,
             }
         }
         graphics.setColor(color);
-        Iterator it = selected.getNodes().iterator();
+        Iterator it = selection.getNodes().iterator();
         while (it.hasNext()) {
             Node aNode = (Node) it.next();
             if (!getCurrentRootNode().isAncestorOf(aNode)) {
@@ -876,7 +875,6 @@ public class Canvas extends JComponent implements DrawableClassification,
         if (aNodeArea != null) {
             aNodeRectangle.setRect(aNodeArea);
         }
-        List selectionsList = this.getSelectionManager().getSelections();
         if (aNode != null) {
             aNodeRectangle.width += 10;
             if (selectionsList != null) {
@@ -965,15 +963,6 @@ public class Canvas extends JComponent implements DrawableClassification,
         }
     }
 
-    //    /**
-    //     * Tels wether the given belongs the list to the list of slected nodes.
-    //     * @param aNode The node to get the value
-    //     * @return The selected state of the parameter node
-    //     */
-    //    private boolean isNodeSelected(Node aNode) {
-    //        return selectedNodes.contains(aNode);
-    //    }
-
     /**
      * Sets the given node to be used as a currentRootNode node for the
      * currently displayed tree.
@@ -996,7 +985,6 @@ public class Canvas extends JComponent implements DrawableClassification,
             expValOverExpDeciles = (List) getClassificationRootNode()
                     .getProperty(Node.OVER_EXP_DECILES);
         }
-        List selectionsList = this.getSelectionManager().getSelections();
         if (selectionsList != null) {
             Iterator it = selectionsList.iterator();
             while (it.hasNext()) {
@@ -1014,9 +1002,7 @@ public class Canvas extends JComponent implements DrawableClassification,
                 String selId = (String) ns.getProperty(NodeSet.SEL_ID);
             }
         }
-        //        if (!selectedNodes.isEmpty()) {
         if (!this.getSelectionManager().getSelectedNodes().isEmpty()) {
-            //            List selectedLeaves = getSelectedLeaves();
             List selectedLeaves = this.getSelectionManager()
                     .getSelectedLeaves();
             int countSelected = 0;
@@ -1031,39 +1017,11 @@ public class Canvas extends JComponent implements DrawableClassification,
             String localHits = countSelected + "/"
                     + currentRootNode.getNumberOfLeaves();
             //            String selId = String.valueOf(nbSel);
-            String selId = String.valueOf(this.getSelectionManager()
+            String selectionID = String.valueOf(this.getSelectionManager()
                     .getNumberOfSelections());
         }
         baseBranchLength = -1; // force the recalculation
     }
-
-    //    /**
-    //     * Returns a list of selected leaves in the displayed tree
-    //     * @return the list of selected leaves
-    //     */
-    //    public List getSelectedLeaves() {
-    //        return getSelectedLeaves(false);
-    //    }
-
-    //    /**
-    //     * Returns a list of selected leaves
-    //     * @param wholeTreeSeach indicates if the function must return the list of
-    //     * selected leaves in the whole tree
-    //     * @return the list of selected leaves
-    //     */
-    //    private List getSelectedLeaves(boolean wholeTreeSearch) {
-    //        Node searchSubtree = (wholeTreeSearch ? getClassificationRootNode()
-    //                : getCurrentRootNode());
-    //        List selectedLeaves = new Vector();
-    //        Iterator iterator = searchSubtree.getLeaves().iterator();
-    //        while (iterator.hasNext()) {
-    //            Node n = (Node) iterator.next();
-    //            if (isNodeSelected(n)) {
-    //                selectedLeaves.add(n);
-    //            }
-    //        }
-    //        return selectedLeaves;
-    //    }
 
     /*
      * (non-Javadoc)
@@ -1294,7 +1252,7 @@ public class Canvas extends JComponent implements DrawableClassification,
         if (hnode == aNode) {
             return;
         }
-        List selectionsList;
+        //        List selectionsList;
         Graphics graphics = getGraphics();
         Rectangle2D.Double hnodeArea = null;
         Point2D.Double hnodePosition = null;
@@ -1318,14 +1276,14 @@ public class Canvas extends JComponent implements DrawableClassification,
         }
         if (hnode != null) {
             hnodeRectangle.width += 10;
-            selectionsList = this.getSelectionManager().getSelections();
+            //            selectionsList = this.getSelectionManager().getSelections();
             if (selectionsList != null) {
                 hnodeRectangle.width += (selectionsList.size() * 10);
             }
         }
         if (aNode != null) {
             aNodeRectangle.width += 10;
-            selectionsList = this.getSelectionManager().getSelections();
+            //            selectionsList = this.getSelectionManager().getSelections();
             if (selectionsList != null) {
                 aNodeRectangle.width += (selectionsList.size() * 10);
             }
@@ -1435,8 +1393,10 @@ public class Canvas extends JComponent implements DrawableClassification,
         repaint();
     }
 
-    /* (non-Javadoc)
-     * @see fr.unice.bioinfo.thea.classification.editor.Drawable#repaintRectangle(int, int, int, int)
+    /*
+     * (non-Javadoc)
+     * @see fr.unice.bioinfo.thea.classification.editor.Drawable#repaintRectangle(int,
+     *      int, int, int)
      */
     public void repaintRectangle(int x, int y, int width, int height) {
         repaint(x, y, width, height);

@@ -4,22 +4,23 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.ImageIcon;
 
-import fr.unice.bioinfo.thea.classification.NodeSet;
+import fr.unice.bioinfo.thea.classification.Node;
 import fr.unice.bioinfo.thea.classification.editor.DrawableClassification;
 
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
-public class MoveAction extends GenericAction {
+public class WholeAction extends GenericAction {
 
-    private NodeSet selection;
+    private Node aNode;
 
-    public MoveAction(String name, String accelerator,
-            ImageIcon icon, String shortDescription,
-            DrawableClassification drawable, NodeSet selection) {
+    public WholeAction(String name, String accelerator, ImageIcon icon,
+            String shortDescription, DrawableClassification drawable, Node aNode) {
         // call super constructor
         super(name, accelerator, icon, shortDescription, drawable);
-        this.selection = selection;
+        this.aNode = aNode;
+        //        this.setEnabled(drawable.getClassificationRootNode() != drawable
+        //                .getCurrentRootNode());
     }
 
     /*
@@ -27,8 +28,7 @@ public class MoveAction extends GenericAction {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
-        drawable.getSelectionManager().moveSelectionToCurrent(selection);
-        drawable.updateGraphics();
+        drawable.showWholeTree();
     }
 
 }

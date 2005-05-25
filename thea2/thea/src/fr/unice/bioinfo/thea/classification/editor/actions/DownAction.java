@@ -28,6 +28,7 @@ public class DownAction extends GenericAction {
      */
     public void actionPerformed(ActionEvent e) {
         drawable.showSubTree(aNode);
+        drawable.updateGraphics();
     }
 
 }

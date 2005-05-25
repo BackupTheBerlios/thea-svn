@@ -28,6 +28,7 @@ public class GroupAction extends GenericAction {
      */
     public void actionPerformed(ActionEvent e) {
         drawable.getSelectionManager().groupSelection(selection);
+        drawable.updateGraphics();
     }
 
 }

@@ -28,6 +28,7 @@ public class RemoveAction extends GenericAction {
      */
     public void actionPerformed(ActionEvent e) {
         drawable.getSelectionManager().removeSelection(selection);
+        drawable.updateGraphics();
     }
 
 }

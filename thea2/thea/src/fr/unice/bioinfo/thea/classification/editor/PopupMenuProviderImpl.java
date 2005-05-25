@@ -28,6 +28,7 @@ import fr.unice.bioinfo.thea.classification.editor.actions.SelectAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.UncollapseAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.UnionAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.UpAction;
+import fr.unice.bioinfo.thea.classification.editor.actions.WholeAction;
 
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
@@ -59,15 +60,17 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         popup.add(createUpMenuItem(drawable, aNode));
         // 5 - Down:
         popup.add(createDownMenuItem(drawable, aNode));
+        // 6 - Whole Tree:
+        popup.add(createWholeMenuItem(drawable, aNode));
         // add a separator here
         popup.addSeparator();
-        // 6 - Classifier:
+        // 7 - Classifier:
         popup.add(createClassifierMenuItem(drawable, aNode));
-        // 7 - New:
+        // 8 - New:
         popup.add(createNewMenuItem(drawable, aNode));
         // add a separator here
         popup.addSeparator();
-        // 8 - Select:
+        // 9 - Select:
         popup.add(createSelectMenuItem(drawable, aNode));
         return popup;
     }
@@ -139,6 +142,20 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         Action down = new DownAction(name, accelerator, icon, shortDescription,
                 drawable, aNode);
         menuItem = new JMenuItem(down);
+        return menuItem;
+    }
+
+    private JMenuItem createWholeMenuItem(DrawableClassification drawable,
+            Node aNode) {
+        name = bundle.getString("LBL_WholeTreeAction");
+        shortDescription = bundle.getString("HINT_WholeTreeAction");
+        accelerator = bundle.getString("ACC_WholeTreeAction");
+        icon = new ImageIcon(
+                Utilities
+                        .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/EmptyIcon.gif"));
+        Action whole = new WholeAction(name, accelerator, icon,
+                shortDescription, drawable, aNode);
+        menuItem = new JMenuItem(whole);
         return menuItem;
     }
 
