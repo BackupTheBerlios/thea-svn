@@ -71,14 +71,17 @@ public class CanvasMouseManager extends MouseInputAdapter {
      * @see java.awt.event.MouseMotionListener#mouseMoved(java.awt.event.MouseEvent)
      */
     public void mouseMoved(MouseEvent e) {
-//        if (drawable.isShowingPopupMenu())
-//            return;
+        //        if (drawable.isShowingPopupMenu())
+        //            return;
 
         final Point2D point2D = (Point2D) e.getPoint();
         Node rn = drawable.getCurrentRootNode();
         Node aNode = drawable.locateNode(rn, point2D);
         drawable.highlightSurroundingArea(aNode);
-        drawable.updateGraphics();
+        // Calling updateGraphics() on drwable make the GUI
+        // takes some seconds to refresh to view,
+        // i'll see later whether to keep this call or not:
+        //        drawable.updateGraphics();
     }
 
     /*

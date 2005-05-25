@@ -1333,6 +1333,7 @@ public class Canvas extends JComponent implements DrawableClassification,
         }
         hnode = aNode;
         graphics.setPaintMode();
+        //        repaint();
     }
 
     /*
