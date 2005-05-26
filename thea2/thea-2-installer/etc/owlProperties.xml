@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<owlproperties>
+	<ontologyexplorer>
+		<!-- List of root entries in the ontology.-->
+		<roots>
+			<uri>http://www.geneontology.org/owl#GO_0008150</uri>
+			<uri>http://www.geneontology.org/owl#GO_0005575</uri>
+			<uri>http://www.geneontology.org/owl#GO_0003674</uri>
+		</roots>
+		<!-- hieararchy bloc defines list of properties to be used
+			to build the tree in the ontology explorer.
+			-->
+		<hierarchy>
+			<uri>SUPERCLASS</uri>
+			<uri>http://www.unice.fr/bioinfo/owl/biowl#contains</uri>
+			<partof>http://www.unice.fr/bioinfo/owl/biowl#contains</partof>
+			<isa>SUPERCLASS</isa>
+		</hierarchy>
+		<nodes>
+			<!-- nodename tels how to create a display name for nodes -->
+			<nodename>http://www.w3.org/2000/01/rdf-schema#label</nodename>
+			<!-- the property used to extract genes annotated with a given resource-->
+			<annotates> 
+				http://www.unice.fr/bioinfo/owl/biowl#annotates</annotates>
+			<hasevidence>
+				http://www.unice.fr/bioinfo/owl/biowl#hasEvidence</hasevidence>
+			<!-- genename tels how to create a display name for an annotated gene -->
+			<genename>http://www.unice.fr/bioinfo/owl/biowl#symbol</genename>
+			<!-- property that allows access to the full name of a gene-->
+			<genefullname> 
+				http://www.unice.fr/bioinfo/owl/biowl#fullName</genefullname>
+			<!-- xrefname is the property ised to find a DB XREF-->
+			<xrefname>http://www.unice.fr/bioinfo/owl/biowl#xref</xrefname>
+			<dbname>http://www.unice.fr/bioinfo/owl/biowl#db</dbname>
+			<dbkeyname> 
+				http://www.unice.fr/bioinfo/owl/biowl#dbname</dbkeyname>
+			<!-- property used to get the database name as a string valeue-->
+			<dbsvname>http://www.unice.fr/bioinfo/owl/biowl#name</dbsvname>
+		</nodes>
+	</ontologyexplorer>
+	<!-- CODES EVIDENCES -->
+	<evidences>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#IMP</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#IC</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#IPI</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#IEP</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#NA</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#NR</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#IGI</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#ISS</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#ND</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#ASS</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#NAS</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#TAS</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#IEA</uri>
+		<uri>http://www.unice.fr/bioinfo/owl/biowl#IDA</uri>
+	</evidences>
+	<!-- END CODE EVEIDENCES BLOC-->
+	<!-- Gene editor related properties-->
+	<geneeditor>
+		<column>
+			<name>http://www.unice.fr/bioinfo/owl/biowl#symbol</name>
+			<name>http://www.unice.fr/bioinfo/owl/biowl#fullName</name>
+			<name>http://www.unice.fr/bioinfo/owl/biowl#chromosome</name>
+			<name>http://www.unice.fr/bioinfo/owl/biowl#startPos</name>
+			<name>http://www.unice.fr/bioinfo/owl/biowl#endPos</name>
+			<name>http://www.unice.fr/bioinfo/owl/biowl#strand</name>
+		</column>
+	</geneeditor>
+</owlproperties>
