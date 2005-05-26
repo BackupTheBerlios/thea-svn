@@ -406,7 +406,7 @@ public class Canvas extends JComponent implements DrawableClassification,
         Iterator iterator = annotations.iterator();
         while (iterator.hasNext()) {
             List param = (List) iterator.next();
-            String annot = (String) param.get(0);
+            String annotation = (String) param.get(0);
             NodeLayoutSupport nls = (NodeLayoutSupport) param.get(1);
             Font font = null;
             if (nls != null) {
@@ -415,11 +415,11 @@ public class Canvas extends JComponent implements DrawableClassification,
             if (font == null) {
                 font = terminalFont;
             }
-            TextLayout tl = new TextLayout(annot, font, context);
+            TextLayout tl = new TextLayout(annotation, font, context);
             double labelNormalWidth = tl.getBounds().getWidth();
-            while ((labelNormalWidth > width) && (annot.length() > 0)) {
-                annot = annot.substring(0, annot.length() - 1);
-                tl = new TextLayout(annot, font, context);
+            while ((labelNormalWidth > width) && (annotation.length() > 0)) {
+                annotation = annotation.substring(0, annotation.length() - 1);
+                tl = new TextLayout(annotation, font, context);
                 labelNormalWidth = tl.getBounds().getWidth();
             }
             layouts.add(tl);
