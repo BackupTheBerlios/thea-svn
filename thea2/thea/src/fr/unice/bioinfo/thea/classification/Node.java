@@ -499,22 +499,8 @@ public class Node {
         }
     }
 
-    /** Contains properties which could be visible from the GUI */
-    private Hashtable /* to store all string values */strings;
-
     /** The name of the node. */
     private String name = null;
-
-    /**
-     * Get the depth of this node
-     * @return The number of getParent() to perform in order to reach the root
-     */
-    public int getDepth() {
-        if (parent == null) {
-            return 0;
-        }
-        return (parent.getDepth() + 1);
-    }
 
     /* under tests */
 
