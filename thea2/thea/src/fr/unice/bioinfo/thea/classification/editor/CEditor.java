@@ -17,12 +17,12 @@ import org.openide.util.Utilities;
 import org.openide.windows.TopComponent;
 
 import fr.unice.bioinfo.thea.classification.Node;
+import fr.unice.bioinfo.thea.classification.editor.selection.SelectionEditor;
 import fr.unice.bioinfo.thea.classification.editor.util.Consts;
 import fr.unice.bioinfo.thea.classification.editor.util.EisenUtil;
 import fr.unice.bioinfo.thea.classification.editor.util.MeasuresFileReader;
 import fr.unice.bioinfo.thea.classification.editor.util.NewickUtil;
 import fr.unice.bioinfo.thea.classification.editor.util.SotaUtil;
-import fr.unice.bioinfo.thea.editor.selection.SelectionEditor;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ClassificationNodeInfo;
 
 /**
@@ -81,8 +81,9 @@ public class CEditor extends TopComponent {
         // Icon
         setIcon(Utilities
                 .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/CEditorIcon16.gif"));//NOI18N
-//        selectionEditor.setName(selectionEditor.getName() + "[" + cni.getName()
-//                + "]");//NOI18N
+        //        selectionEditor.setName(selectionEditor.getName() + "[" +
+        // cni.getName()
+        //                + "]");//NOI18N
         // Load classification
         load();
     }
