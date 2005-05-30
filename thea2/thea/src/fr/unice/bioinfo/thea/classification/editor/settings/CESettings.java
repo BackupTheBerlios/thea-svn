@@ -18,6 +18,12 @@ public class CESettings extends SystemOption {
     /** generated Serialized Version UID */
     static final long serialVersionUID = 801136840705717911L;
 
+    /** zoomFactorX property name */
+    public static final String ZOOM_FACTOR_X = "zoomFactorX";//NOI18N
+
+    /** zoomFactorY property name */
+    public static final String ZOOM_FACTOR_Y = "zoomFactorY";//NOI18N
+
     /** showTermID property name */
     public static final String PROP_SHOW_TERM_ID = "showTermID"; // NOI18N
 
@@ -53,7 +59,7 @@ public class CESettings extends SystemOption {
 
     /** terminals boxed property name */
     public static final String PROP_TERMINALS_BOXED = "terminalsBoxed"; // NOI18N
-    
+
     /** Non terminals boxed property name */
     public static final String PROP_NON_TERMINALS_BOXED = "nonTerminalsBoxed"; // NOI18N
 
@@ -186,6 +192,12 @@ public class CESettings extends SystemOption {
     /** accessor property name */
     public static final String PROP_ACCESSOR = "accessor"; // NOI18N
 
+    /** Zooming factor on X direction */
+    private double zoomFactorX = 3;
+
+    /** Zooming factor on Y direction */
+    private double zoomFactorY = 10;
+
     /*
      * The following variables corresponds to Ontology Terms Properties Panel
      */
@@ -236,7 +248,7 @@ public class CESettings extends SystemOption {
 
     /** Surround terminal nodes property */
     private static boolean terminalsBoxed = false;
-    
+
     /** Surround non terminal nodes property */
     private static boolean nonTerminalsBoxed = true;
 
@@ -663,14 +675,14 @@ public class CESettings extends SystemOption {
                 (!alignTerminalNodes) ? Boolean.TRUE : Boolean.FALSE,
                 alignTerminalNodes ? Boolean.TRUE : Boolean.FALSE);
     }
-    
+
     /**
      * Returns nonTerminalsBoxed
      */
     public boolean isNonTerminalsBoxed() {
         return nonTerminalsBoxed;
     }
-    
+
     /**
      * Setter for nonTerminalsBoxed
      */
@@ -681,7 +693,7 @@ public class CESettings extends SystemOption {
         nonTerminalsBoxed = value;
         firePropertyChange(PROP_NON_TERMINALS_BOXED,
                 (!nonTerminalsBoxed) ? Boolean.TRUE : Boolean.FALSE,
-                        nonTerminalsBoxed ? Boolean.TRUE : Boolean.FALSE);
+                nonTerminalsBoxed ? Boolean.TRUE : Boolean.FALSE);
     }
 
     /**
@@ -1565,5 +1577,27 @@ public class CESettings extends SystemOption {
             accessor = value;
             firePropertyChange(PROP_ACCESSOR, old, value);
         }
+    }
+
+    public double getZoomFactorX() {
+        return zoomFactorX;
+    }
+
+    public void setZoomFactorX(double value) {
+        double oldValue = zoomFactorX;
+        zoomFactorX = value;
+        firePropertyChange(ZOOM_FACTOR_X, new Double(oldValue), new Double(
+                value));
+    }
+
+    public double getZoomFactorY() {
+        return zoomFactorY;
+    }
+
+    public void setZoomFactorY(double value) {
+        double oldValue = zoomFactorY;
+        zoomFactorY = value;
+        firePropertyChange(ZOOM_FACTOR_Y, new Double(oldValue), new Double(
+                value));
     }
 }

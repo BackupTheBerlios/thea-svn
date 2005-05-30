@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
+import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.thea.classification.editor.settings.CESettings;
 import fr.unice.bioinfo.thea.classification.editor.util.Discretization;
 
@@ -115,12 +116,30 @@ public class Node {
         this.children = children;
     }
 
+    /** Correspending {@link Entity}to this node. */
+    private Entity entity;
+
     /** Creates a node. */
     public Node() {
         // instanciate properties list
         this.properties = new Hashtable();
         // Creates this node's layout support
         this.layoutSupport = new NodeLayoutSupport();
+    }
+
+    /** Associate an {@link Entity}to this node. */
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+        if (entity == null) {
+            System.out.println("null");
+        } else {
+            System.out.println(entity.toString());
+        }
+    }
+
+    /** Returns the {@link Entity}associated to this node. */
+    public Entity getEntity() {
+        return entity;
     }
 
     /** Returns <i>True </i> if this node is collapsed. <i>False </i>otherwise. */

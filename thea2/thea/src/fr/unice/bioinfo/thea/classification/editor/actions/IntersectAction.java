@@ -14,12 +14,14 @@ public class IntersectAction extends GenericAction {
 
     private Selection selection;
 
-    public IntersectAction(String name, String accelerator,
-            ImageIcon icon, String shortDescription,
-            DrawableClassification drawable, Selection selection) {
+    public IntersectAction(String name, String accelerator, ImageIcon icon,
+            String shortDescription, DrawableClassification drawable,
+            Selection selection) {
         // call super constructor
         super(name, accelerator, icon, shortDescription, drawable);
         this.selection = selection;
+        this.setEnabled(!drawable.getSelectionManager().getSelectedLeaves(true)
+                .isEmpty());
     }
 
     /*
@@ -27,8 +29,7 @@ public class IntersectAction extends GenericAction {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
-        drawable.getSelectionManager()
-        .intersectSelectionWithCurrent(selection);
+        drawable.getSelectionManager().intersect(selection);
         drawable.updateGraphics();
     }
 

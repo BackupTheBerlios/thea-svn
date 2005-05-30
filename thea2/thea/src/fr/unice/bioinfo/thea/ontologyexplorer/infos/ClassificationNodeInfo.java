@@ -6,6 +6,8 @@ import java.util.Hashtable;
 
 import org.openide.nodes.Node;
 
+import fr.unice.bioinfo.thea.classification.Classification;
+import fr.unice.bioinfo.thea.classification.io.ClassificationFactory;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationNode;
 
 /**
@@ -37,6 +39,8 @@ public class ClassificationNodeInfo extends Hashtable implements Node.Cookie {
 
     /* Owning node */
     private WeakReference nodewr = null;
+
+    private Classification classification = null;
 
     public ClassificationNodeInfo() {
         super();
@@ -205,5 +209,23 @@ public class ClassificationNodeInfo extends Hashtable implements Node.Cookie {
     /** Sets the selected data type */
     public void setSelectedFormat(int value) {
         put(TYPE, new Integer(value));
+    }
+
+    /**
+     * @return Returns the classification.
+     */
+    public Classification getClassification() {
+        if (classification == null) {
+            classification = ClassificationFactory.getDefault()
+                    .getClassification(this);
+        }
+        return classification;
+    }
+
+    /**
+     * @param classification The classification to set.
+     */
+    public void setClassification(Classification classification) {
+        this.classification = classification;
     }
 }

@@ -11,8 +11,8 @@ import fr.unice.bioinfo.thea.classification.Selection;
 public interface PopupMenuProvider {
 
     /**
-     * Creates a popup menu to show when the mouse's right button is
-     * activated on a Node from the shown tree in the classification editor.
+     * Creates a popup menu to show when the mouse's right button is activated
+     * on a Node from the shown tree in the classification editor.
      * @param e A {@link java.awt.event.MouseEvent}
      * @param drawable {@link Drawable}
      * @param aNode {@link Node}
@@ -21,8 +21,8 @@ public interface PopupMenuProvider {
             final DrawableClassification drawable, final Node aNode);
 
     /**
-     * Creates a popup menu to show when the mouse's right button is
-     * activated on a Node from the shown tree in the classification editor.
+     * Creates a popup menu to show when the mouse's right button is activated
+     * on a Node from the shown tree in the classification editor.
      * @param e A {@link java.awt.event.MouseEvent}
      * @param drawable {@link Drawable}
      * @param selection {@link Selection}

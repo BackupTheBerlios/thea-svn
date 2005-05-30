@@ -103,12 +103,6 @@ public class Canvas extends JComponent implements DrawableClassification,
     /** The set of collapsed nodes */
     private Set collapsedNodes = new HashSet();
 
-    //    /** The list of selected nodes */
-    //    private Set selectedNodes = new HashSet();
-
-    //    /** The number of selections done */
-    //    private int nbSel;
-
     /** The node currently highlighted */
     private Node hnode;
 
@@ -666,8 +660,8 @@ public class Canvas extends JComponent implements DrawableClassification,
         if (selection.getNodes().isEmpty()) {
             return;
         }
-        Color color = (Color) selection.getProperty(Selection.COLOR);
-        Color bgc = (Color) selection.getProperty(Selection.BG_COLOR);
+        Color color = selection.getColor();
+        Color bgc = selection.getBackgroundColor();
         Color c = getBackground();
         if (bgc != null) {
             graphics.setColor(bgc);
@@ -989,8 +983,8 @@ public class Canvas extends JComponent implements DrawableClassification,
             Iterator it = selectionsList.iterator();
             while (it.hasNext()) {
                 int countSelected = 0;
-                Selection ns = (Selection) it.next();
-                Iterator it2 = ns.getNodes().iterator();
+                Selection selection = (Selection) it.next();
+                Iterator it2 = selection.getNodes().iterator();
                 while (it2.hasNext()) {
                     Node node = (Node) it2.next();
                     if (currentRootNode.isAncestorOf(node)) {
@@ -999,7 +993,7 @@ public class Canvas extends JComponent implements DrawableClassification,
                 }
                 String localHits = countSelected + "/"
                         + currentRootNode.getNumberOfLeaves();
-                String selId = (String) ns.getProperty(Selection.SEL_ID);
+                String selectionID = selection.getId();
             }
         }
         if (!this.getSelectionManager().getSelectedNodes().isEmpty()) {
@@ -1016,7 +1010,6 @@ public class Canvas extends JComponent implements DrawableClassification,
             }
             String localHits = countSelected + "/"
                     + currentRootNode.getNumberOfLeaves();
-            //            String selId = String.valueOf(nbSel);
             String selectionID = String.valueOf(this.getSelectionManager()
                     .getNumberOfSelections());
         }
@@ -1276,14 +1269,12 @@ public class Canvas extends JComponent implements DrawableClassification,
         }
         if (hnode != null) {
             hnodeRectangle.width += 10;
-            //            selectionsList = this.getSelectionManager().getSelections();
             if (selectionsList != null) {
                 hnodeRectangle.width += (selectionsList.size() * 10);
             }
         }
         if (aNode != null) {
             aNodeRectangle.width += 10;
-            //            selectionsList = this.getSelectionManager().getSelections();
             if (selectionsList != null) {
                 aNodeRectangle.width += (selectionsList.size() * 10);
             }

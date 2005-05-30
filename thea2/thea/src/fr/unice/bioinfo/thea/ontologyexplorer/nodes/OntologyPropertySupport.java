@@ -7,8 +7,8 @@ import org.openide.nodes.PropertySupport;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.OntologyNodeInfo;
 
 /**
- * Support class for {@link OntologyNode}. It is used to build properties 
- * of a node and add them to the properties panel.
+ * Support class for {@link OntologyNode}. It is used to build properties of a
+ * node and add them to the properties panel.
  * @author Saïd El Kasmi
  */
 public class OntologyPropertySupport extends PropertySupport {

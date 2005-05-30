@@ -12,9 +12,9 @@ import fr.unice.bioinfo.thea.classification.editor.DrawableClassification;
 public abstract class GenericAction extends AbstractAction {
 
     protected DrawableClassification drawable;
-    
+
     public GenericAction(String name, String accelerator, ImageIcon icon,
-            String shortDescription,DrawableClassification drawable) {
+            String shortDescription, DrawableClassification drawable) {
         putValue(NAME, name);
         putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(accelerator));
         putValue(SMALL_ICON, icon);

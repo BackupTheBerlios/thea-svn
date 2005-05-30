@@ -14,9 +14,9 @@ public class MoveAction extends GenericAction {
 
     private Selection selection;
 
-    public MoveAction(String name, String accelerator,
-            ImageIcon icon, String shortDescription,
-            DrawableClassification drawable, Selection selection) {
+    public MoveAction(String name, String accelerator, ImageIcon icon,
+            String shortDescription, DrawableClassification drawable,
+            Selection selection) {
         // call super constructor
         super(name, accelerator, icon, shortDescription, drawable);
         this.selection = selection;
@@ -27,7 +27,7 @@ public class MoveAction extends GenericAction {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
-        drawable.getSelectionManager().moveSelectionToCurrent(selection);
+        drawable.getSelectionManager().move(selection);
         drawable.updateGraphics();
     }
 

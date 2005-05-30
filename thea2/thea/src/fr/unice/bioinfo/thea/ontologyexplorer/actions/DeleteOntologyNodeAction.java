@@ -62,8 +62,7 @@ public class DeleteOntologyNodeAction extends NodeAction {
         try {
             node.destroy();
         } catch (IOException e1) {
-            ErrorManager.getDefault()
-            .notify(ErrorManager.INFORMATIONAL, e1);
+            ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, e1);
         }
     }
 

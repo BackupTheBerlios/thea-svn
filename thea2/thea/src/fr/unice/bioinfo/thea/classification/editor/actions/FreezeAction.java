@@ -17,18 +17,14 @@ import fr.unice.bioinfo.thea.classification.editor.DrawableClassification;
 public class FreezeAction extends GenericAction {
 
     private Selection selection;
-    
-    private Boolean b;
 
-    public FreezeAction(String name, String accelerator,
-            ImageIcon icon, String shortDescription,
-            DrawableClassification drawable, Selection selection) {
+    public FreezeAction(String name, String accelerator, ImageIcon icon,
+            String shortDescription, DrawableClassification drawable,
+            Selection selection) {
         // call super constructor
         super(name, accelerator, icon, shortDescription, drawable);
         this.selection = selection;
-        Boolean property = (Boolean) selection.getProperty(Selection.FROZEN);
-        b = (property == null) ? Boolean.FALSE : property;
-        this.setEnabled(b.equals(Boolean.FALSE));
+        this.setEnabled(!selection.isFrozen());
     }
 
     /*
@@ -40,12 +36,10 @@ public class FreezeAction extends GenericAction {
         Iterator iterator = nodes.iterator();
         while (iterator.hasNext()) {
             Node aNode = (Node) iterator.next();
-            aNode.addProperty(Node.FROZEN,
-                    b.equals(Boolean.TRUE) ? Boolean.FALSE
-                            : Boolean.TRUE);
+            aNode.addProperty(Node.FROZEN, new Boolean(selection.isFrozen()));
         }
-        selection.addProperty(Selection.FROZEN, Boolean.TRUE);
-        selection.addProperty(Selection.BG_COLOR, new Color(192, 255, 255));
+        selection.setFrozen(true);
+        selection.setBackgroundColor(new Color(192, 255, 255));
         drawable.updateGraphics();
     }
 

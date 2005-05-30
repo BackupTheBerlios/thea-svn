@@ -41,22 +41,22 @@ public class DeleteClNodeAction extends NodeAction {
         node.getChildren().remove(node.getChildren().getNodes());
         // Close the windows that edit the classification if any:
         final ClassificationNodeInfo cni = (ClassificationNodeInfo) node
-        .getCookie(ClassificationNodeInfo.class);
-        
+                .getCookie(ClassificationNodeInfo.class);
+
         parent.getChildren().remove(new Node[] { node });
         // This commented bloc is used to close
-        // The window that edits the classif. It caused 
+        // The window that edits the classif. It caused
         // an ecpetion
-//        Iterator opened = TopComponent.getRegistry().getOpened().iterator();
-//        while (opened.hasNext()) {
-//            Object tc = opened.next();
-//            if (tc instanceof CEditor) {
-//                CEditor ce = (CEditor) tc;
-//                if(ce.getName().equals(cni.getName())){
-//                    ce.close();
-//                    }
-//            }
-//        }
+        //        Iterator opened = TopComponent.getRegistry().getOpened().iterator();
+        //        while (opened.hasNext()) {
+        //            Object tc = opened.next();
+        //            if (tc instanceof CEditor) {
+        //                CEditor ce = (CEditor) tc;
+        //                if(ce.getName().equals(cni.getName())){
+        //                    ce.close();
+        //                    }
+        //            }
+        //        }
 
         try {
             node.destroy();

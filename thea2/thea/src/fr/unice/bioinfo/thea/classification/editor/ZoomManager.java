@@ -1,8 +1,12 @@
 package fr.unice.bioinfo.thea.classification.editor;
 
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.event.MouseInputAdapter;
+
+import fr.unice.bioinfo.thea.classification.editor.settings.CESettings;
 
 /**
  * This class implements a zooming manager that works on objects of type
@@ -29,11 +33,28 @@ public class ZoomManager extends MouseInputAdapter {
     /** The {@link Zoomable}components to be managet by this adapter. */
     private Zoomable zoomable;
     /** The zoom factor used for zooming using the zooming icon. */
-    private double zoomFactorX = 3;
-    private double zoomFactorY = 10;
+    private double zoomFactorX;
+    private double zoomFactorY;
 
     public ZoomManager(Zoomable zoomable) {
         this.zoomable = zoomable;
+        zoomFactorX = CESettings.getInstance().getZoomFactorX();
+        zoomFactorY = CESettings.getInstance().getZoomFactorY();
+        CESettings.getInstance().addPropertyChangeListener(
+                new PropertyChangeListener() {
+                    public void propertyChange(PropertyChangeEvent e) {
+                        if (e.getPropertyName().equalsIgnoreCase(
+                                CESettings.ZOOM_FACTOR_X)) {
+                            zoomFactorX = ((Double) e.getNewValue())
+                                    .doubleValue();
+                        }
+                        if (e.getPropertyName().equalsIgnoreCase(
+                                CESettings.ZOOM_FACTOR_Y)) {
+                            zoomFactorY = ((Double) e.getNewValue())
+                                    .doubleValue();
+                        }
+                    }
+                });
     }
 
     /*

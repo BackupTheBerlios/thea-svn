@@ -36,7 +36,8 @@ public class Consts {
     public static Font TERMINAL_FONT = new Font("monospaced", Font.PLAIN, 12);
 
     /** The font used to draw labels of non terminal nodes */
-    public static Font NON_TERMINAL_FONT = new Font("monospaced", Font.PLAIN, 12);
+    public static Font NON_TERMINAL_FONT = new Font("monospaced", Font.PLAIN,
+            12);
 
     /** The font used to draw info strings */
     public static Font INFO_FONT = new Font("monospaced", Font.PLAIN, 12);

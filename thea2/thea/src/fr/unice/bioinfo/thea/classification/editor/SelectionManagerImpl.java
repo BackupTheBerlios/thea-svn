@@ -28,14 +28,11 @@ public class SelectionManagerImpl implements SelectionManager {
     /** The number of selections done */
     private int counter;//initially was declared as nbSel
 
-    /** The name of the selection */
-    private String selectionName;
-
     private DrawableClassification drawable = null;
 
     /** The colors used to display selections */
     private Color[] colors = new Color[18];
-    
+
     /** The support for firing property changes */
     private PropertyChangeSupport propertySupport;
 
@@ -66,13 +63,13 @@ public class SelectionManagerImpl implements SelectionManager {
         colors[15] = new Color(64, 128, 128);
         colors[16] = new Color(192, 192, 192);
         colors[17] = new Color(64, 0, 0);
-        
+
         propertySupport = new PropertyChangeSupport(this);
     }
 
     /**
      * Set the selected state of a node ant its children.
-     * @param n The node to update
+     * @param aNode The node to update
      * @param state state Indicates the new selected state of the node.
      *        <ul>
      *        <li>state < 0 : unselect</li>
@@ -80,25 +77,25 @@ public class SelectionManagerImpl implements SelectionManager {
      *        <li>state > 0 : select</li>
      *        </ul>
      */
-    private void setSelectedNodeAndChilds(Node n, int state) {
+    private void setSelectedNodeAndChilds(Node aNode, int state) {
         if (state < 0) {
-            selectedNodes.remove(n);
+            selectedNodes.remove(aNode);
         } else if (state > 0) {
-            selectedNodes.add(n);
+            selectedNodes.add(aNode);
         } else { // state == 0
-            if (isNodeSelected(n)) {
-                selectedNodes.remove(n);
+            if (isNodeSelected(aNode)) {
+                selectedNodes.remove(aNode);
             } else {
-                selectedNodes.add(n);
+                selectedNodes.add(aNode);
             }
         }
-        if (n.isLeaf()) {
+        if (aNode.isLeaf()) {
             return;
         }
-        Iterator iterator = n.getChildren().iterator();
+        Iterator iterator = aNode.getChildren().iterator();
         while (iterator.hasNext()) {
-            Node childNode = (Node) iterator.next();
-            setSelectedNodeAndChilds(childNode, state);
+            Node aChild = (Node) iterator.next();
+            setSelectedNodeAndChilds(aChild, state);
         }
     }
 
@@ -146,18 +143,15 @@ public class SelectionManagerImpl implements SelectionManager {
      *      int)
      */
     public void setSelected(Collection nodes, int state) {
-        Iterator it = nodes.iterator();
+        Iterator iterator = nodes.iterator();
 
-        while (it.hasNext()) {
-            Node n = (Node) it.next();
-            setSelectedNodeAndChilds(n, state);
-
+        while (iterator.hasNext()) {
+            Node aNode = (Node) iterator.next();
+            setSelectedNodeAndChilds(aNode, state);
             // modify the selected state of the parent if necessary
-            updateSelectedState(n.getParent());
+            updateSelectedState(aNode.getParent());
         }
         //sendSelectionEvent();
-        // repaint the whole panel
-        //repaint();
         drawable.updateGraphics();
     }
 
@@ -178,40 +172,6 @@ public class SelectionManagerImpl implements SelectionManager {
                     (int) rectangle.width, (int) rectangle.height);
         }
         drawable.updateGraphics();
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#setSelected(java.util.Collection,
-     *      int, java.lang.String)
-     */
-    public void setSelected(Collection nodes, int state, String name) {
-        Iterator it = nodes.iterator();
-        while (it.hasNext()) {
-            Node n = (Node) it.next();
-            setSelectedNodeAndChilds(n, state);
-            // modify the selected state of the parent if necessary
-            updateSelectedState(n.getParent());
-        }
-        //sendSelectionEvent();
-        drawable.updateGraphics();
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#setSelectionName(java.lang.String)
-     */
-    public void setSelectionName(String name) {
-        selectionName = name;
-        //System.out.println(selectionName);
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#getSelectionName()
-     */
-    public String getSelectionName() {
-        return selectionName;
     }
 
     /*
@@ -273,23 +233,19 @@ public class SelectionManagerImpl implements SelectionManager {
         //                .fireSelectionClearedInClassif(event);
 
         selectedNodes.clear();
-        selectionName = null;
     }
 
     /*
      * (non-Javadoc)
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#keepSelection()
      */
-    public void keepSelection() {
+    public void createSelection() {
         if (selectedNodes == null) {
             return;
         }
-        Selection selection = new Selection(getSelectedLeaves(true));
         String selectionID = String.valueOf(counter);
-        selection.addProperty(Selection.COLOR, colors[counter % 18]);
-        selection.addProperty(Selection.SEL_ID, selectionID);
-        selection.addProperty(Selection.SEL_NAME, selectionName);
-        //System.out.println("ID = "+selectionID+" Name = "+selectionName);
+        Selection selection = new Selection(getSelectedLeaves(true),
+                selectionID, colors[counter % 18]);
 
         //        org.bdgp.apps.dagedit.gui.event.ClassifSelectionEvent event = new
         // org.bdgp.apps.dagedit.gui.event.ClassifSelectionEvent(
@@ -300,7 +256,8 @@ public class SelectionManagerImpl implements SelectionManager {
         selectionsList.add(selection);
         counter++;
         removeSelectedNodes();
-        propertySupport.firePropertyChange("selectionsList", null, selectionsList);
+        propertySupport.firePropertyChange("selectionsList", null,
+                selectionsList);
         drawable.updateGraphics();
     }
 
@@ -332,11 +289,10 @@ public class SelectionManagerImpl implements SelectionManager {
      * (non-Javadoc)
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#moveSelectionToCurrent(fr.unice.bioinfo.thea.classification.Selection)
      */
-    public void moveSelectionToCurrent(Selection selection) {
+    public void move(Selection selection) {
         removeSelectedNodes();
-        setSelected(selection.getNodes(), 1, (String) selection
-                .getProperty(Selection.SEL_NAME));
-        removeSelection(selection);
+        setSelected(selection.getNodes(), 1);
+        remove(selection);
         drawable.updateGraphics();
     }
 
@@ -344,10 +300,9 @@ public class SelectionManagerImpl implements SelectionManager {
      * (non-Javadoc)
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#copySelectionToCurrent(fr.unice.bioinfo.thea.classification.Selection)
      */
-    public void copySelectionToCurrent(Selection selection) {
+    public void copy(Selection selection) {
         removeSelectedNodes();
-        setSelected(selection.getNodes(), 1, (String) selection
-                .getProperty(Selection.SEL_NAME));
+        setSelected(selection.getNodes(), 1);
         drawable.updateGraphics();
     }
 
@@ -355,19 +310,8 @@ public class SelectionManagerImpl implements SelectionManager {
      * (non-Javadoc)
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#unionSelectionWithCurrent(fr.unice.bioinfo.thea.classification.Selection)
      */
-    public void unionSelectionWithCurrent(Selection selection) {
-        String newSelectionName = (String) selection
-                .getProperty(Selection.SEL_NAME);
-        if (selectionName.startsWith("Manual")) {
-            // use selName for the name of the union
-        } else {
-            if (newSelectionName.startsWith("Manual")) {
-                newSelectionName = selectionName;
-            } else {
-                newSelectionName = selectionName + " OR " + newSelectionName;
-            }
-        }
-        setSelected(selection.getNodes(), 1, newSelectionName);
+    public void union(Selection selection) {
+        setSelected(selection.getNodes(), 1);
         drawable.updateGraphics();
     }
 
@@ -375,22 +319,11 @@ public class SelectionManagerImpl implements SelectionManager {
      * (non-Javadoc)
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#intersectSelectionWithCurrent(fr.unice.bioinfo.thea.classification.Selection)
      */
-    public void intersectSelectionWithCurrent(Selection selection) {
-        String newSelectionName = (String) selection
-                .getProperty(Selection.SEL_NAME);
-        if (selectionName.startsWith("Manual")) {
-            // use selName for the name of the union
-        } else {
-            if (newSelectionName.startsWith("Manual")) {
-                newSelectionName = selectionName;
-            } else {
-                newSelectionName = selectionName + " AND " + newSelectionName;
-            }
-        }
-        Collection currentSel = getSelectedLeaves(true);
-        currentSel.retainAll(selection.getNodes());
+    public void intersect(Selection selection) {
+        Collection current = getSelectedLeaves(true);
+        current.retainAll(selection.getNodes());
         removeSelectedNodes();
-        setSelected(currentSel, 1, newSelectionName);
+        setSelected(current, 1);
         drawable.updateGraphics();
     }
 
@@ -398,8 +331,8 @@ public class SelectionManagerImpl implements SelectionManager {
      * (non-Javadoc)
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#removeSelection(fr.unice.bioinfo.thea.classification.Selection)
      */
-    public void removeSelection(Selection selection) {
-        String selId = (String) selection.getProperty(Selection.SEL_ID);
+    public void remove(Selection selection) {
+        String selectionID = (String) selection.getId();
         //        org.bdgp.apps.dagedit.gui.event.ClassifSelectionEvent event = new
         // org.bdgp.apps.dagedit.gui.event.ClassifSelectionEvent(
         //                this, selId);
@@ -416,36 +349,38 @@ public class SelectionManagerImpl implements SelectionManager {
      * (non-Javadoc)
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#groupSelection(fr.unice.bioinfo.thea.classification.Selection)
      */
-    public void groupSelection(Selection selection) {
-        List l = new Vector(selection.getNodes());
-        while (!l.isEmpty()) {
-            Node aNode = (Node) l.get(0);
-            Boolean frozen = (Boolean) aNode.getProperty(Selection.FROZEN);
-            if ((frozen == null) || frozen.equals(Boolean.FALSE)) {
-                Node parent = aNode.getParent();
-                List children = parent.getChildren();
-                for (int i = 0; i < children.size(); i++) {
-                    frozen = (Boolean) ((Node) children.get(i))
-                            .getProperty(Selection.FROZEN);
-                    if ((frozen == null) || frozen.equals(Boolean.FALSE)) {
-                        parent.moveChild(aNode, i);
-                        break;
-                    }
-                }
-            }
-            l.remove(aNode);
-        }
-        drawable.updateGraphics();
+    public void group(Selection selection) {
+        //        List l = new Vector(selection.getNodes());
+        //        while (!l.isEmpty()) {
+        //            Node aNode = (Node) l.get(0);
+        //            Boolean frozen = (Boolean) aNode.getProperty(Selection.FROZEN);
+        //            if ((frozen == null) || frozen.equals(Boolean.FALSE)) {
+        //                Node parent = aNode.getParent();
+        //                List children = parent.getChildren();
+        //                for (int i = 0; i < children.size(); i++) {
+        //                    frozen = (Boolean) ((Node) children.get(i))
+        //                            .getProperty(Selection.FROZEN);
+        //                    if ((frozen == null) || frozen.equals(Boolean.FALSE)) {
+        //                        parent.moveChild(aNode, i);
+        //                        break;
+        //                    }
+        //                }
+        //            }
+        //            l.remove(aNode);
+        //        }
+        //        drawable.updateGraphics();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#addPropertyChangeListener(java.beans.PropertyChangeListener)
      */
     public void addPropertyChangeListener(PropertyChangeListener l) {
         propertySupport.addPropertyChangeListener(l);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#removePropertyChangeListener(java.beans.PropertyChangeListener)
      */
     public void removePropertyChangeListener(PropertyChangeListener l) {

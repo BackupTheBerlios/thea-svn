@@ -28,7 +28,7 @@ public class SelectAction extends GenericAction {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
-        drawable.getSelectionManager().keepSelection();
+        drawable.getSelectionManager().createSelection();
         drawable.updateGraphics();
     }
 

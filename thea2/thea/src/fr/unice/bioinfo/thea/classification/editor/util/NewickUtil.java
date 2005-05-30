@@ -120,7 +120,7 @@ public class NewickUtil {
         if (label.indexOf('|') == -1) {
             // there is only one label in the string
             n.setName(label);
-//            n.setUserData("idInClassif", label);
+            //            n.setUserData("idInClassif", label);
             n.addProperty(Node.ID_IN_CLASSIF, label);
             n.setBranchLength(branchLength);
 
@@ -156,14 +156,14 @@ public class NewickUtil {
 
                 Node childNode = new Node();
                 childNode.setName(nodeLabel);
-//                childNode.setUserData("idInClassif", nodeLabel);
+                //                childNode.setUserData("idInClassif", nodeLabel);
                 childNode.addProperty(Node.ID_IN_CLASSIF, nodeLabel);
                 childNode.setBranchLength(bLength);
                 childs.add(childNode);
             } else {
                 Node childNode = new Node();
                 childNode.setName(nodeIdent);
-//                childNode.setUserData("idInClassif", nodeIdent);
+                //                childNode.setUserData("idInClassif", nodeIdent);
                 childNode.addProperty(Node.ID_IN_CLASSIF, nodeIdent);
                 childs.add(childNode);
             }

@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Map;
 
 /**
- * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi</a>
+ * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public interface MeasuresParser {
     /**

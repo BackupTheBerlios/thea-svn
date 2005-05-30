@@ -32,7 +32,8 @@ public class GeneNode extends AbstractNode {
         Configuration con = TheaConfiguration.getDefault().getConfiguration();
         Object o = con.getProperty("ontologyexplorer.nodes.genename");//NOI18N
         nodeNameProperty = (String) o;
-        fullNameProperty = (String)con.getProperty("ontologyexplorer.nodes.genefullname");//NOI18N
+        fullNameProperty = (String) con
+                .getProperty("ontologyexplorer.nodes.genefullname");//NOI18N
     }
 
     /** The property to use to reach for a node's display name. */

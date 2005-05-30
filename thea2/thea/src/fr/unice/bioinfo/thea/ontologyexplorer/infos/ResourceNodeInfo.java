@@ -32,7 +32,7 @@ public class ResourceNodeInfo extends Hashtable implements Node.Cookie {
 
         return old;
     }
-    
+
     /** Called by property editor */
     public Object getProperty(String key) {
         return get(key);

@@ -1,24 +1,13 @@
-package fr.unice.bioinfo.thea.classification.editor;
+package fr.unice.bioinfo.thea.classification.io;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Vector;
-
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-
-import org.openide.util.NbBundle;
-import org.openide.util.Utilities;
-import org.openide.windows.TopComponent;
 
 import fr.unice.bioinfo.thea.classification.Classification;
 import fr.unice.bioinfo.thea.classification.Node;
-import fr.unice.bioinfo.thea.classification.editor.selection.SelectionEditor;
 import fr.unice.bioinfo.thea.classification.editor.util.Consts;
 import fr.unice.bioinfo.thea.classification.editor.util.EisenUtil;
 import fr.unice.bioinfo.thea.classification.editor.util.MeasuresFileReader;
@@ -27,103 +16,24 @@ import fr.unice.bioinfo.thea.classification.editor.util.SotaUtil;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ClassificationNodeInfo;
 
 /**
- * The main swing GUI used by the classification viewer module. It extends the
- * {@link TopComponent}from the netbeans open API and encapsulates a {@link
- * CECanvas}object.
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
-public class CEditor extends TopComponent {
-    //  Serial Version UID
-    static final long serialVersionUID = 6855188441469780252L;
-    /** preferred ID:ce as Classification Editor */
-    private String PREFERRED_ID = "ce";//NOI18N
-    /** Resource Bundle */
-    private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.classification.editor.Bundle"); //NOI18N
-    /** A scrolle pane to contain the CECanvas */
-    private JScrollPane scrollPane;
-    /** the popup menu currently displayed */
-    private JPopupMenu popup = null;
-    /** A bean that contains informations about the classification to be edited */
-    private ClassificationNodeInfo cni;
-    /** A Canvas to draw into */
-    private Canvas canvas;
-    /** A window to show selected nodes of the classification tree */
-    private SelectionEditor selectionEditor;
+public class ClassificationFactory {
 
-    private CEditor() {
-        super();
-        // build the scroll pane and fit the CECanvas
-        // into it
-        canvas = new Canvas();
-        ModeBar modeBar = new ModeBar((Zoomable) canvas);
-        scrollPane = new JScrollPane(canvas);
-        // Create the selection editor and dok it in the explorer mode
-        //        selectionEditor = new SelectionEditor();
-        //        Mode m = WindowManager.getDefault().findMode("explorer");//NOI18N
-        //        if (m != null) {
-        //            m.dockInto(selectionEditor);
-        //        }
-        //        selectionEditor.open();
-        //        selectionEditor.requestActive();
-        // Put the canvas in a JScrollPane
-        scrollPane.setBackground(Color.WHITE);
-        scrollPane.getViewport().setBackground(Color.WHITE);
-        setLayout(new BorderLayout());
-        add(modeBar, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
+    public static ClassificationFactory instance = null;
+
+    private ClassificationFactory() {
     }
 
-    public CEditor(ClassificationNodeInfo cni) {
-        this();
-        this.cni = cni;
-        // Give a title to this window
-        setName(cni.getName());
-        // Icon
-        setIcon(Utilities
-                .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/CEditorIcon16.gif"));//NOI18N
-        //        selectionEditor.setName(selectionEditor.getName() + "[" +
-        // cni.getName()
-        //                + "]");//NOI18N
-        // Load classification
-        // load();
-        canvas.setCurrentRootNode(cni.getClassification()
-                .getClassificationRootNode());
+    public static ClassificationFactory getDefault() {
+        if (instance == null) {
+            instance = new ClassificationFactory();
+        }
+        return instance;
     }
 
-    public CEditor(Node aNode) {
-        this();
-        //Give a title to this window
-        setName(aNode.getName());
-        //Node rootNode = canvas.getTreeRoot();
-        aNode.init();
-        canvas.setCurrentRootNode(aNode);
-    }
-
-    /** returns the preferred ID */
-    protected String preferredID() {
-        return PREFERRED_ID;
-    }
-
-    /** This windows can be closed */
-    public boolean canClose() {
-        return true;
-    }
-
-    /** Implements what to do when this window's closed */
-    protected void componentClosed() {
-        super.componentClosed();
-        // close the selection editor attached to this window
-        //selectionEditor.close();
-    }
-
-    /** Mange persistence for this windows */
-    public int getPersistenceType() {
-        return super.PERSISTENCE_ALWAYS;
-    }
-
-    public void load() {
-        Node rootNode = canvas.getClassificationRootNode();
+    public Classification getClassification(ClassificationNodeInfo cni) {
+        Node rootNode = null;
         File cf = cni.getCFile();
         File tf = cni.getTFile();
         int type = cni.getSelectedFormat();
@@ -153,7 +63,7 @@ public class CEditor extends TopComponent {
                             - Runtime.getRuntime().freeMemory() - mem));
 
             if (rootNode == null) {
-                return;
+                return null;
             }
 
             if (tf != null) {
@@ -165,8 +75,6 @@ public class CEditor extends TopComponent {
 
                 while (it.hasNext()) {
                     Node leaf = (Node) it.next();
-                    //                    leaf.setUserData("measures", geneId2Measures.get(leaf
-                    //                            .getUserData("idInClassif")));
                     leaf.addProperty(Node.MEASURES, geneId2Measures.get(leaf
                             .getProperty(Node.ID_IN_CLASSIF)));
                 }
@@ -182,7 +90,7 @@ public class CEditor extends TopComponent {
             rootNode = new SotaUtil().load(cf);
 
             if (rootNode == null) {
-                return;
+                return null;
             }
 
             if (tf != null) {
@@ -235,29 +143,7 @@ public class CEditor extends TopComponent {
             rootNode.setChildren(nodes);
             rootNode.init();
         }
-        canvas.setCurrentRootNode(rootNode);
-        cni.setClassification(new Classification(rootNode));
         Runtime.getRuntime().gc();
-
-        long mem2 = Runtime.getRuntime().freeMemory();
-        long t2 = System.currentTimeMillis();
-        repaint();
-        setVisible(true);
-        System.err.println("Time to draw=" + (System.currentTimeMillis() - t2));
-        Runtime.getRuntime().gc();
-        System.err.println("Memory needed="
-                + (Runtime.getRuntime().totalMemory()
-                        - Runtime.getRuntime().freeMemory() - mem2));
-        System.err.println("Memory needed (total)="
-                + (Runtime.getRuntime().totalMemory()
-                        - Runtime.getRuntime().freeMemory() - mem));
-    }
-
-    public Canvas getCanvas() {
-        return canvas;
-    }
-
-    public SelectionEditor getSelectionEditor() {
-        return selectionEditor;
+        return new Classification(rootNode);
     }
 }

@@ -70,10 +70,9 @@ public interface DrawableClassification extends Drawable {
     public void highlightSurroundingArea(Node aNode);
 
     /**
-     * Shows or hides the popup menu depending on the value of the parameter
-     b;
+     * Shows or hides the popup menu depending on the value of the parameter b;
      * @param b If <i>True </i> the popup menu will be shown and hidden if
-     * otherwise.
+     *        otherwise.
      */
     public void setPopupMenuVisible(boolean b);
 
@@ -82,8 +81,7 @@ public interface DrawableClassification extends Drawable {
 
     /**
      * Says wether the popup menu is shown or not.
-     * @return <i>True </i> if showing the popup menu. <i>False </i <
-     elswhere.
+     * @return <i>True </i> if showing the popup menu. <i>False </i < elswhere.
      */
     public boolean isShowingPopupMenu();
 

@@ -16,8 +16,10 @@ import fr.unice.bioinfo.thea.classification.Selection;
 import fr.unice.bioinfo.thea.classification.editor.actions.BackAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.ClassifierAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.CollapseAction;
+import fr.unice.bioinfo.thea.classification.editor.actions.ColorAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.CopyAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.DownAction;
+import fr.unice.bioinfo.thea.classification.editor.actions.FreezeAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.GroupAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.IntersectAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.MoveAction;
@@ -26,6 +28,7 @@ import fr.unice.bioinfo.thea.classification.editor.actions.RemoveAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.SaveAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.SelectAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.UncollapseAction;
+import fr.unice.bioinfo.thea.classification.editor.actions.UnfreezeAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.UnionAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.UpAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.WholeAction;
@@ -231,6 +234,10 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         popup.addSeparator();
         // 9 - Save
         popup.add(createSaveMenuItem(drawable, selection));
+        // add separator
+        popup.addSeparator();
+        // 10 - Color
+        popup.add(createColorMenuItem(drawable, selection));
         // the popup menu ie ready,return it.
         return popup;
     }
@@ -342,9 +349,9 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         icon = new ImageIcon(
                 Utilities
                         .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/EmptyIcon.gif"));
-        Action save = new SaveAction(name, accelerator, icon, shortDescription,
-                drawable, selection);
-        menuItem = new JMenuItem(save);
+        Action freeze = new FreezeAction(name, accelerator, icon,
+                shortDescription, drawable, selection);
+        menuItem = new JMenuItem(freeze);
         return menuItem;
     }
 
@@ -356,9 +363,23 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         icon = new ImageIcon(
                 Utilities
                         .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/EmptyIcon.gif"));
-        Action save = new SaveAction(name, accelerator, icon, shortDescription,
-                drawable, selection);
-        menuItem = new JMenuItem(save);
+        Action unfreeze = new UnfreezeAction(name, accelerator, icon,
+                shortDescription, drawable, selection);
+        menuItem = new JMenuItem(unfreeze);
+        return menuItem;
+    }
+
+    private JMenuItem createColorMenuItem(DrawableClassification drawable,
+            Selection selection) {
+        name = bundle.getString("LBL_ColorAction");
+        shortDescription = bundle.getString("HINT_ColorAction");
+        accelerator = bundle.getString("ACC_ColorAction");
+        icon = new ImageIcon(
+                Utilities
+                        .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/EmptyIcon.gif"));
+        Action color = new ColorAction(name, accelerator, icon,
+                shortDescription, drawable, selection);
+        menuItem = new JMenuItem(color);
         return menuItem;
     }
 

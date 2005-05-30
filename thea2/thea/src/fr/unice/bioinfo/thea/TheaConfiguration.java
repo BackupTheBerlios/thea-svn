@@ -53,7 +53,7 @@ public class TheaConfiguration {
         return configuration;
     }
 
-    /** Creates the configuration.*/
+    /** Creates the configuration. */
     public Configuration createConfiguration() {
         path = OESettings.getInstance().getConfigFilePath();
         if (path.equalsIgnoreCase("")) {//NOI18N

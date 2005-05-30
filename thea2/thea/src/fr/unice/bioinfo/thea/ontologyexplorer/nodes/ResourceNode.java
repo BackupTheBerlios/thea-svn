@@ -25,9 +25,9 @@ import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowAnnotetdGenesAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 
 /**
- * This class uses the nodes API to build a node that represents a 
- * resource from an ontology.
- * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi</a>
+ * This class uses the nodes API to build a node that represents a resource from
+ * an ontology.
+ * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class ResourceNode extends AbstractNode implements Node.Cookie {
 
@@ -37,7 +37,7 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         nodeNameProperty = (String) o;
     }
 
-    /** The property to use to reach for a node's display name.*/
+    /** The property to use to reach for a node's display name. */
     private static String nodeNameProperty;
 
     private ResourceNodeInfo info;
@@ -194,7 +194,7 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         this.resource = resource;
     }
 
-    /** Make this node destroyable.*/
+    /** Make this node destroyable. */
     public boolean canDestroy() {
         return true;
     }

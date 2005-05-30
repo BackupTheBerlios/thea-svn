@@ -156,8 +156,8 @@ public class ProfileClassifierPanel extends JPanel {
             Iterator iterator = nodes.iterator();
             while (iterator.hasNext()) {
                 Node aNode = (Node) iterator.next();
-//                RowContent rowContent = new RowContent(aNode, 0, (List) aNode
-//                        .getUserData("measures"));
+                //                RowContent rowContent = new RowContent(aNode, 0, (List) aNode
+                //                        .getUserData("measures"));
                 RowContent rowContent = new RowContent(aNode, 0, (List) aNode
                         .getProperty(Node.MEASURES));
                 rows.add(rowContent);
@@ -213,7 +213,7 @@ public class ProfileClassifierPanel extends JPanel {
         }
 
         public void sortNodes(Node aNode) {
-//            List baseMeasures = (List) aNode.getUserData("measures");
+            //            List baseMeasures = (List) aNode.getUserData("measures");
             List baseMeasures = (List) aNode.getProperty(Node.MEASURES);
             int nbMeasures = baseMeasures.size();
             Iterator it = rows.iterator();

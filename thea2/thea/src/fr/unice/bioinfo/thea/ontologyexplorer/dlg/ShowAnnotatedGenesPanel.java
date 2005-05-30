@@ -82,10 +82,9 @@ public class ShowAnnotatedGenesPanel extends JPanel {
     }
 
     /**
-     * Create models ( instances of DefaultListModel ) for JList
-     * components. For selected evidences and properties, we try 
-     * to make selected data that the user would have selected in 
-     * the last run.
+     * Create models ( instances of DefaultListModel ) for JList components. For
+     * selected evidences and properties, we try to make selected data that the
+     * user would have selected in the last run.
      */
     private void createModels() {
         //      create the list's allEvidencesModel

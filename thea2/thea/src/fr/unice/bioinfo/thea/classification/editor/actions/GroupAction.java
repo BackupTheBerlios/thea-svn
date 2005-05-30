@@ -14,9 +14,9 @@ public class GroupAction extends GenericAction {
 
     private Selection selection;
 
-    public GroupAction(String name, String accelerator,
-            ImageIcon icon, String shortDescription,
-            DrawableClassification drawable, Selection selection) {
+    public GroupAction(String name, String accelerator, ImageIcon icon,
+            String shortDescription, DrawableClassification drawable,
+            Selection selection) {
         // call super constructor
         super(name, accelerator, icon, shortDescription, drawable);
         this.selection = selection;
@@ -27,7 +27,7 @@ public class GroupAction extends GenericAction {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
-        drawable.getSelectionManager().groupSelection(selection);
+        drawable.getSelectionManager().group(selection);
         drawable.updateGraphics();
     }
 

@@ -3,24 +3,30 @@ package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
 
 import org.openide.DialogDescriptor;
 import org.openide.DialogDisplayer;
+import org.openide.NotifyDescriptor;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
 
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
+import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 import fr.unice.bioinfo.thea.ontologyexplorer.dlg.OntologiesListPanel;
+import fr.unice.bioinfo.thea.ontologyexplorer.infos.ClassificationNodeInfo;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationNode;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologiesRootNode;
+import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
 
 /**
  * @author Saïd El Kasmi
  */
-public class AnnotateAction extends NodeAction {
+public class SelectOntologyAction extends NodeAction {
     private Dialog dialog;
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
@@ -39,11 +45,13 @@ public class AnnotateAction extends NodeAction {
         if (!(node instanceof ClassificationNode)) {
             return;
         }
+        final ClassificationNodeInfo cni = (ClassificationNodeInfo) node
+                .getCookie(ClassificationNodeInfo.class);
         // Get the root node of all ontologies:
         // First, get the root context node which is not visible
-        final Node rt = OntologyExplorer.findDefault().getExplorerManager()
+        final Node rc = OntologyExplorer.findDefault().getExplorerManager()
                 .getRootContext();
-        final Node[] children = rt.getChildren().getNodes();
+        final Node[] children = rc.getChildren().getNodes();
         // The root for all ontologies belongs to children list.
         Node ontologiesRootNode = null;
         for (int cnt = 0; cnt < children.length; cnt++) {
@@ -55,18 +63,38 @@ public class AnnotateAction extends NodeAction {
             return;
         }
 
+        // Listener to the linking operation from here
+        final PropertyChangeListener pcl = new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent event) {
+                if (event.getPropertyName().equals("linked")) { //NOI18N
+                    if (dialog != null) {
+                        dialog.setVisible(false);
+                    }
+                } else if (event.getPropertyName().equals("failed")) { //NOI18N
+                    DialogDisplayer.getDefault().notify(
+                            new NotifyDescriptor.Message(
+                                    "Linking to the ontlogy failed.",
+                                    NotifyDescriptor.INFORMATION_MESSAGE));
+                }
+            }
+        };
+        //cni.getClassification().addPropertyChangeListener(pcl);
+
         //Create the panel
         final OntologiesListPanel panel = new OntologiesListPanel(
-                ontologiesRootNode.getChildren().getNodes());
+                ontologiesRootNode.getChildren().getNodes(), cni);
 
         // Create the listener for buttons actions/ Ok/Cancel
         ActionListener al = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == DialogDescriptor.OK_OPTION) {
-
-                    Node n = panel.getSelectedOntologyNode();
+                    OntologyNode ontologyNode = (OntologyNode) panel
+                            .getSelectedOntologyNode();
                     // close dialog
                     closeDialog();
+                    final DatabaseConnection dbc = ontologyNode.getConnection();
+                    cni.getClassification().createGeneProducts(
+                            dbc.getConnection());
                 }
             }
         };
@@ -104,7 +132,7 @@ public class AnnotateAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        return bundle.getString("LBL_AnnotateAction_Name");//NO18N
+        return bundle.getString("LBL_SelectOntologyAction_Name");//NO18N
     }
 
     /*

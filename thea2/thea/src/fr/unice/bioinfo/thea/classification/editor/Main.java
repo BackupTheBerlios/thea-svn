@@ -11,7 +11,7 @@ import fr.unice.bioinfo.thea.classification.Node;
 import fr.unice.bioinfo.thea.classification.editor.util.SotaUtil;
 
 /**
- * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi</a>
+ * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class Main {
     public static void main(String[] args) {
@@ -36,8 +36,8 @@ public class Main {
         scrollPane.getViewport().setBackground(Color.WHITE);
         frame.getContentPane().setLayout(new BorderLayout());
 
-        ModeBar modeBar = new ModeBar((Zoomable)canvas);
-        frame.getContentPane().add(modeBar,BorderLayout.NORTH);
+        ModeBar modeBar = new ModeBar((Zoomable) canvas);
+        frame.getContentPane().add(modeBar, BorderLayout.NORTH);
         frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
