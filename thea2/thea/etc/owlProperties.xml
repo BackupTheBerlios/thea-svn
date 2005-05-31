@@ -11,10 +11,10 @@
 			to build the tree in the ontology explorer.
 			-->
 		<hierarchy>
-			<uri>SUPERCLASS</uri>
+			<uri>http://www.w3.org/2002/07/owl#superClassOf</uri>
 			<uri>http://www.unice.fr/bioinfo/owl/biowl#contains</uri>
 			<partof>http://www.unice.fr/bioinfo/owl/biowl#contains</partof>
-			<isa>SUPERCLASS</isa>
+			<isa>http://www.w3.org/2002/07/owl#superClassOf</isa>
 		</hierarchy>
 		<nodes>
 			<!-- nodename tels how to create a display name for nodes -->
