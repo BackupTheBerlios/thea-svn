@@ -12,8 +12,8 @@
 			-->
 		<hierarchy>
 			<uri>http://www.w3.org/2002/07/owl#superClassOf</uri>
-			<uri>http://www.unice.fr/bioinfo/owl/biowl#contains</uri>
-			<partof>http://www.unice.fr/bioinfo/owl/biowl#contains</partof>
+			<uri>http://www.geneontology.org/owl#part_of</uri>
+			<partof>http://www.geneontology.org/owl#part_of</partof>
 			<isa>http://www.w3.org/2002/07/owl#superClassOf</isa>
 		</hierarchy>
 		<nodes>
