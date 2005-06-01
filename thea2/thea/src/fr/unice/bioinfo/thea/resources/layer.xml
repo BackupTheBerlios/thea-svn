@@ -1,65 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE filesystem PUBLIC '-//NetBeans//DTD Filesystem 1.0//EN' 'http://www.netbeans.org/dtds/filesystem-1_0.dtd'>
+<!DOCTYPE filesystem PUBLIC '-//NetBeans//DTD Filesystem 1.0//EN' 
+	'http://www.netbeans.org/dtds/filesystem-1_0.dtd'>
 <filesystem>
-  <!-- =============== BEGIN MENUS ============= -->
-  <folder name="Menu">
-    <attr name="SystemFileSystem.localizingBundle" stringvalue="fr.unice.bioinfo.thea.ontologyexplorer.Bundle"/>
-    <!-- ========== Windows Menu ================ -->
-    <folder name="Window">
-      <attr
-        name="fr-unice-bioinfo-thea-ontologyexplorer-actions-OntologyExplorerAction.instance/org-netbeans-core-execution-ExecutionViewAction.instance" boolvalue="true"/>
-      <file name="fr-unice-bioinfo-thea-ontologyexplorer-actions-OntologyExplorerAction.instance"/>
-    </folder>
-    <!-- ========== END Windows Menu ================ -->
-  </folder>
-  <!-- ================ END MENUS =============== -->
-  <!-- ================ BEGINE WINDOWS2 =============== -->
-  <folder name="Windows2">
-    <folder name="Modes">
-      <file name="editor.wsmode" url="editor.wsmode"/>
-      <file name="explorer.wsmode" url="explorer.wsmode"/>
-      <folder name="explorer">
-        <file name="ontologyexplorer.wstcref" url="ontologyexplorer.wstcref"/>
-        <file name="selectioneditor.wstcref" url="selectioneditor.wstcref"/>
-      </folder>
-    </folder>
-    <folder name="Components">
-      <file name="ontologyexplorer.settings" url="ontologyexplorer.settings"/>
-    </folder>
-  </folder>
-  <!-- ================ END WINDOWS2 =============== -->
-  <!-- ================ SERVICES  =============== -->
-  <folder name="Services">
-    <folder name="JDBCDrivers">
-      <file name="JDBC-ODBC Bridge.xml" url="JDBCODBC.xml"/>
-    </folder>
-    <folder name="Hidden">
-      <folder name="OntologyExplorer">
-        <file name="OESettings.settings" url="OESettings.settings"/>
-      </folder>
-      <folder name="CEditor">
-        <file name="CESettings.settings" url="CESettings.settings"/>
-      </folder>
-    </folder>
-  </folder>
-  <folder name="xml">
-        <folder name="entities">
-            <folder name="NetBeans" >
-                <file name="DTD_JDBC_Driver_1_0" url="nbresloc:/fr/unice/bioinfo/thea/ontologyexplorer/db/driver/driver.dtd">
-                    <attr name="hint.originalPublicID" stringvalue="-//NetBeans//DTD JDBC Driver 1.0//EN"/>
-                </file>
-            </folder>
-        </folder>
-        
-        <folder name="lookups">
-            <folder name="NetBeans">
-                <file name="DTD_JDBC_Driver_1_0.instance">
-                    <attr name="instanceClass" stringvalue="fr.unice.bioinfo.thea.ontologyexplorer.db.driver.JDBCDriverConvertor"/>
-                    <attr name="instanceOf" stringvalue="org.openide.loaders.Environment.Provider"/>
-                    <attr name="instanceCreate" methodvalue="fr.unice.bioinfo.thea.ontologyexplorer.db.driver.JDBCDriverConvertor.createProvider"/>
-                </file>
-            </folder>
-        </folder>
-    </folder>
-  <!-- ================ SERVICES  =============== -->
+	<folder name="Actions">
+		<folder name="Window">
+			<file 
+				name="fr-unice-bioinfo-thea-ontologyexplorer-actions-OntologyExplorerAction.instance"/>
+			<file 
+				name="fr-unice-bioinfo-thea-actions-PreferencesAction.instance"/>
+		</folder>
+	</folder>
+	<!-- =============== BEGIN MENUS ============= -->
+	<folder name="Menu">
+		<attr name="SystemFileSystem.localizingBundle" 
+			stringvalue="fr.unice.bioinfo.thea.ontologyexplorer.Bundle"/>
+		<!-- ========== Windows Menu ================ -->
+		<folder name="Window">
+			<attr 
+				name="fr-unice-bioinfo-thea-ontologyexplorer-actions-OntologyExplorerAction.instance/org-netbeans-core-execution-ExecutionViewAction.instance" 
+				boolvalue="true"/>
+			<file 
+				name="fr-unice-bioinfo-thea-ontologyexplorer-actions-OntologyExplorerAction.instance"/>
+			<attr 
+				name="fr-unice-bioinfo-thea-ontologyexplorer-actions-OntologyExplorerAction.instance/Separator1.instance" 
+				boolvalue="true"/>
+			<file name="Separator1.instance">
+				<attr name="instanceClass" 
+					stringvalue="javax.swing.JSeparator"/>
+			</file>
+			<attr 
+				name="Separator1.instance/fr-unice-bioinfo-thea-actions-PreferencesAction.instance" 
+				boolvalue="true"/>
+			<file 
+				name="fr-unice-bioinfo-thea-actions-PreferencesAction.instance"/>
+		</folder>
+		<!-- ========== END Windows Menu ================ -->
+	</folder>
+	<!-- ================ END MENUS =============== -->
+	<!-- ================ BEGINE WINDOWS2 =============== -->
+	<folder name="Windows2">
+		<folder name="Modes">
+			<file name="editor.wsmode" url="editor.wsmode"/>
+			<file name="explorer.wsmode" url="explorer.wsmode"/>
+			<folder name="explorer">
+				<file name="ontologyexplorer.wstcref" 
+					url="ontologyexplorer.wstcref"/>
+				<file name="selectioneditor.wstcref" 
+					url="selectioneditor.wstcref"/>
+			</folder>
+		</folder>
+		<folder name="Components">
+			<file name="ontologyexplorer.settings" 
+				url="ontologyexplorer.settings"/>
+		</folder>
+	</folder>
+	<!-- ================ END WINDOWS2 =============== -->
+	<!-- ================ SERVICES  =============== -->
+	<folder name="Services">
+		<folder name="JDBCDrivers">
+			<file name="JDBC-ODBC Bridge.xml" url="JDBCODBC.xml"/>
+		</folder>
+		<folder name="Hidden">
+			<folder name="OntologyExplorer">
+				<file name="OESettings.settings" url="OESettings.settings"/>
+			</folder>
+			<folder name="CEditor">
+				<file name="CESettings.settings" url="CESettings.settings"/>
+			</folder>
+		</folder>
+	</folder>
+	<folder name="xml">
+		<folder name="entities">
+			<folder name="NetBeans" >
+				<file name="DTD_JDBC_Driver_1_0" 
+					url="nbresloc:/fr/unice/bioinfo/thea/ontologyexplorer/db/driver/driver.dtd">
+					<attr name="hint.originalPublicID" 
+						stringvalue="-//NetBeans//DTD JDBC Driver 1.0//EN"/>
+				</file>
+			</folder>
+		</folder>
+		<folder name="lookups">
+			<folder name="NetBeans">
+				<file name="DTD_JDBC_Driver_1_0.instance">
+					<attr name="instanceClass" 
+						stringvalue="fr.unice.bioinfo.thea.ontologyexplorer.db.driver.JDBCDriverConvertor"/>
+					<attr name="instanceOf" 
+						stringvalue="org.openide.loaders.Environment.Provider"/>
+					<attr name="instanceCreate" 
+						methodvalue="fr.unice.bioinfo.thea.ontologyexplorer.db.driver.JDBCDriverConvertor.createProvider"/>
+				</file>
+			</folder>
+		</folder>
+	</folder>
+	<!-- ================ SERVICES  =============== -->
 </filesystem>

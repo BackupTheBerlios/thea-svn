@@ -35,6 +35,7 @@ import javax.swing.JPopupMenu;
 import fr.unice.bioinfo.thea.classification.Node;
 import fr.unice.bioinfo.thea.classification.NodeLayoutSupport;
 import fr.unice.bioinfo.thea.classification.Selection;
+import fr.unice.bioinfo.thea.classification.editor.settings.CESettings;
 import fr.unice.bioinfo.thea.classification.editor.util.Discretization;
 
 /**
@@ -43,6 +44,7 @@ import fr.unice.bioinfo.thea.classification.editor.util.Discretization;
 public class Canvas extends JComponent implements DrawableClassification,
         Zoomable {
 
+    /** A helper class that is responsible of managing nodes selection.*/
     private SelectionManager selectionManager = null;
 
     /** The image used to show that a branch is collapsed */
@@ -107,7 +109,7 @@ public class Canvas extends JComponent implements DrawableClassification,
     private Node hnode;
 
     /** True if terminal labels are surrounded by a frame */
-    private boolean terminalBoxed = false;
+    private boolean terminalBoxed;
 
     /** Flag to indicate if terminal nodes should be aligned. */
     private boolean alignTerminalNodes;
@@ -134,7 +136,7 @@ public class Canvas extends JComponent implements DrawableClassification,
     private Color nonTerminalBackground;
 
     /** True if non terminal labels are surrounded by a frame */
-    private boolean nonTerminalBoxed = true;
+    private boolean nonTerminalBoxed;
 
     /** data relative to expression values */
     private int expValNbMeasures = 0;
@@ -179,7 +181,16 @@ public class Canvas extends JComponent implements DrawableClassification,
                 }
             }
         };
-        this.selectionManager.addPropertyChangeListener(selectionListener);
+        selectionManager.addPropertyChangeListener(selectionListener);
+        // Register this as a listener to changes in that instance
+        CESettings settings = CESettings.getInstance();
+        hmode = settings.getHighlightingMode();
+        showBranchLength = settings.isShowBranchLength();
+        alignTerminalNodes = settings.isAlignTerminalNodes();
+        showExpressionValues = settings.isShowExpressionValues();
+        nonTerminalBoxed = settings.isNonTerminalsBoxed();
+        terminalBoxed = settings.isTerminalsBoxed();
+        settings.addPropertyChangeListener(this);
     }
 
     /*
@@ -1392,5 +1403,32 @@ public class Canvas extends JComponent implements DrawableClassification,
      */
     public void repaintRectangle(int x, int y, int width, int height) {
         repaint(x, y, width, height);
+    }
+
+    /* (non-Javadoc)
+     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+     */
+    public void propertyChange(PropertyChangeEvent e) {
+        if (e.getPropertyName().equalsIgnoreCase(
+                CESettings.PROP_HIGHLIGHTING_MODE)) {
+            hmode = ((Integer) e.getNewValue()).intValue();
+        } else if (e.getPropertyName().equalsIgnoreCase(
+                CESettings.PROP_SHOW_BRANCH_LENGTH)) {
+            showBranchLength = ((Boolean) e.getNewValue()).booleanValue();
+        } else if (e.getPropertyName().equalsIgnoreCase(
+                CESettings.PROP_ALIGN_TERMINAL_NODES)) {
+            alignTerminalNodes = CESettings.getInstance()
+                    .isAlignTerminalNodes();
+        } else if (e.getPropertyName().equalsIgnoreCase(
+                CESettings.PROP_HIDE_SIMILAR_ANNOTATION)) {
+        } else if (e.getPropertyName().equalsIgnoreCase(
+                CESettings.PROP_SHOW_EXP_VALUES_SELECT)) {
+            showExpressionValues = CESettings.getInstance()
+                    .isShowExpressionValues();
+        } else if (e.getPropertyName().equalsIgnoreCase(
+                CESettings.PROP_TERMINALS_BOXED)) {
+            terminalBoxed = CESettings.getInstance().isTerminalsBoxed();
+        }
+        repaint();
     }
 }

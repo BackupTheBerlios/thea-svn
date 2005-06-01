@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 
 import org.openide.util.NbBundle;
@@ -40,10 +39,6 @@ public class CEditor extends TopComponent {
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.classification.editor.Bundle"); //NOI18N
-    /** A scrolle pane to contain the CECanvas */
-    private JScrollPane scrollPane;
-    /** the popup menu currently displayed */
-    private JPopupMenu popup = null;
     /** A bean that contains informations about the classification to be edited */
     private ClassificationNodeInfo cni;
     /** A Canvas to draw into */
@@ -57,7 +52,7 @@ public class CEditor extends TopComponent {
         // into it
         canvas = new Canvas();
         ModeBar modeBar = new ModeBar((Zoomable) canvas);
-        scrollPane = new JScrollPane(canvas);
+        JScrollPane scrollPane = new JScrollPane(canvas);
         // Create the selection editor and dok it in the explorer mode
         //        selectionEditor = new SelectionEditor();
         //        Mode m = WindowManager.getDefault().findMode("explorer");//NOI18N

@@ -22,10 +22,7 @@ import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
-/**
- * DOCUMENT ME!
- * @author wolf
- */
+
 public class MessagePopup extends javax.swing.JDialog {
     // Variables declaration - do not modify
     private javax.swing.JLabel lblMessage;

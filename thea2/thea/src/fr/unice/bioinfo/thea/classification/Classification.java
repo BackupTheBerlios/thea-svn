@@ -1,5 +1,6 @@
 package fr.unice.bioinfo.thea.classification;
 
+import java.awt.Frame;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.Connection;
@@ -12,11 +13,15 @@ import java.util.Map;
 import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Query;
 import net.sf.hibernate.Session;
+
+import org.openide.windows.WindowManager;
+
 import fr.unice.bioinfo.allonto.datamodel.Property;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
+import fr.unice.bioinfo.thea.util.BlockingSwingWorker;
 
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
@@ -112,11 +117,11 @@ public class Classification {
 
         this.cnx = cnx;
 
-        //        BlockingSwingWorker worker = new BlockingSwingWorker(
-        //                (Frame) WindowManager.getDefault().getMainWindow(),
-        //                "Annotating ...",
-        //                "Status: annotation in progress, please wait ...", true) {
-        //            protected void doNonUILogic() throws RuntimeException {
+                BlockingSwingWorker worker = new BlockingSwingWorker(
+                        (Frame) WindowManager.getDefault().getMainWindow(),
+                        "Annotating ...",
+                        "Status: annotation in progress, please wait ...", true) {
+                    protected void doNonUILogic() throws RuntimeException {
 
         List /* all leave nodes */ln = classificationRootNode.getLeaves();
         // keys = List formed by leaves' nodes names.
@@ -153,7 +158,6 @@ public class Classification {
 
             // Resources correspending to keys are now:
             List list = q.list();
-            System.out.println("list.size = " + list.size());
             // Iterate over the list of found resources and
             // associate to each Node its corespending Resource
             Iterator it = list.iterator();
@@ -163,16 +167,15 @@ public class Classification {
                 String key = (String) tuple[1];
                 // associate for each Node its correspending
                 // Resource(Entity)
-                System.out.println("iter =" + key);
                 ((Node) map.get(key)).setEntity(geneProduct);
             }
         } catch (HibernateException he) {
             he.printStackTrace();
         }
 
-        //            }
-        //        };
-        //        worker.start();
+                    }
+                };
+                worker.start();
     }
 
     /**

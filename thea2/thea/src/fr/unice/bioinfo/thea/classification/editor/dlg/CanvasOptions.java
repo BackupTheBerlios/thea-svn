@@ -29,7 +29,7 @@ public class CanvasOptions extends JPanel {
     // separators
     private JComponent hmodeSeparator;
     private JComponent layoutSeparator;
-    private JComponent othersSeparator;
+    private JComponent xpressionValuesSeparztor;
 
     // highlighting mode variables
     private ButtonGroup group;
@@ -57,8 +57,8 @@ public class CanvasOptions extends JPanel {
 
         hmodeSeparator = compFactory.createSeparator(bundle
                 .getString("LBL_HModeSeparator"));//NOI18N
-        othersSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_OthersSeparator"));//NOI18N
+        xpressionValuesSeparztor = compFactory.createSeparator(bundle
+                .getString("LBL_XPressionValuesSeparator"));//NOI18N
         layoutSeparator = compFactory.createSeparator(bundle
                 .getString("LBL_LayoutSeparator"));//NOI18N
 
@@ -209,7 +209,7 @@ public class CanvasOptions extends JPanel {
         });
         add(terminalBoxingCbx, cc.xywh(1, 11, 1, 1, CellConstraints.FILL,
                 CellConstraints.FILL));
-        add(othersSeparator, cc.xywh(1, 13, 3, 1));
+        add(xpressionValuesSeparztor, cc.xywh(1, 13, 3, 1));
 
         //---- showXPCbx ----
         showXPCbx.setText(bundle.getString("LBL_ShowXPV"));//NOI18N

@@ -2,6 +2,7 @@ package fr.unice.bioinfo.thea.classification;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -591,5 +592,9 @@ public class Node {
         this.addProperty(Node.OVER_EXP_DECILES, overExpDeciles);
         this.addProperty(Node.MIN_MEASURE, Collections.min(measuresTable));
         this.addProperty(Node.MAX_MEASURE, Collections.max(measuresTable));
+//        List an = new ArrayList();
+//        an.add(new String("annotation 1"));
+//        an.add(new String("annotation 2"));
+//        this.addProperty(Node.USER_ANNOTATIONS,an);
     }
 }
