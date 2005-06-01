@@ -19,6 +19,6 @@ public class EditorSettingsPage extends AbstractSettingsPage {
 
     private void init() {
         setLayout(new BorderLayout());
-        add(new CanvasOptions(),BorderLayout.CENTER);
+        add(new CanvasOptions(), BorderLayout.CENTER);
     }
 }

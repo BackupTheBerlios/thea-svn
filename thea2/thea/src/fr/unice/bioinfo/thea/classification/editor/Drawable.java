@@ -7,7 +7,7 @@ import java.beans.PropertyChangeListener;
  * Objects to be drawn should implemnts this interface.
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
-public interface Drawable extends PropertyChangeListener{
+public interface Drawable extends PropertyChangeListener {
     /**
      * Draw using the given graphics context.
      * @param graphics A graphics context.

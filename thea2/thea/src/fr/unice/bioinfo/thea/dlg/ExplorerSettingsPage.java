@@ -1,7 +1,7 @@
 package fr.unice.bioinfo.thea.dlg;
 
 /**
- * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi</a>
+ * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class ExplorerSettingsPage extends AbstractSettingsPage {
 
@@ -12,6 +12,7 @@ public class ExplorerSettingsPage extends AbstractSettingsPage {
         super(container);
         init();
     }
-    
-    private void init(){}
+
+    private void init() {
+    }
 }

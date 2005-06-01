@@ -117,65 +117,69 @@ public class Classification {
 
         this.cnx = cnx;
 
-                BlockingSwingWorker worker = new BlockingSwingWorker(
-                        (Frame) WindowManager.getDefault().getMainWindow(),
-                        "Annotating ...",
-                        "Status: annotation in progress, please wait ...", true) {
-                    protected void doNonUILogic() throws RuntimeException {
+        BlockingSwingWorker worker = new BlockingSwingWorker(
+                (Frame) WindowManager.getDefault().getMainWindow(),
+                "Annotating ...",
+                "Status: annotation in progress, please wait ...", true) {
+            protected void doNonUILogic() throws RuntimeException {
 
-        List /* all leave nodes */ln = classificationRootNode.getLeaves();
-        // keys = List formed by leaves' nodes names.
-        List keys /* list of names from leave nodes */= new ArrayList();
-        // This map is created to make a leaf node accessible via its
-        // name
-        Map map = new HashMap();
-        Iterator iterator = ln.iterator();
-        while (iterator.hasNext()) {
-            Node aNode = (Node) iterator.next();
-            String name = aNode.getName();
-            keys.add(name);
-            map.put(name, aNode);
-        }
-        // Create a Session using a Connection
-        try {
-            HibernateUtil.createSession(cnx);
-            Session sess = HibernateUtil.currentSession();
-            ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-                    .getResourceFactory();
-            Query q = sess
-                    .createQuery("select res, dbkey.value from Resource res, Resource dbxref, StringValue dbkey where dbxref.arcs[:propidentifies] = res and dbxref.arcs[:propdbkey] = dbkey and dbkey.value in (:dbkeyval)");
+                List /* all leave nodes */ln = classificationRootNode
+                        .getLeaves();
+                // keys = List formed by leaves' nodes names.
+                List keys /* list of names from leave nodes */= new ArrayList();
+                // This map is created to make a leaf node accessible via its
+                // name
+                Map map = new HashMap();
+                Iterator iterator = ln.iterator();
+                while (iterator.hasNext()) {
+                    Node aNode = (Node) iterator.next();
+                    String name = aNode.getName();
+                    keys.add(name);
+                    map.put(name, aNode);
+                }
+                // Create a Session using a Connection
+                try {
+                    HibernateUtil.createSession(cnx);
+                    Session sess = HibernateUtil.currentSession();
+                    ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
+                            .getResourceFactory();
+                    Query q = sess
+                            .createQuery("select res, dbkey.value from Resource res, Resource dbxref, StringValue dbkey where dbxref.arcs[:propidentifies] = res and dbxref.arcs[:propdbkey] = dbkey and dbkey.value in (:dbkeyval)");
 
-            Property p = resourceFactory
-                    .getProperty("http://www.unice.fr/bioinfo/owl/biowl#xref");
+                    Property p = resourceFactory
+                            .getProperty("http://www.unice.fr/bioinfo/owl/biowl#xref");
 
-            q.setEntity("propidentifies", p.getInverse());
-            System.out.println(p.getInverse().getAcc());
+                    q.setEntity("propidentifies", p.getInverse());
+                    System.out.println(p.getInverse().getAcc());
 
-            q.setEntity("propdbkey", resourceFactory
-                    .getProperty("http://www.unice.fr/bioinfo/owl/biowl#acc"));
+                    q
+                            .setEntity(
+                                    "propdbkey",
+                                    resourceFactory
+                                            .getProperty("http://www.unice.fr/bioinfo/owl/biowl#acc"));
 
-            q.setParameterList("dbkeyval", keys);
+                    q.setParameterList("dbkeyval", keys);
 
-            // Resources correspending to keys are now:
-            List list = q.list();
-            // Iterate over the list of found resources and
-            // associate to each Node its corespending Resource
-            Iterator it = list.iterator();
-            while (it.hasNext()) {
-                Object[] tuple = (Object[]) it.next();
-                Resource geneProduct = (Resource) tuple[0];
-                String key = (String) tuple[1];
-                // associate for each Node its correspending
-                // Resource(Entity)
-                ((Node) map.get(key)).setEntity(geneProduct);
-            }
-        } catch (HibernateException he) {
-            he.printStackTrace();
-        }
-
+                    // Resources correspending to keys are now:
+                    List list = q.list();
+                    // Iterate over the list of found resources and
+                    // associate to each Node its corespending Resource
+                    Iterator it = list.iterator();
+                    while (it.hasNext()) {
+                        Object[] tuple = (Object[]) it.next();
+                        Resource geneProduct = (Resource) tuple[0];
+                        String key = (String) tuple[1];
+                        // associate for each Node its correspending
+                        // Resource(Entity)
+                        ((Node) map.get(key)).setEntity(geneProduct);
                     }
-                };
-                worker.start();
+                } catch (HibernateException he) {
+                    he.printStackTrace();
+                }
+
+            }
+        };
+        worker.start();
     }
 
     /**

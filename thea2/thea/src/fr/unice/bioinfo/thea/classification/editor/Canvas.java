@@ -44,7 +44,7 @@ import fr.unice.bioinfo.thea.classification.editor.util.Discretization;
 public class Canvas extends JComponent implements DrawableClassification,
         Zoomable {
 
-    /** A helper class that is responsible of managing nodes selection.*/
+    /** A helper class that is responsible of managing nodes selection. */
     private SelectionManager selectionManager = null;
 
     /** The image used to show that a branch is collapsed */
@@ -1405,7 +1405,8 @@ public class Canvas extends JComponent implements DrawableClassification,
         repaint(x, y, width, height);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
     public void propertyChange(PropertyChangeEvent e) {

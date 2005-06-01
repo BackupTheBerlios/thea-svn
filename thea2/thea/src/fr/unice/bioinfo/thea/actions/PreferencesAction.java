@@ -15,7 +15,7 @@ import org.openide.util.actions.SystemAction;
 import fr.unice.bioinfo.thea.dlg.PreferencesContainer;
 
 /**
- * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi</a>
+ * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class PreferencesAction extends SystemAction {
 
@@ -23,21 +23,24 @@ public class PreferencesAction extends SystemAction {
     private static ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.actions.Bundle"); //NOI18N;
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
         return bundle.getString("LBL_PreferencesAction");//NOI18N
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see org.openide.util.HelpCtx.Provider#getHelpCtx()
      */
     public HelpCtx getHelpCtx() {
         return HelpCtx.DEFAULT_HELP;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {

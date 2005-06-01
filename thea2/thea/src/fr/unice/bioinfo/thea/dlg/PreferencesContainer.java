@@ -106,7 +106,7 @@ public class PreferencesContainer extends JPanel {
 
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
-        rightPanel.setPreferredSize(new Dimension(350, 400));
+        //rightPanel.setPreferredSize(new Dimension(350, 400));
         rightPanel.add(spacer, BorderLayout.WEST);
         rightPanel.add(settingsPanel, BorderLayout.CENTER);
 
@@ -173,10 +173,9 @@ public class PreferencesContainer extends JPanel {
                         .getString("ClassificationSettingsPage_Name"), bundle
                         .getString("ClassificationSettingsPage_Title"), bundle
                         .getString("ClassificationSettingsPage_Class")));
-        
-        DefaultMutableTreeNode zooming = new SettingsNode(
-                new SettingsNodeInfo(bundle
-                        .getString("ZoomingSettingsPage_Name"), bundle
+
+        DefaultMutableTreeNode zooming = new SettingsNode(new SettingsNodeInfo(
+                bundle.getString("ZoomingSettingsPage_Name"), bundle
                         .getString("ZoomingSettingsPage_Title"), bundle
                         .getString("ZoomingSettingsPage_Class")));
 
