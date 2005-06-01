@@ -18,6 +18,9 @@ public class CESettings extends SystemOption {
     /** generated Serialized Version UID */
     static final long serialVersionUID = 801136840705717911L;
 
+    /** lastSelectedEvidences property name */
+    public static final String PROP_EVIDENCES = "lastSelectedEvidences"; // NOI18N
+
     /** zoomFactorX property name */
     public static final String ZOOM_FACTOR_X = "zoomFactorX";//NOI18N
 
@@ -408,6 +411,9 @@ public class CESettings extends SystemOption {
 
     /** A table that contains StringValues and correspebdibg accessors */
     private Hashtable accTable = null;
+
+    /** Last selected lastSelectedEvidences */
+    private static String[] lastSelectedEvidences = null;
 
     /*
      * (non-Javadoc)
@@ -1599,5 +1605,17 @@ public class CESettings extends SystemOption {
         zoomFactorY = value;
         firePropertyChange(ZOOM_FACTOR_Y, new Double(oldValue), new Double(
                 value));
+    }
+
+    /** retrurns lastSelectedEvidences list. */
+    public String[] getLastSelectedEvidences() {
+        return lastSelectedEvidences;
+    }
+
+    /** Sets lastSelectedEvidences. */
+    public void setLastSelectedEvidences(String[] value) {
+        String[] old = getLastSelectedEvidences();
+        lastSelectedEvidences = value;
+        firePropertyChange(PROP_EVIDENCES, old, value);
     }
 }

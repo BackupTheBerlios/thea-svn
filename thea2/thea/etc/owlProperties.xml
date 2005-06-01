@@ -67,4 +67,8 @@
 			<name>http://www.unice.fr/bioinfo/owl/biowl#strand</name>
 		</column>
 	</geneeditor>
+	<annotation>
+		<propdbkeyname>http://www.unice.fr/bioinfo/owl/biowl#acc</propdbkeyname>
+		<annotatedbyname>http://www.unice.fr/bioinfo/owl/biowl#annotatedBy</annotatedbyname>
+	</annotation>
 </owlproperties>

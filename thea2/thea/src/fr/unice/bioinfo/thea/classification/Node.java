@@ -130,11 +130,6 @@ public class Node {
     /** Associate an {@link Entity}to this node. */
     public void setEntity(Entity entity) {
         this.entity = entity;
-        if (entity == null) {
-            System.out.println("null");
-        } else {
-            System.out.println(entity.toString());
-        }
     }
 
     /** Returns the {@link Entity}associated to this node. */

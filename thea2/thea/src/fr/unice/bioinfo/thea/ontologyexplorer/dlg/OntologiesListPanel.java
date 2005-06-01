@@ -112,8 +112,8 @@ public class OntologiesListPanel extends JPanel {
         //---- statusLabel ----
         statusLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         statusLabel.setText(bundle.getString("LBL_StatusLabel"));
-        add(statusLabel, cc.xy(1, 7));
-        add(pb, cc.xy(2, 7));
+        //add(statusLabel, cc.xy(1, 7));
+        //add(pb, cc.xy(2, 7));
     }
 
     /**

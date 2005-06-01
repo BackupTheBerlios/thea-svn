@@ -7,20 +7,26 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Query;
 import net.sf.hibernate.Session;
 
+import org.apache.commons.configuration.Configuration;
 import org.openide.windows.WindowManager;
 
 import fr.unice.bioinfo.allonto.datamodel.Property;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
+import fr.unice.bioinfo.allonto.datamodel.expression.Criterion;
+import fr.unice.bioinfo.allonto.datamodel.expression.Expression;
 import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
+import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.util.BlockingSwingWorker;
 
 /**
@@ -28,11 +34,40 @@ import fr.unice.bioinfo.thea.util.BlockingSwingWorker;
  */
 public class Classification {
 
+    /** The partof relationship property name */
+    private static String propdbkeyPropertyName;
+    /** The is a relationship property name */
+    private static String xrefPropertyName;
+    /** annotatedbyname property name */
+    private static String annotatedByPropertyName;
+    private static String hasEvidenceProperty;
+
+    static {
+        ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
+                .getResourceFactory();
+        Configuration con = TheaConfiguration.getDefault().getConfiguration();
+        // get the partof and is a properties names:
+        Object o = con.getProperty("ontologyexplorer.nodes.xrefname");//NOI18N
+        xrefPropertyName = (String) o;
+        o = con.getProperty("annotation.propdbkeyname");//NOI18N
+        propdbkeyPropertyName = (String) o;
+        o = con.getProperty("annotation.annotatedbyname");//NOI18N
+        annotatedByPropertyName = (String) o;
+        o = con.getProperty("ontologyexplorer.nodes.hasevidence");//NOI18N
+        hasEvidenceProperty = (String) o;
+    }
+
     /** The root node of the classification. */
     private Node classificationRootNode;
 
     /** The connection to an ontology. */
     private Connection cnx = null;
+
+    /**
+     * Flag indicating if the classification represented by this class have been
+     * linked to an ontology or not.
+     */
+    private boolean linked = false;
 
     /** The support for firing property changes */
     private PropertyChangeSupport propertySupport;
@@ -119,10 +154,9 @@ public class Classification {
 
         BlockingSwingWorker worker = new BlockingSwingWorker(
                 (Frame) WindowManager.getDefault().getMainWindow(),
-                "Annotating ...",
-                "Status: annotation in progress, please wait ...", true) {
+                "Classification - Ontology association ...",
+                "Looking for resources, please wait ...", true) {
             protected void doNonUILogic() throws RuntimeException {
-
                 List /* all leave nodes */ln = classificationRootNode
                         .getLeaves();
                 // keys = List formed by leaves' nodes names.
@@ -146,17 +180,11 @@ public class Classification {
                     Query q = sess
                             .createQuery("select res, dbkey.value from Resource res, Resource dbxref, StringValue dbkey where dbxref.arcs[:propidentifies] = res and dbxref.arcs[:propdbkey] = dbkey and dbkey.value in (:dbkeyval)");
 
-                    Property p = resourceFactory
-                            .getProperty("http://www.unice.fr/bioinfo/owl/biowl#xref");
+                    Property p = resourceFactory.getProperty(xrefPropertyName);
 
                     q.setEntity("propidentifies", p.getInverse());
-                    System.out.println(p.getInverse().getAcc());
-
-                    q
-                            .setEntity(
-                                    "propdbkey",
-                                    resourceFactory
-                                            .getProperty("http://www.unice.fr/bioinfo/owl/biowl#acc"));
+                    q.setEntity("propdbkey", resourceFactory
+                            .getProperty(propdbkeyPropertyName));
 
                     q.setParameterList("dbkeyval", keys);
 
@@ -167,16 +195,62 @@ public class Classification {
                     Iterator it = list.iterator();
                     while (it.hasNext()) {
                         Object[] tuple = (Object[]) it.next();
-                        Resource geneProduct = (Resource) tuple[0];
+                        Resource r = (Resource) tuple[0];
                         String key = (String) tuple[1];
                         // associate for each Node its correspending
                         // Resource(Entity)
-                        ((Node) map.get(key)).setEntity(geneProduct);
+                        ((Node) map.get(key)).setEntity(r);
                     }
                 } catch (HibernateException he) {
+                    setLinked(false);
                     he.printStackTrace();
                 }
 
+            }
+        };
+        worker.start();
+        setLinked(true);
+    }
+
+    public void annotate(final String[] evidences) {
+        BlockingSwingWorker worker = new BlockingSwingWorker(
+                (Frame) WindowManager.getDefault().getMainWindow(),
+                "Annotating ...", "Annotation in progress, please wait ...",
+                true) {
+            protected void doNonUILogic() throws RuntimeException {
+                List /* all leave nodes */ln = classificationRootNode
+                        .getLeaves();
+                Iterator iterator = ln.iterator();
+
+                ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
+                        .getResourceFactory();
+                resourceFactory.setMemoryCached(true);
+                LinkedList ll = new LinkedList();
+                for (int cnt = 0; cnt < evidences.length; cnt++) {
+                    ll.add(resourceFactory.getResource(evidences[cnt]));
+                }
+                Criterion criterion = Expression.in(resourceFactory
+                        .getResource(hasEvidenceProperty), ll);
+
+                Resource annotateProperty = resourceFactory
+                        .getProperty(annotatedByPropertyName);
+
+                resourceFactory.setMemoryCached(false);
+
+                while (iterator.hasNext()) {
+                    Node aNode = (Node) iterator.next();
+                    Resource resource = (Resource) aNode.getEntity();
+                    if (resource != null) {
+                        System.out.println(resource.getAcc() + " "
+                                + resource.getArcs());
+                        Set genes = resource.getTargets(annotateProperty,
+                                criterion);
+                        if (genes != null) {
+                            System.out.println(aNode.getName() + "->"
+                                    + genes.size());
+                        }
+                    }
+                }
             }
         };
         worker.start();
@@ -206,5 +280,13 @@ public class Classification {
     /** Sets he classification's root node. */
     public void setClassificationRootNode(Node classificationRootNode) {
         this.classificationRootNode = classificationRootNode;
+    }
+
+    public boolean isLinked() {
+        return linked;
+    }
+
+    public void setLinked(boolean linked) {
+        this.linked = linked;
     }
 }

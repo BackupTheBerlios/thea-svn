@@ -53,13 +53,9 @@ public class GenesTableModel extends AbstractTableModel {
         String hasEvidenceProperty = (String) con
                 .getProperty("ontologyexplorer.nodes.hasevidence");//NOI18N
 
-        //        Set genes = resource.getTargets(resourceFactory
-        //                .getProperty(annotatePropertyName));
-
         resourceFactory.setMemoryCached(true);
         LinkedList ll = new LinkedList();
         for (int cnt = 0; cnt < evidences.length; cnt++) {
-            System.out.println("evidences[" + cnt + "]=" + evidences[cnt]);
             ll.add(resourceFactory.getResource(evidences[cnt]));
         }
         Criterion criterion = Expression.in(resourceFactory
@@ -73,7 +69,6 @@ public class GenesTableModel extends AbstractTableModel {
 
         // if we find a list of genes:
         if (genes != null) {
-            //resourceFactory.setMemoryCached(true);
             data = new Object[genes.size()][columnNames.length];
             int counter = 0;
             Iterator iterator = genes.iterator();
@@ -81,7 +76,6 @@ public class GenesTableModel extends AbstractTableModel {
             // iterate over the list of found genes
             while (iterator.hasNext()) {
                 rse = (Resource) iterator.next();
-                System.out.println(rse);
                 // for each gene: get the list of properties
                 for (int cnt = 0; cnt < properties.length; cnt++) {
                     resourceFactory.setMemoryCached(true);
@@ -91,12 +85,9 @@ public class GenesTableModel extends AbstractTableModel {
 
                     StringValue sv = (StringValue) rse
                             .getTarget(accessedProperty);
-                    System.out.println("properties[" + cnt + "]="
-                            + properties[cnt]);
                     if (sv != null) {
                         data[counter][cnt] = sv.getValue();
                     } else if (sv == null) {
-                        System.out.println("sv = null");
                         data[counter][cnt] = "";//NOI18N
                     }
                 }

@@ -7,6 +7,7 @@ import org.openide.nodes.Children;
 import org.openide.nodes.Node;
 import org.openide.util.actions.SystemAction;
 
+import fr.unice.bioinfo.thea.ontologyexplorer.actions.AnnotateAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.DeleteClNodeAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.EditClAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.SelectOntologyAction;
@@ -48,7 +49,8 @@ public class ClassificationNode extends AbstractNode implements Node.Cookie {
      */
     public Action[] getActions(boolean arg0) {
         Action[] result = new Action[] { SystemAction.get(EditClAction.class),
-                SystemAction.get(SelectOntologyAction.class), null,
+                SystemAction.get(SelectOntologyAction.class),
+                SystemAction.get(AnnotateAction.class), null,
                 SystemAction.get(DeleteClNodeAction.class) };
 
         return result;
