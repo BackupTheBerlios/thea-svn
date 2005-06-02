@@ -5,6 +5,8 @@ import java.util.Hashtable;
 
 import org.openide.nodes.Node;
 
+import fr.unice.bioinfo.allonto.datamodel.Resource;
+
 /**
  * @author Saïd El Kasmi
  */
@@ -13,6 +15,8 @@ public class ResourceNodeInfo extends Hashtable implements Node.Cookie {
     static final long serialVersionUID = 1176243907461868244L;
     public static final String NAME = "name"; //NOI18N
     public static final String CONNECTION = "conection"; //NOI18N
+    
+    private Resource resource = null;
 
     /*
      * (non-Javadoc)
@@ -61,5 +65,11 @@ public class ResourceNodeInfo extends Hashtable implements Node.Cookie {
     /** Sets a JDBC Connection */
     public void setConnection(Connection con) {
         put(CONNECTION, con);
+    }
+    public Resource getResource() {
+        return resource;
+    }
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 }

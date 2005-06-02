@@ -102,6 +102,7 @@ public class ExploreOntologyAction extends NodeAction {
         for (int cnt = 0; cnt < roots.length; cnt++) {
             rootNodes[cnt] = new ResourceNode(roots[cnt]);
             rni[cnt] = new ResourceNodeInfo();
+            rni[cnt].setResource(roots[cnt]);
             rni[cnt].setConnection(dbc.getConnection());
             rootNodes[cnt].setInfo(rni[cnt]);
             rootNodes[cnt]

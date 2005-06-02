@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Vector;
 
 import org.openide.options.SystemOption;
-import org.openide.util.NbBundle;
 
 /**
  * Defines all options for the classification viewer customization. Never
@@ -420,8 +419,7 @@ public class CESettings extends SystemOption {
      * @see org.openide.options.SystemOption#displayName()
      */
     public String displayName() {
-        return NbBundle.getMessage(CESettings.class,
-                "LBL_ClassificationViewerOptions_Name"); // NOI18N;
+        return ""; // NOI18N;
     }
 
     protected void initialize() {

@@ -86,66 +86,6 @@ public class Classification {
         this.classificationRootNode = classificationRootNode;
     }
 
-    //    public void createGeneProducts(Connection cnx) {
-    //        if (cnx == null)
-    //            return;
-    //
-    //        propertySupport.firePropertyChange("linking", null, null);
-    //        System.out.println("linking");
-    //
-    //        List /* all leave nodes */ln = classificationRootNode.getLeaves();
-    //        // keys = List formed by leaves' nodes names.
-    //        List keys /* list of names from leave nodes */= new ArrayList();
-    //        // This map is created to make a leaf node accessible via its
-    //        // name
-    //        Map map = new HashMap();
-    //        Iterator iterator = ln.iterator();
-    //        while (iterator.hasNext()) {
-    //            Node aNode = (Node) iterator.next();
-    //            String name = aNode.getName();
-    //            keys.add(name);
-    //            map.put(name, aNode);
-    //        }
-    //        // Create a Session using a Connection
-    //        try {
-    //            HibernateUtil.createSession(cnx);
-    //            Session sess = HibernateUtil.currentSession();
-    //            ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-    //                    .getResourceFactory();
-    //            Query q = sess
-    //                    .createQuery("select res, dbkey.value from Resource res, Resource dbxref,
-    // StringValue dbkey where dbxref.arcs[:propidentifies] = res and
-    // dbxref.arcs[:propdbkey] = dbkey and dbkey.value in (:dbkeyval)");
-    //
-    //            Property p = resourceFactory
-    //                    .getProperty("http://www.unice.fr/bioinfo/owl/biowl#xref");
-    //            q.setEntity("propidentifies", p.getInverse());
-    //
-    //            q.setEntity("propdbkey", resourceFactory
-    //                    .getProperty("http://www.unice.fr/bioinfo/owl/biowl#acc"));
-    //
-    //            q.setParameterList("dbkeyval", keys);
-    //
-    //            // Resources correspending to keys are now:
-    //            List list = q.list();
-    //            // Iterate over the list of found resources and
-    //            // associate to each Node its corespending Resource
-    //            Iterator it = list.iterator();
-    //            while (it.hasNext()) {
-    //                Object[] tuple = (Object[]) it.next();
-    //                Resource geneProduct = (Resource) tuple[0];
-    //                String key = (String) tuple[1];
-    //                // associate for each Node its correspending Resource(Entity)
-    //                ((Node) map.get(key)).setEntity(geneProduct);
-    //            }
-    //        } catch (HibernateException he) {
-    //            he.printStackTrace();
-    //        }
-    //
-    //        propertySupport.firePropertyChange("linked", null, null);
-    //        System.out.println("linked");
-    //    }
-
     public void createGeneProducts(final Connection cnx) {
         if (cnx == null)
             return;
@@ -178,11 +118,11 @@ public class Classification {
                     ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                             .getResourceFactory();
                     Query q = sess
-                            .createQuery("select res, dbkey.value from Resource res, Resource dbxref, StringValue dbkey where dbxref.arcs[:propidentifies] = res and dbxref.arcs[:propdbkey] = dbkey and dbkey.value in (:dbkeyval)");
+                            .createQuery("select dbxref, dbkey.value from Resource dbxref, StringValue dbkey where dbxref.arcs[:propdbkey] = dbkey and dbkey.value in (:dbkeyval)");
 
                     Property p = resourceFactory.getProperty(xrefPropertyName);
 
-                    q.setEntity("propidentifies", p.getInverse());
+                    //q.setEntity("propidentifies", p.getInverse());
                     q.setEntity("propdbkey", resourceFactory
                             .getProperty(propdbkeyPropertyName));
 
@@ -195,17 +135,23 @@ public class Classification {
                     Iterator it = list.iterator();
                     while (it.hasNext()) {
                         Object[] tuple = (Object[]) it.next();
-                        Resource r = (Resource) tuple[0];
+                        Resource dbxref = (Resource) tuple[0];
                         String key = (String) tuple[1];
+                        Set s = dbxref.getTargets(p.getInverse());
                         // associate for each Node its correspending
                         // Resource(Entity)
-                        ((Node) map.get(key)).setEntity(r);
+                        Iterator itr = s.iterator();
+                        while (itr.hasNext()) {
+                            Resource entity = (Resource) itr.next();
+                            ((Node) map.get(key)).setEntity(entity);
+                        }
                     }
                 } catch (HibernateException he) {
                     setLinked(false);
-                    he.printStackTrace();
+                    he.printStackTrace(System.out);
+                } catch (Exception e) {
+                    e.printStackTrace(System.out);
                 }
-
             }
         };
         worker.start();
@@ -220,37 +166,49 @@ public class Classification {
             protected void doNonUILogic() throws RuntimeException {
                 List /* all leave nodes */ln = classificationRootNode
                         .getLeaves();
-                Iterator iterator = ln.iterator();
 
-                ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-                        .getResourceFactory();
-                resourceFactory.setMemoryCached(true);
-                LinkedList ll = new LinkedList();
-                for (int cnt = 0; cnt < evidences.length; cnt++) {
-                    ll.add(resourceFactory.getResource(evidences[cnt]));
-                }
-                Criterion criterion = Expression.in(resourceFactory
-                        .getResource(hasEvidenceProperty), ll);
+                // Create a Session using a Connection
+                try {
+                    HibernateUtil.createSession(cnx);
+                    Session sess = HibernateUtil.currentSession();
 
-                Resource annotateProperty = resourceFactory
-                        .getProperty(annotatedByPropertyName);
+                    ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
+                            .getResourceFactory();
 
-                resourceFactory.setMemoryCached(false);
+                    LinkedList ll = new LinkedList();
+                    for (int cnt = 0; cnt < evidences.length; cnt++) {
+                        ll.add(resourceFactory.getResource(evidences[cnt]));
+                    }
+                    Criterion criterion = Expression.in(resourceFactory
+                            .getResource(hasEvidenceProperty), ll);
 
-                while (iterator.hasNext()) {
-                    Node aNode = (Node) iterator.next();
-                    Resource resource = (Resource) aNode.getEntity();
-                    if (resource != null) {
-                        System.out.println(resource.getAcc() + " "
-                                + resource.getArcs());
-                        Set genes = resource.getTargets(annotateProperty,
-                                criterion);
-                        if (genes != null) {
-                            System.out.println(aNode.getName() + "->"
-                                    + genes.size());
+                    Resource annotatedByProperty = resourceFactory
+                            .getProperty(annotatedByPropertyName);
+                    // Iterate over the list of all genes.
+                    Iterator iterator = ln.iterator();
+                    while (iterator.hasNext()) {
+                        Node aNode = (Node) iterator.next();
+                        Resource resource = (Resource) aNode.getEntity();
+                        // Some genes don't have any resource. Check for
+                        // nullity:
+                        if (resource != null) {
+                            System.out.println("acc = " + resource.getAcc());
+                            System.out.println("arcs = " + resource.getArcs());
+                            Set targets = resource.getTargets(
+                                    annotatedByProperty);
+                            if (targets != null) {
+                                System.out.println(aNode.getName() + "->"
+                                        + targets.size());
+                            }
                         }
                     }
+
+                } catch (HibernateException he) {
+                    he.printStackTrace(System.out);
+                } catch (Exception e) {
+                    e.printStackTrace(System.out);
                 }
+
             }
         };
         worker.start();

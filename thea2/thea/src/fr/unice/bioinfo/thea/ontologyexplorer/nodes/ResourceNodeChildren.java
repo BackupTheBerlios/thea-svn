@@ -96,16 +96,17 @@ public class ResourceNodeChildren extends Children.Keys {
      * @see org.openide.nodes.Children.Keys#createNodes(java.lang.Object)
      */
     protected Node[] createNodes(Object key) {
-        Resource r = (Resource) key;
-        ResourceNode rn = new ResourceNode(r);
+        Resource aResource = (Resource) key;
+        ResourceNode rn = new ResourceNode(aResource);
         ResourceNodeInfo rni = new ResourceNodeInfo();
+        rni.setResource(aResource);
         //rni.setConnection(dbc.getConnection());
         rn.setInfo(rni);
         // associate an icon dependening on the relation
         // between the children's resource and the parent's one
-        ResourceNode p = (ResourceNode) getNode();
+        ResourceNode aResourceNode = (ResourceNode) getNode();
 
-        if (p != null) {
+        if (aResourceNode != null) {
             try {
                 Session sess = HibernateUtil.currentSession();
                 if (!sess.isConnected()) {
@@ -120,14 +121,14 @@ public class ResourceNodeChildren extends Children.Keys {
                     .getProperty(isaPropertyName));
 
             if (pchilds != null) {
-                if (pchilds.contains(r)) {
+                if (pchilds.contains(aResource)) {
                     rn
                             .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/partOfIcon");//NOI18N
                 }
             }
 
             if (ichilds != null) {
-                if (ichilds.contains(r)) {
+                if (ichilds.contains(aResource)) {
                     rn
                             .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/isAIcon");//NOI18N
                 }
