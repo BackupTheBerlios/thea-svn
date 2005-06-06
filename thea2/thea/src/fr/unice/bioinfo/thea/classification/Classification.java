@@ -22,6 +22,7 @@ import org.openide.windows.WindowManager;
 import fr.unice.bioinfo.allonto.datamodel.Property;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
+import fr.unice.bioinfo.allonto.datamodel.StringValue;
 import fr.unice.bioinfo.allonto.datamodel.expression.Criterion;
 import fr.unice.bioinfo.allonto.datamodel.expression.Expression;
 import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
@@ -41,12 +42,15 @@ public class Classification {
     /** annotatedbyname property name */
     private static String annotatedByPropertyName;
     private static String hasEvidenceProperty;
+    private static String chromosomePropertyName;
+    private static String endPosPropertyName;
+    private static String strandPropertyName;
+    private static String transcribedFromPropertyName;
+    private static String startPosPropertyName;
+    private static String symbolPropertyName;
 
     static {
-        ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-                .getResourceFactory();
         Configuration con = TheaConfiguration.getDefault().getConfiguration();
-        // get the partof and is a properties names:
         Object o = con.getProperty("ontologyexplorer.nodes.xrefname");//NOI18N
         xrefPropertyName = (String) o;
         o = con.getProperty("annotation.propdbkeyname");//NOI18N
@@ -55,6 +59,18 @@ public class Classification {
         annotatedByPropertyName = (String) o;
         o = con.getProperty("ontologyexplorer.nodes.hasevidence");//NOI18N
         hasEvidenceProperty = (String) o;
+        o = con.getProperty("annotation.chromosomename");//NOI18N
+        chromosomePropertyName = (String) o;
+        o = con.getProperty("annotation.endPosname");//NOI18N
+        endPosPropertyName = (String) o;
+        o = con.getProperty("annotation.strandname");//NOI18N
+        strandPropertyName = (String) o;
+        o = con.getProperty("annotation.transcribedFromname");//NOI18N
+        transcribedFromPropertyName = (String) o;
+        o = con.getProperty("annotation.startPosname");//NOI18N
+        startPosPropertyName = (String) o;
+        o = con.getProperty("annotation.symbolname");//NOI18N
+        symbolPropertyName = (String) o;
     }
 
     /** The root node of the classification. */
@@ -188,17 +204,20 @@ public class Classification {
                     Iterator iterator = ln.iterator();
                     while (iterator.hasNext()) {
                         Node aNode = (Node) iterator.next();
-                        Resource resource = (Resource) aNode.getEntity();
+                        Resource entity = (Resource) aNode.getEntity();
                         // Some genes don't have any resource. Check for
                         // nullity:
-                        if (resource != null) {
-                            System.out.println("acc = " + resource.getAcc());
-                            System.out.println("arcs = " + resource.getArcs());
-                            Set targets = resource.getTargets(
-                                    annotatedByProperty);
+                        if (entity != null) {
+                            Resource accessedProperty = resourceFactory
+                                    .getResource(chromosomePropertyName);
+                            StringValue sv = (StringValue) entity
+                                    .getTarget(accessedProperty);
+
+                            Set targets = entity
+                                    .getTargets(annotatedByProperty);
                             if (targets != null) {
-                                System.out.println(aNode.getName() + "->"
-                                        + targets.size());
+                                // add a the list of terms to each leaf node
+                                aNode.addProperty(Node.ASSOC_TERMS, targets);
                             }
                         }
                     }
@@ -247,4 +266,78 @@ public class Classification {
     public void setLinked(boolean linked) {
         this.linked = linked;
     }
+
+    private Map createSpeciesMap() {
+        Map map = new HashMap();
+
+        String specieID = null;
+        Integer obj = (Integer) map.get(specieID);
+        int count = ((obj == null) ? 0 : obj.intValue());
+        map.put(specieID, new Integer(count + 1));
+
+        return map;
+    }
+
+    private String computeMainSpecie(Map map) {
+        String ms /* Main Specie */= null;
+        Set entrySet = map.entrySet();
+        Iterator iterator = entrySet.iterator();
+        int counter = 0;
+        while (iterator.hasNext()) {
+            Map.Entry entry = (Map.Entry) iterator.next();
+            if (((Integer) entry.getValue()).intValue() > counter) {
+                counter = ((Integer) entry.getValue()).intValue();
+                ms = (String) entry.getKey();
+            }
+        }
+        return ms;
+    }
+
+    private void createProperties(Node aNode, Resource resource,
+            ResourceFactory resourceFactory) {
+        StringValue sv = (StringValue) resource.getTarget(resourceFactory
+                .getProperty(chromosomePropertyName));
+        System.out.println("node " + aNode.getName() + " -> " + sv.toString());
+    }
+
+    //    private void initTermsMap() {
+    //        Map map = new HashMap();
+    //
+    //        // Iterate over leave nodes
+    //        List lNodes = classificationRootNode.getLeaves();
+    //        Iterator lIt = lNodes.iterator();
+    //        while (lIt.hasNext()) {
+    //            Node lNode = (Node) lIt.next();
+    //            // Get associated terms for "leaf"
+    //            Set lTerms = (Set) lNode.getProperty(Node.ASSOC_TERMS);
+    //            Set allTerms = new HashSet(lTerms);
+    //            Iterator iterator = lTerms.iterator();
+    //            // Add also ancestors of each Term to the list of terms
+    //            while (iterator.hasNext()) {
+    //                Term term = (Term) iterator.next();
+    //                allTerms.addAll(term.getAllAncestorsHash().values());
+    //            }
+    //            /*
+    //             * Keys are associated Terms,
+    //             * Values are number of occurences
+    //             */
+    //            Map lMap = new HashMap();
+    //            iterator = allTerms.iterator();
+    //            // Iterate over the list of all terms associated to "leaf"
+    //            // this list is formed by Terms directly associated to "leaf"
+    //            // plus their ancestors
+    //            while (iterator.hasNext()) {
+    //                Term term = (Term) iterator.next();
+    //                lMap.put(term, new Integer(1));
+    //                if (map.containsKey(term)) {
+    //                    map.put(term, new Integer(((Integer) map
+    //                            .get(term)).intValue() + 1));
+    //                } else {
+    //                    map.put(term, new Integer(1));
+    //                }
+    //            }
+    //            lNode.addProperty(Node.TERMS_MAP, lMap);
+    //        }
+    //        classificationRootNode.addProperty(Node.TERMS_MAP, map);
+    //    }
 }

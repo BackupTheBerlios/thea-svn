@@ -72,10 +72,10 @@ public class GenesTableModel extends AbstractTableModel {
             data = new Object[genes.size()][columnNames.length];
             int counter = 0;
             Iterator iterator = genes.iterator();
-            Resource rse;
+            Resource aResource;
             // iterate over the list of found genes
             while (iterator.hasNext()) {
-                rse = (Resource) iterator.next();
+                aResource = (Resource) iterator.next();
                 // for each gene: get the list of properties
                 for (int cnt = 0; cnt < properties.length; cnt++) {
                     resourceFactory.setMemoryCached(true);
@@ -83,7 +83,7 @@ public class GenesTableModel extends AbstractTableModel {
                             .getResource(properties[cnt]);
                     resourceFactory.setMemoryCached(false);
 
-                    StringValue sv = (StringValue) rse
+                    StringValue sv = (StringValue) aResource
                             .getTarget(accessedProperty);
                     if (sv != null) {
                         data[counter][cnt] = sv.getValue();
