@@ -1,4 +1,4 @@
-package fr.unice.bioinfo.thea.classification.editor.settings;
+package fr.unice.bioinfo.thea.classification.settings;
 
 import java.awt.Color;
 import java.util.Hashtable;

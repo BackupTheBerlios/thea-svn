@@ -5,7 +5,9 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,6 +50,10 @@ public class Classification {
     private static String transcribedFromPropertyName;
     private static String startPosPropertyName;
     private static String symbolPropertyName;
+    /** The partof relationship property name */
+    private static String partofPropertyName;
+    /** The is a relationship property name */
+    private static String isaPropertyName;
 
     static {
         Configuration con = TheaConfiguration.getDefault().getConfiguration();
@@ -71,6 +77,11 @@ public class Classification {
         startPosPropertyName = (String) o;
         o = con.getProperty("annotation.symbolname");//NOI18N
         symbolPropertyName = (String) o;
+
+        o = con.getProperty("ontologyexplorer.hierarchy.partof");//NOI18N
+        partofPropertyName = (String) o;
+        o = con.getProperty("ontologyexplorer.hierarchy.isa");//NOI18N
+        isaPropertyName = (String) o;
     }
 
     /** The root node of the classification. */
@@ -84,6 +95,12 @@ public class Classification {
      * linked to an ontology or not.
      */
     private boolean linked = false;
+
+    /**
+     * Flag indicating if the classification represented by this class have been
+     * annotated using an ontology or not.
+     */
+    private boolean annotated = false;
 
     /** The support for firing property changes */
     private PropertyChangeSupport propertySupport;
@@ -168,10 +185,10 @@ public class Classification {
                 } catch (Exception e) {
                     e.printStackTrace(System.out);
                 }
+                setLinked(true);
             }
         };
         worker.start();
-        setLinked(true);
     }
 
     public void annotate(final String[] evidences) {
@@ -205,14 +222,11 @@ public class Classification {
                     while (iterator.hasNext()) {
                         Node aNode = (Node) iterator.next();
                         Resource entity = (Resource) aNode.getEntity();
+                        aNode.addProperty(Node.ASSOC_TERMS, new HashSet());
                         // Some genes don't have any resource. Check for
                         // nullity:
                         if (entity != null) {
-                            Resource accessedProperty = resourceFactory
-                                    .getResource(chromosomePropertyName);
-                            StringValue sv = (StringValue) entity
-                                    .getTarget(accessedProperty);
-
+                            createProperties(aNode, entity, resourceFactory);
                             Set targets = entity
                                     .getTargets(annotatedByProperty);
                             if (targets != null) {
@@ -221,13 +235,19 @@ public class Classification {
                             }
                         }
                     }
+                    long t0 = System.currentTimeMillis();
+                    initTermsMap(resourceFactory);
+                    System.out.println("time = "
+                            + (System.currentTimeMillis() - t0));
 
                 } catch (HibernateException he) {
+                    setAnnotated(false);
                     he.printStackTrace(System.out);
                 } catch (Exception e) {
+                    setAnnotated(false);
                     e.printStackTrace(System.out);
                 }
-
+                setAnnotated(true);
             }
         };
         worker.start();
@@ -267,6 +287,14 @@ public class Classification {
         this.linked = linked;
     }
 
+    public boolean isAnnotated() {
+        return annotated;
+    }
+
+    public void setAnnotated(boolean annotated) {
+        this.annotated = annotated;
+    }
+
     private Map createSpeciesMap() {
         Map map = new HashMap();
 
@@ -293,51 +321,106 @@ public class Classification {
         return ms;
     }
 
+    // write javadoc later:
+    // extract some properties from the given resources, and
+    // attch them the given node.
     private void createProperties(Node aNode, Resource resource,
             ResourceFactory resourceFactory) {
         StringValue sv = (StringValue) resource.getTarget(resourceFactory
                 .getProperty(chromosomePropertyName));
-        System.out.println("node " + aNode.getName() + " -> " + sv.toString());
+        if (sv != null) {
+            aNode.addProperty(Node.CHROMOSOME, sv.getValue());
+        }
+
+        sv = (StringValue) resource.getTarget(resourceFactory
+                .getProperty(endPosPropertyName));
+        if (sv != null) {
+            aNode.addProperty(Node.END_POS, sv.getValue());
+        }
+
+        sv = (StringValue) resource.getTarget(resourceFactory
+                .getProperty(startPosPropertyName));
+        if (sv != null) {
+            aNode.addProperty(Node.START_POS, sv.getValue());
+        }
+
+        sv = (StringValue) resource.getTarget(resourceFactory
+                .getProperty(symbolPropertyName));
+        if (sv != null) {
+            aNode.addProperty(Node.SYMBOL, sv.getValue());
+        }
+
+        //        sv = (StringValue) resource.getTarget(resourceFactory
+        //                .getProperty(strandPropertyName));
+        //        if (sv != null) {
+        //            aNode.addProperty(Node.STRAND_POSITION, sv.getValue());
+        //        }
     }
 
-    //    private void initTermsMap() {
-    //        Map map = new HashMap();
-    //
-    //        // Iterate over leave nodes
-    //        List lNodes = classificationRootNode.getLeaves();
-    //        Iterator lIt = lNodes.iterator();
-    //        while (lIt.hasNext()) {
-    //            Node lNode = (Node) lIt.next();
-    //            // Get associated terms for "leaf"
-    //            Set lTerms = (Set) lNode.getProperty(Node.ASSOC_TERMS);
-    //            Set allTerms = new HashSet(lTerms);
-    //            Iterator iterator = lTerms.iterator();
-    //            // Add also ancestors of each Term to the list of terms
-    //            while (iterator.hasNext()) {
-    //                Term term = (Term) iterator.next();
-    //                allTerms.addAll(term.getAllAncestorsHash().values());
-    //            }
-    //            /*
-    //             * Keys are associated Terms,
-    //             * Values are number of occurences
-    //             */
-    //            Map lMap = new HashMap();
-    //            iterator = allTerms.iterator();
-    //            // Iterate over the list of all terms associated to "leaf"
-    //            // this list is formed by Terms directly associated to "leaf"
-    //            // plus their ancestors
-    //            while (iterator.hasNext()) {
-    //                Term term = (Term) iterator.next();
-    //                lMap.put(term, new Integer(1));
-    //                if (map.containsKey(term)) {
-    //                    map.put(term, new Integer(((Integer) map
-    //                            .get(term)).intValue() + 1));
-    //                } else {
-    //                    map.put(term, new Integer(1));
-    //                }
-    //            }
-    //            lNode.addProperty(Node.TERMS_MAP, lMap);
-    //        }
-    //        classificationRootNode.addProperty(Node.TERMS_MAP, map);
-    //    }
+    private void initTermsMap(ResourceFactory resourceFactory) {
+        Map map = new HashMap();
+        // Iterate over leave nodes
+        List ln = classificationRootNode.getLeaves();
+        Iterator lnIt = ln.iterator();
+        while (lnIt.hasNext()) {
+            Node aNode = (Node) lnIt.next();
+            // Get associated terms for the each leaf node
+            Set aNodeTerms = (Set) aNode.getProperty(Node.ASSOC_TERMS);
+            // Add also resources that annotates inderictly this leaf node.
+            Set all = new HashSet(aNodeTerms);
+            Iterator iterator = aNodeTerms.iterator();
+            // Add also ancestors of each Term to the list of terms
+            while (iterator.hasNext()) {
+                Resource aResource = (Resource) iterator.next();
+                all.addAll(createAncestorsList(aResource, resourceFactory));
+            }
+            /*
+             * Keys are associated Terms, Values are number of occurences
+             */
+            Map lMap = new HashMap();
+            iterator = all.iterator();
+            // Iterate over the list of all terms associated to "leaf"
+            // this list is formed by Terms directly associated to "leaf"
+            // plus their ancestors
+            while (iterator.hasNext()) {
+                Resource aResource = (Resource) iterator.next();
+                lMap.put(aResource, new Integer(1));
+                if (map.containsKey(aResource)) {
+                    map.put(aResource, new Integer(((Integer) map
+                            .get(aResource)).intValue() + 1));
+                } else {
+                    map.put(aResource, new Integer(1));
+                }
+            }
+            aNode.addProperty(Node.TERMS_MAP, lMap);
+        }
+        classificationRootNode.addProperty(Node.TERMS_MAP, map);
+    }
+
+    private Set createAncestorsList(Resource aResource,
+            ResourceFactory resourceFactory) {
+        Set ancestors = new HashSet();
+        Set properties = new HashSet();
+        Configuration con = TheaConfiguration.getDefault().getConfiguration();
+        Object o = con.getProperty("ontologyexplorer.hierarchy.uri");//NOI18N
+        if (o instanceof Collection) {
+            ArrayList al = new ArrayList((Collection) o);
+            Object[] names = al.toArray();
+            for (int counter = 0; counter < al.size(); counter++) {
+                String name = (String) names[counter];
+                Resource r = resourceFactory.getProperty(name).getInverse();
+                properties.add(r);
+            }
+        }
+        Set targets = ((Resource) aResource).getTargets(properties);
+        if (targets != null) {
+            Iterator iterator = targets.iterator();
+            while (iterator.hasNext()) {
+                Resource target = (Resource) iterator.next();
+                ancestors.addAll(createAncestorsList(target, resourceFactory));
+            }
+            ancestors.addAll(targets);
+        }
+        return ancestors;
+    }
 }

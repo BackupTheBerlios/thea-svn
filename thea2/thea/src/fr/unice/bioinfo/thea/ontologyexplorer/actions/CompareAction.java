@@ -1,19 +1,13 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
 import java.awt.Dialog;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
-import org.openide.DialogDescriptor;
-import org.openide.DialogDisplayer;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
 
-import fr.unice.bioinfo.thea.classification.editor.dlg.AnnotationEvidencesPanel;
-import fr.unice.bioinfo.thea.classification.settings.CESettings;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ClassificationNodeInfo;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationNode;
@@ -21,7 +15,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationNode;
 /**
  * @author Saïd El Kasmi
  */
-public class AnnotateAction extends NodeAction {
+public class CompareAction extends NodeAction {
     private Dialog dialog;
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
@@ -43,35 +37,6 @@ public class AnnotateAction extends NodeAction {
         final ClassificationNodeInfo cni = (ClassificationNodeInfo) node
                 .getCookie(ClassificationNodeInfo.class);
 
-        //Create the panel
-        final AnnotationEvidencesPanel panel = new AnnotationEvidencesPanel();
-
-        // Create the listener for buttons actions/ Ok/Cancel
-        ActionListener al = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == DialogDescriptor.OK_OPTION) {
-                    // close dialog
-                    closeDialog();
-                    final String[] evidences = panel.getSelectedEvidences();
-                    if ((evidences == null)) {
-                        return;
-                    }
-                    // store selected data:
-                    CESettings.getInstance()
-                            .setLastSelectedEvidences(evidences);
-                    // ask to annotate
-                    cni.getClassification().annotate(evidences);
-                }
-            }
-        };
-
-        // Use DialogDescriptor to show the panel
-        DialogDescriptor descriptor = new DialogDescriptor(panel, bundle
-                .getString("LBL_EvidencesDialogTitle"), true, al); //NOI18N
-        Object[] closingOptions = { DialogDescriptor.CANCEL_OPTION };
-        descriptor.setClosingOptions(closingOptions);
-        dialog = DialogDisplayer.getDefault().createDialog(descriptor);
-        dialog.show();
     }
 
     /*
@@ -90,7 +55,7 @@ public class AnnotateAction extends NodeAction {
         if (node instanceof ClassificationNode) {
             final ClassificationNodeInfo cni = (ClassificationNodeInfo) node
                     .getCookie(ClassificationNodeInfo.class);
-            if (cni.getClassification().isLinked()) {
+            if (cni.getClassification().isAnnotated()) {
                 return true;
             }
         }
@@ -102,7 +67,8 @@ public class AnnotateAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        return bundle.getString("LBL_AnnotateAction_Name");//NO18N
+        //        return bundle.getString("LBL_AnnotateAction_Name");//NO18N
+        return "Compare ...";
     }
 
     /*

@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
-import fr.unice.bioinfo.thea.classification.editor.settings.CESettings;
+import fr.unice.bioinfo.thea.classification.settings.CESettings;
 
 /**
  * A class to discretize data

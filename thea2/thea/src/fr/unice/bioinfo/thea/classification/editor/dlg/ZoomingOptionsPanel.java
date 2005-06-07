@@ -25,7 +25,7 @@ import com.jgoodies.forms.layout.FormSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.Sizes;
 
-import fr.unice.bioinfo.thea.classification.editor.settings.CESettings;
+import fr.unice.bioinfo.thea.classification.settings.CESettings;
 
 public class ZoomingOptionsPanel extends JPanel {
 

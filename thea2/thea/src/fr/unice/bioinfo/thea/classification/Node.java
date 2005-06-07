@@ -7,13 +7,11 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.Vector;
 
 import fr.unice.bioinfo.allonto.datamodel.Entity;
-import fr.unice.bioinfo.allonto.datamodel.Resource;
-import fr.unice.bioinfo.thea.classification.editor.settings.CESettings;
 import fr.unice.bioinfo.thea.classification.editor.util.Discretization;
+import fr.unice.bioinfo.thea.classification.settings.CESettings;
 
 /**
  * A class representing a node. Each node has a link to its parent and hold the
@@ -49,32 +47,36 @@ public class Node {
     public static final String ID_IN_CLASSIF = "idInClassif";//NOI18N
     /***/
     public static final String DB_KEY = "dbKey";//NOI18N
-    
+
     public static final String CHROMOSOME = "chromosome";//NOI18N
-    
+
     public static final String COMPLEMENT_POS = "complementPos";//NOI18N
-    
+
     public static final String CHROMOSOMAL_POSITION = "chromosomal_position";//NOI18N
-    
-    public static final String STRAND_POS = "strand_position";//NOI18N
-    
+
+    public static final String STRAND_POSITION = "strand_position";//NOI18N
+
     public static final String START_POS = "startPos";//NOI18N
-    
+
     public static final String END_POS = "endPos";//NOI18N
-    
+
     public static final String DB_KEY_MAP = "dbKeyMap";//NOI18N
-    
+
     public static final String SYMBOL = "symbol";//NOI18N
-    
+
     public static final String GENE_PRODUCT_ID = "GeneProductID";//NOI18N
-    
+
     public static final String SPECIES_MAP = "speciesMap";//NOI18N
-    
+
     public static final String NB_GENE_PRODUCTS_IN_SPECIE = "nbGeneProductsInSpecie";//NOI18N
-    
+
     public static final String ASSOC_TERMS = "assocTerms";//NOI18N
-    
+
     public static final String TERMS_MAP = "termsMap";//NOI18N
+
+    public static final String GENE_NA = "geneNA";//NOI18N
+
+    public static final String GENE_UNKNOWN = "geneUnknown";//NOI18N
 
     /** Node's children. This contains only direct children. */
     private List children = null;
@@ -98,7 +100,7 @@ public class Node {
      * this node in the used classification.
      */
     private String label = null;
-    
+
     /** The name of the node. */
     private String name = null;
 

@@ -15,7 +15,7 @@ public class ResourceNodeInfo extends Hashtable implements Node.Cookie {
     static final long serialVersionUID = 1176243907461868244L;
     public static final String NAME = "name"; //NOI18N
     public static final String CONNECTION = "conection"; //NOI18N
-    
+
     private Resource resource = null;
 
     /*
@@ -66,9 +66,11 @@ public class ResourceNodeInfo extends Hashtable implements Node.Cookie {
     public void setConnection(Connection con) {
         put(CONNECTION, con);
     }
+
     public Resource getResource() {
         return resource;
     }
+
     public void setResource(Resource resource) {
         this.resource = resource;
     }

@@ -22,6 +22,7 @@ import fr.unice.bioinfo.allonto.datamodel.StringValue;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowAnnotetdGenesAction;
+import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowParentAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 
 /**
@@ -179,8 +180,9 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
      * @see org.openide.nodes.Node#getActions(boolean)
      */
     public Action[] getActions(boolean arg0) {
-        Action[] actions = new Action[] { SystemAction
-                .get(ShowAnnotetdGenesAction.class) };
+        Action[] actions = new Action[] {
+                SystemAction.get(ShowAnnotetdGenesAction.class),
+                SystemAction.get(ShowParentAction.class) };
         return actions;
     }
 

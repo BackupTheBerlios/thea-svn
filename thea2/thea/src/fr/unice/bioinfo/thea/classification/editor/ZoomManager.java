@@ -6,7 +6,7 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.event.MouseInputAdapter;
 
-import fr.unice.bioinfo.thea.classification.editor.settings.CESettings;
+import fr.unice.bioinfo.thea.classification.settings.CESettings;
 
 /**
  * This class implements a zooming manager that works on objects of type

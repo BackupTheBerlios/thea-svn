@@ -184,7 +184,7 @@ public class PreferencesContainer extends JPanel {
                         .getString("OntologySettingsPage_Name"), bundle
                         .getString("OntologySettingsPage_Title"), bundle
                         .getString("OntologySettingsPage_Class")));
-        
+
         DefaultMutableTreeNode annotation = new SettingsNode(
                 new SettingsNodeInfo(bundle
                         .getString("AnnotationSettingsPage_Name"), bundle

@@ -20,7 +20,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
-import fr.unice.bioinfo.thea.classification.editor.settings.CESettings;
+import fr.unice.bioinfo.thea.classification.settings.CESettings;
 
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>

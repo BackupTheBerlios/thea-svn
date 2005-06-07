@@ -35,8 +35,8 @@ import javax.swing.JPopupMenu;
 import fr.unice.bioinfo.thea.classification.Node;
 import fr.unice.bioinfo.thea.classification.NodeLayoutSupport;
 import fr.unice.bioinfo.thea.classification.Selection;
-import fr.unice.bioinfo.thea.classification.editor.settings.CESettings;
 import fr.unice.bioinfo.thea.classification.editor.util.Discretization;
+import fr.unice.bioinfo.thea.classification.settings.CESettings;
 
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
