@@ -153,16 +153,23 @@ public class Classification {
                     Query q = sess
                             .createQuery("select dbxref, dbkey.value from Resource dbxref, StringValue dbkey where dbxref.arcs[:propdbkey] = dbkey and dbkey.value in (:dbkeyval)");
 
+                    resourceFactory.setMemoryCached(true);
                     Property p = resourceFactory.getProperty(xrefPropertyName);
+                    if (p != null) p = p.getInverse();
 
                     //q.setEntity("propidentifies", p.getInverse());
                     q.setEntity("propdbkey", resourceFactory
                             .getProperty(propdbkeyPropertyName));
+                    resourceFactory.setMemoryCached(false);
 
                     q.setParameterList("dbkeyval", keys);
 
                     // Resources correspending to keys are now:
+                    long t = System.currentTimeMillis();
                     List list = q.list();
+                    System.out.println("retrieved "+list.size()+" objects in "+(System.currentTimeMillis()-t)+"ms");
+                    t = System.currentTimeMillis();
+                    
                     // Iterate over the list of found resources and
                     // associate to each Node its corespending Resource
                     Iterator it = list.iterator();
@@ -170,7 +177,7 @@ public class Classification {
                         Object[] tuple = (Object[]) it.next();
                         Resource dbxref = (Resource) tuple[0];
                         String key = (String) tuple[1];
-                        Set s = dbxref.getTargets(p.getInverse());
+                        Set s = dbxref.getTargets(p);
                         // associate for each Node its correspending
                         // Resource(Entity)
                         Iterator itr = s.iterator();
@@ -179,6 +186,7 @@ public class Classification {
                             ((Node) map.get(key)).setEntity(entity);
                         }
                     }
+                    System.out.println("all genes retrieved in "+(System.currentTimeMillis()-t)+"ms");
                 } catch (HibernateException he) {
                     setLinked(false);
                     he.printStackTrace(System.out);
@@ -208,16 +216,20 @@ public class Classification {
                     ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                             .getResourceFactory();
 
+                    resourceFactory.setMemoryCached(true);
                     LinkedList ll = new LinkedList();
                     for (int cnt = 0; cnt < evidences.length; cnt++) {
                         ll.add(resourceFactory.getResource(evidences[cnt]));
+                        System.out.println("evidence="+evidences[cnt]);
                     }
                     Criterion criterion = Expression.in(resourceFactory
                             .getResource(hasEvidenceProperty), ll);
 
                     Resource annotatedByProperty = resourceFactory
                             .getProperty(annotatedByPropertyName);
+                    resourceFactory.setMemoryCached(false);
                     // Iterate over the list of all genes.
+                    long t = System.currentTimeMillis();
                     Iterator iterator = ln.iterator();
                     while (iterator.hasNext()) {
                         Node aNode = (Node) iterator.next();
@@ -226,19 +238,23 @@ public class Classification {
                         // Some genes don't have any resource. Check for
                         // nullity:
                         if (entity != null) {
-                            createProperties(aNode, entity, resourceFactory);
+                            // we don't need to retrieve these properties in the frame of
+                            // the annotation process
+                            //createProperties(aNode, entity, resourceFactory);
                             Set targets = entity
-                                    .getTargets(annotatedByProperty);
+                                    .getTargets(annotatedByProperty, criterion);
                             if (targets != null) {
                                 // add a the list of terms to each leaf node
                                 aNode.addProperty(Node.ASSOC_TERMS, targets);
                             }
                         }
                     }
+                    System.out.println("retrieved annotation in "
+                            + (System.currentTimeMillis() - t)+"ms");
                     long t0 = System.currentTimeMillis();
                     initTermsMap(resourceFactory);
-                    System.out.println("time = "
-                            + (System.currentTimeMillis() - t0));
+                    System.out.println("retrieved ancestors in "
+                            + (System.currentTimeMillis() - t0)+"ms");
 
                 } catch (HibernateException he) {
                     setAnnotated(false);
@@ -358,6 +374,28 @@ public class Classification {
     }
 
     private void initTermsMap(ResourceFactory resourceFactory) {
+        // Collect the set of properties that are used to retrieve terms' ancestors
+        Set properties = new HashSet();
+        Configuration con = TheaConfiguration.getDefault().getConfiguration();
+        Object o = con.getProperty("ontologyexplorer.hierarchy.uri");//NOI18N
+        resourceFactory.setMemoryCached(true);
+        if (o instanceof Collection) {
+            ArrayList al = new ArrayList((Collection) o);
+            Object[] names = al.toArray();
+            for (int counter = 0; counter < al.size(); counter++) {
+                String name = (String) names[counter];
+                Resource r = resourceFactory.getProperty(name).getInverse();
+                properties.add(r);
+            }
+        } else if (o instanceof String) {
+            properties.add(resourceFactory.getProperty((String)o).getInverse());
+        } else {
+            // to be completed with the processing of this serious error
+            System.out.println("fatal error");
+        }
+        resourceFactory.setMemoryCached(false);
+
+        
         Map map = new HashMap();
         // Iterate over leave nodes
         List ln = classificationRootNode.getLeaves();
@@ -366,13 +404,13 @@ public class Classification {
             Node aNode = (Node) lnIt.next();
             // Get associated terms for the each leaf node
             Set aNodeTerms = (Set) aNode.getProperty(Node.ASSOC_TERMS);
-            // Add also resources that annotates inderictly this leaf node.
+            // Add also resources that annotates indirerctly this leaf node.
             Set all = new HashSet(aNodeTerms);
             Iterator iterator = aNodeTerms.iterator();
             // Add also ancestors of each Term to the list of terms
             while (iterator.hasNext()) {
                 Resource aResource = (Resource) iterator.next();
-                all.addAll(createAncestorsList(aResource, resourceFactory));
+                all.addAll(createAncestorsList(aResource, properties));
             }
             /*
              * Keys are associated Terms, Values are number of occurences
@@ -398,26 +436,14 @@ public class Classification {
     }
 
     private Set createAncestorsList(Resource aResource,
-            ResourceFactory resourceFactory) {
+            Set properties) {
         Set ancestors = new HashSet();
-        Set properties = new HashSet();
-        Configuration con = TheaConfiguration.getDefault().getConfiguration();
-        Object o = con.getProperty("ontologyexplorer.hierarchy.uri");//NOI18N
-        if (o instanceof Collection) {
-            ArrayList al = new ArrayList((Collection) o);
-            Object[] names = al.toArray();
-            for (int counter = 0; counter < al.size(); counter++) {
-                String name = (String) names[counter];
-                Resource r = resourceFactory.getProperty(name).getInverse();
-                properties.add(r);
-            }
-        }
         Set targets = ((Resource) aResource).getTargets(properties);
         if (targets != null) {
             Iterator iterator = targets.iterator();
             while (iterator.hasNext()) {
                 Resource target = (Resource) iterator.next();
-                ancestors.addAll(createAncestorsList(target, resourceFactory));
+                ancestors.addAll(createAncestorsList(target, properties));
             }
             ancestors.addAll(targets);
         }
