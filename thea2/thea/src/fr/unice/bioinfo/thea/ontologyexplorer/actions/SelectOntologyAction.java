@@ -93,6 +93,7 @@ public class SelectOntologyAction extends NodeAction {
                     // close dialog
                     closeDialog();
                     final DatabaseConnection dbc = ontologyNode.getConnection();
+                    cni.setLinkedOntologyNode(ontologyNode);
                     cni.getClassification().createGeneProducts(
                             dbc.getConnection());
                 }

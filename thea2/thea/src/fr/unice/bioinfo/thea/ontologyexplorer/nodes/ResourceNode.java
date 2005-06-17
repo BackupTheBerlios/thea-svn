@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.swing.Action;
 
-import org.apache.commons.configuration.Configuration;
 import org.openide.actions.PropertiesAction;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
@@ -20,10 +19,10 @@ import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.StringValue;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
-import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowAnnotetdGenesAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowParentAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
+import fr.unice.bioinfo.thea.util.OWLProperties;
 
 /**
  * This class uses the nodes API to build a node that represents a resource from
@@ -32,14 +31,14 @@ import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
  */
 public class ResourceNode extends AbstractNode implements Node.Cookie {
 
-    static {
-        Configuration con = TheaConfiguration.getDefault().getConfiguration();
-        Object o = con.getProperty("ontologyexplorer.nodes.nodename");//NOI18N
-        nodeNameProperty = (String) o;
-    }
-
-    /** The property to use to reach for a node's display name. */
-    private static String nodeNameProperty;
+    //    static {
+    //        Configuration con = TheaConfiguration.getDefault().getConfiguration();
+    //        Object o = con.getProperty("ontologyexplorer.nodes.nodename");//NOI18N
+    //        nodeNameProperty = (String) o;
+    //    }
+    //
+    //    /** The property to use to reach for a node's display name. */
+    //    private static String nodeNameProperty;
 
     private ResourceNodeInfo info;
 
@@ -74,8 +73,11 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         //        RequestProcessor.getDefault().post(new Runnable() {
         //            public void run() {
 
-        StringValue sv = (StringValue) resource.getTarget(resourceFactory
-                .getProperty(nodeNameProperty));
+        //        StringValue sv = (StringValue) resource.getTarget(resourceFactory
+        //                .getProperty(nodeNameProperty));
+        StringValue sv = (StringValue) resource
+                .getTarget(resourceFactory.getProperty(OWLProperties
+                        .getInstance().getNodeNameProperty()));
         if (sv != null) {
             name = sv.getValue();
         } else {

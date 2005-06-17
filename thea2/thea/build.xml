@@ -24,6 +24,7 @@
 			<include name="${nb.modules.dir}/ext/commons-digester-1.5.jar"/>
 			<include name="${nb.modules.dir}/ext/commons-beanutils-core-1.7.0.jar"/>
 			<include name="${nb.modules.dir}/ext/allonto.jar"/>
+			<include name="${nb.modules.dir}/ext/colt.jar"/>
 		</patternset>
 	</target>
 
@@ -49,6 +50,7 @@
 				<include name="commons-lang-2.0.jar"/>
 				<include name="commons-beanutils-core-1.7.0.jar"/>
 				<include name="allonto.jar"/>
+				<include name="colt.jar"/>
 			</fileset>
 		</copy>
 	</target>

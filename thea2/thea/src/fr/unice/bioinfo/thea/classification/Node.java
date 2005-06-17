@@ -72,11 +72,17 @@ public class Node {
 
     public static final String ASSOC_TERMS = "assocTerms";//NOI18N
 
+    public static final String ASSOC_TERM = "assocTerm";//NOI18N
+
     public static final String TERMS_MAP = "termsMap";//NOI18N
 
     public static final String GENE_NA = "geneNA";//NOI18N
 
     public static final String GENE_UNKNOWN = "geneUnknown";//NOI18N
+
+    public static final String TERM_AND_SCORE = "termAndScore";//NOI18N
+
+    public static final String BEST_SCORE = "bestScore";//NOI18N
 
     /** Node's children. This contains only direct children. */
     private List children = null;
@@ -387,6 +393,16 @@ public class Node {
         return label;
     }
 
+    /**
+     * Sets a label for this node. A label maybe the node name or something
+     * else. When no label is specified (label = null), the node's name is used
+     * as label.
+     * @param label This node's label.
+     */
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
     /** Sets the name of this node. */
     public void setName(String name) {
         this.name = name;
@@ -415,6 +431,10 @@ public class Node {
      */
     public void addProperty(Object key, Object value) {
         properties.put(key, value);
+    }
+
+    public void removeProperty(Object key) {
+        properties.remove(key);
     }
 
     /**

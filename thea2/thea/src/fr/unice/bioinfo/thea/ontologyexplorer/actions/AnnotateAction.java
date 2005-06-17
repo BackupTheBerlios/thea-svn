@@ -53,9 +53,6 @@ public class AnnotateAction extends NodeAction {
                     // close dialog
                     closeDialog();
                     final String[] evidences = panel.getSelectedEvidences();
-                    if ((evidences == null)) {
-                        return;
-                    }
                     // store selected data:
                     CESettings.getInstance()
                             .setLastSelectedEvidences(evidences);

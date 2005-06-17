@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.Hashtable;
 
+import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Node;
 
 import fr.unice.bioinfo.thea.classification.Classification;
@@ -41,6 +42,8 @@ public class ClassificationNodeInfo extends Hashtable implements Node.Cookie {
     private WeakReference nodewr = null;
 
     private Classification classification = null;
+
+    private AbstractNode linkedOntologyNode;
 
     public ClassificationNodeInfo() {
         super();
@@ -227,5 +230,13 @@ public class ClassificationNodeInfo extends Hashtable implements Node.Cookie {
      */
     public void setClassification(Classification classification) {
         this.classification = classification;
+    }
+
+    public AbstractNode getLinkedOntologyNode() {
+        return linkedOntologyNode;
+    }
+
+    public void setLinkedOntologyNode(AbstractNode node) {
+        this.linkedOntologyNode = node;
     }
 }

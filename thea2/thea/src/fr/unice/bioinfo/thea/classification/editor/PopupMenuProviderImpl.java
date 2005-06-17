@@ -334,7 +334,7 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         accelerator = bundle.getString("ACC_SaveSelectionAction");
         icon = new ImageIcon(
                 Utilities
-                        .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/EmptyIcon.gif"));
+                        .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/FileSaveIcon16.gif"));
         Action save = new SaveAction(name, accelerator, icon, shortDescription,
                 drawable, selection);
         menuItem = new JMenuItem(save);

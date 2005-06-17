@@ -33,6 +33,14 @@ public class PreferencesAction extends SystemAction {
 
     /*
      * (non-Javadoc)
+     * @see org.openide.util.actions.SystemAction#iconResource()
+     */
+    //    protected String iconResource() {
+    //        return "fr/unice/bioinfo/thea/resources/PreferencesIconIcon16.gif";
+    // //NOI18N
+    //    }
+    /*
+     * (non-Javadoc)
      * @see org.openide.util.HelpCtx.Provider#getHelpCtx()
      */
     public HelpCtx getHelpCtx() {

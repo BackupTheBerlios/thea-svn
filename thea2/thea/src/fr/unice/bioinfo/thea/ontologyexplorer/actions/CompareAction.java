@@ -1,16 +1,23 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
 import java.awt.Dialog;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 
+import org.openide.DialogDescriptor;
+import org.openide.DialogDisplayer;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
 
+import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
+import fr.unice.bioinfo.thea.ontologyexplorer.dlg.OntologyRootsListPanel;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ClassificationNodeInfo;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationNode;
+import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 
 /**
  * @author Saïd El Kasmi
@@ -36,7 +43,32 @@ public class CompareAction extends NodeAction {
         }
         final ClassificationNodeInfo cni = (ClassificationNodeInfo) node
                 .getCookie(ClassificationNodeInfo.class);
+        Node ontologyNode = cni.getLinkedOntologyNode();
+        Node[] children = ontologyNode.getChildren().getNodes();
+        //Create the panel
+        final OntologyRootsListPanel panel = new OntologyRootsListPanel(
+                children);
+        //Create the listener for buttons actions/ Ok/Cancel
+        ActionListener al = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == DialogDescriptor.OK_OPTION) {
+                    ResourceNode rn = (ResourceNode) panel
+                            .getSelectedOntologyRoot();
+                    // close dialog
+                    closeDialog();
+                    Resource resource = rn.getResource();
+                    cni.getClassification().compareWithClassification(resource);
+                }
+            }
+        };
 
+        // Use DialogDescriptor to show the panel
+        DialogDescriptor descriptor = new DialogDescriptor(panel, bundle
+                .getString("SelectOntologyRootDialogTitle"), true, al); //NOI18N
+        Object[] closingOptions = { DialogDescriptor.CANCEL_OPTION };
+        descriptor.setClosingOptions(closingOptions);
+        dialog = DialogDisplayer.getDefault().createDialog(descriptor);
+        dialog.show();
     }
 
     /*

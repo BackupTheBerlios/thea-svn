@@ -87,6 +87,9 @@ public class PreferencesContainer extends JPanel {
         settingsPanel.add(titlePanel, BorderLayout.NORTH);
         settingsPanel.add(currentSettingsPanel, BorderLayout.CENTER);
         settingsPanel.add(new JSeparator(), BorderLayout.SOUTH);
+        settingsPanel.setMinimumSize(new Dimension(400, 550));
+        settingsPanel.setPreferredSize(new Dimension(400, 550));
+        settingsPanel.setSize(settingsPanel.getMinimumSize());
 
         // create the tree
         DefaultMutableTreeNode root = createNodes();
@@ -191,10 +194,18 @@ public class PreferencesContainer extends JPanel {
                         .getString("AnnotationSettingsPage_Title"), bundle
                         .getString("AnnotationSettingsPage_Class")));
 
+        DefaultMutableTreeNode annotationOptions = new SettingsNode(
+                new SettingsNodeInfo(bundle
+                        .getString("AnnotationOptionsPage_Name"), bundle
+                        .getString("AnnotationOptionsPage_Title"), bundle
+                        .getString("AnnotationOptionsPage_Class")));
+
         root.add(general);
         classification.add(zooming);
         root.add(classification);
         root.add(ontology);
+
+        annotation.add(annotationOptions);
         root.add(annotation);
         return root;
     }
