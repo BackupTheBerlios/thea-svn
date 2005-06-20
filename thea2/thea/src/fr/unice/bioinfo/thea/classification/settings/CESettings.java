@@ -284,7 +284,7 @@ public class CESettings extends SystemOption {
     private static boolean statisticalCalculationSelected = true;
 
     /** Terms count */
-    private static double termsCount = 10;
+    private static double termsCount = 1;
 
     /** Density of terms in cluster */
     private static double densityInCluster = 1;
