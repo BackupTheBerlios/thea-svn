@@ -77,6 +77,10 @@ public class Node {
     public static final String ASSOC_TERM = "assocTerm";//NOI18N
 
     public static final String TERMS_MAP = "termsMap";//NOI18N
+    
+    public static final String TERMS_GMAP = "termsGMap";//NOI18N
+    
+    public static final String TERMS_LIST_MAP = "termsListMap";//NOI18N
 
     public static final String GENE_NA = "geneNA";//NOI18N
 
@@ -85,6 +89,12 @@ public class Node {
     public static final String TERM_AND_SCORE = "termAndScore";//NOI18N
 
     public static final String BEST_SCORE = "bestScore";//NOI18N
+    
+    public static final String NB_ASSOC_IN_LIST = "nbAssocInList";//NOI18N
+    
+    public static final String NB_GENE_PRODUCTS_IN_LIST = "nbGeneProductsInList";//NOI18N
+    
+    public static final String NB_ASSOC = "nbAssoc";//NOI18N
 
     /** Node's children. This contains only direct children. */
     private List children = null;

@@ -183,8 +183,7 @@ public class AnnotationOptionsPanel extends JPanel {
         termCntBtn.setSelected(options.isTermsCountSelected());
         termCntBtn.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                CESettings.getInstance().setTermsCountSelected(
-                        termCntBtn.isSelected());
+                updateScoreCalculationSettings();
                 termCntTfd.setEnabled(termCntBtn.isSelected());
             }
         });
@@ -203,8 +202,7 @@ public class AnnotationOptionsPanel extends JPanel {
                 .isTermsDensityInClusterSelected());
         densityInClusterBtn.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                CESettings.getInstance().setTermsDensityInClusterSelected(
-                        densityInClusterBtn.isSelected());
+                updateScoreCalculationSettings();
                 densityInClusterTfd
                         .setEnabled(densityInClusterBtn.isSelected());
             }
@@ -224,8 +222,7 @@ public class AnnotationOptionsPanel extends JPanel {
                 .isTermsDensityInPopulationSelected());
         densityInPopulationBtn.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                CESettings.getInstance().setTermsDensityInPopulationSelected(
-                        densityInPopulationBtn.isSelected());
+                updateScoreCalculationSettings();
                 densityInPopulationTfd.setEnabled(densityInPopulationBtn
                         .isSelected());
             }
@@ -244,8 +241,7 @@ public class AnnotationOptionsPanel extends JPanel {
                 .setSelected(options.isTermsRelativeDensitySelected());
         relativeDensityBtn.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                CESettings.getInstance().setTermsRelativeDensitySelected(
-                        relativeDensityBtn.isSelected());
+                updateScoreCalculationSettings();
                 relativeDensityTfd.setEnabled(relativeDensityBtn.isSelected());
             }
         });
@@ -264,8 +260,7 @@ public class AnnotationOptionsPanel extends JPanel {
         setPValueWidgetsEnabled(statCalculationBtn.isSelected());
         statCalculationBtn.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                CESettings.getInstance().setStatisticalCalculationSelected(
-                        statCalculationBtn.isSelected());
+                updateScoreCalculationSettings();
                 statCalculationTfd.setEnabled(statCalculationBtn.isSelected());
                 setPValueWidgetsEnabled(statCalculationBtn.isSelected());
             }
@@ -283,6 +278,7 @@ public class AnnotationOptionsPanel extends JPanel {
         m1Btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setMethod1Selected(m1Btn.isSelected());
+                CESettings.getInstance().setMethod2Selected(m2Btn.isSelected());
             }
         });
         add(m1Btn, cc.xy(3, 17));
@@ -293,6 +289,7 @@ public class AnnotationOptionsPanel extends JPanel {
         m2Btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setMethod2Selected(m2Btn.isSelected());
+                CESettings.getInstance().setMethod1Selected(m1Btn.isSelected());
             }
         });
         add(m2Btn, cc.xy(5, 17));
@@ -305,6 +302,8 @@ public class AnnotationOptionsPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setBinomialLawSelected(
                         binLawBtn.isSelected());
+                CESettings.getInstance().setHypergeometricLawSelected(
+                        hyperLawBtn.isSelected());
             }
         });
         add(binLawBtn, cc.xy(3, 21));
@@ -316,6 +315,8 @@ public class AnnotationOptionsPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setHypergeometricLawSelected(
                         hyperLawBtn.isSelected());
+                CESettings.getInstance().setBinomialLawSelected(
+                        binLawBtn.isSelected());
             }
         });
         add(hyperLawBtn, cc.xy(5, 21));
@@ -330,6 +331,8 @@ public class AnnotationOptionsPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setBonferonniCorrectionSelected(
                         bonCorrectionBtn.isSelected());
+                CESettings.getInstance().setSidakCorrectionSelected(
+                        dunCorrectionBtn.isSelected());
                 if (bonCorrectionBtn.isSelected()) {
                     dunCorrectionBtn.setSelected(false);
                 }
@@ -345,6 +348,8 @@ public class AnnotationOptionsPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setSidakCorrectionSelected(
                         dunCorrectionBtn.isSelected());
+                CESettings.getInstance().setBonferonniCorrectionSelected(
+                        bonCorrectionBtn.isSelected());
                 if (dunCorrectionBtn.isSelected()) {
                     bonCorrectionBtn.setSelected(false);
                 }
@@ -361,8 +366,7 @@ public class AnnotationOptionsPanel extends JPanel {
                 .getString("TIP_InClassificationBtn"));//NOI18N
         inClassificationBtn.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                CESettings.getInstance().setClassifBaseSelected(
-                        inClassificationBtn.isSelected());
+                updateBaseCalculationSettings();
             }
         });
         add(inClassificationBtn, cc.xywh(1, 29, 9, 1));
@@ -372,8 +376,7 @@ public class AnnotationOptionsPanel extends JPanel {
         inOntologyBtn.setToolTipText(bundle.getString("TIP_InOntologyBtn"));//NOI18N
         inOntologyBtn.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                CESettings.getInstance().setOntologyBaseSelected(
-                        inOntologyBtn.isSelected());
+                updateBaseCalculationSettings();
             }
         });
         add(inOntologyBtn, cc.xywh(1, 31, 9, 1));
@@ -384,8 +387,7 @@ public class AnnotationOptionsPanel extends JPanel {
                 .getString("TIP_UserSpecifiedBtn"));//NOI18N
         userSpecifiedBtn.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                CESettings.getInstance().setUserSpecifiedBaseSelected(
-                        userSpecifiedBtn.isSelected());
+                updateBaseCalculationSettings();
                 browseBtn.setEnabled(userSpecifiedBtn.isSelected());
                 browseTfd.setEnabled(userSpecifiedBtn.isSelected());
             }
@@ -449,6 +451,27 @@ public class AnnotationOptionsPanel extends JPanel {
         dunCorrectionBtn.setSelected(options.isSidakCorrectionSelected());
         bonCorrectionBtn.setSelected(options.isBonferonniCorrectionSelected());
     }
+
+    private void updateScoreCalculationSettings() {
+        CESettings.getInstance().setTermsCountSelected(termCntBtn.isSelected());
+        CESettings.getInstance().setTermsDensityInClusterSelected(
+                densityInClusterBtn.isSelected());
+        CESettings.getInstance().setTermsDensityInPopulationSelected(
+                densityInPopulationBtn.isSelected());
+        CESettings.getInstance().setTermsRelativeDensitySelected(
+                relativeDensityBtn.isSelected());
+        CESettings.getInstance().setStatisticalCalculationSelected(
+                statCalculationBtn.isSelected());
+    }
+    
+    private void updateBaseCalculationSettings(){
+        CESettings.getInstance().setClassifBaseSelected(
+                inClassificationBtn.isSelected());
+        CESettings.getInstance().setOntologyBaseSelected(
+                inOntologyBtn.isSelected());
+        CESettings.getInstance().setUserSpecifiedBaseSelected(
+                userSpecifiedBtn.isSelected());
+        }
 
     private void setPValueWidgetsEnabled(boolean b) {
         this.m1Btn.setEnabled(b);
