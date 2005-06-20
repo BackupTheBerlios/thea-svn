@@ -14,6 +14,7 @@ import org.openide.util.Utilities;
 import fr.unice.bioinfo.thea.classification.Node;
 import fr.unice.bioinfo.thea.classification.Selection;
 import fr.unice.bioinfo.thea.classification.editor.actions.BackAction;
+import fr.unice.bioinfo.thea.classification.editor.actions.ChooseAnnotationAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.ClassifierAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.CollapseAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.ColorAction;
@@ -22,9 +23,12 @@ import fr.unice.bioinfo.thea.classification.editor.actions.DownAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.FreezeAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.GroupAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.IntersectAction;
+import fr.unice.bioinfo.thea.classification.editor.actions.KeepAllAnnotationsAction;
+import fr.unice.bioinfo.thea.classification.editor.actions.KeepAnnotationAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.MoveAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.NewAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.RemoveAction;
+import fr.unice.bioinfo.thea.classification.editor.actions.RemoveAnnotationAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.SaveAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.SelectAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.UncollapseAction;
@@ -57,25 +61,35 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         popup.add(createUncollapseMenuItem(drawable, aNode));
         // add a separator here
         popup.addSeparator();
-        // 3 - Back:
+        // 3 - Keep annotation
+        popup.add(createKeepAnnotationMenuItem(drawable, aNode));
+        // 4 - Keep all annotations
+        popup.add(createKeepAllAnnotationsMenuItem(drawable, aNode));
+        // 5 - Choose annotation
+        popup.add(createChooseAnnotationMenuItem(drawable, aNode));
+        // 6 - Remove annotation 
+        popup.add(createRemoveAnnotationsMenuItem(drawable, aNode));
+        // add a separator here
+        popup.addSeparator();
+        // 7 - Back:
         popup.add(createBackMenuItem(drawable, aNode));
-        // 4 - Up:
+        // 8 - Up:
         popup.add(createUpMenuItem(drawable, aNode));
-        // 5 - Down:
+        // 9 - Down:
         popup.add(createDownMenuItem(drawable, aNode));
-        // 6 - Whole Tree:
+        // 10 - Whole Tree:
         // It causes a NullPointerException sometimes,
         // commenting it until this bug is fixed.
         //popup.add(createWholeMenuItem(drawable, aNode));
         // add a separator here
         popup.addSeparator();
-        // 7 - Classifier:
+        // 11 - Classifier:
         popup.add(createClassifierMenuItem(drawable, aNode));
-        // 8 - New:
+        // 12 - New:
         popup.add(createNewMenuItem(drawable, aNode));
         // add a separator here
         popup.addSeparator();
-        // 9 - Select:
+        // 13 - Select:
         popup.add(createSelectMenuItem(drawable, aNode));
         return popup;
     }
@@ -105,6 +119,62 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         Action uncollapse = new UncollapseAction(name, accelerator, icon,
                 shortDescription, drawable, aNode);
         menuItem = new JMenuItem(uncollapse);
+        return menuItem;
+    }
+
+    private JMenuItem createKeepAnnotationMenuItem(
+            DrawableClassification drawable, Node aNode) {
+        name = bundle.getString("LBL_KeepAnnotationAction");
+        shortDescription = bundle.getString("HINT_KeepAnnotationAction");
+        accelerator = bundle.getString("ACC_KeepAnnotationAction");
+        icon = new ImageIcon(
+                Utilities
+                        .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/EmptyIcon.gif"));
+        Action keep = new KeepAnnotationAction(name, accelerator, icon,
+                shortDescription, drawable, aNode);
+        menuItem = new JMenuItem(keep);
+        return menuItem;
+    }
+
+    private JMenuItem createKeepAllAnnotationsMenuItem(
+            DrawableClassification drawable, Node aNode) {
+        name = bundle.getString("LBL_KeepAllAnnotationsAction");
+        shortDescription = bundle.getString("HINT_KeepAllAnnotationsAction");
+        accelerator = bundle.getString("ACC_KeepAllAnnotationsAction");
+        icon = new ImageIcon(
+                Utilities
+                        .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/EmptyIcon.gif"));
+        Action keepAll = new KeepAllAnnotationsAction(name, accelerator, icon,
+                shortDescription, drawable, aNode);
+        menuItem = new JMenuItem(keepAll);
+        return menuItem;
+    }
+    
+    private JMenuItem createChooseAnnotationMenuItem(
+            DrawableClassification drawable, Node aNode) {
+        name = bundle.getString("LBL_ChooseAnnotationAction");
+        shortDescription = bundle.getString("HINT_ChooseAnnotationAction");
+        accelerator = bundle.getString("ACC_ChooseAnnotationAction");
+        icon = new ImageIcon(
+                Utilities
+                        .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/EmptyIcon.gif"));
+        Action keepAll = new ChooseAnnotationAction(name, accelerator, icon,
+                shortDescription, drawable, aNode);
+        menuItem = new JMenuItem(keepAll);
+        return menuItem;
+    }
+    
+    private JMenuItem createRemoveAnnotationsMenuItem(
+            DrawableClassification drawable, Node aNode) {
+        name = bundle.getString("LBL_RemoveAnnotationAction");
+        shortDescription = bundle.getString("HINT_RemoveAnnotationAction");
+        accelerator = bundle.getString("ACC_RemoveAnnotationAction");
+        icon = new ImageIcon(
+                Utilities
+                        .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/EmptyIcon.gif"));
+        Action remove = new RemoveAnnotationAction(name, accelerator, icon,
+                shortDescription, drawable, aNode);
+        menuItem = new JMenuItem(remove);
         return menuItem;
     }
 

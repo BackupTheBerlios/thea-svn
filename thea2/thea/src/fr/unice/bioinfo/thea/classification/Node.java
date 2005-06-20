@@ -2,7 +2,9 @@ package fr.unice.bioinfo.thea.classification;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -636,9 +638,23 @@ public class Node {
         this.addProperty(Node.OVER_EXP_DECILES, overExpDeciles);
         this.addProperty(Node.MIN_MEASURE, Collections.min(measuresTable));
         this.addProperty(Node.MAX_MEASURE, Collections.max(measuresTable));
-        //        List an = new ArrayList();
-        //        an.add(new String("annotation 1"));
-        //        an.add(new String("annotation 2"));
-        //        this.addProperty(Node.USER_ANNOTATIONS,an);
+    }
+
+    /** Return the list of all nodes that are descendant of this node.*/
+    public Collection getAllChildNodes() {
+        Collection collection = new HashSet();
+        collectAllChildNodes(collection);
+        return collection;
+    }
+
+    private void collectAllChildNodes(Collection collection) {
+        collection.add(this);
+        if (isLeaf())
+            return;
+
+        Iterator childrenIt = getChildren().iterator();
+        while (childrenIt.hasNext()) {
+            ((Node) childrenIt.next()).collectAllChildNodes(collection);
+        }
     }
 }

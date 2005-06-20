@@ -219,7 +219,7 @@ public class AnnotationOptionsPanel extends JPanel {
         densityInPopulationBtn.setText(bundle
                 .getString("TXT_DensityInPopulationBtn"));//NOI18N
         densityInPopulationBtn.setToolTipText(bundle
-                .getString("DensityInPopulationBtn"));//NOI18N
+                .getString("TIP_DensityInPopulationBtn"));//NOI18N
         densityInPopulationBtn.setSelected(options
                 .isTermsDensityInPopulationSelected());
         densityInPopulationBtn.addChangeListener(new ChangeListener() {
