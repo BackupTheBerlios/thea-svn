@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Collection;
 import java.util.ResourceBundle;
 
 import javax.swing.JScrollPane;
@@ -66,8 +67,16 @@ public class CEditor extends TopComponent {
         PropertyChangeListener pcl = new PropertyChangeListener() {
             public void propertyChange(final PropertyChangeEvent event) {
                 if (event.getPropertyName().equals("annotationChanged")) { //NOI18N
-                    canvas.invalidate();
-                    canvas.repaint();
+                    canvas.updateGraphics();
+                }
+                if(event.getPropertyName().equals("showPhysicallyAdjacents")){//NOI18N
+                    canvas.getSelectionManager().removeSelectedNodes();
+                    canvas.updateGraphics();
+                }
+                if(event.getPropertyName().equals("colocalized")){//NOI18N
+                    canvas.getSelectionManager().removeSelectedNodes();
+                    canvas.getSelectionManager().setSelected((Collection) event.getNewValue(),1);
+                    canvas.updateGraphics();
                 }
             }
         };

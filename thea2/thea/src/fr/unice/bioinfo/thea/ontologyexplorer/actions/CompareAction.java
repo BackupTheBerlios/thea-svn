@@ -57,7 +57,7 @@ public class CompareAction extends NodeAction {
                     // close dialog
                     closeDialog();
                     Resource resource = rn.getResource();
-                    cni.getClassification().compareWithClassification(resource);
+                    cni.getClassification().compareWithClassification(resource, rn.getDisplayName());
                 }
             }
         };

@@ -41,6 +41,7 @@ public final class OWLProperties {
     private static String xrefPropertyName;
     /** annotatedbyname property name */
     private static String annotatedByPropertyName;
+    private static String annotatePropertyName;
     private static String hasEvidenceProperty;
     private static String chromosomePropertyName;
     private static String endPosPropertyName;
@@ -78,6 +79,8 @@ public final class OWLProperties {
         propdbkeyPropertyName = (String) o;
         o = con.getProperty("annotation.annotatedbyname");//NOI18N
         annotatedByPropertyName = (String) o;
+        o = con.getProperty("ontologyexplorer.nodes.annotates");//NOI18N
+        annotatePropertyName = (String) o;
         o = con.getProperty("ontologyexplorer.nodes.hasevidence");//NOI18N
         hasEvidenceProperty = (String) o;
         o = con.getProperty("annotation.chromosomename");//NOI18N
@@ -148,5 +151,8 @@ public final class OWLProperties {
 
     public String getXrefPropertyName() {
         return xrefPropertyName;
+    }
+    public String getAnnotatePropertyName() {
+        return annotatePropertyName;
     }
 }
