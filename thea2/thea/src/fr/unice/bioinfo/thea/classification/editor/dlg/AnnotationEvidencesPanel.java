@@ -172,8 +172,6 @@ public class AnnotationEvidencesPanel extends JPanel {
                         Utilities
                                 .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/RemoveIcon16.gif"))); //NOI18N
         add(removeEvidencesBtn, cc.xy(3, 9));
-        // JFormDesigner - End of component initialization
-        // //GEN-END:initComponents
     }
 
     /**

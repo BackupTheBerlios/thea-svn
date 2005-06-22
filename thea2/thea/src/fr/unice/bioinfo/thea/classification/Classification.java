@@ -68,7 +68,7 @@ public class Classification {
      * annotate the classification.
      */
     private Resource branchRootResource = null;
-    /** The name of the node that represents the branch used for comparing.*/
+    /** The name of the node that represents the branch used for comparing. */
     private String branchRootName = null;
 
     /**
@@ -86,6 +86,9 @@ public class Classification {
     /** The support for firing property changes */
     private PropertyChangeSupport propertySupport;
     
+    /** Code evidences used to perform the annotation.*/
+    private String[] codes;
+
     private Map utilMap = new HashMap();
 
     private Classification() {
@@ -198,6 +201,8 @@ public class Classification {
                 "Annotating ...", "Annotation in progress, please wait ...",
                 true) {
             protected void doNonUILogic() throws RuntimeException {
+                // Rember codes evidences used for this annotation:
+                codes = evidences;
                 // all leave nodes
                 List ln = classificationRootNode.getLeaves();
 
@@ -472,7 +477,7 @@ public class Classification {
         }
         return ancestors;
     }
-    
+
     // TODO : RENAME THIS METHOD LATER
     // TODO : WRITE ALGORITHM FIRST
     // TODO : OPTIMIZE IT WHEN THE BEST ONE IS FOUND
@@ -488,18 +493,22 @@ public class Classification {
             Iterator childrenIt = children.iterator();
             while (childrenIt.hasNext()) {
                 aChild = (Resource) childrenIt.next();
-//                Set targets = aChild.getTargets(annotateProperty);
-//                if (targets != null) {
-//                    returnInt += targets.size();
-//                }
-                returnInt += compute(aChild,resourceFactory);
+                //                Set targets = aChild.getTargets(annotateProperty);
+                //                if (targets != null) {
+                //                    returnInt += targets.size();
+                //                }
+                returnInt += compute(aChild, resourceFactory);
             }
         }
-        Set set = nodeResource.getTargets(annotateProperty);
-        if (set != null) {
-            returnInt += set.size();
+        // First, find out if the Term was used to annotate the classification
+        if (((Map) classificationRootNode.getProperty(Node.TERMS_MAP))
+                .containsKey(nodeResource)) {
+            Set set = nodeResource.getTargets(annotateProperty);
+            if (set != null) {
+                returnInt += set.size();
+            }
+            utilMap.put(nodeResource, new Integer(returnInt));
         }
-        utilMap.put(nodeResource,new Integer(returnInt));
         return returnInt;
     }
 
@@ -527,8 +536,8 @@ public class Classification {
 
                     // allBranchTerms contains list of terms under a root node
                     // from the ontology
-                    Set allBranchTerms = createWholeBranchTermsList(resourceFactory,
-                            nodeResource);
+                    Set allBranchTerms = createWholeBranchTermsList(
+                            resourceFactory, nodeResource);
 
                     // Count Genes for the Top root node
                     int genesCount = countGenes(resourceFactory,
@@ -841,7 +850,8 @@ public class Classification {
             Iterator targetsIt = targets.iterator();
             while (targetsIt.hasNext()) {
                 Resource target = (Resource) targetsIt.next();
-                descendants.addAll(createWholeBranchTermsList(resourceFactory, target));
+                descendants.addAll(createWholeBranchTermsList(resourceFactory,
+                        target));
             }
             descendants.addAll(targets);
         }
@@ -1264,22 +1274,6 @@ public class Classification {
         if (!ignoreNotAnnotated && !ignoreUnknown) {
             return ln.size();
         }
-
-        // Unknown Terms are Terms that ends with "unknown"
-        //        Collection unknownTerms = getController().getUnknownTerms().values();
-        //        Resource anUnknownResource = null; // Unknown Resource
-        //        // Iterate over the list of unknown terms
-        //        Iterator uIt = unknownTerms.iterator();
-        //        while (uIt.hasNext()) {
-        //            Resource uResource = (Resource) uIt.next();
-        //            // If the list of terms of the branch contains
-        //            // a terms which is "unknown", keep the first one and break
-        //            // the while loop
-        //            if (allBranchTerms.contains(uResource)) {
-        //                anUnknownResource = uResource;
-        //                break;
-        //            }
-        //        }
         int count = 0;/* Number of associated genes */
         // Iterate over the list of leaves node
         Iterator lnIt = ln.iterator();
