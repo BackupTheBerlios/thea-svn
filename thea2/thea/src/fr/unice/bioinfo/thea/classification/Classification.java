@@ -85,11 +85,14 @@ public class Classification {
 
     /** The support for firing property changes */
     private PropertyChangeSupport propertySupport;
-    
-    /** Code evidences used to perform the annotation.*/
+
+    /** Code evidences used to perform the annotation. */
     private String[] codes;
 
     private Map utilMap = new HashMap();
+    // TODO : THIS ATTRIBUTES IS USED ONLY FOR A SPECIFIC TEST
+    // TODO : REMOVE IT LATER
+    private int nbAssoc = 0;
 
     private Classification() {
         propertySupport = new PropertyChangeSupport(this);
@@ -482,7 +485,7 @@ public class Classification {
     // TODO : WRITE ALGORITHM FIRST
     // TODO : OPTIMIZE IT WHEN THE BEST ONE IS FOUND
     private int compute(Resource nodeResource, ResourceFactory resourceFactory) {
-        int returnInt = 0;
+        nbAssoc = 0;
         // Get direct children of the the resource:
         Set children = nodeResource.getTargets(OWLProperties.getInstance()
                 .getHierarchyProperties());
@@ -493,11 +496,7 @@ public class Classification {
             Iterator childrenIt = children.iterator();
             while (childrenIt.hasNext()) {
                 aChild = (Resource) childrenIt.next();
-                //                Set targets = aChild.getTargets(annotateProperty);
-                //                if (targets != null) {
-                //                    returnInt += targets.size();
-                //                }
-                returnInt += compute(aChild, resourceFactory);
+                nbAssoc += compute(aChild, resourceFactory);
             }
         }
         // First, find out if the Term was used to annotate the classification
@@ -505,11 +504,16 @@ public class Classification {
                 .containsKey(nodeResource)) {
             Set set = nodeResource.getTargets(annotateProperty);
             if (set != null) {
-                returnInt += set.size();
+                nbAssoc += set.size();
             }
-            utilMap.put(nodeResource, new Integer(returnInt));
+            if (utilMap.containsKey(nodeResource)) {
+                utilMap.put(nodeResource, new Integer(((Integer) utilMap
+                        .get(nodeResource)).intValue() + 1));
+            } else {
+                utilMap.put(nodeResource, new Integer(1));
+            }
         }
-        return returnInt;
+        return nbAssoc;
     }
 
     public void compareWithClassification(final Resource nodeResource,
@@ -550,17 +554,20 @@ public class Classification {
                                 .getProperty(Node.TERMS_MAP);
                     } else if (CESettings.getInstance()
                             .isOntologyBaseSelected()) {
-                        map = (Map) classificationRootNode
-                                .getProperty(Node.TERMS_GMAP);
-                        if (ignoreNotAnnotated) {
-                            genesCount = ((Integer) classificationRootNode
-                                    .getProperty(branch + Node.NB_ASSOC))
-                                    .intValue();
-                        } else {
-                            genesCount = ((Integer) classificationRootNode
-                                    .getProperty(Node.NB_GENE_PRODUCTS_IN_SPECIE))
-                                    .intValue();
-                        }
+                        compute(nodeResource,resourceFactory);
+                        System.out.println("nbAssoc = "+nbAssoc);
+                        return;
+//                        map = (Map) classificationRootNode
+//                                .getProperty(Node.TERMS_GMAP);
+//                        if (ignoreNotAnnotated) {
+//                            genesCount = ((Integer) classificationRootNode
+//                                    .getProperty(branch + Node.NB_ASSOC))
+//                                    .intValue();
+//                        } else {
+//                            genesCount = ((Integer) classificationRootNode
+//                                    .getProperty(Node.NB_GENE_PRODUCTS_IN_SPECIE))
+//                                    .intValue();
+//                        }
                     } else if (CESettings.getInstance()
                             .isUserSpecifiedBaseSelected()) {
                         map = (Map) classificationRootNode
