@@ -225,6 +225,8 @@ public class Classification {
                     oq.setResultVars(l);
                     oq.prepareQuery();
                     oq.getResults();
+                    System.out.println("NB_GENE_PRODUCTS_IN_SPECIE = "
+                            + oq.getResultCount());
                     classificationRootNode.addProperty(
                             Node.NB_GENE_PRODUCTS_IN_SPECIE, new Integer(oq
                                     .getResultCount()));
@@ -258,7 +260,7 @@ public class Classification {
                             // we don't need to retrieve these properties in the
                             // frame of
                             // the annotation process
-                            createProperties(aNode, entity, resourceFactory);
+                            //createProperties(aNode, entity, resourceFactory);
                             Set targets;
                             if (criterion != null) {
                                 targets = entity.getTargets(
@@ -341,18 +343,6 @@ public class Classification {
 
     public void setAnnotated(boolean annotated) {
         this.annotated = annotated;
-    }
-
-    // not used yet.
-    private Map createSpeciesMap() {
-        Map map = new HashMap();
-
-        String specieID = null;
-        Integer obj = (Integer) map.get(specieID);
-        int count = ((obj == null) ? 0 : obj.intValue());
-        map.put(specieID, new Integer(count + 1));
-
-        return map;
     }
 
     // write javadoc later:
@@ -484,36 +474,50 @@ public class Classification {
     // TODO : RENAME THIS METHOD LATER
     // TODO : WRITE ALGORITHM FIRST
     // TODO : OPTIMIZE IT WHEN THE BEST ONE IS FOUND
-    private int compute(Resource nodeResource, ResourceFactory resourceFactory) {
-        nbAssoc = 0;
-        // Get direct children of the the resource:
-        Set children = nodeResource.getTargets(OWLProperties.getInstance()
-                .getHierarchyProperties());
+    private void compute(Resource nodeResource, ResourceFactory resourceFactory) {
+        utilMap.clear();
         Resource annotateProperty = resourceFactory.getProperty(OWLProperties
                 .getInstance().getAnnotatePropertyName());
+        //    Get direct children of the the resource:
+        //        Set children = nodeResource.getTargets(OWLProperties.getInstance()
+        //                .getHierarchyProperties());
+        Set children = createWholeBranchTermsList(resourceFactory, nodeResource);
+        Map terms = (Map) classificationRootNode.getProperty(Node.TERMS_MAP);
         if (children != null) {
-            Resource aChild = null;
+            System.out.println("number of terms in this branch = "+children.size());
             Iterator childrenIt = children.iterator();
             while (childrenIt.hasNext()) {
-                aChild = (Resource) childrenIt.next();
-                nbAssoc += compute(aChild, resourceFactory);
+                Resource aChild = (Resource) childrenIt.next();
+                //                compute(aChild, resourceFactory);
+
+                //              First, find out if the Term was used to annotate the
+                // classification
+                if (terms.containsKey(aChild)) {
+                    // Find out if this term is used to annotate genes in the
+                    // ontology
+                    Set targets = aChild.getTargets(annotateProperty);
+                    // Get the number of genes annotated by this term.
+                    if (targets != null) {
+                        Object[] o = targets.toArray();
+                        Map m = new HashMap();
+                        for (int cnt = 0; cnt < o.length; cnt++) {
+                            m.put(o[cnt], null);
+                        }
+                        if (utilMap.containsKey(aChild)) {
+                            Map map = (Map) utilMap.get(aChild);
+                            m.putAll(map);
+                            utilMap.put(aChild, m);
+                        } else {
+                            utilMap.put(aChild, m);
+                        }
+                    } else {
+                        utilMap.put(aChild, null);
+                    }
+                }
+
             }
         }
-        // First, find out if the Term was used to annotate the classification
-        if (((Map) classificationRootNode.getProperty(Node.TERMS_MAP))
-                .containsKey(nodeResource)) {
-            Set set = nodeResource.getTargets(annotateProperty);
-            if (set != null) {
-                nbAssoc += set.size();
-            }
-            if (utilMap.containsKey(nodeResource)) {
-                utilMap.put(nodeResource, new Integer(((Integer) utilMap
-                        .get(nodeResource)).intValue() + 1));
-            } else {
-                utilMap.put(nodeResource, new Integer(1));
-            }
-        }
-        return nbAssoc;
+
     }
 
     public void compareWithClassification(final Resource nodeResource,
@@ -554,20 +558,35 @@ public class Classification {
                                 .getProperty(Node.TERMS_MAP);
                     } else if (CESettings.getInstance()
                             .isOntologyBaseSelected()) {
-                        compute(nodeResource,resourceFactory);
-                        System.out.println("nbAssoc = "+nbAssoc);
-                        return;
-//                        map = (Map) classificationRootNode
-//                                .getProperty(Node.TERMS_GMAP);
-//                        if (ignoreNotAnnotated) {
-//                            genesCount = ((Integer) classificationRootNode
-//                                    .getProperty(branch + Node.NB_ASSOC))
-//                                    .intValue();
-//                        } else {
-//                            genesCount = ((Integer) classificationRootNode
-//                                    .getProperty(Node.NB_GENE_PRODUCTS_IN_SPECIE))
-//                                    .intValue();
-//                        }
+                        compute(nodeResource, resourceFactory);
+                        Set keys = utilMap.keySet();
+                        Iterator keysIt = keys.iterator();
+                        int anInt = 0;
+                        while (keysIt.hasNext()) {
+                            Resource r = (Resource) keysIt.next();
+                            Map umap = (Map) utilMap.get(r);
+                            if (umap != null) {
+                                anInt += umap.size();
+                                utilMap.put(r, new Integer(umap.size()));
+                            }
+                        }
+                        classificationRootNode.addProperty(branch
+                                + Node.NB_ASSOC, new Integer(anInt));
+                        classificationRootNode.addProperty(Node.TERMS_GMAP,
+                                utilMap);
+                        System.out.println("nbAssoc = " + anInt);
+                        System.out.println("utilMap.size = " + utilMap.size());
+                        map = (Map) classificationRootNode
+                                .getProperty(Node.TERMS_GMAP);
+                        if (ignoreNotAnnotated) {
+                            genesCount = ((Integer) classificationRootNode
+                                    .getProperty(branch + Node.NB_ASSOC))
+                                    .intValue();
+                        } else {
+                            genesCount = ((Integer) classificationRootNode
+                                    .getProperty(Node.NB_GENE_PRODUCTS_IN_SPECIE))
+                                    .intValue();
+                        }
                     } else if (CESettings.getInstance()
                             .isUserSpecifiedBaseSelected()) {
                         map = (Map) classificationRootNode
@@ -609,7 +628,7 @@ public class Classification {
 
                     // IF Show physically adjacent genes IS SELECTED
                     if (CESettings.getInstance().isShowPhysicallyAdjacent()) {
-                        compareWithMap(resourceFactory);
+                        //compareWithMap(resourceFactory);
                     } else {
                         propertySupport.firePropertyChange(
                                 "showPhysicallyAdjacents", null, null);//NOI18N
@@ -1210,6 +1229,15 @@ public class Classification {
         if (settings.isStatisticalCalculationSelected()) {
             Collections.reverse(commonTerms);
         }
+        
+        
+        System.out.println("annotations for node");
+        Iterator tit = commonTerms.iterator();
+        while (tit.hasNext()) {
+            Score sc = (Score) tit.next();
+            System.out.println(sc.getTerm().getName()+": "+sc.getNbAssociatedGenesInCluster()+"/"+sc.getClusterSize()+" ("+sc.getNbAssociatedGenesInPopulation()+"/"+sc.getpopulationSize()+") = "+sc.getScore());
+        }
+
 
         Resource bestTerm = ((Score) commonTerms.get(0)).getTerm();
         String label = "";//NOI18N
