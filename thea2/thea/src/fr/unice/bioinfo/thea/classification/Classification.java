@@ -474,50 +474,51 @@ public class Classification {
     // TODO : RENAME THIS METHOD LATER
     // TODO : WRITE ALGORITHM FIRST
     // TODO : OPTIMIZE IT WHEN THE BEST ONE IS FOUND
-    private void compute(Resource nodeResource, ResourceFactory resourceFactory) {
-        utilMap.clear();
+    private Set compute(Resource nodeResource, ResourceFactory resourceFactory) {
         Resource annotateProperty = resourceFactory.getProperty(OWLProperties
                 .getInstance().getAnnotatePropertyName());
         //    Get direct children of the the resource:
-        //        Set children = nodeResource.getTargets(OWLProperties.getInstance()
-        //                .getHierarchyProperties());
-        Set children = createWholeBranchTermsList(resourceFactory, nodeResource);
+        Set children = nodeResource.getTargets(OWLProperties.getInstance()
+                .getHierarchyProperties());
+        // retrieves the set of genes associated with nodeResource or one of its
+        // descendants
+        Set allAssociatedGenes = (Set) utilMap.get(nodeResource);
+        // if utilMap already contains an entry for the term,
+        // then the set of associated genes is already calculated : returns it
+        // else, creates a new empty set
+        if (allAssociatedGenes != null) {
+            return allAssociatedGenes;
+        } else {
+            allAssociatedGenes = new HashSet();
+        }
+        // Retrieves all terms used in the classification
         Map terms = (Map) classificationRootNode.getProperty(Node.TERMS_MAP);
         if (children != null) {
-            System.out.println("number of terms in this branch = "+children.size());
             Iterator childrenIt = children.iterator();
             while (childrenIt.hasNext()) {
                 Resource aChild = (Resource) childrenIt.next();
-                //                compute(aChild, resourceFactory);
 
-                //              First, find out if the Term was used to annotate the
+                // Performs the computation only if the term is used to annotate the
                 // classification
                 if (terms.containsKey(aChild)) {
-                    // Find out if this term is used to annotate genes in the
-                    // ontology
-                    Set targets = aChild.getTargets(annotateProperty);
-                    // Get the number of genes annotated by this term.
-                    if (targets != null) {
-                        Object[] o = targets.toArray();
-                        Map m = new HashMap();
-                        for (int cnt = 0; cnt < o.length; cnt++) {
-                            m.put(o[cnt], null);
-                        }
-                        if (utilMap.containsKey(aChild)) {
-                            Map map = (Map) utilMap.get(aChild);
-                            m.putAll(map);
-                            utilMap.put(aChild, m);
-                        } else {
-                            utilMap.put(aChild, m);
-                        }
-                    } else {
-                        utilMap.put(aChild, null);
-                    }
+                    // recurses to compute utilMap for all childs
+                    allAssociatedGenes.addAll(compute(aChild, resourceFactory));
                 }
 
             }
         }
+        // Retrieve the set of genes annotated with the term
+        Set targets = nodeResource.getTargets(annotateProperty);
 
+        // If the term is used to annotates genes,
+        // add the set of annotated genes to the set of
+        // genes annotated with its childs
+        if (targets != null) {
+            allAssociatedGenes.addAll(targets);
+        }
+        // updates utilMap
+        utilMap.put(nodeResource, allAssociatedGenes);
+        return allAssociatedGenes;
     }
 
     public void compareWithClassification(final Resource nodeResource,
@@ -558,18 +559,9 @@ public class Classification {
                                 .getProperty(Node.TERMS_MAP);
                     } else if (CESettings.getInstance()
                             .isOntologyBaseSelected()) {
+                        utilMap.clear();
                         compute(nodeResource, resourceFactory);
-                        Set keys = utilMap.keySet();
-                        Iterator keysIt = keys.iterator();
-                        int anInt = 0;
-                        while (keysIt.hasNext()) {
-                            Resource r = (Resource) keysIt.next();
-                            Map umap = (Map) utilMap.get(r);
-                            if (umap != null) {
-                                anInt += umap.size();
-                                utilMap.put(r, new Integer(umap.size()));
-                            }
-                        }
+                        int anInt = ((Set) utilMap.get(nodeResource)).size();
                         classificationRootNode.addProperty(branch
                                 + Node.NB_ASSOC, new Integer(anInt));
                         classificationRootNode.addProperty(Node.TERMS_GMAP,
@@ -984,8 +976,8 @@ public class Classification {
 
             int nbGenesAssociatedWithTermInNode = (termsMap.get(aResource) == null) ? 0
                     : ((Integer) termsMap.get(aResource)).intValue();
-            double nbGenesAssociatedWithTermInRoot = ((Integer) rootTermsMap
-                    .get(aResource)).intValue();
+            double nbGenesAssociatedWithTermInRoot = ((Set) rootTermsMap
+                    .get(aResource)).size();
             double occurence = (double) nbGenesAssociatedWithTermInNode
                     / (double) count;
             double globalOccurence = nbGenesAssociatedWithTermInRoot
@@ -1229,15 +1221,17 @@ public class Classification {
         if (settings.isStatisticalCalculationSelected()) {
             Collections.reverse(commonTerms);
         }
-        
-        
+
         System.out.println("annotations for node");
         Iterator tit = commonTerms.iterator();
         while (tit.hasNext()) {
             Score sc = (Score) tit.next();
-            System.out.println(sc.getTerm().getName()+": "+sc.getNbAssociatedGenesInCluster()+"/"+sc.getClusterSize()+" ("+sc.getNbAssociatedGenesInPopulation()+"/"+sc.getpopulationSize()+") = "+sc.getScore());
+            System.out.println(sc.getTerm().getName() + ": "
+                    + sc.getNbAssociatedGenesInCluster() + "/"
+                    + sc.getClusterSize() + " ("
+                    + sc.getNbAssociatedGenesInPopulation() + "/"
+                    + sc.getpopulationSize() + ") = " + sc.getScore());
         }
-
 
         Resource bestTerm = ((Score) commonTerms.get(0)).getTerm();
         String label = "";//NOI18N
