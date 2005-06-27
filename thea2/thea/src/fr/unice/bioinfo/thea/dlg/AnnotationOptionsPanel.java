@@ -364,7 +364,8 @@ public class AnnotationOptionsPanel extends JPanel {
                 .setText(bundle.getString("TXT_InClassificationBtn"));//NOI18N
         inClassificationBtn.setToolTipText(bundle
                 .getString("TIP_InClassificationBtn"));//NOI18N
-        inClassificationBtn.setSelected(CESettings.getInstance().isClassifBaseSelected());
+        inClassificationBtn.setSelected(CESettings.getInstance()
+                .isClassifBaseSelected());
         inClassificationBtn.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 updateBaseCalculationSettings();
@@ -375,7 +376,8 @@ public class AnnotationOptionsPanel extends JPanel {
         //---- inOntologyBtn ----
         inOntologyBtn.setText(bundle.getString("TXT_InOntologyBtn"));//NOI18N
         inOntologyBtn.setToolTipText(bundle.getString("TIP_InOntologyBtn"));//NOI18N
-        inOntologyBtn.setSelected(CESettings.getInstance().isOntologyBaseSelected());
+        inOntologyBtn.setSelected(CESettings.getInstance()
+                .isOntologyBaseSelected());
         inOntologyBtn.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 updateBaseCalculationSettings();
@@ -387,7 +389,8 @@ public class AnnotationOptionsPanel extends JPanel {
         userSpecifiedBtn.setText(bundle.getString("TXT_UserSpecifiedBtn"));//NOI18N
         userSpecifiedBtn.setToolTipText(bundle
                 .getString("TIP_UserSpecifiedBtn"));//NOI18N
-        userSpecifiedBtn.setSelected(CESettings.getInstance().isUserSpecifiedBaseSelected());
+        userSpecifiedBtn.setSelected(CESettings.getInstance()
+                .isUserSpecifiedBaseSelected());
         userSpecifiedBtn.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 updateBaseCalculationSettings();
@@ -466,15 +469,15 @@ public class AnnotationOptionsPanel extends JPanel {
         CESettings.getInstance().setStatisticalCalculationSelected(
                 statCalculationBtn.isSelected());
     }
-    
-    private void updateBaseCalculationSettings(){
+
+    private void updateBaseCalculationSettings() {
         CESettings.getInstance().setClassifBaseSelected(
                 inClassificationBtn.isSelected());
         CESettings.getInstance().setOntologyBaseSelected(
                 inOntologyBtn.isSelected());
         CESettings.getInstance().setUserSpecifiedBaseSelected(
                 userSpecifiedBtn.isSelected());
-        }
+    }
 
     private void setPValueWidgetsEnabled(boolean b) {
         this.m1Btn.setEnabled(b);

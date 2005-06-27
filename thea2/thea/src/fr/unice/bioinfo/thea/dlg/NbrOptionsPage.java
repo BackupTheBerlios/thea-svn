@@ -5,17 +5,18 @@ import java.awt.BorderLayout;
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
-public class AnnotationSettingsPage extends AbstractSettingsPage {
+public class NbrOptionsPage extends AbstractSettingsPage {
+
     /**
      * @param container
      */
-    public AnnotationSettingsPage(PreferencesContainer container) {
+    public NbrOptionsPage(PreferencesContainer container) {
         super(container);
         init();
     }
 
     private void init() {
         setLayout(new BorderLayout());
-        add(new AnnotationSelectionPanel(), BorderLayout.CENTER);
+        add(new NbrOptionsPanel(), BorderLayout.CENTER);
     }
 }

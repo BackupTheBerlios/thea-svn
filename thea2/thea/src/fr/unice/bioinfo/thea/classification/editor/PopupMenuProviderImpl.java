@@ -67,7 +67,7 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         popup.add(createKeepAllAnnotationsMenuItem(drawable, aNode));
         // 5 - Choose annotation
         popup.add(createChooseAnnotationMenuItem(drawable, aNode));
-        // 6 - Remove annotation 
+        // 6 - Remove annotation
         popup.add(createRemoveAnnotationsMenuItem(drawable, aNode));
         // add a separator here
         popup.addSeparator();
@@ -149,7 +149,7 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         menuItem = new JMenuItem(keepAll);
         return menuItem;
     }
-    
+
     private JMenuItem createChooseAnnotationMenuItem(
             DrawableClassification drawable, Node aNode) {
         name = bundle.getString("LBL_ChooseAnnotationAction");
@@ -163,7 +163,7 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         menuItem = new JMenuItem(keepAll);
         return menuItem;
     }
-    
+
     private JMenuItem createRemoveAnnotationsMenuItem(
             DrawableClassification drawable, Node aNode) {
         name = bundle.getString("LBL_RemoveAnnotationAction");

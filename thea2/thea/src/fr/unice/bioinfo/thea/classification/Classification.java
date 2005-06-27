@@ -497,8 +497,8 @@ public class Classification {
             Iterator childrenIt = children.iterator();
             while (childrenIt.hasNext()) {
                 Resource aChild = (Resource) childrenIt.next();
-
-                // Performs the computation only if the term is used to annotate the
+                // Performs the computation only if the term is used to annotate
+                // the
                 // classification
                 if (terms.containsKey(aChild)) {
                     // recurses to compute utilMap for all childs
@@ -509,8 +509,7 @@ public class Classification {
         }
         // Retrieve the set of genes annotated with the term
         Set targets = nodeResource.getTargets(annotateProperty);
-
-        // If the term is used to annotates genes,
+        // If the term is used to annotate genes,
         // add the set of annotated genes to the set of
         // genes annotated with its childs
         if (targets != null) {
@@ -559,7 +558,7 @@ public class Classification {
                                 .getProperty(Node.TERMS_MAP);
                     } else if (CESettings.getInstance()
                             .isOntologyBaseSelected()) {
-                        utilMap.clear();
+                        //utilMap.clear();
                         compute(nodeResource, resourceFactory);
                         int anInt = ((Set) utilMap.get(nodeResource)).size();
                         classificationRootNode.addProperty(branch
@@ -568,6 +567,8 @@ public class Classification {
                                 utilMap);
                         System.out.println("nbAssoc = " + anInt);
                         System.out.println("utilMap.size = " + utilMap.size());
+                        utilMap.clear();
+
                         map = (Map) classificationRootNode
                                 .getProperty(Node.TERMS_GMAP);
                         if (ignoreNotAnnotated) {
@@ -584,6 +585,7 @@ public class Classification {
                         map = (Map) classificationRootNode
                                 .getProperty(Node.TERMS_LIST_MAP);
                         if (map == null) {
+                            //throw(new NullPointerException());
                             //                            JOptionPane
                             //                                    .showMessageDialog(
                             //                                            this,
@@ -620,7 +622,7 @@ public class Classification {
 
                     // IF Show physically adjacent genes IS SELECTED
                     if (CESettings.getInstance().isShowPhysicallyAdjacent()) {
-                        //compareWithMap(resourceFactory);
+                        compareWithMap(resourceFactory);
                     } else {
                         propertySupport.firePropertyChange(
                                 "showPhysicallyAdjacents", null, null);//NOI18N
@@ -670,7 +672,7 @@ public class Classification {
                 this.branchRootName);
     }
 
-    public void compareWithMap(ResourceFactory resourceFactory) {
+    private void compareWithMap(ResourceFactory resourceFactory) {
         Set colocatedGeneSets = new HashSet();
         compareWithMap(classificationRootNode, colocatedGeneSets,
                 resourceFactory);
@@ -900,7 +902,6 @@ public class Classification {
                     && ignoreUnknown) {
                 return 0;
             }
-
             termsMap.putAll((Map) aNode.getProperty(Node.TERMS_MAP));
             return 1;
         }
@@ -931,9 +932,7 @@ public class Classification {
                 }
             }
         }
-
         CESettings settings = CESettings.getInstance();
-
         // remove terms for which their occurence in this cluster
         // is greater than a given cutoff
         Set keySet = termsMap.keySet();
@@ -943,7 +942,6 @@ public class Classification {
         //        Set unknownTerms = new HashSet(getController().getUnknownTerms()
         //                .values());
         int nbTestedTerms = 0; // used for multiple testing correction
-
         while (it.hasNext()) {
             Resource aResource = (Resource) it.next();
             String aResourceName = "";//NOI18N
@@ -957,7 +955,6 @@ public class Classification {
             if (rootTermsMap.get(aResource) == null) {
                 continue;
             }
-
             // do not process ontologie roots
             //            if (rootTerms.contains(t)) {
             //                continue;
@@ -967,13 +964,10 @@ public class Classification {
             if (ignoreUnknown && aResourceName.endsWith("unknown")) {//NOI18N
                 continue;
             }
-
             //            if (t == getController().getRoot()) {
             //                continue;
             //            }
-
             nbTestedTerms += 1;
-
             int nbGenesAssociatedWithTermInNode = (termsMap.get(aResource) == null) ? 0
                     : ((Integer) termsMap.get(aResource)).intValue();
             double nbGenesAssociatedWithTermInRoot = ((Set) rootTermsMap
@@ -991,7 +985,6 @@ public class Classification {
                     .getMinAssociatedGenes()) {
                 continue;
             }
-
             double scoreCutoff = 0;
             //Score Calculation
             //Ontology Terms Count:
@@ -1028,7 +1021,6 @@ public class Classification {
                 }
             } else if (settings.isTermsDensityInPopulationSelected()) {
                 scoreCutoff = settings.getDensityInPopulation();
-
                 double score = (double) nbGenesAssociatedWithTermInNode
                         / (double) nbGenesAssociatedWithTermInRoot;
 
@@ -1063,7 +1055,6 @@ public class Classification {
                 }
             } else if (settings.isStatisticalCalculationSelected()) {
                 scoreCutoff = settings.getStat();
-
                 // Initialization of parameters
                 double kValue = nbGenesAssociatedWithTermInNode;
                 double n = count;
@@ -1076,11 +1067,9 @@ public class Classification {
                     p = count / (double) nbRootAssociatedGenes;
                     np = n * p;
                 }
-
                 double pValue = 0;
                 double lessThanKProb = 0;
                 double moreThanKProb = 0;
-
                 if (settings.isBinomialLawSelected()) {
                     if (kValue == 0) {
                         moreThanKProb = 1;
@@ -1088,7 +1077,6 @@ public class Classification {
                         moreThanKProb = Probability.binomialComplemented(
                                 (int) kValue - 1, (int) n, p);
                     }
-
                     lessThanKProb = Probability.binomial((int) kValue, (int) n,
                             p);
                 } else if (settings.isHypergeometricLawSelected()) {
@@ -1113,11 +1101,9 @@ public class Classification {
                 if (moreThanKProb < 0) {
                     moreThanKProb = 0;
                 }
-
                 if (lessThanKProb < 0) {
                     lessThanKProb = 0;
                 }
-
                 if ((moreThanKProb <= scoreCutoff)
                         && settings.isShowOverRepresented()) {
                     Score tas = (Score) overAndUnderExpTerms.get(aResource);
@@ -1140,7 +1126,6 @@ public class Classification {
                         }
                     }
                 }
-
                 if ((lessThanKProb <= scoreCutoff)
                         && settings.isShowUnderRepresented()) {
                     Score tas = (Score) overAndUnderExpTerms.get(aResource);
@@ -1165,22 +1150,18 @@ public class Classification {
                 }
             }
         }
-
         if (overAndUnderExpTerms.isEmpty()) {
             return count;
         }
-
         List commonTerms = new Vector();
-
         // collecting overexpressed terms
         Set entries = overAndUnderExpTerms.entrySet();
         it = entries.iterator();
         while (it.hasNext()) {
             Map.Entry mapE = (Map.Entry) it.next();
-            Score tas = (Score) mapE.getValue();
-
+            Score score = (Score) mapE.getValue();
             if (settings.isStatisticalCalculationSelected()) {
-                double pValue = tas.getScore();
+                double pValue = score.getScore();
 
                 // correction of cutoff
                 double scoreCutoff = settings.getStat();
@@ -1198,30 +1179,23 @@ public class Classification {
                         continue;
                     }
                 }
-
-                tas.putScore(pValue);
-                if (tas.isOverexpressed()) {
+                score.putScore(pValue);
+                if (score.isOverexpressed()) {
                     nb_overAnnotation += 1;
                 } else {
                     nb_underAnnotation += 1;
                 }
             }
-
-            commonTerms.add(tas);
+            commonTerms.add(score);
         }
-
         if (commonTerms.isEmpty()) {
             return count;
         }
-
         nb_annotatedClusters += 1;
-
         Collections.sort(commonTerms, new Comp());
-
         if (settings.isStatisticalCalculationSelected()) {
             Collections.reverse(commonTerms);
         }
-
         System.out.println("annotations for node");
         Iterator tit = commonTerms.iterator();
         while (tit.hasNext()) {
@@ -1232,14 +1206,11 @@ public class Classification {
                     + sc.getNbAssociatedGenesInPopulation() + "/"
                     + sc.getpopulationSize() + ") = " + sc.getScore());
         }
-
         Resource bestTerm = ((Score) commonTerms.get(0)).getTerm();
         String label = "";//NOI18N
-
         if (settings.isShowTermID()) {
             label += bestTerm.getId();
         }
-
         if (settings.isShowTermName()) {
             if (!"".equals(label)) {
                 label += ":";
@@ -1251,7 +1222,6 @@ public class Classification {
                 label += (sv.getValue() + " ");
             }
         }
-
         if (commonTerms.size() > 1) {
             label += "(+)";//NOI18N
         }
@@ -1263,12 +1233,10 @@ public class Classification {
             aNode.setLayoutSupport(new NodeLayoutSupport(null, null, new Color(
                     200, 255, 200), NodeLayoutSupport.RECTANGLE, null));
         }
-
         double bestScore = ((Score) commonTerms.get(0)).getScore();
         aNode.addProperty(Node.TERM_AND_SCORE, commonTerms);
         aNode.addProperty(Node.ASSOC_TERM, bestTerm);
         aNode.addProperty(Node.BEST_SCORE, new Double(bestScore));
-
         if (settings.isHideSimilarAnnotation()) {
             // remove labels from child nodes if they are the same
             childrenIt = aNode.getChildren().iterator();
@@ -1294,9 +1262,7 @@ public class Classification {
      */
     private int countGenes(ResourceFactory resourceFactory, Set allBranchTerms,
             boolean ignoreNotAnnotated, boolean ignoreUnknown) {
-
         // allBranchTerms contains all terms from the onotology branch
-
         List ln = classificationRootNode.getLeaves();
         // If we dont ignore:
         // - Genes annotated with unknown terms
@@ -1335,7 +1301,7 @@ public class Classification {
                 // Now try to find out if the gene is annotated using
                 // an unknown term:
                 atIt = at.iterator();
-                String name = "";
+                String name = "";//NOI18N
                 StringValue sv;
                 while (atIt.hasNext()) {
                     Resource aResource = (Resource) atIt.next();
@@ -1354,15 +1320,6 @@ public class Classification {
                     }
                 }
             }
-
-            // Test if the node "aNode" is annotated with an
-            // unknown Term
-            //            if (bln && (anUnknownResource != null)
-            //                    && at.contains(anUnknownResource)) {
-            //                annotatedWithUnknown = false;//Yes, the Gene is annotated with
-            //                // an unknown
-            //                // Term
-            //            }
             if (bln && isEndsWithUnknown) {
                 // Yes, the Gene is annotated with
                 // an unknown

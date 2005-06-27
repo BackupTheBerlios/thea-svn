@@ -152,6 +152,7 @@ public final class OWLProperties {
     public String getXrefPropertyName() {
         return xrefPropertyName;
     }
+
     public String getAnnotatePropertyName() {
         return annotatePropertyName;
     }

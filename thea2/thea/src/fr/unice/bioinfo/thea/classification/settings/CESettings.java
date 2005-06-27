@@ -128,8 +128,8 @@ public class CESettings extends SystemOption {
     /** userSpecifiedBaseSelected property name */
     public static final String PROP_FILE_BASE_SELECT = "userSpecifiedBaseSelected"; // NOI18N
 
-    /** specifiedBaseFileName property name */
-    public static final String PROP_FILE_BASE = "specifiedBaseFileName"; // NOI18N
+    /** genesFilePath property name */
+    public static final String PROP_FILE_BASE = "genesFilePath"; // NOI18N
 
     /** ignoreUnknownSelected property name */
     public static final String PROP_IGNORE_UNKNOWN_SELECT = "ignoreUnknownSelected"; // NOI18N
@@ -332,7 +332,7 @@ public class CESettings extends SystemOption {
     private static boolean userSpecifiedBaseSelected = false;
 
     /** User specified base of calculation file name property */
-    private static String specifiedBaseFileName = "";
+    private static String genesFilePath = "";//NPOI18N
 
     /* The following variables corresponds to Gene Product Selection panel */
 
@@ -1140,22 +1140,22 @@ public class CESettings extends SystemOption {
     }
 
     /**
-     * Returns specifiedBaseFileName property
+     * Returns genesFilePath property
      */
-    public String getSpecifiedBaseFileName() {
-        return specifiedBaseFileName;
+    public String getGenesFilePath() {
+        return genesFilePath;
     }
 
     /**
-     * Setter for specifiedBaseFileName
+     * Setter for genesFilePath
      */
-    public void setSpecifiedBaseFileName(String value) {
+    public void setGenesFilePath(String value) {
         value = (value == null) ? "" : value;
 
-        String oldFileName = getSpecifiedBaseFileName();
+        String oldFileName = getGenesFilePath();
 
         if (!value.equals(oldFileName)) {
-            specifiedBaseFileName = value;
+            genesFilePath = value;
             firePropertyChange(PROP_FILE_BASE, oldFileName, value);
         }
     }

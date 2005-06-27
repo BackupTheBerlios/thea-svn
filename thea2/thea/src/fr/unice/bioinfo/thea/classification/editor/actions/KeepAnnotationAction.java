@@ -28,8 +28,7 @@ public class KeepAnnotationAction extends GenericAction {
         super(name, accelerator, icon, shortDescription, drawable);
         this.aNode = aNode;
 
-        // if the node is leaf, disable this menu item action:
-        if ((aNode.getLabel() != null) && (!aNode.getLabel().equals(""))
+        if ((aNode.getLabel() != null) && (!aNode.getLabel().equals(""))//NOI18N
                 && (aNode.getProperty(Node.ASSOC_TERM) != null)) {
             this.setEnabled(true);
         } else {

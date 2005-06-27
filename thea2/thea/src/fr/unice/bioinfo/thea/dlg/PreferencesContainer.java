@@ -182,6 +182,11 @@ public class PreferencesContainer extends JPanel {
                         .getString("ZoomingSettingsPage_Title"), bundle
                         .getString("ZoomingSettingsPage_Class")));
 
+        DefaultMutableTreeNode xpv = new SettingsNode(new SettingsNodeInfo(
+                bundle.getString("ExpressionValuesSettingsPage_Name"), bundle
+                        .getString("ExpressionValuesSettingsPage_Title"),
+                bundle.getString("ExpressionValuesSettingsPage_Class")));
+
         DefaultMutableTreeNode ontology = new SettingsNode(
                 new SettingsNodeInfo(bundle
                         .getString("OntologySettingsPage_Name"), bundle
@@ -200,12 +205,19 @@ public class PreferencesContainer extends JPanel {
                         .getString("AnnotationOptionsPage_Title"), bundle
                         .getString("AnnotationOptionsPage_Class")));
 
+        DefaultMutableTreeNode nbrOptions = new SettingsNode(
+                new SettingsNodeInfo(bundle.getString("NbrOptionsPage_Name"),
+                        bundle.getString("NbrOptionsPage_Title"), bundle
+                                .getString("NbrOptionsPage_Class")));
+
         root.add(general);
         classification.add(zooming);
+        classification.add(xpv);
         root.add(classification);
         root.add(ontology);
 
         annotation.add(annotationOptions);
+        annotation.add(nbrOptions);
         root.add(annotation);
         return root;
     }

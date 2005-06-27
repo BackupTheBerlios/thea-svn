@@ -69,13 +69,14 @@ public class CEditor extends TopComponent {
                 if (event.getPropertyName().equals("annotationChanged")) { //NOI18N
                     canvas.updateGraphics();
                 }
-                if(event.getPropertyName().equals("showPhysicallyAdjacents")){//NOI18N
+                if (event.getPropertyName().equals("showPhysicallyAdjacents")) {//NOI18N
                     canvas.getSelectionManager().removeSelectedNodes();
                     canvas.updateGraphics();
                 }
-                if(event.getPropertyName().equals("colocalized")){//NOI18N
+                if (event.getPropertyName().equals("colocalized")) {//NOI18N
                     canvas.getSelectionManager().removeSelectedNodes();
-                    canvas.getSelectionManager().setSelected((Collection) event.getNewValue(),1);
+                    canvas.getSelectionManager().setSelected(
+                            (Collection) event.getNewValue(), 1);
                     canvas.updateGraphics();
                 }
             }
