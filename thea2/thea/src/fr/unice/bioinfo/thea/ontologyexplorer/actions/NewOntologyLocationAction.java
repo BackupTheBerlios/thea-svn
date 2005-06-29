@@ -82,7 +82,7 @@ public class NewOntologyLocationAction extends NodeAction {
 
                     // A name is allways required
                     if (name.equalsIgnoreCase("")) { //NOI18N
-                        b.append(bundle.getString("NewOntologyDialog_NoName")); //NOI18N
+                        //b.append(bundle.getString("NewOntologyDialog_NoName")); //NOI18N
                     }
 
                     if (panel.getSelectedDatabaseName().equalsIgnoreCase("")) { //NOI18N
@@ -110,7 +110,7 @@ public class NewOntologyLocationAction extends NodeAction {
                     panel.setConnectionInfo();
 
                     //Create a node that represents an Ontology
-                    OntologyNode on = new OntologyNode(name, hint, dbc);
+                    OntologyNode on = new OntologyNode(dbc.getName(), hint, dbc);
                     // Create its nodeInfo
                     OntologyNodeInfo oni = new OntologyNodeInfo();
                     on.setNodeInfo(oni);

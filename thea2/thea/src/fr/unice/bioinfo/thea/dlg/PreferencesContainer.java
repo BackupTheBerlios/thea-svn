@@ -190,9 +190,9 @@ public class PreferencesContainer extends JPanel {
         DefaultMutableTreeNode ontologyExplorer = new SettingsNode(
                 new SettingsNodeInfo(bundle
                         .getString("OntologyExplorerSettingsPage_Name"), bundle
-                        .getString("OntologyExplorerSettingsPage_Title"), bundle
-                        .getString("OntologyExplorerSettingsPage_Class")));
-        
+                        .getString("OntologyExplorerSettingsPage_Title"),
+                        bundle.getString("OntologyExplorerSettingsPage_Class")));
+
         DefaultMutableTreeNode ontology = new SettingsNode(
                 new SettingsNodeInfo(bundle
                         .getString("OntologySettingsPage_Name"), bundle

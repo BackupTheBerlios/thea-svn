@@ -27,7 +27,7 @@
 		<jar destfile="${netbeans.dest.dir}/${cluster.dir}/${nb.modules.dir}/locale/org-netbeans-core-windows_thea.jar" 
              basedir="core-windows"/>
 
-		<!-- copy thea and pltform4 to thea-2-installer directory
+		<!-- copy thea and pltform4 to thea-2-installer directory-->
 		<mkdir dir="../thea-2-installer/thea"/>
 		<mkdir dir="../thea-2-installer/platform4"/>
 		<copy todir="../thea-2-installer/thea" overwrite="yes">
@@ -36,7 +36,7 @@
 		<copy todir="../thea-2-installer/platform4" overwrite="yes">
 			<fileset dir="${netbeans.dest.dir}/${nb.cluster.platform.dir}"/>
 		</copy>
-		-->
+		
 	</target>
 
 

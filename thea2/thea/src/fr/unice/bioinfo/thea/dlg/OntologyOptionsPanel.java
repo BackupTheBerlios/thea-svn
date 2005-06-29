@@ -83,7 +83,7 @@ public class OntologyOptionsPanel extends JPanel {
         });
         add(showNameBtn, cc.xywh(1, 5, 5, 1));
     }
-    
+
     public static void main(String[] arg) {
         JFrame frame = new JFrame();
         frame.getContentPane().add(new OntologyOptionsPanel());

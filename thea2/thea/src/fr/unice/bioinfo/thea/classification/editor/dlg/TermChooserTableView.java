@@ -154,7 +154,7 @@ public class TermChooserTableView extends JPanel {
         }
     }
 
-    /** Returns the selected term.*/
+    /** Returns the selected term. */
     public Resource getSelectedTerm() {
         return selectedTerm;
     }

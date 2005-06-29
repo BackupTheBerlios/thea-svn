@@ -71,6 +71,8 @@ public interface DBConnection extends java.io.Serializable {
      * Returns connection name
      */
     public String getName();
+    
+    public String getDisplyName();
 
     /**
      * Sets connection name Fires propertychange event.

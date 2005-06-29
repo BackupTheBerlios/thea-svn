@@ -42,9 +42,9 @@ import fr.unice.bioinfo.thea.util.OWLProperties;
  * available annotation for a given cluster in the classification. <br>
  * The list of available annotations is shown on two modes: as a table and in a
  * tree mode. <br>
- * This class uses two other classes to to build those two modes.
- * After the user select an annotation, he can make it used as a prefereed
- * annotation using a <i>Select </i> button.
+ * This class uses two other classes to to build those two modes. After the user
+ * select an annotation, he can make it used as a prefereed annotation using a
+ * <i>Select </i> button.
  * @see {@link TermChooserTreeView}
  * @see {@link TermChooserTableView}
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>

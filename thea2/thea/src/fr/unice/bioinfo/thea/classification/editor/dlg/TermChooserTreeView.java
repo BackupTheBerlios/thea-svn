@@ -11,11 +11,8 @@ import javax.swing.JTree;
 import org.openide.explorer.ExplorerManager;
 import org.openide.explorer.ExplorerManager.Provider;
 import org.openide.explorer.view.BeanTreeView;
-import org.openide.nodes.Node;
 
 import fr.unice.bioinfo.allonto.datamodel.Resource;
-import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationsRootNode;
-import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologiesRootNode;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.RootNode;
 
 /**
@@ -25,7 +22,7 @@ public class TermChooserTreeView extends JPanel implements Provider {
 
     private JTree tree;
     private JScrollPane jsp;
-    
+
     private List scores;
     private Resource selectedTerm;
 
@@ -50,12 +47,12 @@ public class TermChooserTreeView extends JPanel implements Provider {
         // Create the root node
         RootNode rn = new RootNode();
 
-//        // Add the root node for all ontologies
-//        rn.getChildren().add(new Node[] { new OntologiesRootNode() });
-//
-//        // Add the root node for all classifications
-//        rn.getChildren().add(new Node[] { new ClassificationsRootNode() });
-        
+        //        // Add the root node for all ontologies
+        //        rn.getChildren().add(new Node[] { new OntologiesRootNode() });
+        //
+        //        // Add the root node for all classifications
+        //        rn.getChildren().add(new Node[] { new ClassificationsRootNode() });
+
         explorerManager.setRootContext(rn);
 
         // Build and add th BeanTreeView widget
@@ -74,17 +71,16 @@ public class TermChooserTreeView extends JPanel implements Provider {
     public ExplorerManager getExplorerManager() {
         return explorerManager;
     }
-    
-    /** Returns the selected term.*/
+
+    /** Returns the selected term. */
     public Resource getSelectedTerm() {
         return selectedTerm;
     }
-    
-    
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         JFrame f = new JFrame();
         f.getContentPane().add(new TermChooserTreeView(null));
         f.pack();
         f.setVisible(true);
-        }
+    }
 }

@@ -225,7 +225,12 @@ public class DatabaseConnection implements DBConnection {
 
         return name;
     }
+    
+    
 
+    public String getDisplyName() {
+        return null;
+    }
     /**
      * Sets user name of the connection Fires propertychange event.
      * @param value New connection name

@@ -76,14 +76,14 @@ public class ResourceNodeChildren extends Children.Keys {
         ResourceNode aResourceNode = (ResourceNode) getNode();
 
         if (aResourceNode != null) {
-            try {
-                Session sess = HibernateUtil.currentSession();
-                if (!sess.isConnected()) {
-                    sess.reconnect();
-                }
-            } catch (HibernateException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Session sess = HibernateUtil.currentSession();
+//                if (!sess.isConnected()) {
+//                    sess.reconnect();
+//                }
+//            } catch (HibernateException e) {
+//                e.printStackTrace();
+//            }
             Set pchilds = resource.getTargets(resourceFactory
                     .getProperty(OWLProperties.getInstance()
                             .getPartofPropertyName()));
@@ -114,14 +114,14 @@ public class ResourceNodeChildren extends Children.Keys {
      * @return List of keys.
      */
     private Set findSubResources(Resource resource) {
-        try {
-            Session sess = HibernateUtil.currentSession();
-            if (!sess.isConnected()) {
-                sess.reconnect();
-            }
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Session sess = HibernateUtil.currentSession();
+//            if (!sess.isConnected()) {
+//                sess.reconnect();
+//            }
+//        } catch (HibernateException e) {
+//            e.printStackTrace();
+//        }
         Set childs = ((Resource) resource).getTargets(OWLProperties
                 .getInstance().getHierarchyProperties());
         return childs;

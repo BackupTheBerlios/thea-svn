@@ -170,9 +170,9 @@ public class Classification {
 
                     // Iterate over the list of found resources and
                     // associate to each Node its corespending Resource
-                    Iterator it = list.iterator();
-                    while (it.hasNext()) {
-                        Object[] tuple = (Object[]) it.next();
+                    Iterator listIt = list.iterator();
+                    while (listIt.hasNext()) {
+                        Object[] tuple = (Object[]) listIt.next();
                         Resource dbxref = (Resource) tuple[0];
                         String key = (String) tuple[1];
                         Set s = dbxref.getTargets(p);

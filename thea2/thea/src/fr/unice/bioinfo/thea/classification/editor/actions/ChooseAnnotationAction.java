@@ -48,7 +48,7 @@ public class ChooseAnnotationAction extends GenericAction {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {
-        TermChooser chooser = new TermChooser(aNode, "",drawable);
+        TermChooser chooser = new TermChooser(aNode, "", drawable);
         //create the hide button
         JButton hideBtn = new JButton(bundle.getString("LBL_HideButton_Name"));
         hideBtn.addActionListener(new ActionListener() {
@@ -57,8 +57,8 @@ public class ChooseAnnotationAction extends GenericAction {
         });
 
         Object[] options = { hideBtn };
-        DialogDescriptor dd = new DialogDescriptor(chooser, aNode.getLabel(), false,
-                options, null, DialogDescriptor.DEFAULT_ALIGN,
+        DialogDescriptor dd = new DialogDescriptor(chooser, aNode.getLabel(),
+                false, options, null, DialogDescriptor.DEFAULT_ALIGN,
                 HelpCtx.DEFAULT_HELP, null);
         dd.setClosingOptions(new Object[] { hideBtn });
         DialogDisplayer.getDefault().createDialog(dd).show();

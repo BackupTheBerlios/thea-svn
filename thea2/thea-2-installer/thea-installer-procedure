@@ -22,7 +22,7 @@ Installer creation step by step:
 
 4- Put or update any configuration file in the "etc" directory.
 
-5- Put or update any fine ine the "samples" directory.
+5- Put or update any file ine the "samples" directory.
 
 Now,the izPack installation directory should contains a directory named 
 "thea-2-installer" which looks like:
