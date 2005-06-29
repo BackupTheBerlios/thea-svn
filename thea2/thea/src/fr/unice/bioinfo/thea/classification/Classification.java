@@ -567,7 +567,7 @@ public class Classification {
                                 utilMap);
                         System.out.println("nbAssoc = " + anInt);
                         System.out.println("utilMap.size = " + utilMap.size());
-                        utilMap.clear();
+                        //utilMap.clear();
 
                         map = (Map) classificationRootNode
                                 .getProperty(Node.TERMS_GMAP);

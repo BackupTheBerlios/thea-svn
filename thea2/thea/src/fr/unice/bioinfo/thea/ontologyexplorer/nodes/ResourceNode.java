@@ -31,15 +31,6 @@ import fr.unice.bioinfo.thea.util.OWLProperties;
  */
 public class ResourceNode extends AbstractNode implements Node.Cookie {
 
-    //    static {
-    //        Configuration con = TheaConfiguration.getDefault().getConfiguration();
-    //        Object o = con.getProperty("ontologyexplorer.nodes.nodename");//NOI18N
-    //        nodeNameProperty = (String) o;
-    //    }
-    //
-    //    /** The property to use to reach for a node's display name. */
-    //    private static String nodeNameProperty;
-
     private ResourceNodeInfo info;
 
     private ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
@@ -50,31 +41,12 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
     /** A resource associated with a node in the Ontology Explorer. */
     private Resource resource;
 
-    //    /** List of childs */
-    //    private Set targets;
-
-    //    public ResourceNode(Resource resource, Set targets) {
-    //        super((targets == null) ? Children.LEAF : new ResourceNodeChildren(
-    //                resource));
-    //        this.resource = resource;
-    //        this.targets = targets;
-    //        // Set system name and display name of this node
-    //        // using the resource one
-    //        setDisplayName(resource.getName());
-    //    }
-
     public ResourceNode(final Resource resource) {
         super((resource == null) ? Children.LEAF : new ResourceNodeChildren(
                 resource));
         this.resource = resource;
 
         // Build a display name:
-
-        //        RequestProcessor.getDefault().post(new Runnable() {
-        //            public void run() {
-
-        //        StringValue sv = (StringValue) resource.getTarget(resourceFactory
-        //                .getProperty(nodeNameProperty));
         StringValue sv = (StringValue) resource
                 .getTarget(resourceFactory.getProperty(OWLProperties
                         .getInstance().getNodeNameProperty()));
@@ -87,9 +59,6 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         setName(name);
         setDisplayName(name);
     }
-
-    //        }, 0);
-    //    }
 
     /** Returns cookie */
     public ResourceNodeInfo getInfo() {
@@ -104,8 +73,6 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
     }
 
     private void processNodeInfo(final ResourceNodeInfo info) {
-        //        RequestProcessor.getDefault().post(new Runnable() {
-        //            public void run() {
         Iterator mapIt = ((Resource) resource).getArcs().entrySet().iterator();
         String accessor;
         Resource resource;
@@ -124,8 +91,6 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
                 info.setProperty(accessor, ((StringValue) e).getValue());
             }
         }
-        //            }
-        //        }, 0);
     }
 
     /*

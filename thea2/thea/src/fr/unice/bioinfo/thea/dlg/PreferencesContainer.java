@@ -187,6 +187,12 @@ public class PreferencesContainer extends JPanel {
                         .getString("ExpressionValuesSettingsPage_Title"),
                 bundle.getString("ExpressionValuesSettingsPage_Class")));
 
+        DefaultMutableTreeNode ontologyExplorer = new SettingsNode(
+                new SettingsNodeInfo(bundle
+                        .getString("OntologyExplorerSettingsPage_Name"), bundle
+                        .getString("OntologyExplorerSettingsPage_Title"), bundle
+                        .getString("OntologyExplorerSettingsPage_Class")));
+        
         DefaultMutableTreeNode ontology = new SettingsNode(
                 new SettingsNodeInfo(bundle
                         .getString("OntologySettingsPage_Name"), bundle
@@ -214,7 +220,8 @@ public class PreferencesContainer extends JPanel {
         classification.add(zooming);
         classification.add(xpv);
         root.add(classification);
-        root.add(ontology);
+        ontologyExplorer.add(ontology);
+        root.add(ontologyExplorer);
 
         annotation.add(annotationOptions);
         annotation.add(nbrOptions);

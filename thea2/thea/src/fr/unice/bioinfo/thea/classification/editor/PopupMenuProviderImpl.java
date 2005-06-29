@@ -158,9 +158,9 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         icon = new ImageIcon(
                 Utilities
                         .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/EmptyIcon.gif"));
-        Action keepAll = new ChooseAnnotationAction(name, accelerator, icon,
+        Action choose = new ChooseAnnotationAction(name, accelerator, icon,
                 shortDescription, drawable, aNode);
-        menuItem = new JMenuItem(keepAll);
+        menuItem = new JMenuItem(choose);
         return menuItem;
     }
 
