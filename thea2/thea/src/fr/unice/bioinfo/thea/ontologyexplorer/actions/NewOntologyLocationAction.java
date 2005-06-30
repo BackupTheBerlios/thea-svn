@@ -82,7 +82,8 @@ public class NewOntologyLocationAction extends NodeAction {
 
                     // A name is allways required
                     if (name.equalsIgnoreCase("")) { //NOI18N
-                        //b.append(bundle.getString("NewOntologyDialog_NoName")); //NOI18N
+                        //b.append(bundle.getString("NewOntologyDialog_NoName"));
+                        // //NOI18N
                     }
 
                     if (panel.getSelectedDatabaseName().equalsIgnoreCase("")) { //NOI18N

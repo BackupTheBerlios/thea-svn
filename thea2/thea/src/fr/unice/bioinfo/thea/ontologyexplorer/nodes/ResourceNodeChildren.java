@@ -4,16 +4,12 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sf.hibernate.HibernateException;
-import net.sf.hibernate.Session;
-
 import org.openide.nodes.Children;
 import org.openide.nodes.Node;
 import org.openide.util.NbBundle;
 
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
-import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 import fr.unice.bioinfo.thea.util.OWLProperties;
@@ -76,14 +72,14 @@ public class ResourceNodeChildren extends Children.Keys {
         ResourceNode aResourceNode = (ResourceNode) getNode();
 
         if (aResourceNode != null) {
-//            try {
-//                Session sess = HibernateUtil.currentSession();
-//                if (!sess.isConnected()) {
-//                    sess.reconnect();
-//                }
-//            } catch (HibernateException e) {
-//                e.printStackTrace(System.out);
-//            }
+            //            try {
+            //                Session sess = HibernateUtil.currentSession();
+            //                if (!sess.isConnected()) {
+            //                    sess.reconnect();
+            //                }
+            //            } catch (HibernateException e) {
+            //                e.printStackTrace(System.out);
+            //            }
             Set pchilds = resource.getTargets(resourceFactory
                     .getProperty(OWLProperties.getInstance()
                             .getPartofPropertyName()));
@@ -114,14 +110,14 @@ public class ResourceNodeChildren extends Children.Keys {
      * @return List of keys.
      */
     private Set findSubResources(Resource resource) {
-//        try {
-//            Session sess = HibernateUtil.currentSession();
-//            if (!sess.isConnected()) {
-//                sess.reconnect();
-//            }
-//        } catch (HibernateException e) {
-//            e.printStackTrace(System.out);
-//        }
+        //        try {
+        //            Session sess = HibernateUtil.currentSession();
+        //            if (!sess.isConnected()) {
+        //                sess.reconnect();
+        //            }
+        //        } catch (HibernateException e) {
+        //            e.printStackTrace(System.out);
+        //        }
         Set childs = ((Resource) resource).getTargets(OWLProperties
                 .getInstance().getHierarchyProperties());
         return childs;
