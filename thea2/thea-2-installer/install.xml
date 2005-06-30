@@ -84,6 +84,7 @@
 			<file src="Readme.txt" targetdir="$INSTALL_PATH"/>
 			<file src="Licence.txt" targetdir="$INSTALL_PATH"/>
 			<file src="thea.ico" targetdir="$INSTALL_PATH/bin"/>
+			<file src="uninstall.ico" targetdir="$INSTALL_PATH/bin"/>
 			<file src="thea.png" targetdir="$INSTALL_PATH/bin"/>
 			
 			<!-- etc dir. It contains configuration files.-->
@@ -103,8 +104,8 @@
 			<!-- The file will be parsed -->
 			<parsable targetfile="$INSTALL_PATH/bin/launch-thea.bat"/>
 			<parsable targetfile="$INSTALL_PATH/bin/launch-thea.sh"/>
-
 		</pack>
+		
 		<pack required="no" name="Samples">
 			<description>Examples of classifications to use with 
 				THEA</description>
