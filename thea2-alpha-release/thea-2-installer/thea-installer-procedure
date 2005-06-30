@@ -1,0 +1,58 @@
+This file explains how to create the THEA installer using the izPack tool.
+
+Remember that:
+==============
+
+- The compilation system of thea create a directory named "thea" under the 
+ netbeans 4.0 installation directory.
+ 
+Installer creation step by step:
+================================
+
+1- Copy the parent directory of this file under the IzPack installation 
+   directory.
+   
+2- Copy the directory named "thea" from the netbeans 4.0 installation 
+   directory to the parent directory of this file.
+   
+3- Copy the directory named "platform4" from the netbeans 4.0 installation 
+   directory to the parent directory of this file.
+   
+3- Put or update any documentation files in the "doc" directory.
+
+4- Put or update any configuration file in the "etc" directory.
+
+5- Put or update any file ine the "samples" directory.
+
+Now,the izPack installation directory should contains a directory named 
+"thea-2-installer" which looks like:
+
+ thea-2-installer|
+                 |--- bin|
+                 |       |--launch-thea.bat (windows script to launch thea)
+                 |       |--launch-thea.sh (unix/linux launcher)
+                 |
+                 |--- doc (put any available documentation here)
+                 |
+                 |--- etc (contain config file.example thea.cfg.xml)
+                 |
+                 |--- platform4 (netbeans platform)
+                 |
+                 |--- thea
+                 |
+                 |--- samples (examples of classifications )
+                 |
+                 |--- Licence.txt
+                 |
+                 |--- Readme.txt
+                 |
+                 |--- install.xml
+                 |
+                 |--- thea-installer-procedure (this file)
+                 
+6- From this directory:
+   -- Under windows:    ..\bin\compile install.xml -b . -o install.jar
+   -- Under Unix/Linux: ../bin/compile install.xml -b . -o install.jar
+   
+   This generates the thea installer as a jar file (install.jar).
+

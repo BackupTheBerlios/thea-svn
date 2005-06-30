@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<installation version="1.0">
+	<!-- 
+        The info section.
+        The meaning of the tags should be natural ...
+    -->
+	<info>
+		<appname>THEA2</appname>
+		<appversion>1.0 Alpha (Under developement)</appversion>
+		<authors>
+			<author name="Said El Kasmi" email="elkasmi@unice.fr"/>
+			<author name="Claude Pasquier" email="Claude.Pasquier@unice.fr"/>
+		</authors>
+		<url>http://thea.unice.fr/</url>
+	</info>
+	<!-- 
+        The gui preferences indication.
+        Sets the installer window to 640x480. It will not be able to change the size.
+    -->
+	<guiprefs width="500" height="550" resizable="no">
+		<laf name="metouia">
+			<os family="unix" />
+		</laf>
+		<laf name="looks">
+			<os family="windows" />
+			<param name="variant" value="plastic3D" />
+		</laf>
+	</guiprefs>
+	<!-- 
+        The locale section.
+        Asks here to include the English and French langpacks.
+    -->
+	<locale>
+		<langpack iso3="eng"/>
+		<langpack iso3="fra"/>
+	</locale>
+	<!-- 
+        The resources section.
+        The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
+    -->
+	<resources>
+		<res id="LicencePanel.licence" src="Licence.txt"/>
+		<res id="InfoPanel.info" src="Readme.txt"/>
+		<res src="shortcutSpec.xml" id="shortcutSpec.xml"/>
+		<res src="Unix_shortcutSpec.xml" id="Unix_shortcutSpec.xml"/>
+		<res src="border1.png" id="Installer.image.0"/>
+		<res src="border2.png" id="Installer.image.1"/>
+		<res src="border3.png" id="Installer.image.2"/>
+		<res src="border4.png" id="Installer.image.3"/>
+		<res src="border5.png" id="Installer.image.4"/>
+		<res src="border6.png" id="Installer.image.5"/>
+		<res src="border7.png" id="Installer.image.6"/>
+		<res src="border8.png" id="Installer.image.7"/>
+	</resources>
+	<!-- 
+        The panels section.
+        We indicate here which panels we want to use. The order will be respected.
+    -->
+	<panels>
+		<panel classname="HelloPanel"/>
+		<panel classname="InfoPanel"/>
+		<panel classname="LicencePanel"/>
+		<panel classname="TargetPanel"/>
+		<panel classname="PacksPanel"/>
+		<panel classname="InstallPanel"/>
+		<panel classname="ShortcutPanel"/>
+		<panel classname="FinishPanel"/>
+	</panels>
+	<!-- 
+        The packs section.
+        We specify here our packs.
+    -->
+	<packs>
+		<pack name="Base" required="yes" preselected="yes">
+			<description>All necessary files for running thea.</description>
+			
+			<!-- the netbeans platform -->
+			<file src="platform4" targetdir="$INSTALL_PATH"/>
+			
+			<!-- thea module -->
+			<file src="thea" targetdir="$INSTALL_PATH"/>
+			
+			<!-- Readme, icons and Licence files -->
+			<file src="Readme.txt" targetdir="$INSTALL_PATH"/>
+			<file src="Licence.txt" targetdir="$INSTALL_PATH"/>
+			<file src="thea.ico" targetdir="$INSTALL_PATH/bin"/>
+			<file src="uninstall.ico" targetdir="$INSTALL_PATH/bin"/>
+			<file src="thea.png" targetdir="$INSTALL_PATH/bin"/>
+			
+			<!-- etc dir. It contains configuration files.-->
+			<fileset dir="" targetdir="$INSTALL_PATH">
+              <include name="etc/**/*" />
+              <exclude name="etc/*.svn" />
+            </fileset>
+			<!--file src="etc" targetdir="$INSTALL_PATH" /-->
+			
+			<!--  the bin directory.It contains scripts for launching thea -->
+			<!--file src="bin" targetdir="$INSTALL_PATH"/-->
+			<fileset dir="" targetdir="$INSTALL_PATH">
+              <include name="bin/*" />
+              <exclude name="bin/*.svn" />
+            </fileset>
+			
+			<!-- The file will be parsed -->
+			<parsable targetfile="$INSTALL_PATH/bin/launch-thea.bat"/>
+			<parsable targetfile="$INSTALL_PATH/bin/launch-thea.sh"/>
+		</pack>
+		
+		<pack required="no" name="Samples">
+			<description>Examples of classifications to use with 
+				THEA</description>
+			<!--file src="samples" targetdir="$INSTALL_PATH"/-->
+			<fileset dir="" targetdir="$INSTALL_PATH">
+              <include name="samples/**/*" />
+              <exclude name="samples/*.svn" />
+              <exclude name="samples/**/*.svn" />
+            </fileset>
+		</pack>
+		<!-- documentations -->
+		<pack name="Documentation" required="no">
+			<description>The documentation</description>
+			<!--file src="doc" targetdir="$INSTALL_PATH"/-->
+			<fileset dir="" targetdir="$INSTALL_PATH">
+              <include name="doc/*" />
+              <exclude name="doc/*.svn" />
+            </fileset>
+		</pack>
+	</packs>
+	<!-- The native libraries to add -->
+	<native type="izpack" name="ShellLink.dll"/>
+</installation>

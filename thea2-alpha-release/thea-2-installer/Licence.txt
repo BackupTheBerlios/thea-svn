@@ -1,0 +1,14 @@
+Software Thea (c) CNRS 2003, hereinafter referred 
+to as "THE SOFTWARE".
+
+The SOFTWARE has been designed and produced by researchers of the 
+Virtual Biology Laboratory from the CNRS institute
+
+CNRS
+UMR6543 - Institute of Signaling Developmental Biology and Cancer
+Université de Nice - Sophia Antipolis
+CENTRE DE BIOCHIMIE
+Parc Valrose
+06108 NICE CEDEX 2
+
+CNRS holds all the patent rights concerning the SOFTWARE.
