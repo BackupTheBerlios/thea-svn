@@ -82,7 +82,7 @@ public class ResourceNodeChildren extends Children.Keys {
 //                    sess.reconnect();
 //                }
 //            } catch (HibernateException e) {
-//                e.printStackTrace();
+//                e.printStackTrace(System.out);
 //            }
             Set pchilds = resource.getTargets(resourceFactory
                     .getProperty(OWLProperties.getInstance()
@@ -120,7 +120,7 @@ public class ResourceNodeChildren extends Children.Keys {
 //                sess.reconnect();
 //            }
 //        } catch (HibernateException e) {
-//            e.printStackTrace();
+//            e.printStackTrace(System.out);
 //        }
         Set childs = ((Resource) resource).getTargets(OWLProperties
                 .getInstance().getHierarchyProperties());

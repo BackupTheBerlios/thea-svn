@@ -11,10 +11,10 @@
 			to build the tree in the ontology explorer.
 			-->
 		<hierarchy>
-			<uri>SUPERCLASS</uri>
+			<uri>http://www.unice.fr/bioinfo/owl/biowl#superClassOf</uri>
 			<uri>http://www.unice.fr/bioinfo/owl/biowl#contains</uri>
 			<partof>http://www.unice.fr/bioinfo/owl/biowl#contains</partof>
-			<isa>SUPERCLASS</isa>
+			<isa>http://www.unice.fr/bioinfo/owl/biowl#superClassOf</isa>
 		</hierarchy>
 		<nodes>
 			<!-- nodename tels how to create a display name for nodes -->
@@ -67,4 +67,15 @@
 			<name>http://www.unice.fr/bioinfo/owl/biowl#strand</name>
 		</column>
 	</geneeditor>
+	<annotation>
+		<propdbkeyname>http://www.unice.fr/bioinfo/owl/biowl#acc</propdbkeyname>
+		<annotatedbyname>http://www.unice.fr/bioinfo/owl/biowl#annotatedBy</annotatedbyname>
+		<chromosomename>http://www.unice.fr/bioinfo/owl/biowl#chromosome</chromosomename>
+		<endPosname>http://www.unice.fr/bioinfo/owl/biowl#endPos</endPosname>
+		<strandname>http://www.unice.fr/bioinfo/owl/biowl#strand</strandname>
+		<!--transcribedFromname>http://www.unice.fr/bioinfo/owl/biowl#</transcribedFromname-->
+		<startPosname>http://www.unice.fr/bioinfo/owl/biowl#startPos</startPosname>
+		<symbolname>http://www.unice.fr/bioinfo/owl/biowl#symbol</symbolname>
+		<speciename>http://www.unice.fr/bioinfo/owl/biowl#specie</speciename>
+	</annotation>
 </owlproperties>

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 
 <shortcuts>
+<skipIfNotSupported />
 
   <programGroup defaultName="THEA 2" location="applications"/>
   
   <shortcut
-     name="Thea"
+     name="THEA 2"
      programGroup="yes"
      desktop="yes"
      applications="no"
      startMenu="no"
      startup="no"
      target="$INSTALL_PATH\bin\launch-thea.bat"
-     workingDirectory="$INSTALL_PATH"
+     workingDirectory="$INSTALL_PATH\bin"
      commandLine=""
      description="THEA 2 launcher"
      iconFile="$INSTALL_PATH\bin\thea.ico"

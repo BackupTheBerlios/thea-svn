@@ -44,11 +44,11 @@
 		</folder>
 		<folder name="Help"/>
 	</folder>
-	<folder name="Windows2">
+	<!--folder name="Windows2">
 		<file name="WindowManager.wswmgr" url="WindowManager.wswmgr"/>
 		<folder name="Modes">
 		</folder>
-	</folder>
+	</folder-->
 	<!-- Config Toolbars -->
 	<folder name="Toolbars">
 		<file name="File_hidden"/>

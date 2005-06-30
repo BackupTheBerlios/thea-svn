@@ -73,33 +73,56 @@
 	<packs>
 		<pack name="Base" required="yes" preselected="yes">
 			<description>All necessary files for running thea.</description>
+			
 			<!-- the netbeans platform -->
 			<file src="platform4" targetdir="$INSTALL_PATH"/>
+			
 			<!-- thea module -->
 			<file src="thea" targetdir="$INSTALL_PATH"/>
-			<!-- readme and Licence files -->
+			
+			<!-- Readme, icons and Licence files -->
 			<file src="Readme.txt" targetdir="$INSTALL_PATH"/>
 			<file src="Licence.txt" targetdir="$INSTALL_PATH"/>
-			<!-- etc dir. It contains configuration files.-->
-			<file src="etc" targetdir="$INSTALL_PATH" />
-			<!--  the bin directory.It contains scripts for launching thea -->
-			<file src="bin" targetdir="$INSTALL_PATH"/>
 			<file src="thea.ico" targetdir="$INSTALL_PATH/bin"/>
 			<file src="thea.png" targetdir="$INSTALL_PATH/bin"/>
+			
+			<!-- etc dir. It contains configuration files.-->
+			<fileset dir="" targetdir="$INSTALL_PATH">
+              <include name="etc/**/*" />
+              <exclude name="etc/*.svn" />
+            </fileset>
+			<!--file src="etc" targetdir="$INSTALL_PATH" /-->
+			
+			<!--  the bin directory.It contains scripts for launching thea -->
+			<!--file src="bin" targetdir="$INSTALL_PATH"/-->
+			<fileset dir="" targetdir="$INSTALL_PATH">
+              <include name="bin/*" />
+              <exclude name="bin/*.svn" />
+            </fileset>
+			
+			<!-- The file will be parsed -->
 			<parsable targetfile="$INSTALL_PATH/bin/launch-thea.bat"/>
 			<parsable targetfile="$INSTALL_PATH/bin/launch-thea.sh"/>
-			<!-- The file will be parsed -->
+
 		</pack>
 		<pack required="no" name="Samples">
 			<description>Examples of classifications to use with 
 				THEA</description>
-			<file src="samples" targetdir="$INSTALL_PATH"/>
+			<!--file src="samples" targetdir="$INSTALL_PATH"/-->
+			<fileset dir="" targetdir="$INSTALL_PATH">
+              <include name="samples/**/*" />
+              <exclude name="samples/*.svn" />
+              <exclude name="samples/**/*.svn" />
+            </fileset>
 		</pack>
 		<!-- documentations -->
 		<pack name="Documentation" required="no">
 			<description>The documentation</description>
-			<file src="doc" targetdir="$INSTALL_PATH"/>
-			<!-- Reccursive adding -->
+			<!--file src="doc" targetdir="$INSTALL_PATH"/-->
+			<fileset dir="" targetdir="$INSTALL_PATH">
+              <include name="doc/*" />
+              <exclude name="doc/*.svn" />
+            </fileset>
 		</pack>
 	</packs>
 	<!-- The native libraries to add -->
