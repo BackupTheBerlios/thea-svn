@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.swing.Action;
 
-import org.openide.actions.PropertiesAction;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
 import org.openide.nodes.Node;
@@ -20,7 +19,7 @@ import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.StringValue;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowAnnotetdGenesAction;
-import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowParentAction;
+import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowResourceNodeProperties;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 import fr.unice.bioinfo.thea.util.OWLProperties;
 
@@ -134,13 +133,13 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         return sheet;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.openide.nodes.Node#getPreferredAction()
-     */
-    public Action getPreferredAction() {
-        return SystemAction.get(PropertiesAction.class);
-    }
+    //    /*
+    //     * (non-Javadoc)
+    //     * @see org.openide.nodes.Node#getPreferredAction()
+    //     */
+    //    public Action getPreferredAction() {
+    //        return SystemAction.get(PropertiesAction.class);
+    //    }
 
     /*
      * (non-Javadoc)
@@ -148,8 +147,8 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
      */
     public Action[] getActions(boolean arg0) {
         Action[] actions = new Action[] {
-                SystemAction.get(ShowAnnotetdGenesAction.class),
-                SystemAction.get(ShowParentAction.class) };
+                SystemAction.get(ShowAnnotetdGenesAction.class), null,
+                SystemAction.get(ShowResourceNodeProperties.class) };
         return actions;
     }
 

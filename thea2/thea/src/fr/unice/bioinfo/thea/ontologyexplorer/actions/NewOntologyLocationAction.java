@@ -111,7 +111,8 @@ public class NewOntologyLocationAction extends NodeAction {
                     panel.setConnectionInfo();
 
                     //Create a node that represents an Ontology
-                    OntologyNode on = new OntologyNode(dbc.getName(), hint, dbc);
+                    OntologyNode on = new OntologyNode(dbc.getDatabase(), hint,
+                            dbc);
                     // Create its nodeInfo
                     OntologyNodeInfo oni = new OntologyNodeInfo();
                     on.setNodeInfo(oni);

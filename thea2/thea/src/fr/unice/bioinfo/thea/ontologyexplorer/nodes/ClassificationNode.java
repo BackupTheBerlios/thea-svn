@@ -8,10 +8,10 @@ import org.openide.nodes.Node;
 import org.openide.util.actions.SystemAction;
 
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.AnnotateAction;
-import fr.unice.bioinfo.thea.ontologyexplorer.actions.CompareAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.DeleteClNodeAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.EditClAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.SelectOntologyAction;
+import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowAnnotationsAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ClassificationNodeInfo;
 
 /**
@@ -52,7 +52,7 @@ public class ClassificationNode extends AbstractNode implements Node.Cookie {
         Action[] result = new Action[] { SystemAction.get(EditClAction.class),
                 SystemAction.get(SelectOntologyAction.class),
                 SystemAction.get(AnnotateAction.class),
-                SystemAction.get(CompareAction.class), null,
+                SystemAction.get(ShowAnnotationsAction.class), null,
                 SystemAction.get(DeleteClNodeAction.class) };
 
         return result;

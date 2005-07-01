@@ -22,7 +22,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 /**
  * @author Saïd El Kasmi
  */
-public class CompareAction extends NodeAction {
+public class ShowAnnotationsAction extends NodeAction {
     private Dialog dialog;
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
@@ -100,8 +100,7 @@ public class CompareAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        //        return bundle.getString("LBL_AnnotateAction_Name");//NO18N
-        return "Compare ...";
+        return bundle.getString("LBL_ShowAnnotationsAction_Name");//NO18N
     }
 
     /*
