@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="thea-2-installer" default="installer" basedir=".">
+<project name="thea-2-installer" default="info" basedir=".">
 	<!--import file="../nbbuild/module-scripts/projectized.xml" /-->
 
 	<property name="installer.properties.file" value="installer.build.properties" />
@@ -10,7 +10,8 @@
 
 	<izpack input="install.xml" output="${installer.output}/thea2-install.jar" installerType="standard" basedir="." izPackDir="${izpack.home}/" />
 
-	<target name="installer" >
+	<target name="info" >
+		<echo message="IzPack version:"/>
 		<echo message="IZH=${izpack.home}" />
 	</target>
 </project>
