@@ -211,10 +211,10 @@ public class PreferencesContainer extends JPanel {
                         .getString("AnnotationOptionsPage_Title"), bundle
                         .getString("AnnotationOptionsPage_Class")));
 
-        DefaultMutableTreeNode nbrOptions = new SettingsNode(
-                new SettingsNodeInfo(bundle.getString("NbrOptionsPage_Name"),
-                        bundle.getString("NbrOptionsPage_Title"), bundle
-                                .getString("NbrOptionsPage_Class")));
+        DefaultMutableTreeNode colocalisation = new SettingsNode(
+                new SettingsNodeInfo(bundle.getString("ColocalizationOptionsPage_Name"),
+                        bundle.getString("ColocalizationOptionsPage_Title"), bundle
+                                .getString("ColocalizationOptionsPage_Class")));
 
         root.add(general);
         classification.add(zooming);
@@ -224,7 +224,7 @@ public class PreferencesContainer extends JPanel {
         root.add(ontologyExplorer);
 
         annotation.add(annotationOptions);
-        annotation.add(nbrOptions);
+        root.add(colocalisation);
         root.add(annotation);
         return root;
     }

@@ -27,7 +27,7 @@ import com.jgoodies.forms.layout.Sizes;
 
 import fr.unice.bioinfo.thea.classification.settings.CESettings;
 
-public class NbrOptionsPanel extends JPanel {
+public class ColocalizationOptionsPanel extends JPanel {
 
     private JComponent nbrSelectionSeparator;
     private JLabel maxDistanceLbl;
@@ -45,7 +45,7 @@ public class NbrOptionsPanel extends JPanel {
     private static ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.dlg.Bundle"); //NOI18N;
 
-    public NbrOptionsPanel() {
+    public ColocalizationOptionsPanel() {
         init();
     }
 
