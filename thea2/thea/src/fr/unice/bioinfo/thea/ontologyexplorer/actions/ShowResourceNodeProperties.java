@@ -7,6 +7,9 @@ import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
 
+import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
+import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
+
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
@@ -29,8 +32,19 @@ public class ShowResourceNodeProperties extends NodeAction {
      * (non-Javadoc)
      * @see org.openide.util.actions.NodeAction#enable(org.openide.nodes.Node[])
      */
-    protected boolean enable(Node[] arg0) {
-        // TODO Auto-generated method stub
+    protected boolean enable(Node[] nodes) {
+        nodes = OntologyExplorer.findDefault().getExplorerManager()
+                .getSelectedNodes();
+        Node node;
+        if ((nodes != null) && (nodes.length == 1)) {
+            node = nodes[0];
+        } else {
+            return false;
+        }
+        // enable only if this is a Resource node.
+        if (node instanceof ResourceNode) {
+            return true;
+        }
         return false;
     }
 
@@ -47,8 +61,7 @@ public class ShowResourceNodeProperties extends NodeAction {
      * @see org.openide.util.HelpCtx.Provider#getHelpCtx()
      */
     public HelpCtx getHelpCtx() {
-        // TODO Auto-generated method stub
-        return null;
+        return HelpCtx.DEFAULT_HELP;
     }
 
 }

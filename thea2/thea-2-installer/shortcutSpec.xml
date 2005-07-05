@@ -3,10 +3,10 @@
 <shortcuts>
 <skipIfNotSupported />
 
-  <programGroup defaultName='THEA 2' location='applications'/>
+  <programGroup defaultName='Thea 2' location='applications'/>
   
   <shortcut
-     name='THEA 2'
+     name='Thea'
      programGroup='yes'
      desktop='yes'
      applications='no'
