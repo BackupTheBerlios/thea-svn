@@ -1,1 +1,19 @@
-Starting from here
+1 - Edit the file : installer.build.properties and change 
+    properties when needed.
+
+2 - Call ant using the script file name build-dist.xml
+    ant -f build-dist.xml
+    This prepares the installation by copying the netbeans 
+    platform and the thea module directory inside this 
+    directory.
+    
+3 - Call ant using the script file build.xml
+    ant -f build.xml ( or simply ant)
+    
+    Now the installer is created and placed at the path specified 
+    by installer.output variable in installer.build.properties
+    
+4 - Clean generated binaries:
+    ant -f build-dist.xml clean
+    This cleans directory generated in point 2. and the generated 
+    installer.
