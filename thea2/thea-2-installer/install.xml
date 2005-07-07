@@ -17,7 +17,7 @@
         The gui preferences indication.
         Sets the installer window to 640x480. It will not be able to change the size.
     -->
-	<guiprefs width="500" height="550" resizable="no">
+	<guiprefs width="640" height="480" resizable="no">
 		<laf name="metouia">
 			<os family="unix" />
 		</laf>

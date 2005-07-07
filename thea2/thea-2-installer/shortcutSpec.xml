@@ -22,7 +22,7 @@
    </shortcut>
    
    <shortcut
-     name='Uninstaller'
+     name='Thea uninstaller'
      programGroup='yes'
      desktop='no'
      applications='no'
