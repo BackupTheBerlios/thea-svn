@@ -149,7 +149,7 @@ public class NewClAction extends NodeAction {
 
                     // IF cdfNode and tdfNode are succefully created:
                     if ((cdfNode != null) && (tdfNode != null)) {
-                        cn.getChildren().add(new Node[] { cdfNode, tdfNode });
+                        //cn.getChildren().add(new Node[] { cdfNode, tdfNode });
                     }
 
                     // Add the classification node to the ontology node
