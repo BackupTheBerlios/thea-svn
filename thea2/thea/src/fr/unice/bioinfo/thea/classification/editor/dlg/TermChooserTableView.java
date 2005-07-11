@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -34,6 +35,7 @@ public class TermChooserTableView extends JPanel {
     private String[] columnNames;
     /** Data */
     private Object[][] data;
+    private Vector vector = new Vector();
 
     public TermChooserTableView(List scores) {
         this.scores = scores;
@@ -60,7 +62,8 @@ public class TermChooserTableView extends JPanel {
                 } else {
                     int selectedRow = lsm.getMinSelectionIndex();
                     //selectedRow is selected
-                    selectedTerm = (Resource) data[selectedRow][0];
+                    //                    selectedTerm = (Resource) data[selectedRow][0];
+                    selectedTerm = (Resource) vector.get(selectedRow);
                 }
             }
         });
@@ -77,7 +80,7 @@ public class TermChooserTableView extends JPanel {
     public class TermsTableModel extends AbstractTableModel {
 
         public TermsTableModel() {
-            columnNames = new String[] { "Term", "Label", "GO ID", "Score",//NOI18N
+            columnNames = new String[] { "Term", "Label", "Score",//NOI18N
                     "Represented" };//NOI18N
             data = new Object[scores.size()][columnNames.length];
             Iterator scoresIt = scores.iterator();
@@ -96,21 +99,21 @@ public class TermChooserTableView extends JPanel {
                         .getTarget(resourceFactory.getProperty(OWLProperties
                                 .getInstance().getNodeNameProperty()));
 
-                data[i][j] = aResource;
+                data[i][j] = aResource.getDisplayAcc();
+                vector.add(i, aResource);
                 if (sv != null) {
                     data[i][j + 1] = new String(sv.getValue());
                 } else {
                     data[i][j + 1] = new String("");//NOI18N
                 }
                 String score = s.getFormattedScore();
-                data[i][j + 2] = new Integer(aResource.getId());
-                data[i][j + 3] = score;
+                data[i][j + 2] = score;
                 String expression = String.valueOf(s.isOverexpressed());
 
                 if (expression == "true") {//NOI18N
-                    data[i][j + 4] = "over";//NOI18N
+                    data[i][j + 3] = "over";//NOI18N
                 } else {
-                    data[i][j + 4] = "under";//NOI18N
+                    data[i][j + 3] = "under";//NOI18N
                 }
             }
         }

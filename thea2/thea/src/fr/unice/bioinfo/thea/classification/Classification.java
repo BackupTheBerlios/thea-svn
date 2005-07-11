@@ -701,45 +701,8 @@ public class Classification {
                 annotation += (" s:" + aNode.getProperty(Node.STRAND_POSITION)//NOI18N
                         + " c:" + aNode.getProperty(Node.CHROMOSOMAL_POSITION) + "]");//NOI18N
                 aNode.addProperty(Node.ANNOTATION, annotation);
-
-                //                JDBCDataAdapter idAdapter =
-                // (org.bdgp.apps.dagedit.dataadapter.JDBCDataAdapter)
-                // Controller
-                //                        .getController().getIDAdapter();
-                //
-                //                try {
-                //                    java.sql.Connection con = idAdapter.getConnection();
-                //                    java.sql.Statement stmt = con.createStatement();
-                //                    String query = "select dbname, dbkey "
-                //                            + " from db_crossref INNER JOIN gene_product "
-                //                            + " ON gene_product.id=db_crossref.gene_product_id "
-                //                            + " WHERE gene_product.id="
-                //                            + aNode.getProperty("GeneProductID");
-                //                    java.sql.ResultSet resultSet = stmt.executeQuery(query);
-                //                    resultSet.next();
-                //
-                //                    String db = resultSet.getString("dbname");
-                //                    String key = resultSet.getString("dbkey");
-                //                    Hashtable dbNameURLHash = org.bdgp.apps.dagedit.Preferences
-                //                            .getCrossUrls();
-                //                    String urlModel = (String) dbNameURLHash.get(db);
-                //                    String urlToReach = urlModel.replaceAll("XXXXXXX", key);
-                //                } catch (Exception e) {
-                //                }
-                //
-                //                if (cpos.equals(Boolean.TRUE)) {
-                //
-                //                } else {
-                //
-                //                }
-
-                //                Integer startPos = (Integer) aNode.getProperty("startPos");
-                //                Integer endPos = (Integer) aNode.getProperty("endPos");
             }
         }
-
-        //        treeComponent.clearSelected();
-        //        treeComponent.setSelected(annotatedGenes, 1, "CO-LOCALIZED");
         propertySupport.firePropertyChange("colocalized", null, annotatedGenes);
     }
 

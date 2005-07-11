@@ -212,9 +212,10 @@ public class PreferencesContainer extends JPanel {
                         .getString("AnnotationOptionsPage_Class")));
 
         DefaultMutableTreeNode colocalisation = new SettingsNode(
-                new SettingsNodeInfo(bundle.getString("ColocalizationOptionsPage_Name"),
-                        bundle.getString("ColocalizationOptionsPage_Title"), bundle
-                                .getString("ColocalizationOptionsPage_Class")));
+                new SettingsNodeInfo(bundle
+                        .getString("ColocalizationOptionsPage_Name"), bundle
+                        .getString("ColocalizationOptionsPage_Title"), bundle
+                        .getString("ColocalizationOptionsPage_Class")));
 
         root.add(general);
         classification.add(zooming);
