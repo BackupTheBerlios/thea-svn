@@ -1,0 +1,28 @@
+Results. File ../www/temp/423859_bgeqxqcb/DeGregorio_RMA_SAM_FC_data_moy_ratios_GEPASmerged.sot
+-----------------------------------------
+The CPU time used was : 0 min 0.38 sec
+End in 24 cycles
+--- Parameters ---
+Data input type = DNA array data
+Resource threshold in a node= 0.000000
+Variability threshold among inputs in a node= 0.975000
+Threshold for relative error between consecutive epochs= 0.000100
+Iterations threshold (max number of epochs per cycle)= 1000
+Adaptation values (constant): win = 0.010000, moth = 0.005000, sist = 0.001000
+Input file: ../www/temp/423859_bgeqxqcb/DeGregorio_RMA_SAM_FC_data_moy_ratios_GEPASmerged.txt
+-----------------------------------------
+node 0
+Dist. to 1 = 1.630175
+Dist. to 2 = 0.179779
+node 1
+Dist. to 3 = 0.083003
+Dist. to 4 = 0.108013
+-----------------------------------------
+FBgn0000592 goes to 3 (err=0.084851)
+FBgn0002855 goes to 3 (err=0.053562)
+FBgn0003034 goes to 4 (err=0.044336)
+FBgn0000094 goes to 2 (err=0.021563)
+FBgn0000261 goes to 2 (err=0.102113)
+FBgn0023000 goes to 2 (err=0.161337)
+FBgn0003462 goes to 2 (err=0.268611)
+FBgn0015805 goes to 2 (err=0.040845)

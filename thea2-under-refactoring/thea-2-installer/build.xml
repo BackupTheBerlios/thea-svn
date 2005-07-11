@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="thea-2-installer" default="info" basedir=".">
+	<!--import file="../nbbuild/module-scripts/projectized.xml" /-->
+
+	<property name="installer.properties.file" value="installer.build.properties" />
+	<property file="${installer.properties.file}" />
+	<property name="izpack.home" value="${izh}" />
+	
+	<taskdef name="izpack" classpath="${izpack.home}/lib/compiler.jar" classname="com.izforge.izpack.ant.IzPackTask" />
+
+	<izpack input="install.xml" output="${installer.output}/${installer.name}" installerType="standard" basedir="." izPackDir="${izpack.home}/" />
+
+	<target name="info" >
+		<echo message="IzPack version:"/>
+		<echo message="IZH=${izpack.home}" />
+	</target>
+</project>
