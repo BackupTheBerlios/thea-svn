@@ -38,6 +38,8 @@ import fr.unice.bioinfo.thea.classification.editor.actions.UpAction;
 import fr.unice.bioinfo.thea.classification.editor.actions.WholeAction;
 
 /**
+ * Provides pop-up menus to show when a user is working on node or a selection
+ * of nodes in the classification editor.
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class PopupMenuProviderImpl implements PopupMenuProvider {

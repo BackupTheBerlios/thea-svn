@@ -8,6 +8,7 @@ import fr.unice.bioinfo.thea.classification.Node;
 import fr.unice.bioinfo.thea.classification.Selection;
 
 /**
+ * Provides necessary function for selection nodes in the classification editor.
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public interface SelectionManager {

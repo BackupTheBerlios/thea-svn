@@ -6,6 +6,9 @@ import fr.unice.bioinfo.thea.classification.Node;
 import fr.unice.bioinfo.thea.classification.Selection;
 
 /**
+ * This interface defines behaviour for the managing pop-up menus in the
+ * classification editor.
+ * @see {@link PopupMenuProviderImpl}for an implemantation.
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public interface PopupMenuProvider {
