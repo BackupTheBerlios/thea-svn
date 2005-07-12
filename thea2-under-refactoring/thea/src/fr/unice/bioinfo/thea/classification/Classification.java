@@ -36,16 +36,20 @@ import fr.unice.bioinfo.allonto.datamodel.expression.Expression;
 import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.TheaConfiguration;
+import fr.unice.bioinfo.thea.api.annotation.Annotatable;
 import fr.unice.bioinfo.thea.classification.settings.CESettings;
 import fr.unice.bioinfo.thea.util.BlockingSwingWorker;
 import fr.unice.bioinfo.thea.util.OWLProperties;
 import fr.unice.bioinfo.util.OwlQuery;
 
-//TODO JAVADOC
 /**
+ * <p>
+ * A java bean that represents a classification. A classification can be created
+ * going from a node that is the root node of the tree.
+ * </p>
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
-public class Classification {
+public class Classification implements Annotatable {
 
     private int nb_annotatedClusters = 0;
 
@@ -208,7 +212,6 @@ public class Classification {
                 codes = evidences;
                 // all leave nodes
                 List ln = classificationRootNode.getLeaves();
-
                 // Create a Session using a Connection
                 try {
                     HibernateUtil.createSession(cnx);
@@ -225,8 +228,6 @@ public class Classification {
                     oq.setResultVars(l);
                     oq.prepareQuery();
                     oq.getResults();
-                    System.out.println("NB_GENE_PRODUCTS_IN_SPECIE = "
-                            + oq.getResultCount());
                     classificationRootNode.addProperty(
                             Node.NB_GENE_PRODUCTS_IN_SPECIE, new Integer(oq
                                     .getResultCount()));
@@ -520,7 +521,12 @@ public class Classification {
         return allAssociatedGenes;
     }
 
-    public void compareWithClassification(final Resource nodeResource,
+    /**
+     * Extract annotations correspending to the specified branch.
+     * @param nodeResource The root node of the branch.
+     * @param branch Branch's name.
+     */
+    public void createAnnotations(final Resource nodeResource,
             final String branch) {
         // Remember It:
         branchRootResource = nodeResource;
@@ -616,9 +622,9 @@ public class Classification {
                     nb_overAnnotation = 0;
                     nb_underAnnotation = 0;
 
-                    labelNodesWithCommonTerms(resourceFactory,
-                            classificationRootNode, branchTermsMap, genesCount,
-                            ignoreUnknown, ignoreNotAnnotated, new HashMap());
+                    createLabels(resourceFactory, classificationRootNode,
+                            branchTermsMap, genesCount, ignoreUnknown,
+                            ignoreNotAnnotated, new HashMap());
 
                     // IF Show physically adjacent genes IS SELECTED
                     if (CESettings.getInstance().isShowPhysicallyAdjacent()) {
@@ -668,10 +674,10 @@ public class Classification {
     //TODO : write clean javadoc
     // used to update the annotation whene parameters change.
     public void updateAnnotation() {
-        this.compareWithClassification(this.branchRootResource,
-                this.branchRootName);
+        this.createAnnotations(this.branchRootResource, this.branchRootName);
     }
 
+    // give a significant name. Any idea Claude ?
     private void compareWithMap(ResourceFactory resourceFactory) {
         Set colocatedGeneSets = new HashSet();
         compareWithMap(classificationRootNode, colocatedGeneSets,
@@ -706,6 +712,7 @@ public class Classification {
         propertySupport.firePropertyChange("colocalized", null, annotatedGenes);
     }
 
+    // give a significant name. Any idea Claude ?
     private void compareWithMap(Node aNode, Set colocatedGeneSet,
             ResourceFactory resourceFactory) {
         if (aNode == null) {
@@ -841,11 +848,12 @@ public class Classification {
         return descendants;
     }
 
-    // to rename
-    // javadoc to come later
-    private int labelNodesWithCommonTerms(ResourceFactory resourceFactory,
-            Node aNode, Map rootTermsMap, int nbRootAssociatedGenes,
-            boolean ignoreUnknown, boolean ignoreNotAnnotated, Map termsMap) {
+    /**
+     * Create a labels for classification' nodes using terms that annotate them.
+     */
+    private int createLabels(ResourceFactory resourceFactory, Node aNode,
+            Map rootTermsMap, int nbRootAssociatedGenes, boolean ignoreUnknown,
+            boolean ignoreNotAnnotated, Map termsMap) {
         if (aNode == null) {
             return 0;
         }
@@ -879,9 +887,8 @@ public class Classification {
             Node aChild = (Node) childrenIt.next();
             Map m = new HashMap();
             // For each child:
-            count += labelNodesWithCommonTerms(resourceFactory, aChild,
-                    rootTermsMap, nbRootAssociatedGenes, ignoreUnknown,
-                    ignoreNotAnnotated, m);
+            count += createLabels(resourceFactory, aChild, rootTermsMap,
+                    nbRootAssociatedGenes, ignoreUnknown, ignoreNotAnnotated, m);
             Set keySet = m.keySet();
             Iterator ksIt = keySet.iterator();
             while (ksIt.hasNext()) {
@@ -933,8 +940,14 @@ public class Classification {
             nbTestedTerms += 1;
             int nbGenesAssociatedWithTermInNode = (termsMap.get(aResource) == null) ? 0
                     : ((Integer) termsMap.get(aResource)).intValue();
-            double nbGenesAssociatedWithTermInRoot = ((Set) rootTermsMap
-                    .get(aResource)).size();
+            Object o = rootTermsMap.get(aResource);
+            double nbGenesAssociatedWithTermInRoot = 0;
+            if (o instanceof Set) {
+                nbGenesAssociatedWithTermInRoot = ((Set) o).size();
+            } else if (o instanceof Integer) {
+                nbGenesAssociatedWithTermInRoot = ((Integer) o).intValue();
+            }
+
             double occurence = (double) nbGenesAssociatedWithTermInNode
                     / (double) count;
             double globalOccurence = nbGenesAssociatedWithTermInRoot

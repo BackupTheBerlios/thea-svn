@@ -33,8 +33,8 @@ public class PrintableJTable extends JTable implements Printable {
      */
     public int print(Graphics g, PageFormat pf, int pageIndex)
             throws PrinterException {
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.black); //set default foreground color to black
+        Graphics2D graphics = (Graphics2D) g;
+        graphics.setColor(Color.black); //set default foreground color to black
 
         RepaintManager.currentManager(this).setDoubleBufferingEnabled(false);
         Dimension d = this.getSize(); //get size of document
@@ -49,12 +49,12 @@ public class PrintableJTable extends JTable implements Printable {
             return Printable.NO_SUCH_PAGE;
 
         // Shift Graphic to line up with beginning of print-imageable region
-        g2.translate(pf.getImageableX(), pf.getImageableY());
+        graphics.translate(pf.getImageableX(), pf.getImageableY());
         // Shift Graphic to line up with beginning of next page to print
-        g2.translate(0f, -pageIndex * pageHeight);
+        graphics.translate(0f, -pageIndex * pageHeight);
         // Scale the page so the width fits...
-        g2.scale(scale, scale);
-        this.paint(g2); //repaint the page for printing
+        graphics.scale(scale, scale);
+        this.paint(graphics); //repaint the page for printing
         return Printable.PAGE_EXISTS;
     }
 

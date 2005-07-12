@@ -57,7 +57,7 @@ public class ShowAnnotationsAction extends NodeAction {
                     // close dialog
                     closeDialog();
                     Resource resource = rn.getResource();
-                    cni.getClassification().compareWithClassification(resource,
+                    cni.getClassification().createAnnotations(resource,
                             rn.getDisplayName());
                 }
             }
