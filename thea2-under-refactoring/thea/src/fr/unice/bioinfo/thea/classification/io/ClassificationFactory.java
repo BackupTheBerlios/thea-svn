@@ -8,11 +8,11 @@ import java.util.Vector;
 
 import fr.unice.bioinfo.thea.classification.Classification;
 import fr.unice.bioinfo.thea.classification.Node;
-import fr.unice.bioinfo.thea.classification.editor.util.Consts;
 import fr.unice.bioinfo.thea.classification.editor.util.EisenUtil;
 import fr.unice.bioinfo.thea.classification.editor.util.MeasuresFileReader;
 import fr.unice.bioinfo.thea.classification.editor.util.NewickUtil;
 import fr.unice.bioinfo.thea.classification.editor.util.SotaUtil;
+import fr.unice.bioinfo.thea.classification.io.wizard.SupportedFormat;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ClassificationNodeInfo;
 
 /**
@@ -36,7 +36,7 @@ public class ClassificationFactory {
         Node rootNode = null;
         File cf = cni.getCFile();
         File tf = cni.getTFile();
-        int type = cni.getSelectedFormat();
+        String type = cni.getSelectedFormat();
         int indexOfFirstIgnoredRow = cni.getIndexOfFirstIgnoredRow();
         int indexOfLastIgnoredRow = cni.getIndexOfLastIgnoredRow();
         int indexOfFirstIgnoredColumn = cni.getIndexOfFirstIgnoredColumn();
@@ -48,20 +48,13 @@ public class ClassificationFactory {
         long mem = 0;
         long t = 0;
 
-        if (type == Consts.TYPE_NEWICK) {
+        if (type.equalsIgnoreCase(SupportedFormat.NEWICK)) {
             // load new hampshire (newick) format
             Runtime.getRuntime().gc();
             mem = Runtime.getRuntime().totalMemory()
                     - Runtime.getRuntime().freeMemory();
-            t = System.currentTimeMillis();
             rootNode = new NewickUtil().load(cf);
-            System.err.println("Time to read="
-                    + (System.currentTimeMillis() - t));
             Runtime.getRuntime().gc();
-            System.err.println("Memory needed="
-                    + (Runtime.getRuntime().totalMemory()
-                            - Runtime.getRuntime().freeMemory() - mem));
-
             if (rootNode == null) {
                 return null;
             }
@@ -81,25 +74,22 @@ public class ClassificationFactory {
             }
 
             rootNode.init();
-        } else if (type == Consts.TYPE_EISEN) {
+        } else if (type.equalsIgnoreCase(SupportedFormat.EISEN)) {
             // cluster format
             rootNode = new EisenUtil().load(cf, tf);
             rootNode.init();
-        } else if (type == Consts.TYPE_SOTA) {
+        } else if (type.equalsIgnoreCase(SupportedFormat.SOTA)) {
             // sota format
             rootNode = new SotaUtil().load(cf);
-
             if (rootNode == null) {
                 return null;
             }
-
             if (tf != null) {
                 Map geneId2Measures = new MeasuresFileReader().load(tf,
                         indexOfFirstIgnoredRow, indexOfLastIgnoredRow,
                         indexOfFirstIgnoredColumn, indexOfLastIgnoredColumn,
                         indexOfGeneColumn, indexOfTitleRow, nbColumns);
                 Iterator it = rootNode.getLeaves().iterator();
-
                 while (it.hasNext()) {
                     Node leaf = (Node) it.next();
                     //                    leaf.setUserData("measures", geneId2Measures.get(leaf
@@ -110,7 +100,7 @@ public class ClassificationFactory {
             }
 
             rootNode.init();
-        } else if (type == Consts.TYPE_UNCLUSTERED) {
+        } else if (type.equalsIgnoreCase(SupportedFormat.UNCLUSTERED)) {
             Map geneId2Measures = new MeasuresFileReader().load(tf,
                     indexOfFirstIgnoredRow, indexOfLastIgnoredRow,
                     indexOfFirstIgnoredColumn, indexOfLastIgnoredColumn,

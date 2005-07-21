@@ -14,7 +14,7 @@ import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
 import org.openide.util.actions.SystemAction;
 
-import fr.unice.bioinfo.thea.ontologyexplorer.actions.NewClAction;
+import fr.unice.bioinfo.thea.ontologyexplorer.actions.AddClassificationAction;
 
 /**
  * The root node for all ontologies.
@@ -50,7 +50,7 @@ public class ClassificationsRootNode extends AbstractNode implements Comparable 
      * @see org.openide.nodes.Node#getActions(boolean)
      */
     public Action[] getActions(boolean context) {
-        return new Action[] { NodeAction.get(NewClAction.class) };
+        return new Action[] { NodeAction.get(AddClassificationAction.class) };
     }
 
     /*

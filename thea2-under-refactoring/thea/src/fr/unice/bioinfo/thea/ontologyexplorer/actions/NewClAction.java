@@ -110,7 +110,7 @@ public class NewClAction extends NodeAction {
                     ClassificationNodeInfo cni = ClassificationNodeInfo
                             .createClNodeInfo();
                     // Collect information about personnalization of the JTable
-                    cni.setSelectedFormat(NewClPanel.getSelectedFormat());
+                    //cni.setSelectedFormat(NewClPanel.getSelectedFormat());
                     cni
                             .setIndexOfFirstIgnoredRow(NewClPanel
                                     .getMinIgnoredRow());

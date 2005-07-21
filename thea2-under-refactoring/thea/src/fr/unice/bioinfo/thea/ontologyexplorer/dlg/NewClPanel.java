@@ -96,7 +96,7 @@ public class NewClPanel extends JPanel {
 
     //  user's actions
     private boolean typeSelectionMadeByUser = false;
-    private boolean tabularDataFileSelectionMadeByUser = false;
+    private boolean isTabularDataFileSelected = false;
 
     public NewClPanel() {
         initComponents();
@@ -302,7 +302,7 @@ public class NewClPanel extends JPanel {
             }
         }
 
-        if (tabularDataFileSelectionMadeByUser == true) {
+        if (isTabularDataFileSelected == true) {
             return;
         }
 
@@ -360,7 +360,7 @@ public class NewClPanel extends JPanel {
 
         tabularDataFile = file;
         tdfField.setText(file.getAbsolutePath());
-        tabularDataFileSelectionMadeByUser = true;
+        isTabularDataFileSelected = true;
 
         ClPreviewPanel.previewDataFile(tabularDataFile);
     }

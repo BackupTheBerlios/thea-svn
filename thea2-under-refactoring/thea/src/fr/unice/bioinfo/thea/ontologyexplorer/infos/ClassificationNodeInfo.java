@@ -205,13 +205,13 @@ public class ClassificationNodeInfo extends Hashtable implements Node.Cookie {
     }
 
     /** Returns the selected data type */
-    public int getSelectedFormat() {
-        return ((Integer) get(TYPE)).intValue();
+    public String getSelectedFormat() {
+        return (String) get(TYPE);
     }
 
     /** Sets the selected data type */
-    public void setSelectedFormat(int value) {
-        put(TYPE, new Integer(value));
+    public void setSelectedFormat(String value) {
+        put(TYPE, value);
     }
 
     /**
