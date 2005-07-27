@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-OpenIDE-Module: fr.unice.bioinfo.thea.core/1
-OpenIDE-Module-Specification-Version: 1.0
-OpenIDE-Module-Layer: fr/unice/bioinfo/thea/core/resources/layer.xml
-OpenIDE-Module-Localizing-Bundle: fr/unice/bioinfo/thea/core/Bundle.properties
-Class-Path: ext/mysql-connector-java-3.1.6-bin.jar
-
