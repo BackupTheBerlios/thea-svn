@@ -27,7 +27,7 @@ import org.openide.windows.WindowManager;
 
 import cern.jet.random.HyperGeometric;
 import cern.jet.stat.Probability;
-import fr.unice.bioinfo.allonto.datamodel.Property;
+import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.StringValue;
@@ -149,7 +149,7 @@ public class Classification implements Annotatable {
                     resourceFactory.setMemoryCached(true);
                     //                    Property p =
                     // resourceFactory.getProperty(xrefPropertyName);
-                    Property p = resourceFactory.getProperty(OWLProperties
+                    Resource p = resourceFactory.getResource(OWLProperties
                             .getInstance().getXrefPropertyName());
                     if (p != null)
                         p = p.getInverse();
@@ -158,7 +158,7 @@ public class Classification implements Annotatable {
                     //                    q.setEntity("propdbkey", resourceFactory
                     //                            .getProperty(propdbkeyPropertyName));
                     q.setEntity("propdbkey", resourceFactory
-                            .getProperty(OWLProperties.getInstance()
+                            .getResource(OWLProperties.getInstance()
                                     .getPropdbkeyPropertyName()));
                     resourceFactory.setMemoryCached(false);
 
@@ -245,7 +245,7 @@ public class Classification implements Annotatable {
                                         .getHasEvidenceProperty()), ll);
                     }
                     Resource annotatedByProperty = resourceFactory
-                            .getProperty(OWLProperties.getInstance()
+                            .getResource(OWLProperties.getInstance()
                                     .getAnnotatedByPropertyName());
                     resourceFactory.setMemoryCached(false);
                     // Iterate over the list of all genes.
@@ -351,41 +351,57 @@ public class Classification implements Annotatable {
     // attch them the given node.
     private void createProperties(Node aNode, Resource resource,
             ResourceFactory resourceFactory) {
-        StringValue sv = (StringValue) resource.getTarget(resourceFactory
-                .getProperty(OWLProperties.getInstance()
-                        .getChromosomePropertyName()));
-        if (sv != null) {
-            aNode.addProperty(Node.CHROMOSOME, sv.getValue());
+        StringValue sv = null;
+
+        try {
+            sv = (StringValue) resource.getTarget(resourceFactory
+                    .getResource(OWLProperties.getInstance()
+                            .getChromosomePropertyName()));
+            if (sv != null) {
+                aNode.addProperty(Node.CHROMOSOME, sv.getValue());
+            }
+        } catch (AllontoException ae) {
         }
 
-        sv = (StringValue) resource.getTarget(resourceFactory
-                .getProperty(OWLProperties.getInstance()
-                        .getEndPosPropertyName()));
-        if (sv != null) {
-            aNode.addProperty(Node.END_POS, sv.getValue());
+        try {
+            sv = (StringValue) resource.getTarget(resourceFactory
+                    .getResource(OWLProperties.getInstance()
+                            .getEndPosPropertyName()));
+            if (sv != null) {
+                aNode.addProperty(Node.END_POS, sv.getValue());
+            }
+        } catch (AllontoException ae) {
         }
 
-        sv = (StringValue) resource.getTarget(resourceFactory
-                .getProperty(OWLProperties.getInstance()
-                        .getStartPosPropertyName()));
-        if (sv != null) {
-            aNode.addProperty(Node.START_POS, sv.getValue());
+        try {
+            sv = (StringValue) resource.getTarget(resourceFactory
+                    .getResource(OWLProperties.getInstance()
+                            .getStartPosPropertyName()));
+            if (sv != null) {
+                aNode.addProperty(Node.START_POS, sv.getValue());
+            }
+        } catch (AllontoException ae) {
         }
-
-        sv = (StringValue) resource.getTarget(resourceFactory
-                .getProperty(OWLProperties.getInstance()
-                        .getSymbolPropertyName()));
-        if (sv != null) {
-            aNode.addProperty(Node.SYMBOL, sv.getValue());
+        try {
+            sv = (StringValue) resource.getTarget(resourceFactory
+                    .getResource(OWLProperties.getInstance()
+                            .getSymbolPropertyName()));
+            if (sv != null) {
+                aNode.addProperty(Node.SYMBOL, sv.getValue());
+            }
+        } catch (AllontoException ae) {
         }
-        sv = (StringValue) resource.getTarget(resourceFactory
-                .getProperty(OWLProperties.getInstance()
-                        .getStrandPropertyName()));
-        if (sv != null) {
-            String s = sv.getValue();
-            aNode.addProperty(Node.STRAND_POSITION, s);
-            boolean comp = ((Integer.parseInt(s) == 1) ? false : true);
-            aNode.addProperty(Node.COMPLEMENT_POS, new Boolean(comp));
+        try {
+            sv = (StringValue) resource.getTarget(resourceFactory
+                    .getResource(OWLProperties.getInstance()
+                            .getStrandPropertyName()));
+            if (sv != null) {
+                String s = sv.getValue();
+                aNode.addProperty(Node.STRAND_POSITION, s);
+                boolean comp = ((Integer.parseInt(s) == 1) ? false : true);
+                aNode.addProperty(Node.COMPLEMENT_POS, new Boolean(comp));
+            }
+        } catch (AllontoException ae) {
         }
     }
 
@@ -402,13 +418,19 @@ public class Classification implements Annotatable {
             Object[] names = al.toArray();
             for (int counter = 0; counter < al.size(); counter++) {
                 String name = (String) names[counter];
-                Resource aProperty = resourceFactory.getProperty(name)
-                        .getInverse();
-                inverseHierarchyProperties.add(aProperty);
+                try {
+                    Resource aProperty = resourceFactory.getResource(name)
+                            .getInverse();
+                    inverseHierarchyProperties.add(aProperty);
+                } catch (AllontoException ae) {
+                }
             }
         } else if (o instanceof String) {
-            inverseHierarchyProperties.add(resourceFactory.getProperty(
-                    (String) o).getInverse());
+            try {
+                inverseHierarchyProperties.add(resourceFactory.getResource(
+                        (String) o).getInverse());
+            } catch (AllontoException ae) {
+            }
         } else {
             throw new ClassCastException();
         }
@@ -475,12 +497,34 @@ public class Classification implements Annotatable {
     // TODO : RENAME THIS METHOD LATER
     // TODO : WRITE ALGORITHM FIRST
     // TODO : OPTIMIZE IT WHEN THE BEST ONE IS FOUND
-    private Set compute(Resource nodeResource, ResourceFactory resourceFactory) {
-        Resource annotateProperty = resourceFactory.getProperty(OWLProperties
+    private Set compute(Resource nodeResource, ResourceFactory resourceFactory)
+            throws AllontoException {
+        Resource annotateProperty = resourceFactory.getResource(OWLProperties
                 .getInstance().getAnnotatePropertyName());
         //    Get direct children of the the resource:
-        Set children = nodeResource.getTargets(OWLProperties.getInstance()
-                .getHierarchyProperties());
+        Set children = new HashSet();
+        java.util.Map hierarchyDescription = OWLProperties.getInstance()
+                .getHierarchyDescription();
+
+        Iterator it = hierarchyDescription.values().iterator();
+
+        while (it.hasNext()) {
+            Object[] tuple = (Object[]) it.next();
+
+            Resource prop = (Resource) tuple[0];
+            Criterion crit = (Criterion) tuple[1];
+
+            Set targets = nodeResource.getTargets(prop, crit);
+
+            if (targets != null) {
+                children.addAll(targets);
+            }
+        }
+
+        if (children.isEmpty()) {
+            children = null;
+        }
+
         // retrieves the set of genes associated with nodeResource or one of its
         // descendants
         Set allAssociatedGenes = (Set) utilMap.get(nodeResource);
@@ -834,16 +878,41 @@ public class Classification implements Annotatable {
     private Set createWholeBranchTermsList(ResourceFactory resourceFactory,
             Resource aResource) {
         Set descendants = new HashSet();
-        Set targets = aResource.getTargets(OWLProperties.getInstance()
-                .getHierarchyProperties());
-        if (targets != null) {
-            Iterator targetsIt = targets.iterator();
+        //    Get direct children of the the resource:
+        Set children = new HashSet();
+        java.util.Map hierarchyDescription = OWLProperties.getInstance()
+                .getHierarchyDescription();
+
+        Iterator it = hierarchyDescription.values().iterator();
+
+        while (it.hasNext()) {
+            Object[] tuple = (Object[]) it.next();
+
+            Resource prop = (Resource) tuple[0];
+            Criterion crit = (Criterion) tuple[1];
+
+            try {
+                Set targets = aResource.getTargets(prop, crit);
+
+                if (targets != null) {
+                    children.addAll(targets);
+                }
+            } catch (AllontoException ae) {
+            }
+        }
+
+        if (children.isEmpty()) {
+            children = null;
+        }
+
+        if (children != null) {
+            Iterator targetsIt = children.iterator();
             while (targetsIt.hasNext()) {
                 Resource target = (Resource) targetsIt.next();
                 descendants.addAll(createWholeBranchTermsList(resourceFactory,
                         target));
             }
-            descendants.addAll(targets);
+            descendants.addAll(children);
         }
         return descendants;
     }
@@ -915,11 +984,14 @@ public class Classification implements Annotatable {
         while (it.hasNext()) {
             Resource aResource = (Resource) it.next();
             String aResourceName = "";//NOI18N
-            StringValue sv = (StringValue) aResource.getTarget(resourceFactory
-                    .getProperty(OWLProperties.getInstance()
-                            .getNodeNameProperty()));
-            if (sv != null) {
-                aResourceName = sv.getValue();
+            try {
+                StringValue sv = (StringValue) aResource
+                        .getTarget(resourceFactory.getResource(OWLProperties
+                                .getInstance().getNodeNameProperty()));
+                if (sv != null) {
+                    aResourceName = sv.getValue();
+                }
+            } catch (AllontoException ae) {
             }
             // continue calculation only if the term belong to the right branch
             if (rootTermsMap.get(aResource) == null) {
@@ -1191,11 +1263,14 @@ public class Classification implements Annotatable {
             if (!"".equals(label)) {
                 label += ":";
             }
-            StringValue sv = (StringValue) bestTerm.getTarget(resourceFactory
-                    .getProperty(OWLProperties.getInstance()
-                            .getNodeNameProperty()));
-            if (sv != null) {
-                label += (sv.getValue() + " ");
+            try {
+                StringValue sv = (StringValue) bestTerm
+                        .getTarget(resourceFactory.getResource(OWLProperties
+                                .getInstance().getNodeNameProperty()));
+                if (sv != null) {
+                    label += (sv.getValue() + " ");
+                }
+            } catch (AllontoException ae) {
             }
         }
         if (commonTerms.size() > 1) {
@@ -1281,11 +1356,14 @@ public class Classification implements Annotatable {
                 StringValue sv;
                 while (atIt.hasNext()) {
                     Resource aResource = (Resource) atIt.next();
-                    sv = (StringValue) aResource.getTarget(resourceFactory
-                            .getProperty(OWLProperties.getInstance()
-                                    .getNodeNameProperty()));
-                    if (sv != null) {
-                        name = sv.getValue();
+                    try {
+                        sv = (StringValue) aResource.getTarget(resourceFactory
+                                .getResource(OWLProperties.getInstance()
+                                        .getNodeNameProperty()));
+                        if (sv != null) {
+                            name = sv.getValue();
+                        }
+                    } catch (AllontoException ae) {
                     }
                     // If the list of terms of the brach contains
                     // one of terms associated the the Node "leaf"

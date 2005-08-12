@@ -99,6 +99,7 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
                     NodeAction.get(ExploreOntologyAction.class), null,
                     NodeAction.get(DeleteOntologyNodeAction.class) };
         }
+        //TODO ajouter clear ontology, import ontology 
     }
 
     /*

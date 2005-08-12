@@ -1,10 +1,11 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
-
+import java.util.Iterator;
 import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Session;
 
@@ -17,6 +18,7 @@ import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
 
+import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
@@ -41,6 +43,7 @@ public class ExploreOntologyAction extends NodeAction {
      * @see org.openide.util.actions.NodeAction#performAction(org.openide.nodes.Node[])
      */
     protected void performAction(Node[] arg0) {
+
         //Get the explorer manager from the ontology explorer
         OntologyExplorer e = OntologyExplorer.findDefault();
 
@@ -79,12 +82,31 @@ public class ExploreOntologyAction extends NodeAction {
 
             Object o = con.getProperty("ontologyexplorer.roots.uri");//NOI18N
             if (o instanceof Collection) {
-                ArrayList al = new ArrayList((Collection) o);
-                Object[] names = al.toArray();
-                roots = new Resource[al.size()];
-                for (int counter = 0; counter < al.size(); counter++) {
-                    String name = (String) names[counter];
-                    roots[counter] = resourceFactory.getResource(name);
+                ArrayList rootList = new ArrayList();
+                Iterator rootIt = ((Collection) o).iterator();
+                while (rootIt.hasNext()) {
+                    String name = (String) rootIt.next();
+                    try {
+                        Resource root = resourceFactory.getResource(name);
+                        rootList.add(root);
+                    } catch (AllontoException ae) {
+                        String message = MessageFormat.format(bundle
+                                .getString("ErrMsg_OntologyRootNotFound"),
+                                new String[] { name }); //NOI18N
+
+                        DialogDisplayer.getDefault().notify(
+                                new NotifyDescriptor.Message(message,
+                                        NotifyDescriptor.INFORMATION_MESSAGE));
+
+                    }
+
+                }
+                roots = new Resource[rootList.size()];
+                rootIt = rootList.iterator();
+                int counter = 0;
+                while (rootIt.hasNext()) {
+                    roots[counter] = (Resource) rootIt.next();
+                    counter += 1;
                 }
             }
 
@@ -110,8 +132,6 @@ public class ExploreOntologyAction extends NodeAction {
             node.getChildren().add(new Node[] { rootNodes[cnt] });
         }
 
-        //            }
-        //        }, 0);
     }
 
     /*
@@ -119,6 +139,7 @@ public class ExploreOntologyAction extends NodeAction {
      * @see org.openide.util.actions.NodeAction#enable(org.openide.nodes.Node[])
      */
     protected boolean enable(Node[] nodes) {
+        System.out.println("look for enabled of node");
         //Enable this action only for the OntologyNode
         nodes = OntologyExplorer.findDefault().getExplorerManager()
                 .getSelectedNodes();

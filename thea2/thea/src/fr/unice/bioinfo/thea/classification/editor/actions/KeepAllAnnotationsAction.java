@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import javax.swing.ImageIcon;
 
+import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.StringValue;
@@ -53,12 +54,12 @@ public class KeepAllAnnotationsAction extends GenericAction {
                 Resource r = (Resource) aNode.getProperty(Node.ASSOC_TERM);
                 ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                         .getResourceFactory();
-                StringValue sv = (StringValue) r.getTarget(resourceFactory
-                        .getProperty(OWLProperties.getInstance()
+                try{StringValue sv = (StringValue) r.getTarget(resourceFactory
+                        .getResource(OWLProperties.getInstance()
                                 .getNodeNameProperty()));
                 if (sv != null) {
                     param.add(sv.getValue());
-                }
+                }}catch (AllontoException ae){}
                 param.add(nextNode.getLayoutSupport());
                 nodeAnnots.add(param);
                 nextNode.addProperty(Node.USER_ANNOTATIONS, nodeAnnots);

@@ -14,6 +14,7 @@ import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
 
+import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.StringValue;
@@ -56,17 +57,13 @@ public class ShowParentAction extends NodeAction {
                 .getResourceFactory();
 
         Set set = createAncestorsList(resource, resourceFactory);
-        if (set != null) {
-            Iterator iterator = set.iterator();
-            while (iterator.hasNext()) {
-                Resource entity = (Resource) iterator.next();
-                StringValue sv = (StringValue) entity
-                        .getTarget(resourceFactory
-                                .getProperty("http://www.w3.org/2000/01/rdf-schema#label"));
-                System.out.println("ancestor -> " + sv.getValue());
-            }
-        }
-
+        /*
+         * if (set != null) { Iterator iterator = set.iterator(); while
+         * (iterator.hasNext()) { Resource entity = (Resource) iterator.next();
+         * StringValue sv = (StringValue) entity .getTarget(resourceFactory
+         * .getResource("http://www.w3.org/2000/01/rdf-schema#label"));
+         * System.out.println("ancestor -> " + sv.getValue()); } }
+         */
         //        Set properties = new HashSet();
         //        Configuration con =
         // TheaConfiguration.getDefault().getConfiguration();
@@ -106,8 +103,11 @@ public class ShowParentAction extends NodeAction {
             Object[] names = al.toArray();
             for (int counter = 0; counter < al.size(); counter++) {
                 String name = (String) names[counter];
-                Resource r = resourceFactory.getProperty(name).getInverse();
-                properties.add(r);
+                try {
+                    Resource r = resourceFactory.getResource(name).getInverse();
+                    properties.add(r);
+                } catch (AllontoException ae) {
+                }
             }
         }
         Set s = ((Resource) aResource).getTargets(properties);

@@ -13,6 +13,7 @@ import org.openide.nodes.PropertySupport;
 import org.openide.nodes.Sheet;
 import org.openide.util.actions.SystemAction;
 
+import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
@@ -46,13 +47,22 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         this.resource = resource;
 
         // Build a display name:
-        StringValue sv = (StringValue) resource
-                .getTarget(resourceFactory.getProperty(OWLProperties
-                        .getInstance().getNodeNameProperty()));
-        if (sv != null) {
-            name = sv.getValue();
-        } else {
-            name = "" + resource.getId();//NOI18N
+        try {
+            resourceFactory.setMemoryCached(true);
+            Resource nodeNameProperty = resourceFactory
+                    .getResource(OWLProperties.getInstance()
+                            .getNodeNameProperty());
+            resourceFactory.setMemoryCached(false);
+
+            StringValue sv = (StringValue) resource.getTarget(nodeNameProperty);
+            if (sv != null) {
+                name = sv.getValue();
+            } else {
+                name = "" + resource.getId();//NOI18N
+            }
+        } catch (AllontoException ae) {
+            resourceFactory.setMemoryCached(false);
+
         }
         // Set the node name and display name:
         setName(name);

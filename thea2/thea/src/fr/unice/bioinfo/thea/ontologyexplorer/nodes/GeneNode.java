@@ -8,6 +8,7 @@ import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
 import org.openide.util.NbBundle;
 
+import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.StringValue;
@@ -50,15 +51,23 @@ public class GeneNode extends AbstractNode {
         super(new Children.Array());
         // fix the resource
         this.resource = resource;
-        StringValue sv = (StringValue) resource.getTarget(resourceFactory
-                .getProperty(nodeNameProperty));
+        StringValue sv = null;
+        try {
+            sv = (StringValue) resource.getTarget(resourceFactory
+                    .getResource(nodeNameProperty));
+        } catch (AllontoException ae) {
+        }
         if (sv != null) {
             displayName = sv.getValue();
         } else {
             displayName = "" + resource.getId();//NOI18N
         }
-        StringValue tt = (StringValue) resource.getTarget(resourceFactory
-                .getProperty(fullNameProperty));
+        StringValue tt = null;
+        try {
+            tt = (StringValue) resource.getTarget(resourceFactory
+                    .getResource(fullNameProperty));
+        } catch (AllontoException ae) {
+        }
         if (tt != null) {
             toolTip = tt.getValue();
         } else {

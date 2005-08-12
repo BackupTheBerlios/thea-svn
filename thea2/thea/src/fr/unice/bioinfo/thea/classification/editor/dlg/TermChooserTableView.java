@@ -14,6 +14,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
+import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.StringValue;
@@ -95,16 +96,20 @@ public class TermChooserTableView extends JPanel {
                 Resource aResource = s.getTerm();
                 ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                         .getResourceFactory();
-                StringValue sv = (StringValue) aResource
-                        .getTarget(resourceFactory.getProperty(OWLProperties
-                                .getInstance().getNodeNameProperty()));
-
                 data[i][j] = aResource.getDisplayAcc();
                 vector.add(i, aResource);
-                if (sv != null) {
-                    data[i][j + 1] = new String(sv.getValue());
-                } else {
-                    data[i][j + 1] = new String("");//NOI18N
+                try {
+                    StringValue sv = (StringValue) aResource
+                            .getTarget(resourceFactory
+                                    .getResource(OWLProperties.getInstance()
+                                            .getNodeNameProperty()));
+
+                    if (sv != null) {
+                        data[i][j + 1] = new String(sv.getValue());
+                    } else {
+                        data[i][j + 1] = new String("");//NOI18N
+                    }
+                } catch (AllontoException ae) {
                 }
                 String score = s.getFormattedScore();
                 data[i][j + 2] = score;

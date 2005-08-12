@@ -8,6 +8,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.apache.commons.configuration.Configuration;
 
+import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.StringValue;
@@ -56,16 +57,23 @@ public class GenesTableModel extends AbstractTableModel {
         resourceFactory.setMemoryCached(true);
         LinkedList ll = new LinkedList();
         for (int cnt = 0; cnt < evidences.length; cnt++) {
-            ll.add(resourceFactory.getResource(evidences[cnt]));
+            try {
+                Resource evidence = resourceFactory.getResource(evidences[cnt]);
+                ll.add(evidence);
+            } catch (AllontoException ae) {
+            }
         }
-        Criterion criterion = Expression.in(resourceFactory
-                .getResource(hasEvidenceProperty), ll);
+        Set genes = null;
+        try {
+            Criterion criterion = Expression.in(resourceFactory
+                    .getResource(hasEvidenceProperty), ll);
 
-        Resource annotateProperty = resourceFactory
-                .getProperty(annotatePropertyName);
+            Resource annotateProperty = resourceFactory
+                    .getResource(annotatePropertyName);
+            genes = resource.getTargets(annotateProperty, criterion);
+        } catch (AllontoException ae) {
+        }
         resourceFactory.setMemoryCached(false);
-
-        Set genes = resource.getTargets(annotateProperty, criterion);
 
         // if we find a list of genes:
         if (genes != null) {
@@ -78,17 +86,23 @@ public class GenesTableModel extends AbstractTableModel {
                 aResource = (Resource) genesIt.next();
                 // for each gene: get the list of properties
                 for (int cnt = 0; cnt < properties.length; cnt++) {
-                    resourceFactory.setMemoryCached(true);
-                    Resource accessedProperty = resourceFactory
-                            .getResource(properties[cnt]);
-                    resourceFactory.setMemoryCached(false);
+                    try {
+                        resourceFactory.setMemoryCached(true);
 
-                    StringValue sv = (StringValue) aResource
-                            .getTarget(accessedProperty);
-                    if (sv != null) {
-                        data[counter][cnt] = sv.getValue();
-                    } else if (sv == null) {
+                        Resource accessedProperty = resourceFactory
+                                .getResource(properties[cnt]);
+                        resourceFactory.setMemoryCached(false);
+
+                        StringValue sv = (StringValue) aResource
+                                .getTarget(accessedProperty);
+                        if (sv != null) {
+                            data[counter][cnt] = sv.getValue();
+                        } else if (sv == null) {
+                            data[counter][cnt] = "";//NOI18N
+                        }
+                    } catch (AllontoException ae) {
                         data[counter][cnt] = "";//NOI18N
+                        resourceFactory.setMemoryCached(false);
                     }
                 }
                 counter++;

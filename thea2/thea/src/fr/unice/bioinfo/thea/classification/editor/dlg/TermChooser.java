@@ -26,9 +26,11 @@ import com.jgoodies.forms.layout.FormSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.Sizes;
 
+import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.StringValue;
+import fr.unice.bioinfo.allonto.datamodel.expression.Criterion;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.classification.Node;
 import fr.unice.bioinfo.thea.classification.NodeLayoutSupport;
@@ -162,15 +164,18 @@ public class TermChooser extends JPanel {
                             label += ":";
                         }
                         //label += (termAndScore.getTerm().getTerm() + " ");
-                        StringValue sv = (StringValue) score
-                                .getTerm()
-                                .getTarget(
-                                        resourceFactory
-                                                .getProperty(OWLProperties
-                                                        .getInstance()
-                                                        .getNodeNameProperty()));
-                        if (sv != null) {
-                            label += (sv.getValue() + " ");
+                        try {
+                            StringValue sv = (StringValue) score
+                                    .getTerm()
+                                    .getTarget(
+                                            resourceFactory
+                                                    .getResource(OWLProperties
+                                                            .getInstance()
+                                                            .getNodeNameProperty()));
+                            if (sv != null) {
+                                label += (sv.getValue() + " ");
+                            }
+                        } catch (AllontoException ae) {
                         }
                     }
                     label += "(+)";
@@ -213,16 +218,41 @@ public class TermChooser extends JPanel {
     private Set createWholeBranchTermsList(ResourceFactory resourceFactory,
             Resource aResource) {
         Set descendants = new HashSet();
-        Set targets = aResource.getTargets(OWLProperties.getInstance()
-                .getHierarchyProperties());
-        if (targets != null) {
-            Iterator targetsIt = targets.iterator();
+        //    Get direct children of the the resource:
+        Set children = new HashSet();
+        java.util.Map hierarchyDescription = OWLProperties.getInstance()
+                .getHierarchyDescription();
+
+        Iterator it = hierarchyDescription.values().iterator();
+
+        while (it.hasNext()) {
+            Object[] tuple = (Object[]) it.next();
+
+            Resource prop = (Resource) tuple[0];
+            Criterion crit = (Criterion) tuple[1];
+
+            try {
+                Set targets = aResource.getTargets(prop, crit);
+
+                if (targets != null) {
+                    children.addAll(targets);
+                }
+            } catch (AllontoException ae) {
+            }
+        }
+
+        if (children.isEmpty()) {
+            children = null;
+        }
+
+        if (children != null) {
+            Iterator targetsIt = children.iterator();
             while (targetsIt.hasNext()) {
                 Resource target = (Resource) targetsIt.next();
                 descendants.addAll(createWholeBranchTermsList(resourceFactory,
                         target));
             }
-            descendants.addAll(targets);
+            descendants.addAll(children);
         }
         return descendants;
     }

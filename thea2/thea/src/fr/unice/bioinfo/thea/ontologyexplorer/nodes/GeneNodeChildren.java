@@ -16,6 +16,7 @@ import org.openide.nodes.Node;
 import org.openide.util.NbBundle;
 import org.openide.util.RequestProcessor;
 
+import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
@@ -107,8 +108,12 @@ public class GeneNodeChildren extends Children.Array {
 
                 TreeSet children = new TreeSet();
 
-                Set genes = resource.getTargets(resourceFactory
-                        .getProperty(propertyName));
+                Set genes = null;
+                try {
+                    genes = resource.getTargets(resourceFactory
+                            .getResource(propertyName));
+                } catch (AllontoException ae) {
+                }
                 if (genes != null) {
                     Iterator iterator = genes.iterator();
                     while (iterator.hasNext()) {

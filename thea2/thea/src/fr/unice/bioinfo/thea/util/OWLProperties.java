@@ -2,12 +2,16 @@ package fr.unice.bioinfo.thea.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
 
+import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
+import fr.unice.bioinfo.allonto.datamodel.expression.Criterion;
+import fr.unice.bioinfo.allonto.datamodel.expression.Expression;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.TheaConfiguration;
@@ -26,12 +30,14 @@ public final class OWLProperties {
         return instance;
     }
 
-    /** List of hierarchyProperties to be used to compute keys. */
-    private static Set hierarchyProperties = new HashSet();
-    /** The partof relationship property name */
-    private static String partofPropertyName;
-    /** The is a relationship property name */
-    private static String isaPropertyName;
+    /**
+     * List of hierarchy relationships to be used to compute keys. Each
+     * hierarchical relationship is mapped to a list of the following three
+     * elements: 1- the predicate to follow 2- the Criterion to use (optional) 3 -
+     * the path to the icon representing the relationship
+     */
+
+    private static Map hierarchyDescription = new HashMap();
     /** The property to use to reach for a node's display name. */
     private static String nodeNameProperty;
 
@@ -54,21 +60,48 @@ public final class OWLProperties {
         ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                 .getResourceFactory();
         Configuration con = TheaConfiguration.getDefault().getConfiguration();
-        Object ob = con.getProperty("ontologyexplorer.hierarchy.uri");//NOI18N
+        Object ob = con
+                .getProperty("ontologyexplorer.hierarchy.relationship.name");//NOI18N
         if (ob instanceof Collection) {
-            ArrayList al = new ArrayList((Collection) ob);
+            List al = new ArrayList((Collection) ob);
             Object[] names = al.toArray();
             for (int counter = 0; counter < al.size(); counter++) {
-                String name = (String) names[counter];
-                Resource aProperty = resourceFactory.getProperty(name);
-                hierarchyProperties.add(aProperty);
+
+                try {
+                    String name = (String) names[counter];
+                    List triple = new ArrayList();
+                    Resource property = resourceFactory
+                            .getResource((String) con
+                                    .getProperty("ontologyexplorer.hierarchy.relationship("
+                                            + counter + ").predicate"));//NOI18N
+                    Criterion criterion = null;
+                    Object valueOf = con
+                            .getProperty("ontologyexplorer.hierarchy.relationship("
+                                    + counter + ").context.valueof");//NOI18N
+                    Object equals = con
+                            .getProperty("ontologyexplorer.hierarchy.relationship("
+                                    + counter + ").context.equals");//NOI18N
+                    if ((valueOf != null) && (equals != null)) {
+                        Resource valueOfResource = resourceFactory
+                                .getResource((String) valueOf);
+                        if (equals == null) {
+                            criterion = Expression.alwaysTrue();
+                        } else {
+                            Resource equalsResource = resourceFactory
+                                    .getResource((String) equals);
+                            criterion = Expression.eq(valueOfResource,
+                                    equalsResource);
+                        }
+                    }
+                    Object iconUrl = con
+                            .getProperty("ontologyexplorer.hierarchy.relationship("
+                                    + counter + ").icon");//NOI18N
+                    hierarchyDescription.put(name, new Object[] { property,
+                            criterion, (String) iconUrl });
+                } catch (AllontoException ae) {
+                }
             }
         }
-        // get the partof and is a hierarchyProperties names:
-        Object partof = con.getProperty("ontologyexplorer.hierarchy.partof");//NOI18N
-        partofPropertyName = (String) partof;
-        Object isa = con.getProperty("ontologyexplorer.hierarchy.isa");//NOI18N
-        isaPropertyName = (String) isa;
 
         Object obj = con.getProperty("ontologyexplorer.nodes.nodename");//NOI18N
         nodeNameProperty = (String) obj;
@@ -113,20 +146,12 @@ public final class OWLProperties {
         return hasEvidenceProperty;
     }
 
-    public Set getHierarchyProperties() {
-        return hierarchyProperties;
+    public Map getHierarchyDescription() {
+        return hierarchyDescription;
     }
 
-    public String getIsaPropertyName() {
-        return isaPropertyName;
-    }
-
-    public String getNodeNameProperty() {
+    public synchronized String getNodeNameProperty() {
         return nodeNameProperty;
-    }
-
-    public String getPartofPropertyName() {
-        return partofPropertyName;
     }
 
     public String getPropdbkeyPropertyName() {

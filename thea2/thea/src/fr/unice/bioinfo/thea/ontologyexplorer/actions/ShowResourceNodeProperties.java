@@ -7,7 +7,9 @@ import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
 
+import fr.unice.bioinfo.thea.ontologyexplorer.PropertiesEditor;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
+import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 
 /**
@@ -24,8 +26,17 @@ public class ShowResourceNodeProperties extends NodeAction {
      * @see org.openide.util.actions.NodeAction#performAction(org.openide.nodes.Node[])
      */
     protected void performAction(Node[] arg0) {
-        // TODO Auto-generated method stub
+        // Get the explorer manager from the ontology explorer
+        OntologyExplorer e = OntologyExplorer.findDefault();
+        // Extract the node
+        final Node node = e.getExplorerManager().getSelectedNodes()[0];
+        final ResourceNodeInfo rni = (ResourceNodeInfo) node
+                .getCookie(ResourceNodeInfo.class);
 
+        //      Create the panel
+        PropertiesEditor editor = new PropertiesEditor(node);
+        editor.open();
+        editor.requestActive();
     }
 
     /*
@@ -63,5 +74,4 @@ public class ShowResourceNodeProperties extends NodeAction {
     public HelpCtx getHelpCtx() {
         return HelpCtx.DEFAULT_HELP;
     }
-
 }
