@@ -19,7 +19,7 @@
 			<include name="${nb.modules.dir}/ext/ehcache-1.1.jar"/>
 			<include name="${nb.modules.dir}/ext/cglib-full-2.0.2.jar"/>
 			<include name="${nb.modules.dir}/ext/jta.jar"/>
-			<include name="${nb.modules.dir}/ext/commons-configuration-1.0.jar"/>
+			<include name="${nb.modules.dir}/ext/commons-configuration-1.1.jar"/>
 			<include name="${nb.modules.dir}/ext/commons-lang-2.0.jar"/>
 			<include name="${nb.modules.dir}/ext/commons-digester-1.5.jar"/>
 			<include name="${nb.modules.dir}/ext/commons-beanutils-core-1.7.0.jar"/>
@@ -46,7 +46,7 @@
 				<include name="cglib-full-2.0.2.jar"/>
 				<include name="jta.jar"/>
 				<include name="commons-digester-1.5.jar"/>
-				<include name="commons-configuration-1.0.jar"/>
+				<include name="commons-configuration-1.1.jar"/>
 				<include name="commons-lang-2.0.jar"/>
 				<include name="commons-beanutils-core-1.7.0.jar"/>
 				<include name="allonto.jar"/>
