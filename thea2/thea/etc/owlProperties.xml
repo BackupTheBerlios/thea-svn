@@ -11,10 +11,21 @@
 			to build the tree in the ontology explorer.
 			-->
 		<hierarchy>
-			<uri>http://www.unice.fr/bioinfo/owl/biowl#superClassOf</uri>
-			<uri>http://www.unice.fr/bioinfo/owl/biowl#contains</uri>
-			<partof>http://www.unice.fr/bioinfo/owl/biowl#contains</partof>
-			<isa>http://www.unice.fr/bioinfo/owl/biowl#superClassOf</isa>
+			<relationship>
+				<name>partof</name>
+				<predicate>http://www.unice.fr/bioinfo/owl/biowl#superClassOf</predicate>
+				<context>
+					<valueof>http://www.w3.org/2002/07/owl#onProperty</valueof>
+					<equals>http://www.geneontology.org/owl#part_of</equals>
+				</context>
+				<icon>fr/unice/bioinfo/thea/ontologyexplorer/resources/partOfIcon</icon>
+			</relationship>
+			<relationship>
+				<name>isa</name>
+				<predicate>http://www.unice.fr/bioinfo/owl/biowl#superClassOf</predicate>
+				<!-- deflaut context == true -->
+				<icon>fr/unice/bioinfo/thea/ontologyexplorer/resources/isAIcon</icon>
+			</relationship>
 		</hierarchy>
 		<nodes>
 			<!-- nodename tels how to create a display name for nodes -->
@@ -78,4 +89,18 @@
 		<symbolname>http://www.unice.fr/bioinfo/owl/biowl#symbol</symbolname>
 		<speciename>http://www.unice.fr/bioinfo/owl/biowl#specie</speciename>
 	</annotation>
+  <predicate>
+    <instanceof>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</instanceof>
+    <name>http://www.w3.org/2000/01/rdf-schema#label</name>
+    <inverseof>http://www.w3.org/2002/07/owl#inverseOf</inverseof>
+    <subpropertyof>http://www.w3.org/2000/01/rdf-schema#subPropertyOf</subpropertyof>
+    <subclassof>http://www.w3.org/2000/01/rdf-schema#subClassOf</subclassof>
+    <superpropertyof>http://www.unice.fr/bioinfo/owl/biowl#superPropertyOf</superpropertyof>
+    <superclassof>http://www.unice.fr/bioinfo/owl/biowl#superClassOf</superclassof>
+    <inverse>http://www.w3.org/2002/07/owl#inverseOf</inverse>
+    <transitive>http://www.w3.org/2002/07/owl#TransitiveProperty</transitive>
+    <true>http://www.unice.fr/bioinfo/owl/biowl#true</true>
+    <annotates>http://www.unice.fr/bioinfo/owl/biowl#annotates</annotates>
+    <identifies>http://www.unice.fr/bioinfo/owl/biowl#identifies</identifies>
+  </predicate>
 </owlproperties>
