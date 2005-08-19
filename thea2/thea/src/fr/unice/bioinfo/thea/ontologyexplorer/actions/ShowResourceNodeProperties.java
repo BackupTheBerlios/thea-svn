@@ -2,13 +2,15 @@ package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
 import java.util.ResourceBundle;
 
+import javax.swing.SwingUtilities;
+
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
 
-import fr.unice.bioinfo.thea.ontologyexplorer.PropertiesEditor;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
+import fr.unice.bioinfo.thea.ontologyexplorer.PropertiesEditor;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 
@@ -33,10 +35,17 @@ public class ShowResourceNodeProperties extends NodeAction {
         final ResourceNodeInfo rni = (ResourceNodeInfo) node
                 .getCookie(ResourceNodeInfo.class);
 
-        //      Create the panel
-        PropertiesEditor editor = new PropertiesEditor(node);
-        editor.open();
-        editor.requestActive();
+        //      Create the panel and display the panel in a thread
+
+        Runnable doTopComponent = new Runnable() {
+            public void run() {
+                PropertiesEditor editor = new PropertiesEditor(node);
+                editor.open();
+                editor.requestActive();
+            }
+        };
+        SwingUtilities.invokeLater(doTopComponent);
+
     }
 
     /*
