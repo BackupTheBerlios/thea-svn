@@ -17,7 +17,9 @@ import javax.swing.border.EtchedBorder;
 import org.openide.nodes.Node;
 import org.openide.util.NbBundle;
 import org.openide.util.Utilities;
+import org.openide.windows.Mode;
 import org.openide.windows.TopComponent;
+import org.openide.windows.WindowManager;
 
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.CellConstraints;
@@ -38,7 +40,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 public class PropertiesEditor extends TopComponent {
 
     //  Serial Version UID
-    static final long serialVersionUID = 6857108441469780252L;
+    static final long serialVersionUID = 463902162650994901L;
     /** The support for firing property changes */
     private PropertyChangeSupport propertySupport;
     /** preferred ID:geneeditor */
@@ -46,7 +48,7 @@ public class PropertiesEditor extends TopComponent {
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.Bundle"); //NOI18N
-    /** The Gene Editor loks for genes annotated by this resource. */
+    /** The Gene Editor looks for genes annotated by this resource. */
     private Resource resource;
     /** Genes table. */
     //private JTable table;
@@ -54,6 +56,8 @@ public class PropertiesEditor extends TopComponent {
 
     /** Button to print the genes table. */
     private JButton printBtn;
+
+    private static final String MODE = "properties";
 
     /**
      * Creates a dockable windows to be used to hold displayable properties of a
@@ -130,6 +134,14 @@ public class PropertiesEditor extends TopComponent {
         return panel;
     }
 
+    public void open() {
+        Mode m = WindowManager.getDefault().findMode(MODE);
+        if (m != null) {
+            m.dockInto(this);
+        }
+        super.open();
+    }
+
     /**
      * Add property change listener Registers a listener for the PropertyChange
      * event.
@@ -148,5 +160,9 @@ public class PropertiesEditor extends TopComponent {
 
     private void performPrintBtnAction(ActionEvent e) {
         table.doPrintActions();
+    }
+
+    protected String preferredID() {
+        return PREFERRED_ID;
     }
 }
