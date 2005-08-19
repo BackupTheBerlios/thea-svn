@@ -20,6 +20,8 @@ import fr.unice.bioinfo.thea.ontologyexplorer.actions.ConnectAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.DeleteOntologyNodeAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.DisconnectAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ExploreOntologyAction;
+import fr.unice.bioinfo.thea.ontologyexplorer.actions.InitializeKnowledgeBaseAction;
+import fr.unice.bioinfo.thea.ontologyexplorer.actions.ImportOwlAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.OntologyNodeInfo;
 
@@ -95,11 +97,15 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
             return null;
         } else {
             return new Action[] { NodeAction.get(ConnectAction.class),
-                    NodeAction.get(DisconnectAction.class), null,
-                    NodeAction.get(ExploreOntologyAction.class), null,
-                    NodeAction.get(DeleteOntologyNodeAction.class) };
+                    NodeAction.get(DisconnectAction.class),
+                    null,
+                    NodeAction.get(ExploreOntologyAction.class),
+                    null,
+                    NodeAction.get(DeleteOntologyNodeAction.class),
+                    null,
+                    NodeAction.get(InitializeKnowledgeBaseAction.class),
+                    NodeAction.get(ImportOwlAction.class)};
         }
-        //TODO ajouter clear ontology, import ontology 
     }
 
     /*
