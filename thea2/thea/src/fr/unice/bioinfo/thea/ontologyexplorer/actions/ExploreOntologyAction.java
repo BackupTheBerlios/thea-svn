@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Iterator;
+import java.util.Properties;
 import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Session;
 
@@ -54,8 +55,6 @@ public class ExploreOntologyAction extends NodeAction {
             return;
         }
 
-        //        RequestProcessor.getDefault().post(new Runnable() {
-        //            public void run() {
         DatabaseConnection dbc = ((OntologyNode) node).getConnection();
         List result = null;
         Resource[] roots = null;
@@ -79,7 +78,7 @@ public class ExploreOntologyAction extends NodeAction {
 
             ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                     .getResourceFactory();
-
+            ArrayList rootsNotFound = new ArrayList();
             Object o = con.getProperty("ontologyexplorer.roots.uri");//NOI18N
             if (o instanceof Collection) {
                 ArrayList rootList = new ArrayList();
@@ -88,16 +87,13 @@ public class ExploreOntologyAction extends NodeAction {
                     String name = (String) rootIt.next();
                     try {
                         Resource root = resourceFactory.getResource(name);
-                        rootList.add(root);
+                        if (root != null) {
+                            rootList.add(root);
+                        } else {
+                            rootsNotFound.add(name);
+                        }
                     } catch (AllontoException ae) {
-                        String message = MessageFormat.format(bundle
-                                .getString("ErrMsg_OntologyRootNotFound"),
-                                new String[] { name }); //NOI18N
-
-                        DialogDisplayer.getDefault().notify(
-                                new NotifyDescriptor.Message(message,
-                                        NotifyDescriptor.INFORMATION_MESSAGE));
-
+                        rootsNotFound.add(name);
                     }
 
                 }
@@ -108,6 +104,22 @@ public class ExploreOntologyAction extends NodeAction {
                     roots[counter] = (Resource) rootIt.next();
                     counter += 1;
                 }
+                // display error message if needed
+                if (!rootsNotFound.isEmpty()) {
+                    String message = bundle
+                            .getString("ErrMsg_OntologyRootNotFound"); //NOI18N
+
+                    rootIt = rootsNotFound.iterator();
+                    while (rootIt.hasNext()) {
+                        message += "\n" + (String) rootIt.next();
+                    }
+
+                    DialogDisplayer.getDefault().notify(
+                            new NotifyDescriptor.Message(message,
+                                    NotifyDescriptor.INFORMATION_MESSAGE));
+
+                }
+
             }
 
         } catch (StackOverflowError s) {
@@ -131,7 +143,6 @@ public class ExploreOntologyAction extends NodeAction {
                     .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/RootResourceIcon16");
             node.getChildren().add(new Node[] { rootNodes[cnt] });
         }
-
     }
 
     /*
@@ -139,7 +150,6 @@ public class ExploreOntologyAction extends NodeAction {
      * @see org.openide.util.actions.NodeAction#enable(org.openide.nodes.Node[])
      */
     protected boolean enable(Node[] nodes) {
-        System.out.println("look for enabled of node");
         //Enable this action only for the OntologyNode
         nodes = OntologyExplorer.findDefault().getExplorerManager()
                 .getSelectedNodes();
