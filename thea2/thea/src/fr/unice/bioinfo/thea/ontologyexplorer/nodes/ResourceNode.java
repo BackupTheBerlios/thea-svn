@@ -45,7 +45,6 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         super((resource == null) ? Children.LEAF : new ResourceNodeChildren(
                 resource));
         this.resource = resource;
-
         // Build a display name:
         try {
             resourceFactory.setMemoryCached(true);
@@ -53,12 +52,15 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
                     .getResource(OWLProperties.getInstance()
                             .getNodeNameProperty());
             resourceFactory.setMemoryCached(false);
+            if (nodeNameProperty != null) {
 
-            StringValue sv = (StringValue) resource.getTarget(nodeNameProperty);
-            if (sv != null) {
-                name = sv.getValue();
-            } else {
-                name = "" + resource.getId();//NOI18N
+                StringValue sv = (StringValue) resource
+                        .getTarget(nodeNameProperty);
+                if (sv != null) {
+                    name = sv.getValue();
+                } else {
+                    name = "" + resource.getId();//NOI18N
+                }
             }
         } catch (AllontoException ae) {
             resourceFactory.setMemoryCached(false);
