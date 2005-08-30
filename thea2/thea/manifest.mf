@@ -5,7 +5,7 @@ OpenIDE-Module-Specification-Version: 1.0
 OpenIDE-Module-Layer: fr/unice/bioinfo/thea/resources/layer.xml
 OpenIDE-Module-Localizing-Bundle: fr/unice/bioinfo/thea/Bundle.properties
 OpenIDE-Module-Build-Version: @BUILD_NUMBER_SUBST@
-Class-Path: ext/forms-1.0.5.jar ext/mysql-connector-java-3.1.6-bin.jar ext/hibernate2.jar ext/log4j-1.2.8.jar ext/commons-logging-1.0.4.jar ext/commons-discovery-0.2.jar ext/junit.jar ext/dom4j-1.4.jar ext/commons-collections-3.0.jar ext/odmg-3.0.jar ext/ehcache-1.1.jar ext/cglib-full-2.0.2.jar ext/jta.jar ext/allonto.jar ext/commons-configuration-1.1.jar ext/commons-lang-2.0.jar ext/commons-digester-1.5.jar ext/commons-beanutils-core-1.7.0.jar ext/colt.jar
+Class-Path: ext/forms-1.0.5.jar ext/mysql-connector-java-3.1.6-bin.jar ext/hibernate2.jar ext/log4j-1.2.8.jar ext/commons-logging-1.0.4.jar ext/commons-discovery-0.2.jar ext/junit.jar ext/dom4j-1.4.jar ext/commons-collections-3.0.jar ext/odmg-3.0.jar ext/ehcache-1.1.jar ext/cglib-full-2.0.2.jar ext/jta.jar ext/allonto.jar ext/commons-configuration-1.1.jar ext/commons-lang-2.0.jar ext/commons-digester-1.5.jar ext/commons-beanutils-core-1.7.0.jar ext/colt.jar ext/populate.jar ext/aterm-java-1.6.jar ext/jena.jar ext/pellet.jar ext/xercesImpl.jar ext/icu4j.jar
 
 Name: fr/unice/bioinfo/thea/ontologyexplorer/loaders/ClDataLoader.class
 OpenIDE-Module-Class: Loader

@@ -24,6 +24,12 @@
 			<include name="${nb.modules.dir}/ext/commons-digester-1.5.jar"/>
 			<include name="${nb.modules.dir}/ext/commons-beanutils-core-1.7.0.jar"/>
 			<include name="${nb.modules.dir}/ext/allonto.jar"/>
+			<include name="${nb.modules.dir}/ext/populate.jar"/>
+			<include name="${nb.modules.dir}/ext/aterm-java-1.6.jar"/>
+			<include name="${nb.modules.dir}/ext/jena.jar"/>
+			<include name="${nb.modules.dir}/ext/icu4j.jar"/>
+			<include name="${nb.modules.dir}/ext/pellet.jar"/>
+			<include name="${nb.modules.dir}/ext/xercesImpl.jar"/>
 			<include name="${nb.modules.dir}/ext/colt.jar"/>
 		</patternset>
 	</target>
@@ -50,6 +56,12 @@
 				<include name="commons-lang-2.0.jar"/>
 				<include name="commons-beanutils-core-1.7.0.jar"/>
 				<include name="allonto.jar"/>
+				<include name="populate.jar"/>
+				<include name="aterm-java-1.6.jar"/>
+				<include name="jena.jar"/>
+				<include name="icu4j.jar"/>
+				<include name="pellet.jar"/>
+				<include name="xercesImpl.jar"/>
 				<include name="colt.jar"/>
 			</fileset>
 		</copy>
