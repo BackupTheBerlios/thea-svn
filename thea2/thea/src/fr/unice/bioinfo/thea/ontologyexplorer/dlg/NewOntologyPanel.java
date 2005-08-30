@@ -47,6 +47,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.db.util.DriverListUtil;
  * this node requires some information like the ontology node name, description,
  * a driver to be used to connect to the database, login name and password if
  * any. Users could add their own drivers from jar or zip files on the disk.
+ * 
  * @author Saïd El Kasmi.
  */
 public class NewOntologyPanel extends JPanel implements PropertyChangeListener {
@@ -414,6 +415,7 @@ public class NewOntologyPanel extends JPanel implements PropertyChangeListener {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
     public void propertyChange(PropertyChangeEvent evt) {

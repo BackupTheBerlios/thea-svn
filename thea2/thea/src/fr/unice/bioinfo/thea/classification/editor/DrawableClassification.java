@@ -27,13 +27,17 @@ public interface DrawableClassification extends Drawable {
 
     /**
      * Draws a sub-tree using the given node as a root node for the new tree.
-     * @param aNode The selected node to be a root for the new tree.
+     * 
+     * @param aNode
+     *            The selected node to be a root for the new tree.
      */
     public void showSubTree(Node aNode);
 
     /**
      * Sets the given root to be the root node for the tree to be drawn.
-     * @param aNode A node.
+     * 
+     * @param aNode
+     *            A node.
      */
     public void setCurrentRootNode(Node aNode);
 
@@ -42,26 +46,34 @@ public interface DrawableClassification extends Drawable {
 
     /**
      * Returns the root node for the whole classification.
+     * 
      * @return Node The root node for the whole tree.
      */
     public Node getClassificationRootNode();
 
     /**
      * Collapses the given node.
-     * @param aNode The node to be collapsed.
+     * 
+     * @param aNode
+     *            The node to be collapsed.
      */
     public void collapseNode(Node aNode);
 
     /**
      * Uncollapse the given node.
-     * @param aNode The node to be collapsed;
+     * 
+     * @param aNode
+     *            The node to be collapsed;
      */
     public void uncollapseNode(Node aNode);
 
     /**
      * Find a node from a position using rectangular areas.
-     * @param aNode The node to locate.
-     * @param position Starting point.
+     * 
+     * @param aNode
+     *            The node to locate.
+     * @param position
+     *            Starting point.
      * @return The corresponding node.
      */
     public Node locateNode(Node aNode, Point2D position);
@@ -71,8 +83,10 @@ public interface DrawableClassification extends Drawable {
 
     /**
      * Shows or hides the popup menu depending on the value of the parameter b;
-     * @param b If <i>True </i> the popup menu will be shown and hidden if
-     *        otherwise.
+     * 
+     * @param b
+     *            If <i>True </i> the popup menu will be shown and hidden if
+     *            otherwise.
      */
     public void setPopupMenuVisible(boolean b);
 
@@ -81,12 +95,14 @@ public interface DrawableClassification extends Drawable {
 
     /**
      * Says wether the popup menu is shown or not.
+     * 
      * @return <i>True </i> if showing the popup menu. <i>False </i < elswhere.
      */
     public boolean isShowingPopupMenu();
 
     /**
      * Returns the selection manager used in this component.
+     * 
      * @return {@link SelectionManager}.
      */
     public SelectionManager getSelectionManager();
@@ -94,7 +110,9 @@ public interface DrawableClassification extends Drawable {
     /**
      * Returns the index of the slected column from the expression values
      * matrix.
-     * @param point2D The mouse pointer location.
+     * 
+     * @param point2D
+     *            The mouse pointer location.
      * @return Index of the column under the mouse's pointer.
      */
     public int getExpressionColumnIndex(Point2D point2D);

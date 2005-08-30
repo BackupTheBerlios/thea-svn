@@ -5,6 +5,7 @@ import java.io.File;
 /**
  * A java object to store into nevessart informations to locate a classification
  * and its properties.
+ * 
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class ClassificationInfo {

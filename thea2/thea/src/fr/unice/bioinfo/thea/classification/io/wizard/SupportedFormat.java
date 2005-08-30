@@ -8,6 +8,7 @@ package fr.unice.bioinfo.thea.classification.io.wizard;
  * This utility class defines supported files format and a description of each
  * format.
  * </p>
+ * 
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class SupportedFormat {

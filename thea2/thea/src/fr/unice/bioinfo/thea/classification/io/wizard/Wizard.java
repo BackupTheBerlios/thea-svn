@@ -15,6 +15,7 @@ import org.openide.util.NbBundle;
  * way to iterate over them.
  * </p>
  * Iterates over the list of wizards.
+ * 
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class Wizard implements WizardDescriptor.Iterator {
@@ -39,6 +40,7 @@ public class Wizard implements WizardDescriptor.Iterator {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.WizardDescriptor.Iterator#current()
      */
     public Panel current() {
@@ -47,6 +49,7 @@ public class Wizard implements WizardDescriptor.Iterator {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.WizardDescriptor.Iterator#name()
      */
     public String name() {
@@ -55,6 +58,7 @@ public class Wizard implements WizardDescriptor.Iterator {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.WizardDescriptor.Iterator#hasNext()
      */
     public boolean hasNext() {
@@ -68,6 +72,7 @@ public class Wizard implements WizardDescriptor.Iterator {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.WizardDescriptor.Iterator#hasPrevious()
      */
     public boolean hasPrevious() {
@@ -76,6 +81,7 @@ public class Wizard implements WizardDescriptor.Iterator {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.WizardDescriptor.Iterator#nextPanel()
      */
     public void nextPanel() {
@@ -90,6 +96,7 @@ public class Wizard implements WizardDescriptor.Iterator {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.WizardDescriptor.Iterator#previousPanel()
      */
     public void previousPanel() {
@@ -100,6 +107,7 @@ public class Wizard implements WizardDescriptor.Iterator {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.WizardDescriptor.Iterator#addChangeListener(javax.swing.event.ChangeListener)
      */
     public void addChangeListener(ChangeListener arg0) {
@@ -108,6 +116,7 @@ public class Wizard implements WizardDescriptor.Iterator {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.WizardDescriptor.Iterator#removeChangeListener(javax.swing.event.ChangeListener)
      */
     public void removeChangeListener(ChangeListener arg0) {
@@ -126,6 +135,7 @@ public class Wizard implements WizardDescriptor.Iterator {
 
     /**
      * Build list of panels.
+     * 
      * @return List of panels.
      */
     private WizardDescriptor.Panel[] buildPanels() {
@@ -136,6 +146,7 @@ public class Wizard implements WizardDescriptor.Iterator {
 
     /**
      * Returns steps' list.
+     * 
      * @return List of steps.
      */
     private String[] buildSteps() {

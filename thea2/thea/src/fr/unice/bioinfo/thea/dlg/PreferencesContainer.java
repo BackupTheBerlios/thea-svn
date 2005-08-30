@@ -137,7 +137,9 @@ public class PreferencesContainer extends JPanel {
 
     /**
      * Loads the panel defined by the given settings info.
-     * @param info settings info.
+     * 
+     * @param info
+     *            settings info.
      * @return the indicated settings panel.
      */
     private AbstractSettingsPage loadPanel(SettingsNodeInfo info) {
@@ -161,6 +163,7 @@ public class PreferencesContainer extends JPanel {
 
     /**
      * Creates the different nodes to choose the settings pages.
+     * 
      * @return the root node of the created node tree.
      */
     private DefaultMutableTreeNode createNodes() {
@@ -257,6 +260,7 @@ public class PreferencesContainer extends JPanel {
 
         /**
          * Returns the class to load for the settings page.
+         * 
          * @return the class to load for the settings page.
          */
         public Class getPanelClass() {
@@ -299,7 +303,9 @@ public class PreferencesContainer extends JPanel {
     private static class SettingsNode extends DefaultMutableTreeNode {
         /**
          * Creates a new SettingsNode object.
-         * @param o the node information
+         * 
+         * @param o
+         *            the node information
          */
         public SettingsNode(Object o) {
             super(o);
@@ -307,6 +313,7 @@ public class PreferencesContainer extends JPanel {
 
         /**
          * Returns the node information.
+         * 
          * @return node information object.
          */
         public SettingsNodeInfo getInfo() {
@@ -322,6 +329,7 @@ public class PreferencesContainer extends JPanel {
 
         /*
          * (non-Javadoc)
+         * 
          * @see javax.swing.event.TreeSelectionListener#valueChanged(javax.swing.event.TreeSelectionEvent)
          */
         public void valueChanged(TreeSelectionEvent e) {

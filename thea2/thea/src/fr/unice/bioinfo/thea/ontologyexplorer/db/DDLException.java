@@ -15,6 +15,7 @@ package fr.unice.bioinfo.thea.ontologyexplorer.db;
 /**
  * Generic DDL operation-related exception. This is a generic DDL-operation
  * related exception.
+ * 
  * @author Slavek Psenicka
  */
 public class DDLException extends Exception {
@@ -22,7 +23,9 @@ public class DDLException extends Exception {
 
     /**
      * Creates new exception
-     * @param message The text describing the exception
+     * 
+     * @param message
+     *            The text describing the exception
      */
     public DDLException(String message) {
         super(message);

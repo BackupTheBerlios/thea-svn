@@ -9,6 +9,7 @@ import fr.unice.bioinfo.thea.api.ClassificationParser;
 
 /**
  * An utility class that provides a parser for files in the eisen format.
+ * 
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  * @author Claude Pasquier.
  */
@@ -26,6 +27,7 @@ public class EisenParser implements ClassificationParser {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.api.ClassificationParser#getRootNode(java.io.File)
      */
     public Object getRootNode(File file) throws FileNotFoundException {

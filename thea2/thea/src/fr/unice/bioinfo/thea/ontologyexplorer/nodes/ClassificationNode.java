@@ -16,6 +16,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.infos.ClassificationNodeInfo;
 
 /**
  * A node that represents a classification inside the <i>Ontology Explorer </i>.
+ * 
  * @author Saïd El Kasmi.
  */
 public class ClassificationNode extends AbstractNode implements Node.Cookie {
@@ -46,6 +47,7 @@ public class ClassificationNode extends AbstractNode implements Node.Cookie {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.nodes.Node#getActions(boolean)
      */
     public Action[] getActions(boolean arg0) {
@@ -60,6 +62,7 @@ public class ClassificationNode extends AbstractNode implements Node.Cookie {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.nodes.Node#canDestroy()
      */
     public boolean canDestroy() {
@@ -68,6 +71,7 @@ public class ClassificationNode extends AbstractNode implements Node.Cookie {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.nodes.Node#getCookie(java.lang.Class)
      */
     public Node.Cookie getCookie(Class klas) {

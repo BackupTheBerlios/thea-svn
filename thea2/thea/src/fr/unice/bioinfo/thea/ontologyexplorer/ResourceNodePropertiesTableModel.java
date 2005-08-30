@@ -80,6 +80,7 @@ public class ResourceNodePropertiesTableModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getColumnCount()
      */
     public int getColumnCount() {
@@ -91,6 +92,7 @@ public class ResourceNodePropertiesTableModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getRowCount()
      */
     public int getRowCount() {
@@ -102,6 +104,7 @@ public class ResourceNodePropertiesTableModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     public Object getValueAt(int rowIndex, int columnIndex) {

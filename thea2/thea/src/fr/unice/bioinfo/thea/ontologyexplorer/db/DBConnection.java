@@ -20,6 +20,7 @@ import java.sql.Connection;
  * schema name). It can create JDBC connection and feels to be a bean (has
  * propertychange support and customizer). Instances of this class uses explorer
  * option to store information about open connection.
+ * 
  * @author Slavek Psenicka, Radko Najman
  */
 public interface DBConnection extends java.io.Serializable {
@@ -30,7 +31,9 @@ public interface DBConnection extends java.io.Serializable {
 
     /**
      * Sets driver URL Fires propertychange event.
-     * @param driver DNew driver URL
+     * 
+     * @param driver
+     *            DNew driver URL
      */
     public void setDriver(String driver);
 
@@ -41,7 +44,9 @@ public interface DBConnection extends java.io.Serializable {
 
     /**
      * Sets database URL Fires propertychange event.
-     * @param database New database URL
+     * 
+     * @param database
+     *            New database URL
      */
     public void setDatabase(String database);
 
@@ -52,7 +57,9 @@ public interface DBConnection extends java.io.Serializable {
 
     /**
      * Sets user login name Fires propertychange event.
-     * @param user New login name
+     * 
+     * @param user
+     *            New login name
      */
     public void setUser(String user);
 
@@ -63,7 +70,9 @@ public interface DBConnection extends java.io.Serializable {
 
     /**
      * Sets schema name Fires propertychange event.
-     * @param schema Schema name
+     * 
+     * @param schema
+     *            Schema name
      */
     public void setSchema(String schema);
 
@@ -76,7 +85,9 @@ public interface DBConnection extends java.io.Serializable {
 
     /**
      * Sets connection name Fires propertychange event.
-     * @param name Connection name
+     * 
+     * @param name
+     *            Connection name
      */
     public void setName(String name);
 
@@ -87,7 +98,9 @@ public interface DBConnection extends java.io.Serializable {
 
     /**
      * Sets driver name Fires propertychange event.
-     * @param name Driver name
+     * 
+     * @param name
+     *            Driver name
      */
     public void setDriverName(String name);
 
@@ -98,7 +111,9 @@ public interface DBConnection extends java.io.Serializable {
 
     /**
      * Sets password should be remembered
-     * @param flag New flag
+     * 
+     * @param flag
+     *            New flag
      */
     public void setRememberPassword(boolean flag);
 
@@ -109,7 +124,9 @@ public interface DBConnection extends java.io.Serializable {
 
     /**
      * Sets password Fires propertychange event.
-     * @param password New password
+     * 
+     * @param password
+     *            New password
      */
     public void setPassword(String password);
 

@@ -103,10 +103,15 @@ public class DatabaseConnection implements DBConnection {
 
     /**
      * Advanced constructor Allows to specify all needed information.
-     * @param driver Driver URL
-     * @param database Database URL
-     * @param user User login name
-     * @param password User password
+     * 
+     * @param driver
+     *            Driver URL
+     * @param database
+     *            Database URL
+     * @param user
+     *            User login name
+     * @param password
+     *            User password
      */
     public DatabaseConnection(String driver, String database, String user,
             String password) {
@@ -128,7 +133,9 @@ public class DatabaseConnection implements DBConnection {
 
     /**
      * Sets driver URL Fires propertychange event.
-     * @param driver DNew driver URL
+     * 
+     * @param driver
+     *            DNew driver URL
      */
     public void setDriver(String driver) {
         if ((driver == null) || driver.equals(drv)) {
@@ -171,7 +178,9 @@ public class DatabaseConnection implements DBConnection {
 
     /**
      * Sets database URL Fires propertychange event.
-     * @param database New database URL
+     * 
+     * @param database
+     *            New database URL
      */
     public void setDatabase(String database) {
         if ((database == null) || database.equals(db)) {
@@ -201,7 +210,9 @@ public class DatabaseConnection implements DBConnection {
 
     /**
      * Sets user login name Fires propertychange event.
-     * @param user New login name
+     * 
+     * @param user
+     *            New login name
      */
     public void setUser(String user) {
         if ((user == null) || user.equals(usr)) {
@@ -244,7 +255,9 @@ public class DatabaseConnection implements DBConnection {
 
     /**
      * Sets user name of the connection Fires propertychange event.
-     * @param value New connection name
+     * 
+     * @param value
+     *            New connection name
      */
     public void setName(String value) {
         if ((name == null) || name.equals(value)) {
@@ -272,7 +285,9 @@ public class DatabaseConnection implements DBConnection {
 
     /**
      * Sets user schema name Fires propertychange event.
-     * @param schema_name New login name
+     * 
+     * @param schema_name
+     *            New login name
      */
     public void setSchema(String schema_name) {
         if ((schema_name == null) || schema_name.equals(schema)) {
@@ -298,7 +313,9 @@ public class DatabaseConnection implements DBConnection {
 
     /**
      * Sets password should be remembered
-     * @param flag New flag
+     * 
+     * @param flag
+     *            New flag
      */
     public void setRememberPassword(boolean flag) {
         rpwd = (flag ? Boolean.TRUE : Boolean.FALSE);
@@ -313,7 +330,9 @@ public class DatabaseConnection implements DBConnection {
 
     /**
      * Sets password Fires propertychange event.
-     * @param password New password
+     * 
+     * @param password
+     *            New password
      */
     public void setPassword(String password) {
         if ((password == null) || password.equals(pwd)) {

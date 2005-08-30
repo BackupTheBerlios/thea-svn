@@ -22,6 +22,7 @@ import org.openide.util.NbBundle;
 /**
  * A swing component based on the {@link JTable}component used to pre-view the
  * classification befor opening it.
+ * 
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class PreviewPanel extends JPanel implements PropertyChangeListener {
@@ -61,6 +62,7 @@ public class PreviewPanel extends JPanel implements PropertyChangeListener {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
     public void propertyChange(PropertyChangeEvent evt) {

@@ -18,6 +18,7 @@ import fr.unice.bioinfo.thea.classification.settings.CESettings;
 /**
  * A class representing a node. Each node has a link to its parent and hold the
  * list of its childs. Nodes that have no child are leaves.
+ * 
  * @author Claude Pasquier
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
@@ -309,6 +310,7 @@ public class Node {
     /**
      * Counts and returns terminals (non hidden nodes) that are descendant of
      * this node.
+     * 
      * @return int Number if terminal nodes.
      */
     public int getTerminals() {
@@ -353,7 +355,9 @@ public class Node {
 
     /**
      * Adds a child to the this node's children list.
-     * @param aChild A child to add.
+     * 
+     * @param aChild
+     *            A child to add.
      */
     public void addChild(Node aChild) {
         children.add(aChild);
@@ -362,7 +366,9 @@ public class Node {
 
     /**
      * Remove the given node from this node's children list.
-     * @param aChild The child to remove.
+     * 
+     * @param aChild
+     *            The child to remove.
      */
     public void removeChild(Node aChild) {
         aChild.setParent(null);
@@ -371,6 +377,7 @@ public class Node {
 
     /**
      * Returns this node's children list.
+     * 
      * @return java.util.List This node's children.
      */
     public List getChildren() {
@@ -379,7 +386,9 @@ public class Node {
 
     /**
      * Sets this node's children list.
-     * @param children Children.
+     * 
+     * @param children
+     *            Children.
      */
     public void setChildren(List children) {
         this.children = children;
@@ -392,7 +401,9 @@ public class Node {
 
     /**
      * Sets the parent of this node.
-     * @param parent The parent of this node.
+     * 
+     * @param parent
+     *            The parent of this node.
      */
     public void setParent(Node parent) {
         this.parent = parent;
@@ -400,6 +411,7 @@ public class Node {
 
     /**
      * Returns the parent of this node.
+     * 
      * @return fr.unice.bioinfo.thea.cle.model.Node This node's parent.
      */
     public Node getParent() {
@@ -408,6 +420,7 @@ public class Node {
 
     /**
      * Returns this node's label.
+     * 
      * @return java.lang.String The current label of this node.
      */
     public String getLabel() {
@@ -421,7 +434,9 @@ public class Node {
      * Sets a label for this node. A label maybe the node name or something
      * else. When no label is specified (label = null), the node's name is used
      * as label.
-     * @param label This node's label.
+     * 
+     * @param label
+     *            This node's label.
      */
     public void setLabel(String label) {
         this.label = label;
@@ -442,6 +457,7 @@ public class Node {
 
     /**
      * Returns list of properties of this node.
+     * 
      * @return java.util.Hashtable Properties of this node.
      */
     public Hashtable getProperties() {
@@ -450,8 +466,11 @@ public class Node {
 
     /**
      * Adds a property to this node's properties list.
-     * @param key The name of tht property.
-     * @param value The value of the property.
+     * 
+     * @param key
+     *            The name of tht property.
+     * @param value
+     *            The value of the property.
      */
     public void addProperty(Object key, Object value) {
         properties.put(key, value);
@@ -464,7 +483,9 @@ public class Node {
     /**
      * Returns a property from this node's properties list using the given key
      * as a property name.
-     * @param key The name of tht property.
+     * 
+     * @param key
+     *            The name of tht property.
      * @return java.lang.Object A property associated the given key.
      */
     public Object getProperty(Object key) {
@@ -473,8 +494,11 @@ public class Node {
 
     /**
      * Computes the distance from an ancestor to this node
-     * @param ancestor the ancestor (if ancestor is null, root is assumed)
-     * @param useBranchLength a flag specifying if branch lengths has to be used
+     * 
+     * @param ancestor
+     *            the ancestor (if ancestor is null, root is assumed)
+     * @param useBranchLength
+     *            a flag specifying if branch lengths has to be used
      * @return The distance between an ancestor's node and the current node
      */
     public double getDistanceToAncestor(Node ancestor, boolean useBranchLength) {
@@ -490,6 +514,7 @@ public class Node {
 
     /**
      * Returns the number of leaf nodes rooted at this node.
+     * 
      * @return int Number of leaf nodes rooted at this node.
      */
     public int getNumberOfLeaves() {
@@ -510,7 +535,9 @@ public class Node {
 
     /**
      * Returns wether this node is an ancestor of given node.
-     * @param node the node looking for an ancestor
+     * 
+     * @param node
+     *            the node looking for an ancestor
      * @return boolean <i>True </i>if this node is the ancestor of <i>node </i>.
      *         <i>False otherwise.
      */
@@ -526,6 +553,7 @@ public class Node {
 
     /**
      * Returns wether this node is leaf or not.
+     * 
      * @return boolean <i>True </i>if this node is leaf. <i>False </i>otherwise.
      */
     public boolean isLeaf() {
@@ -535,7 +563,9 @@ public class Node {
     /**
      * Move the specified node (which must be present in the list of children at
      * the end of the list.
-     * @param aChild the child node to move at the end.
+     * 
+     * @param aChild
+     *            the child node to move at the end.
      */
     public void moveChildAtEnd(Node aChild) {
         children.remove(aChild);
@@ -545,8 +575,11 @@ public class Node {
     /**
      * Move the specified node (which must be present in the list of children at
      * the specified position.
-     * @param aChild the child node to move
-     * @param newPosition the new position of the given child.
+     * 
+     * @param aChild
+     *            the child node to move
+     * @param newPosition
+     *            the new position of the given child.
      */
     public void moveChild(Node aChild, int newPosition) {
         children.remove(aChild);
@@ -570,6 +603,7 @@ public class Node {
 
     /**
      * Returns the list of all leaf nodes that are descendant of this one.
+     * 
      * @return java.util.List List of leaves.
      */
     public List getLeaves() {

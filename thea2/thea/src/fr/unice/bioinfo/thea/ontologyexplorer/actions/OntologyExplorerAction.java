@@ -10,11 +10,13 @@ import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 
 /**
  * The actions which shows the Ontology Explorer. It appears in Windows menu.
+ * 
  * @author Saïd El Kasmi
  */
 public class OntologyExplorerAction extends CallableSystemAction {
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.CallableSystemAction#performAction()
      */
     public void performAction() {
@@ -31,6 +33,7 @@ public class OntologyExplorerAction extends CallableSystemAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
@@ -40,6 +43,7 @@ public class OntologyExplorerAction extends CallableSystemAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.SystemAction#iconResource()
      */
     protected String iconResource() {
@@ -48,6 +52,7 @@ public class OntologyExplorerAction extends CallableSystemAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.CallableSystemAction#asynchronous()
      */
     protected boolean asynchronous() {
@@ -56,6 +61,7 @@ public class OntologyExplorerAction extends CallableSystemAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.SystemAction#getHelpCtx()
      */
     public HelpCtx getHelpCtx() {

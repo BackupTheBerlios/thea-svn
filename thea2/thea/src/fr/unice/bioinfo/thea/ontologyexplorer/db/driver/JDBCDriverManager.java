@@ -34,6 +34,7 @@ public final class JDBCDriverManager {
     /**
      * Gets an instance of JDBCDriverManager. If the instance doesn't exist it
      * will be created.
+     * 
      * @return the instance of JDBCDriverManager
      */
     public static synchronized JDBCDriverManager getDefault() {
@@ -46,6 +47,7 @@ public final class JDBCDriverManager {
 
     /**
      * Gets an array of JDBCDriver objects.
+     * 
      * @return the array of registered JDBC drivers.
      */
     public JDBCDriver[] getDrivers() {
@@ -58,7 +60,9 @@ public final class JDBCDriverManager {
 
     /**
      * Gets an array of JDBCDriver objects specified by a class name.
-     * @param drvClass driver class name
+     * 
+     * @param drvClass
+     *            driver class name
      * @return the array of registered JDBC drivers.
      */
     public JDBCDriver[] getDriver(String drvClass) {

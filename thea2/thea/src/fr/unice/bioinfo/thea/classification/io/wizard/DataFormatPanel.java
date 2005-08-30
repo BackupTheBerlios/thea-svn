@@ -25,6 +25,7 @@ import org.openide.util.NbBundle;
  * a description of the classification it is about opening and select the format
  * in which the classification is stored.
  * </p>
+ * 
  * @see {@link DataFormatWizard}
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
@@ -153,6 +154,7 @@ public class DataFormatPanel extends JPanel implements PropertyChangeListener {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
     public void propertyChange(PropertyChangeEvent evt) {

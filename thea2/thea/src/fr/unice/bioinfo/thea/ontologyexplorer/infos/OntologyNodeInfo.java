@@ -23,6 +23,7 @@ public class OntologyNodeInfo extends Hashtable implements Node.Cookie {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.util.Dictionary#put(java.lang.Object, java.lang.Object)
      */
     public synchronized Object put(Object key, Object value) {

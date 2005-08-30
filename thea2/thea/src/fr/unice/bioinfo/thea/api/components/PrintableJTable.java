@@ -28,6 +28,7 @@ public class PrintableJTable extends JTable implements Printable {
 
     /**
      * The method
+     * 
      * @print@ must be implemented for
      * @Printable@ interface. Parameters are supplied by system.
      */

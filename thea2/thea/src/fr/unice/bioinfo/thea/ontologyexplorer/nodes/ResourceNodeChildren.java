@@ -25,6 +25,7 @@ import fr.unice.bioinfo.thea.util.OWLProperties;
  * elements: a resource and a path to the icon to be associated to the
  * relationship between the node and the children. For each key a node is
  * created using the <code>createNode(Object key)</code> method.
+ * 
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class ResourceNodeChildren extends Children.Keys {
@@ -46,6 +47,7 @@ public class ResourceNodeChildren extends Children.Keys {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.nodes.Children#addNotify()
      */
     protected void addNotify() {
@@ -57,6 +59,7 @@ public class ResourceNodeChildren extends Children.Keys {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.nodes.Children#removeNotify()
      */
     protected void removeNotify() {
@@ -65,8 +68,10 @@ public class ResourceNodeChildren extends Children.Keys {
 
     /**
      * createNodes creates a node representing the key.
-     * @param key A key is an array of two elements: a resource and a path to
-     *        the associated icon
+     * 
+     * @param key
+     *            A key is an array of two elements: a resource and a path to
+     *            the associated icon
      * @return Array of created nodes (this function creates one node for each
      *         key.
      */
@@ -94,7 +99,9 @@ public class ResourceNodeChildren extends Children.Keys {
     /**
      * Updates keys. A key is represented by an array of three elements: a
      * resource and a path to the associated icon
-     * @param resource Resource
+     * 
+     * @param resource
+     *            Resource
      * @return List of keys.
      */
     private Set findSubResources(Resource resource) {

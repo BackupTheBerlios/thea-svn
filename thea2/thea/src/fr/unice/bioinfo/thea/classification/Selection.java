@@ -34,9 +34,13 @@ public class Selection {
 
     /**
      * Creates a selection using the given nodes list, color and id.
-     * @param nodes Selected nodes.
-     * @param id Selection's id.
-     * @param color Selection's color.
+     * 
+     * @param nodes
+     *            Selected nodes.
+     * @param id
+     *            Selection's id.
+     * @param color
+     *            Selection's color.
      */
     public Selection(List nodes, String id, Color color) {
         this(nodes);
@@ -57,7 +61,8 @@ public class Selection {
     }
 
     /**
-     * @param backgroundColor The backgroundColor to set.
+     * @param backgroundColor
+     *            The backgroundColor to set.
      */
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
@@ -71,7 +76,8 @@ public class Selection {
     }
 
     /**
-     * @param color The color to set.
+     * @param color
+     *            The color to set.
      */
     public void setColor(Color color) {
         this.color = color;
@@ -85,7 +91,8 @@ public class Selection {
     }
 
     /**
-     * @param frozen The frozen to set.
+     * @param frozen
+     *            The frozen to set.
      */
     public void setFrozen(boolean frozen) {
         this.frozen = frozen;
@@ -99,7 +106,8 @@ public class Selection {
     }
 
     /**
-     * @param id The id to set.
+     * @param id
+     *            The id to set.
      */
     public void setId(String id) {
         this.id = id;
@@ -113,7 +121,8 @@ public class Selection {
     }
 
     /**
-     * @param name The name to set.
+     * @param name
+     *            The name to set.
      */
     public void setName(String name) {
         this.name = name;

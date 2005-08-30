@@ -23,6 +23,7 @@ public class ClDataNode extends DataNode {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.nodes.Node#getActions(boolean)
      */
     public Action[] getActions(boolean arg0) {
@@ -37,6 +38,7 @@ public class ClDataNode extends DataNode {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.nodes.Node#getPreferredAction()
      */
     public Action getPreferredAction() {

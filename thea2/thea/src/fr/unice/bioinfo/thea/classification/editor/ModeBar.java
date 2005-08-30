@@ -15,6 +15,7 @@ import javax.swing.border.EtchedBorder;
 /**
  * A swing component ( exactly a tool bar ) that allows users to switch between
  * available modes ( zooming mode, standard mode ...)
+ * 
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class ModeBar extends JToolBar {

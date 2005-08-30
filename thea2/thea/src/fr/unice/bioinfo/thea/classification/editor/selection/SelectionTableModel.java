@@ -10,6 +10,7 @@ import fr.unice.bioinfo.thea.classification.Node;
 /**
  * A customized model for tables the Selection Viewer will create to hold
  * slections.
+ * 
  * @author SAÏD, EL KASMI.
  */
 public class SelectionTableModel extends AbstractTableModel {
@@ -35,6 +36,7 @@ public class SelectionTableModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getColumnCount()
      */
     public int getColumnCount() {
@@ -56,6 +58,7 @@ public class SelectionTableModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getRowCount()
      */
     public int getRowCount() {
@@ -64,6 +67,7 @@ public class SelectionTableModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -84,6 +88,7 @@ public class SelectionTableModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getColumnClass(int)
      */
     public Class getColumnClass(int columnIndex) {

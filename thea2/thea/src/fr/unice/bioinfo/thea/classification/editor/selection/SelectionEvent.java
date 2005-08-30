@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * This is an event class that holds all of information necessary for a {@link
  * SelectionListener} to figure out what is selected.
+ * 
  * @author Claude Pasquier.
  * @author Saïd El Kasmi.
  */
@@ -33,8 +34,11 @@ public class SelectionEvent extends EventObject {
 
     /**
      * Creates a selection event.
-     * @param source The object upon which the event in question occured on
-     * @param id The slection's identifier (ID).
+     * 
+     * @param source
+     *            The object upon which the event in question occured on
+     * @param id
+     *            The slection's identifier (ID).
      */
     public SelectionEvent(Object source, String id) {
         super(source);
@@ -50,13 +54,19 @@ public class SelectionEvent extends EventObject {
 
     /**
      * Creates a selection event.
-     * @param source The object upon which the event in question occured on
-     * @param id The slection's identifier (ID).
-     * @param name The selection's name
-     * @param color The selection's color.
+     * 
+     * @param source
+     *            The object upon which the event in question occured on
+     * @param id
+     *            The slection's identifier (ID).
+     * @param name
+     *            The selection's name
+     * @param color
+     *            The selection's color.
      * @param nbGlobalHits
      * @param nbLocalHits
-     * @param nodes Nodes correspending to the selection.
+     * @param nodes
+     *            Nodes correspending to the selection.
      */
     public SelectionEvent(Object source, String id, String name, Color color,
             String nbGlobalHits, String nbLocalHits, List nodes) {
@@ -71,14 +81,21 @@ public class SelectionEvent extends EventObject {
 
     /**
      * Creates a selection event.
-     * @param source The object upon which the event in question occured on
-     * @param id The slection's identifier (ID).
-     * @param name The selection's name
-     * @param color The selection's color.
-     * @param bgColor The background's color.
+     * 
+     * @param source
+     *            The object upon which the event in question occured on
+     * @param id
+     *            The slection's identifier (ID).
+     * @param name
+     *            The selection's name
+     * @param color
+     *            The selection's color.
+     * @param bgColor
+     *            The background's color.
      * @param nbGlobalHits
      * @param nbLocalHits
-     * @param nodes Nodes correspending to the selection.
+     * @param nodes
+     *            Nodes correspending to the selection.
      */
     public SelectionEvent(Object source, String id, String name,
             String selectionLabel, Color color, Color bgColor,

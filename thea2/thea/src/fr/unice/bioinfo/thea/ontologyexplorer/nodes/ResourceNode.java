@@ -30,6 +30,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 /**
  * This class uses the nodes API to build a node that represents a resource from
  * an ontology.
+ * 
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class ResourceNode extends AbstractNode implements Node.Cookie {
@@ -151,6 +152,7 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.nodes.Node#getCookie(java.lang.Class)
      */
     public Node.Cookie getCookie(Class klas) {
@@ -200,6 +202,7 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.nodes.Node#getActions(boolean)
      */
     public Action[] getActions(boolean arg0) {

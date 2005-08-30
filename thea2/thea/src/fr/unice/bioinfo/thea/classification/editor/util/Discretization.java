@@ -220,6 +220,7 @@ public class Discretization implements PropertyChangeListener {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
     public void propertyChange(PropertyChangeEvent e) {

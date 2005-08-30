@@ -15,12 +15,14 @@ public class ResourceNodeInfo extends Hashtable implements Node.Cookie {
     static final long serialVersionUID = 1176243907461868244L;
 
     public static final String NAME = "name"; // NOI18N
+
     // public static final String ONTOLOGY_NODE = "ontology_node"; //NOI18N
 
     private Resource resource = null;
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.util.Dictionary#put(java.lang.Object, java.lang.Object)
      */
     public synchronized Object put(Object key, Object value) {

@@ -9,25 +9,31 @@ import fr.unice.bioinfo.thea.classification.Selection;
 
 /**
  * Provides necessary function for selection nodes in the classification editor.
+ * 
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public interface SelectionManager {
 
     /**
      * Update the selection's state of the given collection of nodes.
-     * @param nodes Selected nodes.
-     * @param state state Indicates the new selected state of the node.
-     *        <ul>
-     *        <li>state < 0 : unselect</li>
-     *        <li>state = 0 : invert</li>
-     *        <li>state > 0 : select</li>
-     *        </ul>
+     * 
+     * @param nodes
+     *            Selected nodes.
+     * @param state
+     *            state Indicates the new selected state of the node.
+     *            <ul>
+     *            <li>state < 0 : unselect</li>
+     *            <li>state = 0 : invert</li>
+     *            <li>state > 0 : select</li>
+     *            </ul>
      */
     public void setSelected(Collection nodes, int state);
 
     /**
      * Tels wether the given belongs the list to the list of slected nodes.
-     * @param aNode The node to get the value
+     * 
+     * @param aNode
+     *            The node to get the value
      * @return The selected state of the parameter node
      */
     public boolean isNodeSelected(Node aNode);
@@ -35,13 +41,16 @@ public interface SelectionManager {
     /**
      * Update the selection's state of the given. If the given node is not leaf
      * then update also the selection's state if its children.
-     * @param aNode The node to update.
-     * @param state Indicates the new selected state of the node.
-     *        <ul>
-     *        <li>state < 0 : unselect</li>
-     *        <li>state = 0 : invert</li>
-     *        <li>state > 0 : select</li>
-     *        </ul>
+     * 
+     * @param aNode
+     *            The node to update.
+     * @param state
+     *            Indicates the new selected state of the node.
+     *            <ul>
+     *            <li>state < 0 : unselect</li>
+     *            <li>state = 0 : invert</li>
+     *            <li>state > 0 : select</li>
+     *            </ul>
      */
     public void setSelected(Node aNode, int state);
 
@@ -53,14 +62,17 @@ public interface SelectionManager {
 
     /**
      * Returns a list of selected leaves
-     * @param b indicates if the function must return the list of selected
-     *        leaves in the whole tree
+     * 
+     * @param b
+     *            indicates if the function must return the list of selected
+     *            leaves in the whole tree
      * @return the list of selected leaves
      */
     public List getSelectedLeaves(boolean b);
 
     /**
      * Returns a list of selected leaves in the displayed tree
+     * 
      * @return the list of selected leaves
      */
     public List getSelectedLeaves();
@@ -96,6 +108,7 @@ public interface SelectionManager {
 
     /**
      * Returns a collection of all selected nodes
+     * 
      * @return the collection of selected nodes
      */
     public Collection getSelectedNodes();

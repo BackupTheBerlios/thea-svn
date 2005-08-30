@@ -14,6 +14,7 @@ public class NodesUtilities {
      * Creates and returns the instance of the node representing the status
      * 'WAIT' of the node. It is used when it spent more time to create elements
      * hierarchy.
+     * 
      * @return the wait node.
      */
     public static Node createWaitNode() {

@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  * Cell renderer for the Preview Table.
+ * 
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class PreviewTableCellRenderer extends DefaultTableCellRenderer {

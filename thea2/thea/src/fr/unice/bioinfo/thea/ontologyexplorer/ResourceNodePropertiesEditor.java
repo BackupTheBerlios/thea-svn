@@ -67,7 +67,9 @@ public class ResourceNodePropertiesEditor extends TopComponent {
     /**
      * Creates a dockable windows to be used to hold displayable properties of a
      * resource represented by the given node.
-     * @param node a node that represents a Resource in the ontology explorer.
+     * 
+     * @param node
+     *            a node that represents a Resource in the ontology explorer.
      */
     public ResourceNodePropertiesEditor(Node node) {
         super();

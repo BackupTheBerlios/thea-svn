@@ -86,6 +86,7 @@ public class OntologiesListPanel extends JPanel {
 
     /**
      * Return the selected ontology.
+     * 
      * @return A Node that represents an ontology.
      */
     public Node getSelectedOntologyNode() {

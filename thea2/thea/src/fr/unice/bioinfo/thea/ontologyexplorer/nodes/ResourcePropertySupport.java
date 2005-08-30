@@ -9,6 +9,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 /**
  * Support class for {@link OntologyNode}. It is used to build properties of a
  * node and add them to the properties panel.
+ * 
  * @author Saïd El Kasmi
  */
 public class ResourcePropertySupport extends PropertySupport {
@@ -16,10 +17,14 @@ public class ResourcePropertySupport extends PropertySupport {
     private Object rni;
 
     /**
-     * @param name The name of the property
-     * @param type The class type of the property
-     * @param displayName The display name of the property
-     * @param canW Whether the property is writable
+     * @param name
+     *            The name of the property
+     * @param type
+     *            The class type of the property
+     * @param displayName
+     *            The display name of the property
+     * @param canW
+     *            Whether the property is writable
      */
     public ResourcePropertySupport(String name, Class type, String displayName,
             String shortDescription, Object rni, boolean canW) {
@@ -31,6 +36,7 @@ public class ResourcePropertySupport extends PropertySupport {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.nodes.Node.Property#getValue()
      */
     public Object getValue() throws IllegalAccessException,
@@ -42,6 +48,7 @@ public class ResourcePropertySupport extends PropertySupport {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.nodes.Node.Property#setValue(java.lang.Object)
      */
     public void setValue(Object o) throws IllegalAccessException,

@@ -38,8 +38,10 @@ public class ProgressDialog extends JDialog implements PropertyChangeListener {
 
     /**
      * Creates a new ProgressDialog with the given frame as a parent.
-     * @param parent parent the parent of this dialog. Typically this would be
-     *        <code>WindowManager.getDefault().getMainWindow()</code>.
+     * 
+     * @param parent
+     *            parent the parent of this dialog. Typically this would be
+     *            <code>WindowManager.getDefault().getMainWindow()</code>.
      */
     private ProgressDialog(Frame owner) {
         super(owner, false);
@@ -49,8 +51,10 @@ public class ProgressDialog extends JDialog implements PropertyChangeListener {
 
     /**
      * Creates a new ProgressDialog with the given frame as a parent.
-     * @param parent parent the parent of this dialog. Typically this would be
-     *        another Dialog.
+     * 
+     * @param parent
+     *            parent the parent of this dialog. Typically this would be
+     *            another Dialog.
      */
     public ProgressDialog(Dialog owner) {
         super(owner);
@@ -106,6 +110,7 @@ public class ProgressDialog extends JDialog implements PropertyChangeListener {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
     public void propertyChange(PropertyChangeEvent e) {

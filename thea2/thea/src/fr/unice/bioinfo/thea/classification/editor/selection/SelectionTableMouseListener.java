@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 public class SelectionTableMouseListener extends MouseAdapter {
     /*
      * (non-Javadoc)
+     * 
      * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
      */
     public void mousePressed(MouseEvent e) {

@@ -70,10 +70,13 @@ public class GeneEditor extends TopComponent {
     /**
      * Creates a dockable windows to be used to hold the table of genes
      * annotated by the resource represented by the given node.
-     * @param node a node that represents a Resource in the ontology explorer.
-     * @param evidences Evidences codes used as criterions to find annotated
-     *        genes.
-     * @param properties Array of strings that defines properties of genes.
+     * 
+     * @param node
+     *            a node that represents a Resource in the ontology explorer.
+     * @param evidences
+     *            Evidences codes used as criterions to find annotated genes.
+     * @param properties
+     *            Array of strings that defines properties of genes.
      */
     public GeneEditor(Node node, String[] evidences, String[] properties) {
         super();

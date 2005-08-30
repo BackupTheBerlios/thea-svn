@@ -50,6 +50,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.db.util.DriverListUtil;
 /**
  * A swing GUI that exposes necessary entries to make users add a JDBC driver to
  * the list of drivers to be used to connecto to a database.
+ * 
  * @author Saïd El Kasmi.
  */
 public class AddDriverPanel extends JPanel {

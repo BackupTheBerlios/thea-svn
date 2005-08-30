@@ -11,6 +11,7 @@ import org.openide.options.SystemOption;
  * Defines all options for the classification viewer customization. Never
  * instanciate this class directly but use the the static method <i>
  * getInstance() </i> to get an instance ot it.
+ * 
  * @author SAÏD, EL KASMI.
  */
 public class CESettings extends SystemOption {
@@ -416,6 +417,7 @@ public class CESettings extends SystemOption {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.options.SystemOption#displayName()
      */
     public String displayName() {
@@ -461,6 +463,7 @@ public class CESettings extends SystemOption {
     /**
      * Returns a java object that conatins options for the classifiocation
      * viewer customization.
+     * 
      * @return Instance of CESettings class.
      */
     public static CESettings getInstance() {
@@ -469,6 +472,7 @@ public class CESettings extends SystemOption {
 
     /**
      * Returns the showTermID.
+     * 
      * @return showTermID.
      */
     public boolean isShowTermID() {
@@ -477,7 +481,9 @@ public class CESettings extends SystemOption {
 
     /**
      * Setter for <i>showTermID </i> property.
-     * @param showTermID The showTermID to set.
+     * 
+     * @param showTermID
+     *            The showTermID to set.
      */
     public void setShowTermID(boolean value) {
         if (showTermID == value) {
@@ -491,6 +497,7 @@ public class CESettings extends SystemOption {
 
     /**
      * Returns the showTermName.
+     * 
      * @return showTermName.
      */
     public boolean isShowTermName() {
@@ -499,7 +506,9 @@ public class CESettings extends SystemOption {
 
     /**
      * Setter for <i>showTermName </i> property.
-     * @param showTermName The showTermName to set.
+     * 
+     * @param showTermName
+     *            The showTermName to set.
      */
     public void setShowTermName(boolean value) {
         if (showTermName == value) {
@@ -555,6 +564,7 @@ public class CESettings extends SystemOption {
 
     /**
      * Returns the showOverRepresented.
+     * 
      * @return showOverRepresented.
      */
     public boolean isShowOverRepresented() {
@@ -563,7 +573,9 @@ public class CESettings extends SystemOption {
 
     /**
      * Setter for showOverRepresented property.
-     * @param value The showOverRepresented to set.
+     * 
+     * @param value
+     *            The showOverRepresented to set.
      */
     public void setShowOverRepresented(boolean value) {
         if (showOverRepresented == value) {
@@ -604,7 +616,8 @@ public class CESettings extends SystemOption {
     }
 
     /**
-     * @param showUnderRepresented The showUnderRepresented to set.
+     * @param showUnderRepresented
+     *            The showUnderRepresented to set.
      */
     public void setShowUnderRepresented(boolean value) {
         if (showUnderRepresented == value) {
@@ -1554,7 +1567,8 @@ public class CESettings extends SystemOption {
     }
 
     /**
-     * @param value The accTable to set.
+     * @param value
+     *            The accTable to set.
      */
     public void setAccTable(Hashtable value) {
         Hashtable oldValue = accTable;
@@ -1570,7 +1584,8 @@ public class CESettings extends SystemOption {
     }
 
     /**
-     * @param accessor The accessor to set.
+     * @param accessor
+     *            The accessor to set.
      */
     public void setAccessor(String value) {
         value = (value == null) ? "" : value;

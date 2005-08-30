@@ -10,9 +10,12 @@ import java.util.Map;
 public interface MeasuresParser {
     /**
      * Parses a file containing measures for a given classification.
-     * @param file The measures's source files.
+     * 
+     * @param file
+     *            The measures's source files.
      * @return A map measures.
-     * @throws FileNotFoundException Exception if the given file doesn't exists.
+     * @throws FileNotFoundException
+     *             Exception if the given file doesn't exists.
      */
     public Map getMeasures(File file) throws FileNotFoundException;
 }

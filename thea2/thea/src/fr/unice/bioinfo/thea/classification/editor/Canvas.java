@@ -202,6 +202,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.awt.Component#paint(java.awt.Graphics)
      */
     public void paint(Graphics g) {
@@ -211,6 +212,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.Drawable#draw(java.awt.Graphics)
      */
     public void draw(Graphics graphics, boolean doClipping) {
@@ -275,13 +277,21 @@ public class Canvas extends JComponent implements DrawableClassification,
     /**
      * Draw the node n and all its subnodes in the rectangular area defined by
      * (x, y, width, height)
-     * @param aNode The node to be displayed
-     * @param graphics The graphics context
-     * @param context The font render context
-     * @param x The horizontal position of the node
-     * @param y The vertical position of the node
-     * @param width The width of the area used to display the node
-     * @param height The height of the area used to display the node
+     * 
+     * @param aNode
+     *            The node to be displayed
+     * @param graphics
+     *            The graphics context
+     * @param context
+     *            The font render context
+     * @param x
+     *            The horizontal position of the node
+     * @param y
+     *            The vertical position of the node
+     * @param width
+     *            The width of the area used to display the node
+     * @param height
+     *            The height of the area used to display the node
      * @return the vertical position of the horizontal bar
      */
     private double drawNode(Node aNode, Graphics2D graphics,
@@ -371,13 +381,21 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /**
      * Displays the label of a terminal node
-     * @param aNode The node to be displayed
-     * @param graphics The graphics context
-     * @param context The font render context
-     * @param x The horizontal position of the node
-     * @param y The vertical position of the node
-     * @param width The width of the area used to display the node
-     * @param height The height of the area used to display the node
+     * 
+     * @param aNode
+     *            The node to be displayed
+     * @param graphics
+     *            The graphics context
+     * @param context
+     *            The font render context
+     * @param x
+     *            The horizontal position of the node
+     * @param y
+     *            The vertical position of the node
+     * @param width
+     *            The width of the area used to display the node
+     * @param height
+     *            The height of the area used to display the node
      */
     private void drawTerminalNode(Node aNode, Graphics2D graphics,
             FontRenderContext context, double x, double y, double width,
@@ -551,13 +569,21 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /**
      * Displays the label of a non terminal node
-     * @param aNode The node to be displayed
-     * @param graphics The graphics context
-     * @param context The font render context
-     * @param x The horizontal position of the node
-     * @param y The vertical position of the node
-     * @param width The width of the area used to display the node
-     * @param height The height of the area used to display the node
+     * 
+     * @param aNode
+     *            The node to be displayed
+     * @param graphics
+     *            The graphics context
+     * @param context
+     *            The font render context
+     * @param x
+     *            The horizontal position of the node
+     * @param y
+     *            The vertical position of the node
+     * @param width
+     *            The width of the area used to display the node
+     * @param height
+     *            The height of the area used to display the node
      */
     private void drawNonTerminalNode(Node aNode, Graphics2D graphics,
             FontRenderContext context, double x, double y, double width,
@@ -661,11 +687,17 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /**
      * Draw a mark relative of the tree to show the position of selected nodes
-     * @param graphics The graphics context
-     * @param selection The list of selected nodes
-     * @param color The color to use to fill the area
-     * @param x The horizontal position where to draw selected marks
-     * @param width The width of the marks
+     * 
+     * @param graphics
+     *            The graphics context
+     * @param selection
+     *            The list of selected nodes
+     * @param color
+     *            The color to use to fill the area
+     * @param x
+     *            The horizontal position where to draw selected marks
+     * @param width
+     *            The width of the marks
      */
     private void displaySelected(Graphics2D graphics, Selection selection,
             double x, double width) {
@@ -747,9 +779,13 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /**
      * Draw a colored representation of expression values
-     * @param g The graphics context
-     * @param leaves The list of leaves in the displayed tree
-     * @param x The horizontal position where to display expression values
+     * 
+     * @param g
+     *            The graphics context
+     * @param leaves
+     *            The list of leaves in the displayed tree
+     * @param x
+     *            The horizontal position where to display expression values
      */
     private void displayExpressionValues(Graphics2D g, List leaves, double x) {
         if (leaves == null) {
@@ -822,10 +858,15 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /**
      * Compute the maximum label width of subnodes of this node.
-     * @param font The font
-     * @param aNode The currentRootNode of the subtree
-     * @param graphics The graphics context
-     * @param context The font render context
+     * 
+     * @param font
+     *            The font
+     * @param aNode
+     *            The currentRootNode of the subtree
+     * @param graphics
+     *            The graphics context
+     * @param context
+     *            The font render context
      * @return The maximum width occupied on the screen by the label of this
      *         node or all its subnodes
      */
@@ -1036,6 +1077,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.Zoomable#zoom(double,
      *      double)
      */
@@ -1071,6 +1113,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.Zoomable#getCurrentZoomX()
      */
     public double getCurrentZoomX() {
@@ -1079,6 +1122,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.Zoomable#getCurrentZoomY()
      */
     public double getCurrentZoomY() {
@@ -1087,6 +1131,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.Zoomable#setZoomManager(fr.unice.bioinfo.thea.classification.editor.ZoomManager)
      */
     public void setZoomManager(ZoomManager zm) {
@@ -1095,6 +1140,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.Zoomable#getZoomManager()
      */
     public ZoomManager getZoomManager() {
@@ -1103,6 +1149,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.Zoomable#setZoomingMode()
      */
     public void setZoomingMode() {
@@ -1117,6 +1164,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.Zoomable#setStandardMode()
      */
     public void setStandardMode() {
@@ -1128,6 +1176,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.DrawableClassification#showWholeTree()
      */
     public void showWholeTree() {
@@ -1142,6 +1191,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.DrawableClassification#showPreviousTree()
      */
     public void showPreviousTree() {
@@ -1153,6 +1203,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.DrawableClassification#showOnLevelUp()
      */
     public void showOnLevelUp() {
@@ -1173,6 +1224,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.DrawableClassification#showSubTree(fr.unice.bioinfo.thea.classification.Node)
      */
     public void showSubTree(Node aNode) {
@@ -1184,6 +1236,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.DrawableClassification#getCurrentRootNode()
      */
     public Node getCurrentRootNode() {
@@ -1192,6 +1245,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.DrawableClassification#getClassificationRootNode()
      */
     public Node getClassificationRootNode() {
@@ -1204,6 +1258,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.DrawableClassification#collapseNode(fr.unice.bioinfo.thea.classification.Node)
      */
     public void collapseNode(Node aNode) {
@@ -1214,6 +1269,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.DrawableClassification#uncollapseNode(fr.unice.bioinfo.thea.classification.Node)
      */
     public void uncollapseNode(Node aNode) {
@@ -1223,6 +1279,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.DrawableClassification#locateNode(fr.unice.bioinfo.thea.classification.Node,
      *      java.awt.geom.Point2D)
      */
@@ -1257,6 +1314,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.DrawableClassification#highlightSurroundingArea(fr.unice.bioinfo.thea.classification.Node)
      */
     public void highlightSurroundingArea(Node aNode) {
@@ -1347,6 +1405,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.DrawableClassification#setPopupMenuVisible(boolean)
      */
     public void setPopupMenuVisible(boolean b) {
@@ -1357,6 +1416,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.DrawableClassification#isShowingPopupMenu()
      */
     public boolean isShowingPopupMenu() {
@@ -1367,6 +1427,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.DrawableClassification#getSelectionManager()
      */
     public SelectionManager getSelectionManager() {
@@ -1375,6 +1436,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.DrawableClassification#setPopupMenu(javax.swing.JPopupMenu)
      */
     public void setPopupMenu(JPopupMenu popupMenu) {
@@ -1383,6 +1445,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.DrawableClassification#getExpressionColumnIndex(java.awt.geom.Point2D)
      */
     public int getExpressionColumnIndex(Point2D point2D) {
@@ -1396,6 +1459,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.Drawable#updateGraphics()
      */
     public void updateGraphics() {
@@ -1405,6 +1469,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.Drawable#repaintRectangle(int,
      *      int, int, int)
      */
@@ -1414,6 +1479,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
     public void propertyChange(PropertyChangeEvent e) {

@@ -27,6 +27,7 @@ import fr.unice.bioinfo.thea.classification.settings.CESettings;
  * and finally, to zoom only on the y-direction, keep the Shif key pressed and
  * activate the mouse's right button.</li>
  * <ul>
+ * 
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class ZoomManager extends MouseInputAdapter {
@@ -61,6 +62,7 @@ public class ZoomManager extends MouseInputAdapter {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
      */
     public void mouseClicked(MouseEvent e) {

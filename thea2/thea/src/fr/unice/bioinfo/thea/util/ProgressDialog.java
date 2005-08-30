@@ -27,6 +27,7 @@ import org.openide.windows.WindowManager;
 /**
  * Non-modal dialog box displaying the progress of a given operation and
  * allowing the user to cancel it.
+ * 
  * @author SAÏD, EL KASMI.
  */
 public class ProgressDialog extends JDialog {
@@ -58,8 +59,10 @@ public class ProgressDialog extends JDialog {
 
     /**
      * Creates a new ProgressDialog with the given frame as a parent.
-     * @param parent parent the parent of this dialog. Typically this would be
-     *        <code>WindowManager.getDefault().getMainWindow()</code>.
+     * 
+     * @param parent
+     *            parent the parent of this dialog. Typically this would be
+     *            <code>WindowManager.getDefault().getMainWindow()</code>.
      */
     public ProgressDialog(Frame parent) {
         super(parent, false);
@@ -138,6 +141,7 @@ public class ProgressDialog extends JDialog {
     /**
      * Creates a progress dialog using the netbeans IDE main window as its
      * parent.
+     * 
      * @return ProgressDialog.
      */
     public static ProgressDialog getDefault() {
@@ -161,6 +165,7 @@ public class ProgressDialog extends JDialog {
 
     /**
      * Yields whether the cancel button has been pressed.
+     * 
      * @return Returns true if the cancel button has been pressed.
      */
     public boolean isCancelled() {
@@ -170,7 +175,9 @@ public class ProgressDialog extends JDialog {
     /**
      * This implementation sets the progress bar maximum, and opens the dialog
      * by calling <code>show</code>.
-     * @param value the maximum.
+     * 
+     * @param value
+     *            the maximum.
      */
     public void start(int value) {
         progressBar.setMaximum(value);
@@ -180,7 +187,9 @@ public class ProgressDialog extends JDialog {
     /**
      * Updates the progress bar and returns true unless {@link #isCancelled}is
      * true.
-     * @param index the progression value
+     * 
+     * @param index
+     *            the progression value
      * @return true,or false if {@link #isCancelled}has been called.
      */
     public boolean updateState(int index, String taskname) {
@@ -228,7 +237,8 @@ public class ProgressDialog extends JDialog {
     }
 
     /**
-     * @param isCancelled The isCancelled to set.
+     * @param isCancelled
+     *            The isCancelled to set.
      */
     public void setCancelled(boolean isCancelled) {
         this.isCancelled = isCancelled;

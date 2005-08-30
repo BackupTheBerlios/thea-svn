@@ -14,6 +14,7 @@ package fr.unice.bioinfo.thea.ontologyexplorer.db;
 
 /**
  * Class needed for Java Studio Enterprise feature.
+ * 
  * @author Administrator
  */
 public interface OpenConnectionInterface {

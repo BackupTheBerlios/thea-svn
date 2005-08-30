@@ -14,6 +14,7 @@ package fr.unice.bioinfo.thea.ontologyexplorer.db;
 
 /**
  * Generic database exception.
+ * 
  * @author Slavek Psenicka
  */
 public class DatabaseException extends Exception {
@@ -21,7 +22,9 @@ public class DatabaseException extends Exception {
 
     /**
      * Creates new exception
-     * @param message The text describing the exception
+     * 
+     * @param message
+     *            The text describing the exception
      */
     public DatabaseException(String message) {
         super(message);

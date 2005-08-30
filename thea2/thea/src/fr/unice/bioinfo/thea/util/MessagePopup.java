@@ -35,10 +35,15 @@ public class MessagePopup extends JDialog {
 
     /**
      * Creates new form MessageDialog
-     * @param parent The parent component
-     * @param title DOCUMENT ME!
-     * @param message The message that will be showed
-     * @param beep If true, beeps when clicked on
+     * 
+     * @param parent
+     *            The parent component
+     * @param title
+     *            DOCUMENT ME!
+     * @param message
+     *            The message that will be showed
+     * @param beep
+     *            If true, beeps when clicked on
      */
     public MessagePopup(java.awt.Component parent, String title,
             String message, boolean beep) {

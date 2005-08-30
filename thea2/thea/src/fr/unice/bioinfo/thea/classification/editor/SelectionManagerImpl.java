@@ -69,13 +69,16 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /**
      * Set the selected state of a node ant its children.
-     * @param aNode The node to update
-     * @param state state Indicates the new selected state of the node.
-     *        <ul>
-     *        <li>state < 0 : unselect</li>
-     *        <li>state = 0 : invert</li>
-     *        <li>state > 0 : select</li>
-     *        </ul>
+     * 
+     * @param aNode
+     *            The node to update
+     * @param state
+     *            state Indicates the new selected state of the node.
+     *            <ul>
+     *            <li>state < 0 : unselect</li>
+     *            <li>state = 0 : invert</li>
+     *            <li>state > 0 : select</li>
+     *            </ul>
      */
     private void setSelectedNodeAndChilds(Node aNode, int state) {
         if (state < 0) {
@@ -139,6 +142,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#setSelected(java.util.Collection,
      *      int)
      */
@@ -157,6 +161,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#setSelected(fr.unice.bioinfo.thea.classification.Node,
      *      int)
      */
@@ -176,6 +181,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#setSelectionsList(java.util.Collection)
      */
     public void setSelectionsList(Collection collection) {
@@ -188,6 +194,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#getSelectionList()
      */
     public List getSelections() {
@@ -196,6 +203,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#getSelectedLeaves(boolean)
      */
     public List getSelectedLeaves(boolean b) {
@@ -214,6 +222,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#getSelectedLeaves()
      */
     public List getSelectedLeaves() {
@@ -222,6 +231,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#clearSelected()
      */
     public void removeSelectedNodes() {
@@ -237,6 +247,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#keepSelection()
      */
     public void createSelection() {
@@ -263,6 +274,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#getSelected()
      */
     public Collection getSelectedNodes() {
@@ -271,6 +283,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#isNodeSelected(fr.unice.bioinfo.thea.classification.Node)
      */
     public boolean isNodeSelected(Node aNode) {
@@ -279,6 +292,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#getNumberOfSelections()
      */
     public int getNumberOfSelections() {
@@ -287,6 +301,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#moveSelectionToCurrent(fr.unice.bioinfo.thea.classification.Selection)
      */
     public void move(Selection selection) {
@@ -298,6 +313,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#copySelectionToCurrent(fr.unice.bioinfo.thea.classification.Selection)
      */
     public void copy(Selection selection) {
@@ -308,6 +324,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#unionSelectionWithCurrent(fr.unice.bioinfo.thea.classification.Selection)
      */
     public void union(Selection selection) {
@@ -317,6 +334,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#intersectSelectionWithCurrent(fr.unice.bioinfo.thea.classification.Selection)
      */
     public void intersect(Selection selection) {
@@ -329,6 +347,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#removeSelection(fr.unice.bioinfo.thea.classification.Selection)
      */
     public void remove(Selection selection) {
@@ -347,6 +366,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#groupSelection(fr.unice.bioinfo.thea.classification.Selection)
      */
     public void group(Selection selection) {
@@ -373,6 +393,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#addPropertyChangeListener(java.beans.PropertyChangeListener)
      */
     public void addPropertyChangeListener(PropertyChangeListener l) {
@@ -381,6 +402,7 @@ public class SelectionManagerImpl implements SelectionManager {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#removePropertyChangeListener(java.beans.PropertyChangeListener)
      */
     public void removePropertyChangeListener(PropertyChangeListener l) {

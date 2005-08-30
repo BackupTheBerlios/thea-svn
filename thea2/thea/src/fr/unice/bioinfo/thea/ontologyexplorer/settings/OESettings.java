@@ -20,6 +20,7 @@ public class OESettings extends SystemOption {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.options.SystemOption#displayName()
      */
     public String displayName() {
@@ -28,6 +29,7 @@ public class OESettings extends SystemOption {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.SharedClassObject#initialize()
      */
     protected void initialize() {
@@ -131,7 +133,9 @@ public class OESettings extends SystemOption {
 
     /**
      * Associates to a given node, a path to a configuration file
-     * @param h The Hashtable associating configuration file path to nodes
+     * 
+     * @param h
+     *            The Hashtable associating configuration file path to nodes
      */
     public void setKbConfigFilePaths(Hashtable h) {
         putProperty(PROP_KB_CONFIG_FILE_PATHS, h, true);

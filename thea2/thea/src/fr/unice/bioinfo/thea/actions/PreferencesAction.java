@@ -25,6 +25,7 @@ public class PreferencesAction extends SystemAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
@@ -33,6 +34,7 @@ public class PreferencesAction extends SystemAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.SystemAction#iconResource()
      */
     // protected String iconResource() {
@@ -41,6 +43,7 @@ public class PreferencesAction extends SystemAction {
     // }
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.HelpCtx.Provider#getHelpCtx()
      */
     public HelpCtx getHelpCtx() {
@@ -49,6 +52,7 @@ public class PreferencesAction extends SystemAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {

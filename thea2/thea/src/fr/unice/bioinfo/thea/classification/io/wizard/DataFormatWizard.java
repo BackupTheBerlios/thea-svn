@@ -23,6 +23,7 @@ public class DataFormatWizard implements WizardDescriptor.Panel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.WizardDescriptor.Panel#getComponent()
      */
     public Component getComponent() {
@@ -31,6 +32,7 @@ public class DataFormatWizard implements WizardDescriptor.Panel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.WizardDescriptor.Panel#getHelp()
      */
     public HelpCtx getHelp() {
@@ -39,6 +41,7 @@ public class DataFormatWizard implements WizardDescriptor.Panel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.WizardDescriptor.Panel#readSettings(java.lang.Object)
      */
     public void readSettings(Object arg0) {
@@ -50,6 +53,7 @@ public class DataFormatWizard implements WizardDescriptor.Panel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.WizardDescriptor.Panel#storeSettings(java.lang.Object)
      */
     public void storeSettings(Object arg0) {
@@ -59,6 +63,7 @@ public class DataFormatWizard implements WizardDescriptor.Panel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.WizardDescriptor.Panel#isValid()
      */
     public boolean isValid() {
@@ -67,6 +72,7 @@ public class DataFormatWizard implements WizardDescriptor.Panel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.WizardDescriptor.Panel#addChangeListener(javax.swing.event.ChangeListener)
      */
     public void addChangeListener(ChangeListener arg0) {
@@ -76,6 +82,7 @@ public class DataFormatWizard implements WizardDescriptor.Panel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.WizardDescriptor.Panel#removeChangeListener(javax.swing.event.ChangeListener)
      */
     public void removeChangeListener(ChangeListener arg0) {

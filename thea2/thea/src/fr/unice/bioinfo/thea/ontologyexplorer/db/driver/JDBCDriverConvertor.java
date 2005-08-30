@@ -331,8 +331,11 @@ public class JDBCDriverConvertor implements Environment.Provider,
 
     /**
      * Checks, if given class is on classpath.
-     * @param className name of class to be loaded
-     * @param urls file urls, checking classes only for 'file:/' URL.
+     * 
+     * @param className
+     *            name of class to be loaded
+     * @param urls
+     *            file urls, checking classes only for 'file:/' URL.
      * @return true, if driver is available on classpath, otherwise false
      */
     private static boolean checkClassPathDrivers(String className, URL[] urls) {

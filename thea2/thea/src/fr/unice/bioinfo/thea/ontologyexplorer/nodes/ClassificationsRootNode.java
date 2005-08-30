@@ -18,6 +18,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.actions.AddClassificationAction;
 
 /**
  * The root node for all ontologies.
+ * 
  * @author Saïd El Kasmi.
  */
 public class ClassificationsRootNode extends AbstractNode implements Comparable {
@@ -47,6 +48,7 @@ public class ClassificationsRootNode extends AbstractNode implements Comparable 
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.nodes.Node#getActions(boolean)
      */
     public Action[] getActions(boolean context) {
@@ -55,6 +57,7 @@ public class ClassificationsRootNode extends AbstractNode implements Comparable 
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.nodes.Node#getPreferredAction()
      */
     public Action getPreferredAction() {
@@ -63,6 +66,7 @@ public class ClassificationsRootNode extends AbstractNode implements Comparable 
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.nodes.AbstractNode#createSheet()
      */
     protected Sheet createSheet() {
@@ -77,6 +81,7 @@ public class ClassificationsRootNode extends AbstractNode implements Comparable 
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     public int compareTo(Object o) {

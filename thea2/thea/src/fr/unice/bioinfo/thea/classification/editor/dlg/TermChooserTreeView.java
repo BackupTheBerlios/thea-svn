@@ -30,6 +30,7 @@ public class TermChooserTreeView extends JPanel implements Provider {
 
     /**
      * The widget that allow this component visualize the ontology as a tree.
+     * 
      * @see org.openide.explorer.view.BeanTreeView
      */
     private BeanTreeView beanTreeView;
@@ -68,6 +69,7 @@ public class TermChooserTreeView extends JPanel implements Provider {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.explorer.ExplorerManager.Provider#getExplorerManager()
      */
     public ExplorerManager getExplorerManager() {

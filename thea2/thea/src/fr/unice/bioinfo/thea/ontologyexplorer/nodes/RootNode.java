@@ -9,6 +9,7 @@ import org.openide.util.NbBundle;
 
 /**
  * The root node for all ontologies and classifications nodes.
+ * 
  * @author Saïd El Kasmi.
  */
 public class RootNode extends AbstractNode implements Comparable {
@@ -37,6 +38,7 @@ public class RootNode extends AbstractNode implements Comparable {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     public int compareTo(Object o) {

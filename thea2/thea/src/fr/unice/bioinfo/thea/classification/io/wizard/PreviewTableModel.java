@@ -7,6 +7,7 @@ import javax.swing.table.AbstractTableModel;
 
 /**
  * A model used to preview the classification before opening it.
+ * 
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class PreviewTableModel extends AbstractTableModel {
@@ -26,6 +27,7 @@ public class PreviewTableModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getColumnCount()
      */
     public int getColumnCount() {
@@ -38,6 +40,7 @@ public class PreviewTableModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getRowCount()
      */
     public int getRowCount() {
@@ -46,6 +49,7 @@ public class PreviewTableModel extends AbstractTableModel {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableModel#getValueAt(int, int)
      */
     public Object getValueAt(int rowIndex, int columnIndex) {

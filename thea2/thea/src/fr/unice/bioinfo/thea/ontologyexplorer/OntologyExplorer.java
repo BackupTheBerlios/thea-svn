@@ -22,6 +22,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.RootNode;
  * This component is used to view the currently loaded ontology. When a little
  * plus sign appears, it means that you can expand the tree to see chlids.
  * Clicking this sign will makes childs visible.
+ * 
  * @author Saïd El Kasmi
  */
 public class OntologyExplorer extends TopComponent implements Provider,
@@ -37,6 +38,7 @@ public class OntologyExplorer extends TopComponent implements Provider,
 
     /**
      * The widget that allow this component visualize the ontology as a tree.
+     * 
      * @see org.openide.explorer.view.BeanTreeView
      */
     private BeanTreeView beanTreeView;
@@ -127,6 +129,7 @@ public class OntologyExplorer extends TopComponent implements Provider,
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.windows.TopComponent#preferredID()
      */
     protected String preferredID() {
@@ -135,6 +138,7 @@ public class OntologyExplorer extends TopComponent implements Provider,
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.windows.TopComponent#getPersistenceType()
      */
     public int getPersistenceType() {
@@ -143,6 +147,7 @@ public class OntologyExplorer extends TopComponent implements Provider,
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.explorer.ExplorerManager.Provider#getExplorerManager()
      */
     public ExplorerManager getExplorerManager() {

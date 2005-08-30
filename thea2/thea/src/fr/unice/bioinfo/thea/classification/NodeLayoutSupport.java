@@ -65,7 +65,9 @@ public class NodeLayoutSupport {
 
     /**
      * Setter for font
-     * @param s The value for font
+     * 
+     * @param s
+     *            The value for font
      */
     public void setFont(Font f) {
         font = f;
@@ -73,6 +75,7 @@ public class NodeLayoutSupport {
 
     /**
      * Getter for font
+     * 
      * @return The font used to display the node
      */
     public Font getFont() {
@@ -81,7 +84,9 @@ public class NodeLayoutSupport {
 
     /**
      * Setter for color
-     * @param s The value for color
+     * 
+     * @param s
+     *            The value for color
      */
     public void setColor(Color c) {
         color = c;
@@ -89,6 +94,7 @@ public class NodeLayoutSupport {
 
     /**
      * Getter for color
+     * 
      * @return The color used to display the node
      */
     public Color getColor() {
@@ -97,7 +103,9 @@ public class NodeLayoutSupport {
 
     /**
      * Setter for bgColor
-     * @param s The value for bgColor
+     * 
+     * @param s
+     *            The value for bgColor
      */
     public void setBgColor(Color c) {
         bgColor = c;
@@ -105,6 +113,7 @@ public class NodeLayoutSupport {
 
     /**
      * Getter for bgColor
+     * 
      * @return The color used to display the background of node
      */
     public Color getBgColor() {
@@ -113,7 +122,9 @@ public class NodeLayoutSupport {
 
     /**
      * Setter for framingShape
-     * @param s The value for framingShape
+     * 
+     * @param s
+     *            The value for framingShape
      */
     public void setFramingShape(int s) {
         framingShape = s;
@@ -121,6 +132,7 @@ public class NodeLayoutSupport {
 
     /**
      * Getter for framingShape
+     * 
      * @return The shape of the node's frame
      */
     public int getFramingShape() {
@@ -129,7 +141,9 @@ public class NodeLayoutSupport {
 
     /**
      * Setter for framingColor
-     * @param s The value for framingColor
+     * 
+     * @param s
+     *            The value for framingColor
      */
     public void setFramingColor(Color c) {
         framingColor = c;
@@ -137,6 +151,7 @@ public class NodeLayoutSupport {
 
     /**
      * Getter for framingColor
+     * 
      * @return The color used to display the node's frame
      */
     public Color getFramingColor() {

@@ -24,6 +24,7 @@ import org.openide.windows.TopComponent;
  * A graphical component that extends {@link TopComponent}and works as an
  * add-on in the classification viewer. It simply draws selections made by the
  * user in the classification viewer.
+ * 
  * @author Claude Pasquier.
  * @author Saïd El Kasmi.
  */
@@ -72,6 +73,7 @@ public class SelectionEditor extends TopComponent implements SelectionListener {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.windows.TopComponent#preferredID()
      */
     protected String preferredID() {
@@ -80,6 +82,7 @@ public class SelectionEditor extends TopComponent implements SelectionListener {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.windows.TopComponent#getPersistenceType()
      */
     public int getPersistenceType() {
@@ -88,6 +91,7 @@ public class SelectionEditor extends TopComponent implements SelectionListener {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classificationviewer.selection.SelectionListener#selectionDone(fr.unice.bioinfo.thea.classificationviewer.selection.SelectionEvent)
      */
     public void selectionDone(SelectionEvent e) {
@@ -164,6 +168,7 @@ public class SelectionEditor extends TopComponent implements SelectionListener {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classificationviewer.selection.SelectionListener#selectionChanged(fr.unice.bioinfo.thea.classificationviewer.selection.SelectionEvent)
      */
     public void selectionChanged(SelectionEvent e) {
@@ -172,6 +177,7 @@ public class SelectionEditor extends TopComponent implements SelectionListener {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.classificationviewer.selection.SelectionListener#selectionCleared(fr.unice.bioinfo.thea.classificationviewer.selection.SelectionEvent)
      */
     public void selectionCleared(SelectionEvent e) {

@@ -47,6 +47,7 @@ import fr.unice.bioinfo.thea.util.OWLProperties;
  * This class uses two other classes to to build those two modes. After the user
  * select an annotation, he can make it used as a prefereed annotation using a
  * <i>Select </i> button.
+ * 
  * @see {@link TermChooserTreeView}
  * @see {@link TermChooserTableView}
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
@@ -217,9 +218,12 @@ public class TermChooser extends JPanel {
     /**
      * Retreives and returns resource under the branch which the parent node
      * correspends to the given resource, <i>aResource </i>.
-     * @param resourceFactory A ResourceFactory.
-     * @param aResource The resource represented by the root node of the
-     *        selected branch.
+     * 
+     * @param resourceFactory
+     *            A ResourceFactory.
+     * @param aResource
+     *            The resource represented by the root node of the selected
+     *            branch.
      * @return Children of the term correspending to the resource <i>aResource
      *         </i>.
      */

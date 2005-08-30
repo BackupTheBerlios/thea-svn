@@ -23,6 +23,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
 
 /**
  * Connect to the database.
+ * 
  * @author Saïd El Kasmi
  */
 public class ConnectAction extends NodeAction {
@@ -34,6 +35,7 @@ public class ConnectAction extends NodeAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.NodeAction#performAction(org.openide.nodes.Node[])
      */
     protected void performAction(Node[] arg0) {
@@ -101,6 +103,7 @@ public class ConnectAction extends NodeAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.NodeAction#enable(org.openide.nodes.Node[])
      */
     protected boolean enable(Node[] nodes) {
@@ -127,6 +130,7 @@ public class ConnectAction extends NodeAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.CallableSystemAction#asynchronous()
      */
     protected boolean asynchronous() {
@@ -135,6 +139,7 @@ public class ConnectAction extends NodeAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
@@ -143,6 +148,7 @@ public class ConnectAction extends NodeAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.SystemAction#getHelpCtx()
      */
     public HelpCtx getHelpCtx() {

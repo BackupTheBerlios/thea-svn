@@ -31,6 +31,7 @@ public class RemoveAnnotationAction extends GenericAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent e) {

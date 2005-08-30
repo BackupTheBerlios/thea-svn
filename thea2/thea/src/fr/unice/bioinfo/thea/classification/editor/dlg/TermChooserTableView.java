@@ -131,6 +131,7 @@ public class TermChooserTableView extends JPanel {
 
         /*
          * (non-Javadoc)
+         * 
          * @see javax.swing.table.TableModel#getColumnCount()
          */
         public int getColumnCount() {
@@ -142,6 +143,7 @@ public class TermChooserTableView extends JPanel {
 
         /*
          * (non-Javadoc)
+         * 
          * @see javax.swing.table.TableModel#getRowCount()
          */
         public int getRowCount() {
@@ -153,6 +155,7 @@ public class TermChooserTableView extends JPanel {
 
         /*
          * (non-Javadoc)
+         * 
          * @see javax.swing.table.TableModel#getValueAt(int, int)
          */
         public Object getValueAt(int rowIndex, int columnIndex) {
@@ -161,6 +164,7 @@ public class TermChooserTableView extends JPanel {
 
         /*
          * (non-Javadoc)
+         * 
          * @see javax.swing.table.TableModel#getColumnName(int)
          */
         public String getColumnName(int column) {

@@ -9,6 +9,7 @@ import org.openide.WizardDescriptor;
 
 /**
  * An utility java class to test the wizard.
+ * 
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class TestWizard extends JFrame {

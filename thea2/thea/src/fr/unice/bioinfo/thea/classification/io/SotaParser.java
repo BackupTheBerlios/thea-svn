@@ -19,6 +19,7 @@ import fr.unice.bioinfo.thea.classification.Node;
 
 /**
  * An utility class that defines a parser for files in the <i>sota </i> format.
+ * 
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class SotaParser implements ClassificationParser {
@@ -35,6 +36,7 @@ public class SotaParser implements ClassificationParser {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.api.ClassificationParser#getRootNode()
      */
     public Object getRootNode(File file) throws FileNotFoundException {

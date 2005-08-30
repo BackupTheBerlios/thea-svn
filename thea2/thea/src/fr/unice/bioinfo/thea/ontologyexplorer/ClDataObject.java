@@ -19,6 +19,7 @@ public class ClDataObject extends MultiDataObject {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.loaders.DataObject#createNodeDelegate()
      */
     protected Node createNodeDelegate() {

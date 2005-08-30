@@ -43,6 +43,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.settings.OESettings;
 
 /**
  * A node that represents an Ontology inside the <i>Ontology Explorer </i>.
+ * 
  * @author Saïd El Kasmi.
  */
 public class OntologyNode extends AbstractNode implements Node.Cookie {
@@ -124,6 +125,7 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.nodes.Node#getActions(boolean)
      */
     public Action[] getActions(boolean context) {
@@ -143,6 +145,7 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.nodes.Node#getPreferredAction()
      */
     public Action getPreferredAction() {
@@ -158,7 +161,9 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
 
     /**
      * Sets the {@link DatabaseConnection}correspending to this node
-     * @param connection The connection to set.
+     * 
+     * @param connection
+     *            The connection to set.
      */
     public void setConnection(DatabaseConnection connection) {
         this.connection = connection;
@@ -167,6 +172,7 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
 
     /**
      * Tells whether a connection to the database is opened or not.
+     * 
      * @return Returns the connected.
      */
     public boolean isConnected() {
@@ -196,7 +202,8 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
     }
 
     /**
-     * @param b Sets the connection status.
+     * @param b
+     *            Sets the connection status.
      */
     public void setConnected(boolean b) {
         this.connected = b;
@@ -248,7 +255,8 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
     }
 
     /**
-     * @param compatibleKB The compatibleKB to set.
+     * @param compatibleKB
+     *            The compatibleKB to set.
      */
     public void setCompatibleKB(boolean compatibleKB) {
         this.compatibleKB = compatibleKB;
@@ -262,7 +270,8 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
     }
 
     /**
-     * @param nbResources The nbResources to set.
+     * @param nbResources
+     *            The nbResources to set.
      */
     public synchronized void setNbResources(int nbResources) {
         this.nbResources = nbResources;

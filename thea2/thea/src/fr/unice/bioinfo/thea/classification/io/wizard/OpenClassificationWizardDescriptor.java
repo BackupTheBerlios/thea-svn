@@ -43,6 +43,7 @@ public class OpenClassificationWizardDescriptor extends WizardDescriptor {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.WizardDescriptor#updateState()
      */
     protected synchronized void updateState() {

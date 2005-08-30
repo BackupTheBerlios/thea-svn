@@ -27,6 +27,7 @@ import javax.swing.SwingUtilities;
  * SwingWorker task while one SwingWorker task is already executing. A message
  * popup to provide an explaination for the long wait and beep on click
  * capability can be also requested
+ * 
  * @author Yexin Chen
  * @author Andrea Aime
  */
@@ -50,8 +51,10 @@ public abstract class BlockingSwingWorker {
     /**
      * Start a thread that will call the <code>construct</code> method and
      * then exit. No message nor beeps will be activated
-     * @param aComponent a reference to the UI component that's directly using
-     *        SwingWorker
+     * 
+     * @param aComponent
+     *            a reference to the UI component that's directly using
+     *            SwingWorker
      */
     public BlockingSwingWorker(Component aComponent) {
         this(aComponent, null, null, false);
@@ -60,14 +63,19 @@ public abstract class BlockingSwingWorker {
     /**
      * Start a thread that will call the <code>construct</code> method and
      * then exit.
-     * @param aComponent a reference to the UI component that's directly using
-     *        SwingWorker
-     * @param title DOCUMENT ME!
-     * @param message if non null, a pupup showing the message will appar while
-     *        the worker is performing the long task
-     * @param beep if true, when the user clicks on the blocked user interface
-     *        or pressed a key, a beep will be produced using the standard
-     *        operating system beep
+     * 
+     * @param aComponent
+     *            a reference to the UI component that's directly using
+     *            SwingWorker
+     * @param title
+     *            DOCUMENT ME!
+     * @param message
+     *            if non null, a pupup showing the message will appar while the
+     *            worker is performing the long task
+     * @param beep
+     *            if true, when the user clicks on the blocked user interface or
+     *            pressed a key, a beep will be produced using the standard
+     *            operating system beep
      */
     public BlockingSwingWorker(Component aComponent, String title,
             String message, boolean beep) {
@@ -154,8 +162,9 @@ public abstract class BlockingSwingWorker {
     /**
      * This method will be implemented by the inner class of SwingWorker It
      * should only consist of the logic that's unrelated to UI
-     * @throws java.lang.RuntimeException thrown if there are any errors in the
-     *         non-ui logic
+     * 
+     * @throws java.lang.RuntimeException
+     *             thrown if there are any errors in the non-ui logic
      */
     protected abstract void doNonUILogic() throws RuntimeException;
 
@@ -163,8 +172,10 @@ public abstract class BlockingSwingWorker {
      * This method will be implemented by the inner class of SwingWorker It
      * should only consist of the logic that's related to UI updating, after the
      * doNonUILogic() method is done.
-     * @throws RuntimeException thrown if there are any problems executing the
-     *         ui update logic
+     * 
+     * @throws RuntimeException
+     *             thrown if there are any problems executing the ui update
+     *             logic
      */
     protected void doUIUpdateLogic() throws RuntimeException {
     }
@@ -190,6 +201,7 @@ public abstract class BlockingSwingWorker {
 
     /**
      * Getter method
+     * 
      * @return java.awt.Component
      */
     protected Component getAComponent() {
@@ -198,6 +210,7 @@ public abstract class BlockingSwingWorker {
 
     /**
      * Getter method
+     * 
      * @return GlassPane
      */
     protected GlassPane getGlassPane() {
@@ -220,7 +233,9 @@ public abstract class BlockingSwingWorker {
 
     /**
      * Setter method
-     * @param newAComponent java.awt.Component
+     * 
+     * @param newAComponent
+     *            java.awt.Component
      */
     protected void setAComponent(Component newAComponent) {
         aComponent = newAComponent;
@@ -228,7 +243,9 @@ public abstract class BlockingSwingWorker {
 
     /**
      * Setter method
-     * @param newGlassPane GlassPane
+     * 
+     * @param newGlassPane
+     *            GlassPane
      */
     protected void setGlassPane(GlassPane newGlassPane) {
         glassPane = newGlassPane;

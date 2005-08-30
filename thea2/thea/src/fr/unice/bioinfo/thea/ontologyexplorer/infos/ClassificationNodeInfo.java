@@ -67,6 +67,7 @@ public class ClassificationNodeInfo extends Hashtable implements Node.Cookie {
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.util.Dictionary#put(java.lang.Object, java.lang.Object)
      */
     public synchronized Object put(Object key, Object value) {
@@ -116,6 +117,7 @@ public class ClassificationNodeInfo extends Hashtable implements Node.Cookie {
 
     /**
      * Returns clustered data file
+     * 
      * @return Returns the cFile.
      */
     public File getCFile() {
@@ -123,7 +125,8 @@ public class ClassificationNodeInfo extends Hashtable implements Node.Cookie {
     }
 
     /**
-     * @param file The cFile to set.
+     * @param file
+     *            The cFile to set.
      */
     public void setCFile(File file) {
         put(CDF, file);
@@ -131,6 +134,7 @@ public class ClassificationNodeInfo extends Hashtable implements Node.Cookie {
 
     /**
      * Returns tabular data file
+     * 
      * @return Returns the tFile.
      */
     public File getTFile() {
@@ -138,7 +142,8 @@ public class ClassificationNodeInfo extends Hashtable implements Node.Cookie {
     }
 
     /**
-     * @param file The tFile to set.
+     * @param file
+     *            The tFile to set.
      */
     public void setTFile(File file) {
         put(TDF, file);
@@ -236,7 +241,8 @@ public class ClassificationNodeInfo extends Hashtable implements Node.Cookie {
     }
 
     /**
-     * @param classification The classification to set.
+     * @param classification
+     *            The classification to set.
      */
     public void setClassification(Classification classification) {
         this.classification = classification;

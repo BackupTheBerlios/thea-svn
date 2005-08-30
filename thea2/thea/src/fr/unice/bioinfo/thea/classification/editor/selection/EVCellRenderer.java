@@ -10,6 +10,7 @@ import fr.unice.bioinfo.thea.classification.editor.util.Discretization;
 
 /**
  * A customized cell renderer for tables used to hold selections.
+ * 
  * @author Claude Pasquier.
  * @author Saïd El Kasmi.
  */
@@ -20,6 +21,7 @@ public class EVCellRenderer extends JLabel implements TableCellRenderer {
 
     /*
      * (non-Javadoc)
+     * 
      * @see javax.swing.table.TableCellRenderer#getTableCellRendererComponent(javax.swing.JTable,
      *      java.lang.Object, boolean, boolean, int, int)
      */

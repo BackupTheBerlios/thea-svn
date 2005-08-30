@@ -30,6 +30,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.settings.OESettings;
  * This panel correspends to the second step in the wizard. It allows the user
  * choose files that form the classification.
  * </p>
+ * 
  * @see {@link FilesChooserWizard}
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
@@ -128,6 +129,7 @@ public class FilesChooserPanel extends JPanel implements PropertyChangeListener 
 
     /*
      * (non-Javadoc)
+     * 
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
     public void propertyChange(PropertyChangeEvent evt) {
@@ -144,6 +146,7 @@ public class FilesChooserPanel extends JPanel implements PropertyChangeListener 
 
         /*
          * (non-Javadoc)
+         * 
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         public void actionPerformed(ActionEvent e) {
@@ -269,6 +272,7 @@ public class FilesChooserPanel extends JPanel implements PropertyChangeListener 
 
         /*
          * (non-Javadoc)
+         * 
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         public void actionPerformed(ActionEvent e) {

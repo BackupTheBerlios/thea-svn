@@ -47,6 +47,7 @@ import fr.unice.bioinfo.util.OwlQuery;
  * A java bean that represents a classification. A classification can be created
  * going from a node that is the root node of the tree.
  * </p>
+ * 
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class Classification implements Annotatable {
@@ -107,7 +108,9 @@ public class Classification implements Annotatable {
     /**
      * Crates an object that represents a classification which the root node is
      * the given argument.
-     * @param classificationRootNode The root node of the classification.
+     * 
+     * @param classificationRootNode
+     *            The root node of the classification.
      */
     public Classification(Node classificationRootNode) {
         this();
@@ -478,8 +481,11 @@ public class Classification implements Annotatable {
 
     /**
      * Finds and return ancestors of the given resource.
-     * @param aResource The resource to find out ancestors.
-     * @param properties Properties that fix the <i>ancestor </i> relationship.
+     * 
+     * @param aResource
+     *            The resource to find out ancestors.
+     * @param properties
+     *            Properties that fix the <i>ancestor </i> relationship.
      * @return List of ancestors.
      */
     private Set createAncestorsList(Resource aResource, Set properties) {
@@ -569,8 +575,11 @@ public class Classification implements Annotatable {
 
     /**
      * Extract annotations correspending to the specified branch.
-     * @param nodeResource The root node of the branch.
-     * @param branch Branch's name.
+     * 
+     * @param nodeResource
+     *            The root node of the branch.
+     * @param branch
+     *            Branch's name.
      */
     public void createAnnotations(final Resource nodeResource,
             final String branch) {
@@ -871,9 +880,12 @@ public class Classification implements Annotatable {
     /**
      * Retreives and returns resource under the branch which the parent node
      * correspends to the given resource, <i>aResource </i>.
-     * @param resourceFactory A ResourceFactory.
-     * @param aResource The resource represented by the root node of the
-     *        selected branch.
+     * 
+     * @param resourceFactory
+     *            A ResourceFactory.
+     * @param aResource
+     *            The resource represented by the root node of the selected
+     *            branch.
      * @return Children of the term correspending to the resource <i>aResource
      *         </i>.
      */
@@ -1305,12 +1317,16 @@ public class Classification implements Annotatable {
 
     /**
      * Count the number of gene products.
-     * @param resourceFactory Factory for hibernate support.
-     * @param allBranchTerms Terms in a given branch.
-     * @param ignoreNotAnnotated Flags to indicate wether to ignore not
-     *        annotated genes or not.
-     * @param ignoreUnknown Flags to indicate wether to ignore genes annotated
-     *        with unknown genes or not.
+     * 
+     * @param resourceFactory
+     *            Factory for hibernate support.
+     * @param allBranchTerms
+     *            Terms in a given branch.
+     * @param ignoreNotAnnotated
+     *            Flags to indicate wether to ignore not annotated genes or not.
+     * @param ignoreUnknown
+     *            Flags to indicate wether to ignore genes annotated with
+     *            unknown genes or not.
      * @return number of gene products.
      */
     private int countGenes(ResourceFactory resourceFactory, Set allBranchTerms,

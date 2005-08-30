@@ -23,6 +23,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationsRootNode;
 
 /**
  * A menu item that allow users to add a classification.
+ * 
  * @author Saïd El Kasmi.
  */
 public class AddClassificationAction extends NodeAction {
@@ -34,6 +35,7 @@ public class AddClassificationAction extends NodeAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.NodeAction#performAction(org.openide.nodes.Node[])
      */
     protected void performAction(Node[] arg0) {
@@ -118,6 +120,7 @@ public class AddClassificationAction extends NodeAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.NodeAction#enable(org.openide.nodes.Node[])
      */
     protected boolean enable(Node[] nodes) {
@@ -138,6 +141,7 @@ public class AddClassificationAction extends NodeAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
@@ -146,6 +150,7 @@ public class AddClassificationAction extends NodeAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.CallableSystemAction#asynchronous()
      */
     protected boolean asynchronous() {
@@ -154,6 +159,7 @@ public class AddClassificationAction extends NodeAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.SystemAction#getHelpCtx()
      */
     public HelpCtx getHelpCtx() {
@@ -162,6 +168,7 @@ public class AddClassificationAction extends NodeAction {
 
     /*
      * (non-Javadoc)
+     * 
      * @see org.openide.util.actions.SystemAction#iconResource()
      */
     protected String iconResource() {

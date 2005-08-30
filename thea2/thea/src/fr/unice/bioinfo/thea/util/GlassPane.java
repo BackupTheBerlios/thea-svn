@@ -34,6 +34,7 @@ import javax.swing.SwingUtilities;
 /**
  * This is the glass pane class that intercepts screen interactions during
  * system busy states.
+ * 
  * @author Yexin Chen
  * @author Andrea Aime
  */
@@ -46,8 +47,11 @@ public class GlassPane extends JComponent implements AWTEventListener {
 
     /**
      * GlassPane constructor comment.
-     * @param activeComponent a
-     * @param beep DOCUMENT ME!
+     * 
+     * @param activeComponent
+     *            a
+     * @param beep
+     *            DOCUMENT ME!
      */
     protected GlassPane(Component activeComponent, boolean beep) {
         this.beep = beep;
@@ -70,7 +74,9 @@ public class GlassPane extends JComponent implements AWTEventListener {
     /**
      * Receives all key events in the AWT and processes the ones that originated
      * from the current window with the glass pane.
-     * @param event the AWTEvent that was fired
+     * 
+     * @param event
+     *            the AWTEvent that was fired
      */
     public void eventDispatched(AWTEvent event) {
         Object source = event.getSource();
@@ -91,10 +97,13 @@ public class GlassPane extends JComponent implements AWTEventListener {
 
     /**
      * Finds the glass pane that is related to the specified component.
-     * @param startComponent the component used to start the search for the
-     *        glass pane
-     * @param create a flag whether to create a glass pane if one does not exist
-     * @param beep DOCUMENT ME!
+     * 
+     * @param startComponent
+     *            the component used to start the search for the glass pane
+     * @param create
+     *            a flag whether to create a glass pane if one does not exist
+     * @param beep
+     *            DOCUMENT ME!
      * @return GlassPane
      */
     public synchronized static GlassPane mount(Component startComponent,
@@ -135,7 +144,9 @@ public class GlassPane extends JComponent implements AWTEventListener {
 
     /**
      * Set the component that ordered-up the glass pane.
-     * @param aComponent the UI component that asked for the glass pane
+     * 
+     * @param aComponent
+     *            the UI component that asked for the glass pane
      */
     private void setActiveComponent(Component aComponent) {
         activeComponent = aComponent;
@@ -144,7 +155,9 @@ public class GlassPane extends JComponent implements AWTEventListener {
     /**
      * Sets the glass pane as visible or invisible. The mouse cursor will be set
      * accordingly.
-     * @param value DOCUMENT ME!
+     * 
+     * @param value
+     *            DOCUMENT ME!
      */
     public void setVisible(boolean value) {
         if (value) {

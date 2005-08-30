@@ -16,6 +16,7 @@ import fr.unice.bioinfo.thea.classification.Node;
 
 /**
  * An utility class that provides a parser for files in the newick format.
+ * 
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class NewickParser implements ClassificationParser {
@@ -34,6 +35,7 @@ public class NewickParser implements ClassificationParser {
 
     /*
      * (non-Javadoc)
+     * 
      * @see fr.unice.bioinfo.thea.api.ClassificationParser#getRootNode(java.io.File)
      */
     public Object getRootNode(File file) throws FileNotFoundException {
