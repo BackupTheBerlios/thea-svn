@@ -21,9 +21,11 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.RootNode;
 public class TermChooserTreeView extends JPanel implements Provider {
 
     private JTree tree;
+
     private JScrollPane jsp;
 
     private List scores;
+
     private Resource selectedTerm;
 
     /**
@@ -41,17 +43,17 @@ public class TermChooserTreeView extends JPanel implements Provider {
     }
 
     private void init() {
-        //      Instanciate an explorer manager
+        // Instanciate an explorer manager
         explorerManager = new ExplorerManager();
 
         // Create the root node
         RootNode rn = new RootNode();
 
-        //        // Add the root node for all ontologies
-        //        rn.getChildren().add(new Node[] { new OntologiesRootNode() });
+        // // Add the root node for all ontologies
+        // rn.getChildren().add(new Node[] { new OntologiesRootNode() });
         //
-        //        // Add the root node for all classifications
-        //        rn.getChildren().add(new Node[] { new ClassificationsRootNode() });
+        // // Add the root node for all classifications
+        // rn.getChildren().add(new Node[] { new ClassificationsRootNode() });
 
         explorerManager.setRootContext(rn);
 

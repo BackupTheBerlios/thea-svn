@@ -14,7 +14,7 @@ import org.openide.util.NbBundle;
 public class RootNode extends AbstractNode implements Comparable {
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.nodes.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.nodes.Bundle"); // NOI18N;
 
     /**
      * Main constructor for {@link RootNode}class.
@@ -23,16 +23,16 @@ public class RootNode extends AbstractNode implements Comparable {
         super(new Children.Array());
 
         // Set the bean name
-        setName("RootNode"); //NOI18N
+        setName("RootNode"); // NOI18N
 
         // Add a nice icon
-        setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/empty");//NOI18N
+        setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/empty");// NOI18N
 
         // Set the display name
-        setDisplayName("");//NOI18N
+        setDisplayName("");// NOI18N
 
         // Give a short description which is shown on the mouse rolls on
-        setShortDescription("");//NOI18N
+        setShortDescription("");// NOI18N
     }
 
     /*

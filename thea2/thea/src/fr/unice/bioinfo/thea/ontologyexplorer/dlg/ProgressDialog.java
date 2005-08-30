@@ -26,11 +26,14 @@ public class ProgressDialog extends JDialog implements PropertyChangeListener {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); // NOI18N
 
     private JLabel operationLbl;
+
     private JLabel textLbl;
+
     private JLabel statusLbl;
+
     private JProgressBar progressBar;
 
     /**
@@ -74,29 +77,29 @@ public class ProgressDialog extends JDialog implements PropertyChangeListener {
         contentPane.setLayout(new FormLayout(new ColumnSpec[] {
                 FormFactory.DEFAULT_COLSPEC,
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-                new ColumnSpec("max(default;300px):grow") }, new RowSpec[] {//NOI18N
+                new ColumnSpec("max(default;300px):grow") }, new RowSpec[] {// NOI18N
                 FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
                         FormFactory.DEFAULT_ROWSPEC,
                         FormFactory.LINE_GAP_ROWSPEC,
                         FormFactory.DEFAULT_ROWSPEC }));
 
-        //---- operationLbl ----
+        // ---- operationLbl ----
         operationLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        operationLbl.setText(bundle.getString("LBL_Operation"));//NOI18N
+        operationLbl.setText(bundle.getString("LBL_Operation"));// NOI18N
         contentPane.add(operationLbl, cc.xy(1, 1));
 
-        //---- textLbl ----
-        textLbl.setText(bundle.getString("LBL_Initializing"));//NOI18N
+        // ---- textLbl ----
+        textLbl.setText(bundle.getString("LBL_Initializing"));// NOI18N
         contentPane.add(textLbl, cc.xy(3, 1));
 
-        //---- statusLbl ----
+        // ---- statusLbl ----
         statusLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        statusLbl.setText(bundle.getString("LBL_Status"));//NOI18N
+        statusLbl.setText(bundle.getString("LBL_Status"));// NOI18N
         contentPane.add(statusLbl, cc.xy(1, 5));
 
-        //---- progressBar ----
+        // ---- progressBar ----
         progressBar.setIndeterminate(true);
-        progressBar.setToolTipText(bundle.getString("LBL_ProgressBar"));//NO18N
+        progressBar.setToolTipText(bundle.getString("LBL_ProgressBar"));// NO18N
         contentPane.add(progressBar, cc.xy(3, 5));
 
     }
@@ -107,13 +110,13 @@ public class ProgressDialog extends JDialog implements PropertyChangeListener {
      */
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("initializing")) {
-            textLbl.setText(bundle.getString("LBL_Initializing"));//NOI18N
+            textLbl.setText(bundle.getString("LBL_Initializing"));// NOI18N
         }
         if (e.getPropertyName().equals("processing")) {
-            textLbl.setText(bundle.getString("LBL_Processing"));//NOI18N
+            textLbl.setText(bundle.getString("LBL_Processing"));// NOI18N
         }
         if (e.getPropertyName().equals("endprocessing")) {
-            textLbl.setText(bundle.getString("LBL_EndProcessing"));//NOI18N
+            textLbl.setText(bundle.getString("LBL_EndProcessing"));// NOI18N
             // close this dialog:
             close();
         }

@@ -35,39 +35,66 @@ import fr.unice.bioinfo.thea.classification.settings.CESettings;
 public class AnnotationOptionsPanel extends JPanel {
 
     private JComponent scoreSeparator;
+
     private JRadioButton termCntBtn;
+
     private JTextField termCntTfd;
+
     private JRadioButton densityInClusterBtn;
+
     private JTextField densityInClusterTfd;
+
     private JRadioButton densityInPopulationBtn;
+
     private JTextField densityInPopulationTfd;
+
     private JRadioButton relativeDensityBtn;
+
     private JTextField relativeDensityTfd;
+
     private JRadioButton statCalculationBtn;
+
     private JTextField statCalculationTfd;
+
     private JComponent statSeparator;
+
     private JRadioButton m1Btn;
+
     private JRadioButton m2Btn;
+
     private JComponent pvalueSeparator;
+
     private JRadioButton binLawBtn;
+
     private JRadioButton hyperLawBtn;
+
     private JComponent lawSeparator;
+
     private JComponent correctionSeparator;
+
     private JCheckBox bonCorrectionBtn;
+
     private JCheckBox dunCorrectionBtn;
 
     private JComponent baseCalculationSeparator;
+
     private JRadioButton inClassificationBtn;
+
     private JRadioButton inOntologyBtn;
+
     private JRadioButton userSpecifiedBtn;
+
     private JTextField browseTfd;
+
     private JButton browseBtn;
+
     private JComponent endSeparator;
+
     private JButton applyBtn;
 
     /** Resource Bundle */
     private static ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.dlg.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.dlg.Bundle"); // NOI18N;
 
     public AnnotationOptionsPanel() {
         init();
@@ -78,25 +105,25 @@ public class AnnotationOptionsPanel extends JPanel {
         DefaultComponentFactory compFactory = DefaultComponentFactory
                 .getInstance();
         scoreSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_ScoreSeparator"));//NOI18N
+                .getString("LBL_ScoreSeparator"));// NOI18N
         statSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_StatSeparator"));//NOI18N
+                .getString("LBL_StatSeparator"));// NOI18N
         pvalueSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_PValueSeparator"));//NOI18N
+                .getString("LBL_PValueSeparator"));// NOI18N
         lawSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_LawSeparator"));//NOI18N
+                .getString("LBL_LawSeparator"));// NOI18N
         correctionSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_CorrectionSeparator"));//NOI18N
+                .getString("LBL_CorrectionSeparator"));// NOI18N
         baseCalculationSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_BaseCalculationSeparator"));//NOI18N
+                .getString("LBL_BaseCalculationSeparator"));// NOI18N
 
-        //Create a group for score
+        // Create a group for score
         ButtonGroup scoreGroup = new ButtonGroup();
-        //Create "Methods" group:
+        // Create "Methods" group:
         ButtonGroup mGroup = new ButtonGroup();
-        //Create laws group:
+        // Create laws group:
         ButtonGroup lGroup = new ButtonGroup();
-        //Create group for base of calculation options:
+        // Create group for base of calculation options:
         ButtonGroup buttonGroup = new ButtonGroup();
 
         termCntBtn = new JRadioButton();
@@ -135,7 +162,7 @@ public class AnnotationOptionsPanel extends JPanel {
         buttonGroup.add(userSpecifiedBtn);
         browseTfd = new JTextField();
         browseBtn = new JButton();
-        endSeparator = compFactory.createSeparator("");//NOI18N
+        endSeparator = compFactory.createSeparator("");// NOI18N
         applyBtn = new JButton();
 
         CellConstraints cc = new CellConstraints();
@@ -149,7 +176,7 @@ public class AnnotationOptionsPanel extends JPanel {
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
                 FormFactory.DEFAULT_COLSPEC,
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-                new ColumnSpec("max(min;50px)"),//NOI18N
+                new ColumnSpec("max(min;50px)"),// NOI18N
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
                 FormFactory.DEFAULT_COLSPEC }, new RowSpec[] {
                 FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
@@ -174,12 +201,12 @@ public class AnnotationOptionsPanel extends JPanel {
 
         add(scoreSeparator, cc.xywh(1, 1, 9, 1));
 
-        //Get options
+        // Get options
         CESettings options = CESettings.getInstance();
 
-        //---- termCntBtn ----
-        termCntBtn.setText(bundle.getString("TXT_TermCntBtn"));//NOI18N
-        termCntBtn.setToolTipText(bundle.getString("TIP_TermCntBtn"));//NOI18N
+        // ---- termCntBtn ----
+        termCntBtn.setText(bundle.getString("TXT_TermCntBtn"));// NOI18N
+        termCntBtn.setToolTipText(bundle.getString("TIP_TermCntBtn"));// NOI18N
         termCntBtn.setSelected(options.isTermsCountSelected());
         termCntBtn.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
@@ -189,15 +216,15 @@ public class AnnotationOptionsPanel extends JPanel {
         });
         add(termCntBtn, cc.xywh(1, 3, 5, 1));
 
-        termCntTfd.setText("" + options.getTermsCount());//NOI18N
+        termCntTfd.setText("" + options.getTermsCount());// NOI18N
         termCntTfd.setEnabled(termCntBtn.isSelected());
         add(termCntTfd, cc.xywh(7, 3, 3, 1));
 
-        //---- densityInClusterBtn ----
+        // ---- densityInClusterBtn ----
         densityInClusterBtn
-                .setText(bundle.getString("TXT_DensityInClusterBtn"));//NOI18N
+                .setText(bundle.getString("TXT_DensityInClusterBtn"));// NOI18N
         densityInClusterBtn.setToolTipText(bundle
-                .getString("TIP_DensityInClusterBtn"));//NOI18N
+                .getString("TIP_DensityInClusterBtn"));// NOI18N
         densityInClusterBtn.setSelected(options
                 .isTermsDensityInClusterSelected());
         densityInClusterBtn.addChangeListener(new ChangeListener() {
@@ -209,15 +236,15 @@ public class AnnotationOptionsPanel extends JPanel {
         });
         add(densityInClusterBtn, cc.xywh(1, 5, 5, 1));
 
-        densityInClusterTfd.setText("" + options.getDensityInCluster());//NOI18N
+        densityInClusterTfd.setText("" + options.getDensityInCluster());// NOI18N
         densityInClusterTfd.setEnabled(densityInClusterBtn.isSelected());
         add(densityInClusterTfd, cc.xywh(7, 5, 3, 1));
 
-        //---- densityInPopulationBtn ----
+        // ---- densityInPopulationBtn ----
         densityInPopulationBtn.setText(bundle
-                .getString("TXT_DensityInPopulationBtn"));//NOI18N
+                .getString("TXT_DensityInPopulationBtn"));// NOI18N
         densityInPopulationBtn.setToolTipText(bundle
-                .getString("TIP_DensityInPopulationBtn"));//NOI18N
+                .getString("TIP_DensityInPopulationBtn"));// NOI18N
         densityInPopulationBtn.setSelected(options
                 .isTermsDensityInPopulationSelected());
         densityInPopulationBtn.addChangeListener(new ChangeListener() {
@@ -229,14 +256,14 @@ public class AnnotationOptionsPanel extends JPanel {
         });
         add(densityInPopulationBtn, cc.xywh(1, 7, 5, 1));
 
-        densityInPopulationTfd.setText("" + options.getDensityInPopulation());//NOI18N
+        densityInPopulationTfd.setText("" + options.getDensityInPopulation());// NOI18N
         densityInPopulationTfd.setEnabled(densityInPopulationBtn.isSelected());
         add(densityInPopulationTfd, cc.xywh(7, 7, 3, 1));
 
-        //---- relativeDensityBtn ----
-        relativeDensityBtn.setText(bundle.getString("TXT_RelativeDensityBtn"));//NOI18N
+        // ---- relativeDensityBtn ----
+        relativeDensityBtn.setText(bundle.getString("TXT_RelativeDensityBtn"));// NOI18N
         relativeDensityBtn.setToolTipText(bundle
-                .getString("TIP_RelativeDensityBtn"));//NOI18N
+                .getString("TIP_RelativeDensityBtn"));// NOI18N
         relativeDensityBtn
                 .setSelected(options.isTermsRelativeDensitySelected());
         relativeDensityBtn.addChangeListener(new ChangeListener() {
@@ -247,14 +274,14 @@ public class AnnotationOptionsPanel extends JPanel {
         });
         add(relativeDensityBtn, cc.xywh(1, 9, 5, 1));
 
-        relativeDensityTfd.setText("" + options.getRelativeDensity());//NOI18N
+        relativeDensityTfd.setText("" + options.getRelativeDensity());// NOI18N
         relativeDensityTfd.setEnabled(relativeDensityBtn.isSelected());
         add(relativeDensityTfd, cc.xywh(7, 9, 3, 1));
 
-        //---- statCalculationBtn ----
-        statCalculationBtn.setText(bundle.getString("TXT_StatCalculationBtn"));//NOI18N
+        // ---- statCalculationBtn ----
+        statCalculationBtn.setText(bundle.getString("TXT_StatCalculationBtn"));// NOI18N
         statCalculationBtn.setToolTipText(bundle
-                .getString("TIP_StatCalculationBtn"));//NOI18N
+                .getString("TIP_StatCalculationBtn"));// NOI18N
         statCalculationBtn.setSelected(options
                 .isStatisticalCalculationSelected());
         setPValueWidgetsEnabled(statCalculationBtn.isSelected());
@@ -267,14 +294,14 @@ public class AnnotationOptionsPanel extends JPanel {
         });
         add(statCalculationBtn, cc.xywh(1, 11, 5, 1));
 
-        statCalculationTfd.setText("" + options.getStat());//NOI18N
+        statCalculationTfd.setText("" + options.getStat());// NOI18N
         statCalculationTfd.setEnabled(statCalculationBtn.isSelected());
         add(statCalculationTfd, cc.xywh(7, 11, 3, 1));
         add(statSeparator, cc.xywh(1, 13, 9, 1));
 
-        //---- m1Btn ----
-        m1Btn.setText(bundle.getString("TXT_M1Btn"));//NOI18N
-        m1Btn.setToolTipText(bundle.getString("TIP_M1Btn"));//NOI18N
+        // ---- m1Btn ----
+        m1Btn.setText(bundle.getString("TXT_M1Btn"));// NOI18N
+        m1Btn.setToolTipText(bundle.getString("TIP_M1Btn"));// NOI18N
         m1Btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setMethod1Selected(m1Btn.isSelected());
@@ -283,9 +310,9 @@ public class AnnotationOptionsPanel extends JPanel {
         });
         add(m1Btn, cc.xy(3, 17));
 
-        //---- m2Btn ----
-        m2Btn.setText(bundle.getString("TXT_M2Btn"));//NOI18N
-        m2Btn.setToolTipText(bundle.getString("TIP_M2Btn"));//NOI18N
+        // ---- m2Btn ----
+        m2Btn.setText(bundle.getString("TXT_M2Btn"));// NOI18N
+        m2Btn.setToolTipText(bundle.getString("TIP_M2Btn"));// NOI18N
         m2Btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setMethod2Selected(m2Btn.isSelected());
@@ -295,9 +322,9 @@ public class AnnotationOptionsPanel extends JPanel {
         add(m2Btn, cc.xy(5, 17));
         add(pvalueSeparator, cc.xywh(3, 15, 7, 1));
 
-        //---- binLawBtn ----
-        binLawBtn.setText(bundle.getString("TXT_BinLawBtn"));//NOI18N
-        binLawBtn.setToolTipText(bundle.getString("TIP_BinLawBtn"));//NOI18N
+        // ---- binLawBtn ----
+        binLawBtn.setText(bundle.getString("TXT_BinLawBtn"));// NOI18N
+        binLawBtn.setToolTipText(bundle.getString("TIP_BinLawBtn"));// NOI18N
         binLawBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setBinomialLawSelected(
@@ -308,9 +335,9 @@ public class AnnotationOptionsPanel extends JPanel {
         });
         add(binLawBtn, cc.xy(3, 21));
 
-        //---- hyperLawBtn ----
-        hyperLawBtn.setText(bundle.getString("TXT_HyperLawBtn"));//NOI18N
-        hyperLawBtn.setToolTipText(bundle.getString("TIP_HyperLawBtn"));//NOI18N
+        // ---- hyperLawBtn ----
+        hyperLawBtn.setText(bundle.getString("TXT_HyperLawBtn"));// NOI18N
+        hyperLawBtn.setToolTipText(bundle.getString("TIP_HyperLawBtn"));// NOI18N
         hyperLawBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setHypergeometricLawSelected(
@@ -323,10 +350,10 @@ public class AnnotationOptionsPanel extends JPanel {
         add(lawSeparator, cc.xywh(2, 19, 8, 1));
         add(correctionSeparator, cc.xywh(3, 23, 7, 1));
 
-        //---- bonCorrectionBtn ----
-        bonCorrectionBtn.setText(bundle.getString("TXT_BonCorrectionBtn"));//NOI18N
+        // ---- bonCorrectionBtn ----
+        bonCorrectionBtn.setText(bundle.getString("TXT_BonCorrectionBtn"));// NOI18N
         bonCorrectionBtn.setToolTipText(bundle
-                .getString("TIP_BonCorrectionBtn"));//NOI18N
+                .getString("TIP_BonCorrectionBtn"));// NOI18N
         bonCorrectionBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setBonferonniCorrectionSelected(
@@ -340,10 +367,10 @@ public class AnnotationOptionsPanel extends JPanel {
         });
         add(bonCorrectionBtn, cc.xy(3, 25));
 
-        //---- dunCorrectionBtn ----
-        dunCorrectionBtn.setText(bundle.getString("TXT_DunCorrectionBtn"));//NOI18N
+        // ---- dunCorrectionBtn ----
+        dunCorrectionBtn.setText(bundle.getString("TXT_DunCorrectionBtn"));// NOI18N
         dunCorrectionBtn.setToolTipText(bundle
-                .getString("TIP_DunCorrectionBtn"));//NOI18N
+                .getString("TIP_DunCorrectionBtn"));// NOI18N
         dunCorrectionBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setSidakCorrectionSelected(
@@ -359,11 +386,11 @@ public class AnnotationOptionsPanel extends JPanel {
 
         add(baseCalculationSeparator, cc.xywh(1, 27, 9, 1));
 
-        //---- inClassificationBtn ----
+        // ---- inClassificationBtn ----
         inClassificationBtn
-                .setText(bundle.getString("TXT_InClassificationBtn"));//NOI18N
+                .setText(bundle.getString("TXT_InClassificationBtn"));// NOI18N
         inClassificationBtn.setToolTipText(bundle
-                .getString("TIP_InClassificationBtn"));//NOI18N
+                .getString("TIP_InClassificationBtn"));// NOI18N
         inClassificationBtn.setSelected(CESettings.getInstance()
                 .isClassifBaseSelected());
         inClassificationBtn.addChangeListener(new ChangeListener() {
@@ -373,9 +400,9 @@ public class AnnotationOptionsPanel extends JPanel {
         });
         add(inClassificationBtn, cc.xywh(1, 29, 9, 1));
 
-        //---- inOntologyBtn ----
-        inOntologyBtn.setText(bundle.getString("TXT_InOntologyBtn"));//NOI18N
-        inOntologyBtn.setToolTipText(bundle.getString("TIP_InOntologyBtn"));//NOI18N
+        // ---- inOntologyBtn ----
+        inOntologyBtn.setText(bundle.getString("TXT_InOntologyBtn"));// NOI18N
+        inOntologyBtn.setToolTipText(bundle.getString("TIP_InOntologyBtn"));// NOI18N
         inOntologyBtn.setSelected(CESettings.getInstance()
                 .isOntologyBaseSelected());
         inOntologyBtn.addChangeListener(new ChangeListener() {
@@ -385,10 +412,10 @@ public class AnnotationOptionsPanel extends JPanel {
         });
         add(inOntologyBtn, cc.xywh(1, 31, 9, 1));
 
-        //---- userSpecifiedBtn ----
-        userSpecifiedBtn.setText(bundle.getString("TXT_UserSpecifiedBtn"));//NOI18N
+        // ---- userSpecifiedBtn ----
+        userSpecifiedBtn.setText(bundle.getString("TXT_UserSpecifiedBtn"));// NOI18N
         userSpecifiedBtn.setToolTipText(bundle
-                .getString("TIP_UserSpecifiedBtn"));//NOI18N
+                .getString("TIP_UserSpecifiedBtn"));// NOI18N
         userSpecifiedBtn.setSelected(CESettings.getInstance()
                 .isUserSpecifiedBaseSelected());
         userSpecifiedBtn.addChangeListener(new ChangeListener() {
@@ -403,7 +430,7 @@ public class AnnotationOptionsPanel extends JPanel {
         browseTfd.setEnabled(userSpecifiedBtn.isSelected());
         add(browseTfd, cc.xywh(5, 33, 4, 1));
 
-        //---- browseBtn ----
+        // ---- browseBtn ----
         browseBtn.setBorder(new EtchedBorder());
         browseBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -420,12 +447,12 @@ public class AnnotationOptionsPanel extends JPanel {
         browseBtn
                 .setIcon(new ImageIcon(
                         Utilities
-                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/BrowseIcon16.gif"))); //NOI18N
+                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/BrowseIcon16.gif"))); // NOI18N
         add(browseBtn, cc.xy(9, 33));
         add(endSeparator, cc.xywh(1, 35, 9, 1));
 
-        //---- applyBtn ----
-        applyBtn.setText(bundle.getString("TXT_ApplyBtn"));//NOI18N
+        // ---- applyBtn ----
+        applyBtn.setText(bundle.getString("TXT_ApplyBtn"));// NOI18N
         applyBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setTermsCount(

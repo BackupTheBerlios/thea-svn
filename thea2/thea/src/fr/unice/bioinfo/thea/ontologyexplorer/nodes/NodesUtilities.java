@@ -18,9 +18,9 @@ public class NodesUtilities {
      */
     public static Node createWaitNode() {
         AbstractNode n = new AbstractNode(Children.LEAF);
-        n.setName(NbBundle.getMessage(NodesUtilities.class, "WaitNode")); //NOI18N
+        n.setName(NbBundle.getMessage(NodesUtilities.class, "WaitNode")); // NOI18N
         n
-                .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/waitIcon16"); //NOI18N
+                .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/waitIcon16"); // NOI18N
         return n;
     }
 

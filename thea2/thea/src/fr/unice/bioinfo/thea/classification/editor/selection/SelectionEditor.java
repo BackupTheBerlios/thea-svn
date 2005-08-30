@@ -39,7 +39,7 @@ public class SelectionEditor extends TopComponent implements SelectionListener {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.classification.editor.selection.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.classification.editor.selection.Bundle"); // NOI18N;
 
     /** A {@link JTabbedPane}used to hold multiples selections. */
     private JTabbedPane tabbedPane;
@@ -179,10 +179,10 @@ public class SelectionEditor extends TopComponent implements SelectionListener {
         Integer index = (Integer) selId2Index.get(selId);
 
         if (index == null) {
-            //            IOProvider ioProvider = (IOProvider)
+            // IOProvider ioProvider = (IOProvider)
             // Lookup.getDefault().lookup(IOProvider.class);
-            //            InputOutput io = ioProvider.getIO("Selection Viewer", true);
-            //            io.getOut().println("Trying to delete a non existant row ... ");
+            // InputOutput io = ioProvider.getIO("Selection Viewer", true);
+            // io.getOut().println("Trying to delete a non existant row ... ");
 
             return;
         }

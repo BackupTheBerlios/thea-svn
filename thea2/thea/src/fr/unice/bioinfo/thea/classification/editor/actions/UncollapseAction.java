@@ -36,7 +36,7 @@ public class UncollapseAction extends GenericAction {
             boolean b = !aNode.isCollapsed();
             aNode.setCollapsed(b);
             if (b == true) {
-                //drawable.collapseNode(aNode);
+                // drawable.collapseNode(aNode);
             } else {
                 drawable.uncollapseNode(aNode);
             }

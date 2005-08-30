@@ -31,17 +31,28 @@ import fr.unice.bioinfo.thea.ontologyexplorer.db.driver.JDBCDriverManager;
  */
 public class DatabaseConnection implements DBConnection {
     static final ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.db.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.db.Bundle"); // NOI18N
+
     static final long serialVersionUID = 4554639187416958735L;
-    private static final String SUPPORT = "_schema_support"; //NOI18N
-    public static final String PROP_DRIVER = "driver"; //NOI18N
-    public static final String PROP_DATABASE = "database"; //NOI18N
-    public static final String PROP_USER = "user"; //NOI18N
-    public static final String PROP_PASSWORD = "password"; //NOI18N
-    public static final String PROP_SCHEMA = "schema"; //NOI18N
-    public static final String PROP_DRIVERNAME = "drivername"; //NOI18N
-    public static final String PROP_NAME = "name"; //NOI18N
+
+    private static final String SUPPORT = "_schema_support"; // NOI18N
+
+    public static final String PROP_DRIVER = "driver"; // NOI18N
+
+    public static final String PROP_DATABASE = "database"; // NOI18N
+
+    public static final String PROP_USER = "user"; // NOI18N
+
+    public static final String PROP_PASSWORD = "password"; // NOI18N
+
+    public static final String PROP_SCHEMA = "schema"; // NOI18N
+
+    public static final String PROP_DRIVERNAME = "drivername"; // NOI18N
+
+    public static final String PROP_NAME = "name"; // NOI18N
+
     private Set exceptionListeners = Collections.synchronizedSet(new HashSet());
+
     private Connection con;
 
     /** Driver URL and name */
@@ -60,7 +71,7 @@ public class DatabaseConnection implements DBConnection {
     private String schema;
 
     /** User password */
-    private String pwd = ""; //NOI18N
+    private String pwd = ""; // NOI18N
 
     /** Remembers password */
     private Boolean rpwd = Boolean.FALSE;
@@ -70,6 +81,7 @@ public class DatabaseConnection implements DBConnection {
 
     /** Connection name */
     private String name;
+
     OpenConnectionInterface openConnection;
 
     /**
@@ -215,11 +227,11 @@ public class DatabaseConnection implements DBConnection {
                 name = MessageFormat.format(bundle
                         .getString("ConnectionNodeUniqueName"), new String[] {
                         getDatabase(), getUser(),
-                        bundle.getString("SchemaIsNotSet") }); //NOI18N
+                        bundle.getString("SchemaIsNotSet") }); // NOI18N
             } else {
                 name = MessageFormat.format(bundle
                         .getString("ConnectionNodeUniqueName"), new String[] {
-                        getDatabase(), getUser(), getSchema() }); //NOI18N
+                        getDatabase(), getUser(), getSchema() }); // NOI18N
             }
         }
 
@@ -328,8 +340,8 @@ public class DatabaseConnection implements DBConnection {
         }
 
         Properties dbprops = new Properties();
-        dbprops.put("user", usr); //NOI18N
-        dbprops.put("password", pwd); //NOI18N
+        dbprops.put("user", usr); // NOI18N
+        dbprops.put("password", pwd); // NOI18N
 
         try {
             propertySupport.firePropertyChange("connecting", null, null);
@@ -372,12 +384,12 @@ public class DatabaseConnection implements DBConnection {
                     .getString("EXC_CannotEstablishConnection"), new String[] {
                     db, drv, e.getMessage() }); // NOI18N
 
-            //commented out for 3.6 release, need to solve for next Studio
+            // commented out for 3.6 release, need to solve for next Studio
             // release
             // hack for Pointbase Network Server
-            //            if(drv.equals(PointbasePlus.DRIVER))
-            //                if(e.getErrorCode()==PointbasePlus.ERR_SERVER_REJECTED)
-            //                    message =
+            // if(drv.equals(PointbasePlus.DRIVER))
+            // if(e.getErrorCode()==PointbasePlus.ERR_SERVER_REJECTED)
+            // message =
             // MessageFormat.format(bundle.getString("EXC_PointbaseServerRejected"),
             // new String[] {message, db}); // NOI18N
             propertySupport.firePropertyChange("failed", null, null);
@@ -414,7 +426,7 @@ public class DatabaseConnection implements DBConnection {
                 } catch (SQLException e) {
                     ErrorManager.getDefault().notify(e);
 
-                    //e.printStackTrace();
+                    // e.printStackTrace();
                 }
             }
         }, 0);
@@ -430,8 +442,8 @@ public class DatabaseConnection implements DBConnection {
                 }
 
                 Properties dbprops = new Properties();
-                dbprops.put("user", usr); //NOI18N
-                dbprops.put("password", pwd); //NOI18N
+                dbprops.put("user", usr); // NOI18N
+                dbprops.put("password", pwd); // NOI18N
 
                 try {
                     propertySupport
@@ -478,13 +490,13 @@ public class DatabaseConnection implements DBConnection {
                             .getString("EXC_CannotEstablishConnection"),
                             new String[] { db, drv, e.getMessage() }); // NOI18N
 
-                    //commented out for 3.6 release, need to solve for next
+                    // commented out for 3.6 release, need to solve for next
                     // Studio release
                     // hack for Pointbase Network Server
-                    //                    if (drv.equals(PointbasePlus.DRIVER))
-                    //                        if (e.getErrorCode() ==
+                    // if (drv.equals(PointbasePlus.DRIVER))
+                    // if (e.getErrorCode() ==
                     // PointbasePlus.ERR_SERVER_REJECTED)
-                    //                            message =
+                    // message =
                     // MessageFormat.format(bundle.getString("EXC_PointbaseServerRejected"),
                     // new String[] {message, db}); // NOI18N
                     propertySupport.firePropertyChange("failed", null, null);
@@ -506,20 +518,20 @@ public class DatabaseConnection implements DBConnection {
     }
 
     private void checkRuntime() {
-        //        DatabaseRuntime runtime = DatabaseRuntimeManager.getDefault()
-        //                .getRuntime(drv);
+        // DatabaseRuntime runtime = DatabaseRuntimeManager.getDefault()
+        // .getRuntime(drv);
         //
-        //        // If DatabaseRuntimeManager does not have an entry for the runtime,
+        // // If DatabaseRuntimeManager does not have an entry for the runtime,
         // do
-        //        // not check whether
-        //        // it is running or attempt to start it.
-        //        if (runtime == null)
-        //            return;
+        // // not check whether
+        // // it is running or attempt to start it.
+        // if (runtime == null)
+        // return;
         //
-        //        if (runtime.isRunning())
-        //            return;
-        //        if (runtime.canStart() && runtime.acceptsConnectionUrl(db))
-        //            runtime.start();
+        // if (runtime.isRunning())
+        // return;
+        // if (runtime.canStart() && runtime.acceptsConnectionUrl(db))
+        // runtime.start();
     }
 
     public void addExceptionListener(ExceptionListener l) {
@@ -601,7 +613,7 @@ public class DatabaseConnection implements DBConnection {
         try {
             drvname = (String) in.readObject();
         } catch (Exception exc) {
-            //IGNORE - not stored in 3.6 and earlier
+            // IGNORE - not stored in 3.6 and earlier
         }
 
         // boston setting/pilsen setting?

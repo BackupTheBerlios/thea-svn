@@ -43,37 +43,60 @@ public class ShowAnnotatedGenesPanel extends JPanel {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); // NOI18N
+
     // separators
     private JComponent propertiesSeparator;
+
     private JComponent evidencesSeparator;
+
     // labels
     private JLabel allEvidencesLbl;
+
     private JLabel selectedEvidencesLbl;
+
     private JLabel allPropLbl;
+
     private JLabel selectedPropLbl;
+
     // lists
     private JList allEvidencesList;
+
     private JList selectedEvidencesList;
+
     private JList allPropList;
+
     private JList selectedPropList;
+
     // scroll panes
     private JScrollPane allEvidencesJsp;
+
     private JScrollPane selectedEvidencesJsp;
+
     private JScrollPane allPropJsp;
+
     private JScrollPane selectedPropJsp;
+
     // buttons
     private JButton addEvidencesBtn;
+
     private JButton removeEvidencesBtn;
+
     private JButton addPropBtn;
+
     private JButton removePropBtn;
+
     // lists' models
     private DefaultListModel allEvidencesModel;
+
     private DefaultListModel selectedEvidencesModel;
+
     private DefaultListModel allPropModel;
+
     private DefaultListModel selectedPropModel;
 
     private String[] evidences;
+
     private String[] properties;
 
     public ShowAnnotatedGenesPanel() {
@@ -87,20 +110,20 @@ public class ShowAnnotatedGenesPanel extends JPanel {
      * user would have selected in the last run.
      */
     private void createModels() {
-        //      create the list's allEvidencesModel
+        // create the list's allEvidencesModel
         allEvidencesModel = new DefaultListModel();
         // get evidences list form the configuration file.
-        //      get the configuration
+        // get the configuration
         Configuration con = TheaConfiguration.getDefault().getConfiguration();
         // get list of columns (properties)
-        Object o = con.getProperty("evidences.uri");//NOI18N
+        Object o = con.getProperty("evidences.uri");// NOI18N
         if (o instanceof Collection) {
             ArrayList al = new ArrayList((Collection) o);
             Object[] names = al.toArray();
             evidences = new String[al.size()];
             for (int counter = 0; counter < al.size(); counter++) {
                 String name = (String) names[counter];
-                evidences[counter] = name;//.substring(name.indexOf("#") +
+                evidences[counter] = name;// .substring(name.indexOf("#") +
                 // 1);//NOI18N
                 allEvidencesModel.addElement(evidences[counter]);
             }
@@ -117,15 +140,15 @@ public class ShowAnnotatedGenesPanel extends JPanel {
 
         // create the model for the list of available properties
         allPropModel = new DefaultListModel();
-        //      get list of columns (properties)
-        Object obj = con.getProperty("geneeditor.column.name");//NOI18N
+        // get list of columns (properties)
+        Object obj = con.getProperty("geneeditor.column.name");// NOI18N
         if (obj instanceof Collection) {
             ArrayList al = new ArrayList((Collection) obj);
             Object[] names = al.toArray();
             properties = new String[al.size()];
             for (int counter = 0; counter < al.size(); counter++) {
                 String name = (String) names[counter];
-                properties[counter] = name;//.substring(name.indexOf("#") +
+                properties[counter] = name;// .substring(name.indexOf("#") +
                 // 1);//NOI18N
                 allPropModel.addElement(properties[counter]);
             }
@@ -145,8 +168,8 @@ public class ShowAnnotatedGenesPanel extends JPanel {
         // create separators
         DefaultComponentFactory compFactory = DefaultComponentFactory
                 .getInstance();
-        evidencesSeparator = compFactory.createSeparator("Evidences");//NOI18N
-        propertiesSeparator = compFactory.createSeparator("Properties");//NOI18N
+        evidencesSeparator = compFactory.createSeparator("Evidences");// NOI18N
+        propertiesSeparator = compFactory.createSeparator("Properties");// NOI18N
 
         // labels
         allEvidencesLbl = new JLabel();
@@ -173,7 +196,7 @@ public class ShowAnnotatedGenesPanel extends JPanel {
         selectedPropList
                 .addListSelectionListener(new SelectedPropListSelectionListener());
         selectedPropJsp = new JScrollPane(selectedPropList);
-        //      selection mode
+        // selection mode
         allEvidencesList
                 .setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         selectedEvidencesList
@@ -251,80 +274,80 @@ public class ShowAnnotatedGenesPanel extends JPanel {
 
         add(evidencesSeparator, cc.xywh(1, 1, 5, 1));
 
-        //---- allEvidencesLbl ----
-        allEvidencesLbl.setText(bundle.getString("LBL_AllEvidencesList"));//NOI18N
+        // ---- allEvidencesLbl ----
+        allEvidencesLbl.setText(bundle.getString("LBL_AllEvidencesList"));// NOI18N
         allEvidencesLbl.setToolTipText(bundle
-                .getString("HINT_AllEvidencesList"));//NOI18N
+                .getString("HINT_AllEvidencesList"));// NOI18N
         add(allEvidencesLbl, cc.xy(1, 3));
 
-        //---- selectedEvidencesLbl ----
+        // ---- selectedEvidencesLbl ----
         selectedEvidencesLbl.setText(bundle
-                .getString("LBL_SelectedEvidencesList"));//NOI18N
+                .getString("LBL_SelectedEvidencesList"));// NOI18N
         selectedEvidencesLbl.setToolTipText(bundle
-                .getString("HINT_SelectedEvidencesList"));//NOI18N
+                .getString("HINT_SelectedEvidencesList"));// NOI18N
         add(selectedEvidencesLbl, cc.xy(5, 3));
         add(allEvidencesJsp, cc.xywh(1, 4, 1, 8, CellConstraints.FILL,
                 CellConstraints.FILL));
         add(selectedEvidencesJsp, cc.xywh(5, 4, 1, 8, CellConstraints.FILL,
                 CellConstraints.FILL));
 
-        //---- addEvidenceBtn ----
+        // ---- addEvidenceBtn ----
         addEvidencesBtn.setBorder(new EtchedBorder());
-        addEvidencesBtn.setToolTipText(bundle.getString("HINT_AddEvidence"));//NOI18N
+        addEvidencesBtn.setToolTipText(bundle.getString("HINT_AddEvidence"));// NOI18N
         addEvidencesBtn
                 .setIcon(new ImageIcon(
                         Utilities
-                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/AddIcon16.gif"))); //NOI18N
+                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/AddIcon16.gif"))); // NOI18N
         add(addEvidencesBtn, cc.xy(3, 7));
 
-        //---- removeEvidenceBtn ----
+        // ---- removeEvidenceBtn ----
         removeEvidencesBtn.setBorder(new EtchedBorder());
         removeEvidencesBtn.setToolTipText(bundle
-                .getString("HINT_RemoveEvidence"));//NOI18N
+                .getString("HINT_RemoveEvidence"));// NOI18N
         removeEvidencesBtn
                 .setIcon(new ImageIcon(
                         Utilities
-                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/RemoveIcon16.gif"))); //NOI18N
+                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/RemoveIcon16.gif"))); // NOI18N
         add(removeEvidencesBtn, cc.xy(3, 9));
 
         add(propertiesSeparator, cc.xywh(1, 13, 5, 1));
 
-        //---- allPropLbl ----
-        allPropLbl.setText(bundle.getString("LBL_AllPropList"));//NOI18N
-        allPropLbl.setToolTipText(bundle.getString("HINT_AllPropList"));//NOI18N
+        // ---- allPropLbl ----
+        allPropLbl.setText(bundle.getString("LBL_AllPropList"));// NOI18N
+        allPropLbl.setToolTipText(bundle.getString("HINT_AllPropList"));// NOI18N
         add(allPropLbl, cc.xy(1, 15));
 
-        //---- selectedPropLbl ----
-        selectedPropLbl.setText(bundle.getString("LBL_SelectedPropList"));//NOI18N
+        // ---- selectedPropLbl ----
+        selectedPropLbl.setText(bundle.getString("LBL_SelectedPropList"));// NOI18N
         selectedPropLbl.setToolTipText(bundle
-                .getString("HINT_SelectedPropList"));//NOI18N
+                .getString("HINT_SelectedPropList"));// NOI18N
         add(selectedPropLbl, cc.xy(5, 15));
         add(allPropJsp, cc.xywh(1, 17, 1, 7, CellConstraints.FILL,
                 CellConstraints.FILL));
         add(selectedPropJsp, cc.xywh(5, 17, 1, 7, CellConstraints.FILL,
                 CellConstraints.FILL));
 
-        //---- addPropBtn ----
+        // ---- addPropBtn ----
         addPropBtn.setBorder(new EtchedBorder());
-        addPropBtn.setToolTipText(bundle.getString("HINT_AddProp"));//NOI18N
+        addPropBtn.setToolTipText(bundle.getString("HINT_AddProp"));// NOI18N
         addPropBtn
                 .setIcon(new ImageIcon(
                         Utilities
-                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/AddIcon16.gif"))); //NOI18N
+                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/AddIcon16.gif"))); // NOI18N
         add(addPropBtn, cc.xy(3, 19));
 
-        //---- removePropBtn ----
+        // ---- removePropBtn ----
         removePropBtn.setBorder(new EtchedBorder());
-        removePropBtn.setToolTipText(bundle.getString("HINT_RemoveProp"));//NOI18N
+        removePropBtn.setToolTipText(bundle.getString("HINT_RemoveProp"));// NOI18N
         removePropBtn
                 .setIcon(new ImageIcon(
                         Utilities
-                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/RemoveIcon16.gif"))); //NOI18N
+                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/RemoveIcon16.gif"))); // NOI18N
         add(removePropBtn, cc.xy(3, 21));
     }
 
     private void performAddEvidencesBtnAction(ActionEvent e) {
-        //      Get the index of all the selected items
+        // Get the index of all the selected items
         int[] selectedIx = allEvidencesList.getSelectedIndices();
         // Get all the selected items using the indices
         for (int i = 0; i < selectedIx.length; i++) {
@@ -341,9 +364,9 @@ public class ShowAnnotatedGenesPanel extends JPanel {
         int size = selectedEvidencesModel.getSize();
         if (size == 0) {
             removeEvidencesBtn.setEnabled(false);
-        } else { //Select an index.
+        } else { // Select an index.
             if (index == selectedEvidencesModel.getSize()) {
-                //removed item in last position
+                // removed item in last position
                 index--;
             }
             selectedEvidencesList.setSelectedIndex(index);
@@ -352,7 +375,7 @@ public class ShowAnnotatedGenesPanel extends JPanel {
     }
 
     private void performAddPropBtnAction(ActionEvent e) {
-        //      Get the index of all the selected items
+        // Get the index of all the selected items
         int[] selectedIx = allPropList.getSelectedIndices();
         // Get all the selected items using the indices
         for (int i = 0; i < selectedIx.length; i++) {
@@ -369,9 +392,9 @@ public class ShowAnnotatedGenesPanel extends JPanel {
         int size = selectedPropModel.getSize();
         if (size == 0) {
             removePropBtn.setEnabled(false);
-        } else { //Select an index.
+        } else { // Select an index.
             if (index == selectedPropModel.getSize()) {
-                //removed item in last position
+                // removed item in last position
                 index--;
             }
             selectedPropList.setSelectedIndex(index);

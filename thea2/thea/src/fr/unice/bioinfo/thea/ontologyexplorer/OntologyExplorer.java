@@ -54,7 +54,7 @@ public class OntologyExplorer extends TopComponent implements Provider,
         setIcon(Utilities
                 .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/OntologyExplorer16.png")); // NOI18N
 
-        //      Instanciate an explorer manager
+        // Instanciate an explorer manager
         explorerManager = new ExplorerManager();
 
         // Create the root node

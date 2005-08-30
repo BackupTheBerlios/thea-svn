@@ -48,7 +48,7 @@ public class PreferencesContainer extends JPanel {
 
     /** Resource Bundle */
     private static ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.dlg.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.dlg.Bundle"); // NOI18N;
 
     public PreferencesContainer() {
         init();
@@ -96,7 +96,7 @@ public class PreferencesContainer extends JPanel {
         tree = new JTree(root);
         tree.setRootVisible(false);
         tree.setShowsRootHandles(true);
-        tree.putClientProperty("JTree.lineStyle", "Angled");//NOI18N
+        tree.putClientProperty("JTree.lineStyle", "Angled");// NOI18N
         tree.addTreeSelectionListener(new SettingsTreeSelectionHandler());
         DefaultTreeCellRenderer r = (DefaultTreeCellRenderer) tree
                 .getCellRenderer();
@@ -109,7 +109,7 @@ public class PreferencesContainer extends JPanel {
 
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
-        //rightPanel.setPreferredSize(new Dimension(350, 400));
+        // rightPanel.setPreferredSize(new Dimension(350, 400));
         rightPanel.add(spacer, BorderLayout.WEST);
         rightPanel.add(settingsPanel, BorderLayout.CENTER);
 
@@ -237,10 +237,15 @@ public class PreferencesContainer extends JPanel {
     private static class SettingsNodeInfo implements Serializable {
         /** Use serialVersionUID for interoperability. */
         static final long serialVersionUID = 4496045479306791488L;
+
         transient Class panelClass;
+
         String className;
+
         String key;
+
         String title;
+
         int hashCode;
 
         public SettingsNodeInfo(String key, String title, String className) {
@@ -259,7 +264,7 @@ public class PreferencesContainer extends JPanel {
                 try {
                     this.panelClass = Helper.loadClass(this.className, this);
                 } catch (ClassNotFoundException ex) {
-                    //this.panelClass = GeneralSettingsPage.class;
+                    // this.panelClass = GeneralSettingsPage.class;
                 }
             }
 

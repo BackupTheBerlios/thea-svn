@@ -92,8 +92,8 @@ public class ClassificationFactory {
                 Iterator it = rootNode.getLeaves().iterator();
                 while (it.hasNext()) {
                     Node leaf = (Node) it.next();
-                    //                    leaf.setUserData("measures", geneId2Measures.get(leaf
-                    //                            .getUserData("idInClassif")));
+                    // leaf.setUserData("measures", geneId2Measures.get(leaf
+                    // .getUserData("idInClassif")));
                     leaf.addProperty(Node.MEASURES, geneId2Measures.get(leaf
                             .getProperty(Node.ID_IN_CLASSIF)));
                 }
@@ -118,9 +118,9 @@ public class ClassificationFactory {
 
                 Node node = new Node();
                 node.setName(idInClassif);
-                //                node.setUserData("idInClassif", idInClassif);
+                // node.setUserData("idInClassif", idInClassif);
                 node.addProperty(Node.ID_IN_CLASSIF, idInClassif);
-                //                node.setUserData("measures", entry.getValue());
+                // node.setUserData("measures", entry.getValue());
                 node.addProperty(Node.MEASURES, entry.getValue());
                 node.setBranchLength(0);
                 nodes.add(node);
@@ -128,7 +128,7 @@ public class ClassificationFactory {
 
             rootNode = new Node();
             rootNode.setName("");
-            //            rootNode.setUserData("idInClassif", "");
+            // rootNode.setUserData("idInClassif", "");
             rootNode.addProperty(Node.ID_IN_CLASSIF, "");
             rootNode.setChildren(nodes);
             rootNode.init();

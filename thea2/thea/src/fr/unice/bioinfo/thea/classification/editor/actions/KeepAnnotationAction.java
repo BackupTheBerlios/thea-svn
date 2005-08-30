@@ -29,7 +29,7 @@ public class KeepAnnotationAction extends GenericAction {
         super(name, accelerator, icon, shortDescription, drawable);
         this.aNode = aNode;
 
-        if ((aNode.getLabel() != null) && (!aNode.getLabel().equals(""))//NOI18N
+        if ((aNode.getLabel() != null) && (!aNode.getLabel().equals(""))// NOI18N
                 && (aNode.getProperty(Node.ASSOC_TERM) != null)) {
             this.setEnabled(true);
         } else {
@@ -62,7 +62,7 @@ public class KeepAnnotationAction extends GenericAction {
         param.add(aNode.getLayoutSupport());
         l.add(param);
         aNode.addProperty(Node.USER_ANNOTATIONS, l);
-        aNode.setLabel("");//NOI18N
+        aNode.setLabel("");// NOI18N
         drawable.updateGraphics();
     }
 

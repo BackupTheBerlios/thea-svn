@@ -54,16 +54,27 @@ public class JDBCDriverConvertor implements Environment.Provider,
         InstanceCookie.Of, PropertyChangeListener, Runnable,
         InstanceContent.Convertor {
     static FileObject fo;
+
     static int DELAY = 2000;
+
     static final String ELEMENT_NAME = "name"; // NOI18N
+
     static final String ELEMENT_CLASS = "class"; // NOI18N
+
     static final String ELEMENT_URL = "url"; // NOI18N
+
     static final String ATTR_PROPERTY_VALUE = "value"; // NOI18N
+
     InstanceContent cookies = new InstanceContent();
+
     XMLDataObject holder;
+
     Lookup lookup;
+
     RequestProcessor.Task saveTask;
+
     Reference refDriver = new WeakReference(null);
+
     LinkedList keepAlive = new LinkedList();
 
     private JDBCDriverConvertor() {
@@ -154,7 +165,8 @@ public class JDBCDriverConvertor implements Environment.Provider,
                 if (initialURL.startsWith("RELATIVE:")) {
                     // Use a different URL prefix based on the operating system
                     if (System.getProperty("os.name").toUpperCase()
-                            .lastIndexOf("WINDOWS") == -1) { // For solaris, two
+                            .lastIndexOf("WINDOWS") == -1) { // For solaris,
+                        // two
                         // slashes at the
                         // beginning causes
                         // malformed URL
@@ -173,7 +185,7 @@ public class JDBCDriverConvertor implements Environment.Provider,
 
                 urlList.add(new URL(finalURL));
 
-                //urlList.add(new URL((String) handler.urls.get(i)));
+                // urlList.add(new URL((String) handler.urls.get(i)));
                 // end: Java Studio support. Covert relative url's to absolute
             } catch (MalformedURLException exc) {
                 ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL,
@@ -254,7 +266,7 @@ public class JDBCDriverConvertor implements Environment.Provider,
                 return null;
             }
 
-            //            return new LookNode(drv, null, Looks.defaultSelector());
+            // return new LookNode(drv, null, Looks.defaultSelector());
             return null;
         } else {
             return null;
@@ -273,15 +285,15 @@ public class JDBCDriverConvertor implements Environment.Provider,
         return (Class) obj;
     }
 
-    //    public static DataObject create(JDBCDriver drv, DataFolder f, String
+    // public static DataObject create(JDBCDriver drv, DataFolder f, String
     // idName) throws IOException {
     public static DataObject create(JDBCDriver drv) throws IOException {
         FileObject fo = Repository.getDefault().getDefaultFileSystem()
                 .findResource("Services/JDBCDrivers");
         DataFolder df = DataFolder.findFolder(fo);
 
-        //        W w = new W(drv, df, drv.getName());
-        String fileName = drv.getClassName().replace('.', '_'); //NOI18N
+        // W w = new W(drv, df, drv.getName());
+        String fileName = drv.getClassName().replace('.', '_'); // NOI18N
         W w = new W(drv, df, fileName);
         df.getPrimaryFile().getFileSystem().runAtomicAction(w);
 
@@ -291,7 +303,7 @@ public class JDBCDriverConvertor implements Environment.Provider,
     public static void remove(JDBCDriver drv) throws IOException {
         String name = drv.getName();
         FileObject fo = Repository.getDefault().getDefaultFileSystem()
-                .findResource("Services/JDBCDrivers"); //NOI18N
+                .findResource("Services/JDBCDrivers"); // NOI18N
         FileObject[] drivers = fo.getChildren();
         JDBCDriverConvertor conv;
 
@@ -341,8 +353,11 @@ public class JDBCDriverConvertor implements Environment.Provider,
 
     static class W implements FileSystem.AtomicAction {
         JDBCDriver instance;
+
         MultiDataObject holder;
+
         String name;
+
         DataFolder f;
 
         W(JDBCDriver instance, MultiDataObject holder) {
@@ -365,15 +380,15 @@ public class JDBCDriverConvertor implements Environment.Provider,
                 lck = holder.getPrimaryEntry().takeLock();
             } else {
                 FileObject folder = f.getPrimaryFile();
-                String fn = FileUtil.findFreeFileName(folder, name, "xml"); //NOI18N
-                data = folder.createData(fn, "xml"); //NOI18N
+                String fn = FileUtil.findFreeFileName(folder, name, "xml"); // NOI18N
+                data = folder.createData(fn, "xml"); // NOI18N
                 lck = data.lock();
             }
 
             try {
                 OutputStream ostm = data.getOutputStream(lck);
                 PrintWriter writer = new PrintWriter(new OutputStreamWriter(
-                        ostm, "UTF8")); //NOI18N
+                        ostm, "UTF8")); // NOI18N
                 write(writer);
                 writer.flush();
                 writer.close();
@@ -388,32 +403,34 @@ public class JDBCDriverConvertor implements Environment.Provider,
         }
 
         void write(PrintWriter pw) throws IOException {
-            pw.println("<?xml version='1.0'?>"); //NOI18N
+            pw.println("<?xml version='1.0'?>"); // NOI18N
             pw
-                    .println("<!DOCTYPE driver PUBLIC '-//NetBeans//DTD JDBC Driver 1.0//EN' 'http://www.netbeans.org/dtds/jdbc-driver-1_0.dtd'>"); //NOI18N
-            pw.println("<driver>"); //NOI18N
+                    .println("<!DOCTYPE driver PUBLIC '-//NetBeans//DTD JDBC Driver 1.0//EN' 'http://www.netbeans.org/dtds/jdbc-driver-1_0.dtd'>"); // NOI18N
+            pw.println("<driver>"); // NOI18N
             pw.println("  <name value='"
-                    + XMLUtil.toAttributeValue(instance.getName()) + "'/>"); //NOI18N
+                    + XMLUtil.toAttributeValue(instance.getName()) + "'/>"); // NOI18N
             pw
                     .println("  <class value='"
                             + XMLUtil.toAttributeValue(instance.getClassName())
-                            + "'/>"); //NOI18N
-            pw.println("  <urls>"); //NOI18N
+                            + "'/>"); // NOI18N
+            pw.println("  <urls>"); // NOI18N
 
             URL[] urls = instance.getURLs();
 
             for (int i = 0; i < urls.length; i++)
                 pw.println("    <url value='"
-                        + XMLUtil.toAttributeValue(urls[i].toString()) + "'/>"); //NOI18N
+                        + XMLUtil.toAttributeValue(urls[i].toString()) + "'/>"); // NOI18N
 
-            pw.println("  </urls>"); //NOI18N
-            pw.println("</driver>"); //NOI18N
+            pw.println("  </urls>"); // NOI18N
+            pw.println("</driver>"); // NOI18N
         }
     }
 
     static class H extends org.xml.sax.helpers.DefaultHandler {
         String name;
+
         String clazz;
+
         LinkedList urls = new LinkedList();
 
         public void startDocument() throws org.xml.sax.SAXException {

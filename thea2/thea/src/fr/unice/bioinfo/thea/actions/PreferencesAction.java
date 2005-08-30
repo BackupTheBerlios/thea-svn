@@ -21,24 +21,24 @@ public class PreferencesAction extends SystemAction {
 
     /** Resource Bundle */
     private static ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.actions.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.actions.Bundle"); // NOI18N;
 
     /*
      * (non-Javadoc)
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        return bundle.getString("LBL_PreferencesAction");//NOI18N
+        return bundle.getString("LBL_PreferencesAction");// NOI18N
     }
 
     /*
      * (non-Javadoc)
      * @see org.openide.util.actions.SystemAction#iconResource()
      */
-    //    protected String iconResource() {
-    //        return "fr/unice/bioinfo/thea/resources/PreferencesIconIcon16.gif";
+    // protected String iconResource() {
+    // return "fr/unice/bioinfo/thea/resources/PreferencesIconIcon16.gif";
     // //NOI18N
-    //    }
+    // }
     /*
      * (non-Javadoc)
      * @see org.openide.util.HelpCtx.Provider#getHelpCtx()
@@ -52,10 +52,10 @@ public class PreferencesAction extends SystemAction {
      * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
      */
     public void actionPerformed(ActionEvent arg0) {
-        //      create the main panel for Classification Viewer Settings
+        // create the main panel for Classification Viewer Settings
         PreferencesContainer p = new PreferencesContainer();
 
-        //      create the hide button
+        // create the hide button
         JButton hideBtn = new JButton(bundle.getString("HideButton_Name"));
         hideBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

@@ -13,28 +13,28 @@ package fr.unice.bioinfo.thea.classification.io.wizard;
 public class SupportedFormat {
 
     /** Unclustered format property. */
-    public static String UNCLUSTERED = "Unclustered";//NOI18N
+    public static String UNCLUSTERED = "Unclustered";// NOI18N
 
     /** Unclustered format description. */
-    public static String UNCLUSTERED_DESCRIPTION = "Only the tabular file is considered";//NOI18N
+    public static String UNCLUSTERED_DESCRIPTION = "Only the tabular file is considered";// NOI18N
 
     /** Eisen format description. */
-    public static String EISEN = "Eisen";//NOI18N
+    public static String EISEN = "Eisen";// NOI18N
 
     /** Eisen format property. */
-    public static String EISEN_DESCRIPTION = "Both clustered and tabular files required";//NOI18N
+    public static String EISEN_DESCRIPTION = "Both clustered and tabular files required";// NOI18N
 
     /** Sota format property. */
-    public static String SOTA = "Sota";//NOI18N
+    public static String SOTA = "Sota";// NOI18N
 
     /** Sota format description. */
-    public static String SOTA_DESCRIPTION = "Sota";//NOI18N
+    public static String SOTA_DESCRIPTION = "Sota";// NOI18N
 
     /** Newick format property. */
-    public static String NEWICK = "Newick";//NOI18N
+    public static String NEWICK = "Newick";// NOI18N
 
     /** Newick format description. */
-    public static String NEWICK_DESCRIPTION = "Newick";//NOI18N
+    public static String NEWICK_DESCRIPTION = "Newick";// NOI18N
 
     /** Returns supported files format. */
     public static String[] getExtensions() {

@@ -35,7 +35,7 @@ public class RemoveAnnotationAction extends GenericAction {
      */
     public void actionPerformed(ActionEvent e) {
         aNode.removeProperty(Node.USER_ANNOTATIONS);
-        aNode.setLabel("");//NOI18N
+        aNode.setLabel("");// NOI18N
         drawable.updateGraphics();
     }
 

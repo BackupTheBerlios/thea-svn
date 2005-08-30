@@ -34,14 +34,15 @@ public class PrintableJTable extends JTable implements Printable {
     public int print(Graphics g, PageFormat pf, int pageIndex)
             throws PrinterException {
         Graphics2D graphics = (Graphics2D) g;
-        graphics.setColor(Color.black); //set default foreground color to black
+        graphics.setColor(Color.black); // set default foreground color to black
 
         RepaintManager.currentManager(this).setDoubleBufferingEnabled(false);
-        Dimension d = this.getSize(); //get size of document
-        double panelWidth = d.width; //width in pixels
-        double panelHeight = d.height; //height in pixels
-        double pageHeight = pf.getImageableHeight(); //height of printer page
-        double pageWidth = pf.getImageableWidth(); //width of printer page
+        Dimension d = this.getSize(); // get size of document
+        double panelWidth = d.width; // width in pixels
+        double panelHeight = d.height; // height in pixels
+        double pageHeight = pf.getImageableHeight(); // height of printer
+        // page
+        double pageWidth = pf.getImageableWidth(); // width of printer page
         double scale = pageWidth / panelWidth;
         int totalNumPages = (int) Math.ceil(scale * panelHeight / pageHeight);
         // Make sure not print empty pages
@@ -54,7 +55,7 @@ public class PrintableJTable extends JTable implements Printable {
         graphics.translate(0f, -pageIndex * pageHeight);
         // Scale the page so the width fits...
         graphics.scale(scale, scale);
-        this.paint(graphics); //repaint the page for printing
+        this.paint(graphics); // repaint the page for printing
         return Printable.PAGE_EXISTS;
     }
 
@@ -70,4 +71,3 @@ public class PrintableJTable extends JTable implements Printable {
     }
 
 }
-

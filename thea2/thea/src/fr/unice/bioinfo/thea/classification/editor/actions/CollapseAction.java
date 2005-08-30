@@ -38,7 +38,7 @@ public class CollapseAction extends GenericAction {
             if (b == true) {
                 drawable.collapseNode(aNode);
             } else {
-                //drawable.uncollapseNode(aNode);
+                // drawable.uncollapseNode(aNode);
             }
         }
         drawable.updateGraphics();

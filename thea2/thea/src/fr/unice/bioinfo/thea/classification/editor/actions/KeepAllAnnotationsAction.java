@@ -54,16 +54,19 @@ public class KeepAllAnnotationsAction extends GenericAction {
                 Resource r = (Resource) aNode.getProperty(Node.ASSOC_TERM);
                 ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                         .getResourceFactory();
-                try{StringValue sv = (StringValue) r.getTarget(resourceFactory
-                        .getResource(OWLProperties.getInstance()
-                                .getNodeNameProperty()));
-                if (sv != null) {
-                    param.add(sv.getValue());
-                }}catch (AllontoException ae){}
+                try {
+                    StringValue sv = (StringValue) r.getTarget(resourceFactory
+                            .getResource(OWLProperties.getInstance()
+                                    .getNodeNameProperty()));
+                    if (sv != null) {
+                        param.add(sv.getValue());
+                    }
+                } catch (AllontoException ae) {
+                }
                 param.add(nextNode.getLayoutSupport());
                 nodeAnnots.add(param);
                 nextNode.addProperty(Node.USER_ANNOTATIONS, nodeAnnots);
-                nextNode.setLabel("");//NOI18N
+                nextNode.setLabel("");// NOI18N
             }
         }
         drawable.updateGraphics();

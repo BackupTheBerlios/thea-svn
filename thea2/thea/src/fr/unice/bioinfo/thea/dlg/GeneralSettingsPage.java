@@ -36,13 +36,16 @@ import fr.unice.bioinfo.thea.ontologyexplorer.settings.OESettings;
 public class GeneralSettingsPage extends AbstractSettingsPage {
 
     private JComponent configurationSeparator;
+
     private JLabel cfgFileLbl;
+
     private JTextField cfgFileField;
+
     private JButton browseBtn;
 
     /** Resource Bundle */
     private static ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.dlg.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.dlg.Bundle"); // NOI18N;
 
     /**
      * @param container
@@ -60,7 +63,7 @@ public class GeneralSettingsPage extends AbstractSettingsPage {
 
         CellConstraints cc = new CellConstraints();
 
-        //======== this ========
+        // ======== this ========
         setBorder(Borders.DIALOG_BORDER);
         setLayout(new FormLayout(new ColumnSpec[] {
                 new ColumnSpec("max(min;70px)"),
@@ -73,7 +76,7 @@ public class GeneralSettingsPage extends AbstractSettingsPage {
                 FormFactory.DEFAULT_ROWSPEC }));
         add(configurationSeparator, cc.xywh(1, 1, 5, 1));
 
-        //---- cfgFileLbl ----
+        // ---- cfgFileLbl ----
         cfgFileLbl = new JLabel();
         cfgFileLbl.setHorizontalAlignment(SwingConstants.RIGHT);
         cfgFileLbl.setText(bundle.getString("LBL_ConfigurationFile"));
@@ -83,7 +86,7 @@ public class GeneralSettingsPage extends AbstractSettingsPage {
         cfgFileField.setText(OESettings.getInstance().getConfigFilePath());
         add(cfgFileField, cc.xy(3, 3));
 
-        //---- browseBtn ----
+        // ---- browseBtn ----
         browseBtn = new JButton();
         browseBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

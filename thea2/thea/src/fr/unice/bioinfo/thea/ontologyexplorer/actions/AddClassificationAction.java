@@ -30,7 +30,7 @@ public class AddClassificationAction extends NodeAction {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
 
     /*
      * (non-Javadoc)
@@ -52,28 +52,28 @@ public class AddClassificationAction extends NodeAction {
             String name = ClassificationInfo.getInstance().getName();
             if (name.equalsIgnoreCase("")) {
                 name = "Classification - "
-                        + (ClassificationInfo.getInstance().getCounter() + 1);//NOI18N
+                        + (ClassificationInfo.getInstance().getCounter() + 1);// NOI18N
             }
             String description = ClassificationInfo.getInstance().getHint();
             String format = ClassificationInfo.getInstance().getFileFormat();
             StringBuffer b = new StringBuffer();
             // if no file selected
             if ((cdf == null) && (tdf == null)) {
-                b.append(bundle.getString("NewClassificationDialog_NoFile")); //NOI18N
+                b.append(bundle.getString("NewClassificationDialog_NoFile")); // NOI18N
             }
 
             // when the selected format is Eisen,the two files are
             // required
             if (format.equalsIgnoreCase(SupportedFormat.EISEN)) {
                 if ((cdf == null) || (tdf == null)) {
-                    b.append(bundle.getString("NewClassificationDialog_EISEN")); //NOI18N
+                    b.append(bundle.getString("NewClassificationDialog_EISEN")); // NOI18N
                 }
             }
 
             // Show a dialog with errors if any
             if (b.length() > 0) {
                 String message = MessageFormat.format(bundle
-                        .getString("NewClassificationDialog_ErrMsg"),//NOI18N
+                        .getString("NewClassificationDialog_ErrMsg"),// NOI18N
                         new String[] { b.toString() });
                 DialogDisplayer.getDefault().notify(
                         new NotifyDescriptor.Message(message,
@@ -121,7 +121,7 @@ public class AddClassificationAction extends NodeAction {
      * @see org.openide.util.actions.NodeAction#enable(org.openide.nodes.Node[])
      */
     protected boolean enable(Node[] nodes) {
-        //      Enable this action only for the OntologyNode
+        // Enable this action only for the OntologyNode
         nodes = OntologyExplorer.findDefault().getExplorerManager()
                 .getSelectedNodes();
         Node node;
@@ -165,10 +165,10 @@ public class AddClassificationAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#iconResource()
      */
     protected String iconResource() {
-        return "fr/unice/bioinfo/thea/ontologyexplorer/resources/NewClassificationFileIcon.png"; //NOI18N
+        return "fr/unice/bioinfo/thea/ontologyexplorer/resources/NewClassificationFileIcon.png"; // NOI18N
     }
 
-    //  Closes dialog
+    // Closes dialog
     private void closeDialog() {
         if (dialog != null) {
             dialog.dispose();

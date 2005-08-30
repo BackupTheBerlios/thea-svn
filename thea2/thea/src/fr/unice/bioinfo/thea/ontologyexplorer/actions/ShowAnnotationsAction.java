@@ -24,9 +24,10 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
  */
 public class ShowAnnotationsAction extends NodeAction {
     private Dialog dialog;
+
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
 
     /*
      * (non-Javadoc)
@@ -45,10 +46,10 @@ public class ShowAnnotationsAction extends NodeAction {
                 .getCookie(ClassificationNodeInfo.class);
         Node ontologyNode = cni.getLinkedOntologyNode();
         Node[] children = ontologyNode.getChildren().getNodes();
-        //Create the panel
+        // Create the panel
         final OntologyRootsListPanel panel = new OntologyRootsListPanel(
                 children);
-        //Create the listener for buttons actions/ Ok/Cancel
+        // Create the listener for buttons actions/ Ok/Cancel
         ActionListener al = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == DialogDescriptor.OK_OPTION) {
@@ -65,7 +66,7 @@ public class ShowAnnotationsAction extends NodeAction {
 
         // Use DialogDescriptor to show the panel
         DialogDescriptor descriptor = new DialogDescriptor(panel, bundle
-                .getString("SelectOntologyRootDialogTitle"), true, al); //NOI18N
+                .getString("SelectOntologyRootDialogTitle"), true, al); // NOI18N
         Object[] closingOptions = { DialogDescriptor.CANCEL_OPTION };
         descriptor.setClosingOptions(closingOptions);
         dialog = DialogDisplayer.getDefault().createDialog(descriptor);
@@ -100,7 +101,7 @@ public class ShowAnnotationsAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        return bundle.getString("LBL_ShowAnnotationsAction_Name");//NO18N
+        return bundle.getString("LBL_ShowAnnotationsAction_Name");// NO18N
     }
 
     /*
@@ -119,7 +120,7 @@ public class ShowAnnotationsAction extends NodeAction {
         return false;
     }
 
-    //  Closes dialog
+    // Closes dialog
     private void closeDialog() {
         if (dialog != null) {
             dialog.dispose();

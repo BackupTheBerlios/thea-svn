@@ -26,7 +26,7 @@ public class TheaModule extends ModuleInstall {
     public void close() {
         final Node n = OntologyExplorer.findDefault().getExplorerManager()
                 .getRootContext();
-        //      close all opened connection
+        // close all opened connection
         Children.MUTEX.writeAccess(new Runnable() {
             public void run() {
                 Node[] nodes = n.getChildren().getNodes();
@@ -38,7 +38,7 @@ public class TheaModule extends ModuleInstall {
                                 .getNodes();
                         for (int counter = 0; counter < ontologies.length; counter++) {
                             final OntologyNode on = (OntologyNode) ontologies[counter];
-                            //                          If a connection to a database opened, close it.
+                            // If a connection to a database opened, close it.
                             if (on.isConnected()) {
                                 RequestProcessor.getDefault().post(
                                         new Runnable() {

@@ -21,7 +21,7 @@ public class Wizard implements WizardDescriptor.Iterator {
 
     /** Resource Bundle */
     private static ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.classification.io.wizard.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.classification.io.wizard.Bundle"); // NOI18N;
 
     /** List of panels */
     private transient WizardDescriptor.Panel[] panels = null;

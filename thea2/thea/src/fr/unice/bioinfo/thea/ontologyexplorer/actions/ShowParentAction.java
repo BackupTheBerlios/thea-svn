@@ -33,7 +33,7 @@ public class ShowParentAction extends NodeAction {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
 
     /*
      * (non-Javadoc)
@@ -64,30 +64,30 @@ public class ShowParentAction extends NodeAction {
          * .getResource("http://www.w3.org/2000/01/rdf-schema#label"));
          * System.out.println("ancestor -> " + sv.getValue()); } }
          */
-        //        Set properties = new HashSet();
-        //        Configuration con =
+        // Set properties = new HashSet();
+        // Configuration con =
         // TheaConfiguration.getDefault().getConfiguration();
-        //        Object o = con.getProperty("ontologyexplorer.hierarchy.uri");//NOI18N
-        //        if (o instanceof Collection) {
-        //            ArrayList al = new ArrayList((Collection) o);
-        //            Object[] names = al.toArray();
-        //            for (int counter = 0; counter < al.size(); counter++) {
-        //                String name = (String) names[counter];
-        //                Resource r = resourceFactory.getProperty(name).getInverse();
-        //                properties.add(r);
-        //            }
-        //        }
-        //        Set childs = ((Resource) resource).getTargets(properties);
-        //        if (childs != null) {
-        //            Iterator iterator = childs.iterator();
-        //            while (iterator.hasNext()) {
-        //                Resource entity = (Resource) iterator.next();
-        //                StringValue sv = (StringValue) entity
-        //                        .getTarget(resourceFactory
-        //                                .getProperty("http://www.w3.org/2000/01/rdf-schema#label"));
-        //                System.out.println("ancestor -> " + sv.getValue());
-        //            }
-        //        }
+        // Object o = con.getProperty("ontologyexplorer.hierarchy.uri");//NOI18N
+        // if (o instanceof Collection) {
+        // ArrayList al = new ArrayList((Collection) o);
+        // Object[] names = al.toArray();
+        // for (int counter = 0; counter < al.size(); counter++) {
+        // String name = (String) names[counter];
+        // Resource r = resourceFactory.getProperty(name).getInverse();
+        // properties.add(r);
+        // }
+        // }
+        // Set childs = ((Resource) resource).getTargets(properties);
+        // if (childs != null) {
+        // Iterator iterator = childs.iterator();
+        // while (iterator.hasNext()) {
+        // Resource entity = (Resource) iterator.next();
+        // StringValue sv = (StringValue) entity
+        // .getTarget(resourceFactory
+        // .getProperty("http://www.w3.org/2000/01/rdf-schema#label"));
+        // System.out.println("ancestor -> " + sv.getValue());
+        // }
+        // }
     }
 
     private Set createAncestorsList(Resource aResource,
@@ -97,7 +97,7 @@ public class ShowParentAction extends NodeAction {
 
         Set properties = new HashSet();
         Configuration con = TheaConfiguration.getDefault().getConfiguration();
-        Object o = con.getProperty("ontologyexplorer.hierarchy.uri");//NOI18N
+        Object o = con.getProperty("ontologyexplorer.hierarchy.uri");// NOI18N
         if (o instanceof Collection) {
             ArrayList al = new ArrayList((Collection) o);
             Object[] names = al.toArray();
@@ -127,7 +127,7 @@ public class ShowParentAction extends NodeAction {
      * @see org.openide.util.actions.NodeAction#enable(org.openide.nodes.Node[])
      */
     protected boolean enable(Node[] nodes) {
-        //      Enable this action only for the OntologyNode
+        // Enable this action only for the OntologyNode
         nodes = OntologyExplorer.findDefault().getExplorerManager()
                 .getSelectedNodes();
         Node node;
@@ -148,7 +148,7 @@ public class ShowParentAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        return "Show Parent";//NOI18N
+        return "Show Parent";// NOI18N
     }
 
     /*
@@ -167,7 +167,7 @@ public class ShowParentAction extends NodeAction {
         return false;
     }
 
-    //  Closes dialog
+    // Closes dialog
     private void closeDialog() {
         if (dialog != null) {
             dialog.dispose();

@@ -29,10 +29,11 @@ public class ResourceNodePropertiesTableModel extends AbstractTableModel {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.Bundle"); // NOI18N
 
     /** Columns names. */
     private String[] columnNames;
+
     /** Data */
     private Object[][] data;
 

@@ -28,24 +28,33 @@ import fr.unice.bioinfo.thea.classification.settings.CESettings;
 public class CanvasOptions extends JPanel {
     // separators
     private JComponent hmodeSeparator;
+
     private JComponent layoutSeparator;
+
     private JComponent xpressionValuesSeparztor;
 
     // highlighting mode variables
     private ButtonGroup group;
+
     private JRadioButton borderFrameBtn;
+
     private JRadioButton rootNodeBtn;
+
     private JRadioButton plainFrameBtn;
+
     private JRadioButton noHighBtn;
 
     private JCheckBox showBLCbx;
+
     private JCheckBox alignCbx;
+
     private JCheckBox terminalBoxingCbx;
+
     private JCheckBox showXPCbx;
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.classification.editor.dlg.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.classification.editor.dlg.Bundle"); // NOI18N
 
     public CanvasOptions() {
         initComponents();
@@ -56,11 +65,11 @@ public class CanvasOptions extends JPanel {
                 .getInstance();
 
         hmodeSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_HModeSeparator"));//NOI18N
+                .getString("LBL_HModeSeparator"));// NOI18N
         xpressionValuesSeparztor = compFactory.createSeparator(bundle
-                .getString("LBL_XPressionValuesSeparator"));//NOI18N
+                .getString("LBL_XPressionValuesSeparator"));// NOI18N
         layoutSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_LayoutSeparator"));//NOI18N
+                .getString("LBL_LayoutSeparator"));// NOI18N
 
         borderFrameBtn = new JRadioButton();
         rootNodeBtn = new JRadioButton();
@@ -109,9 +118,9 @@ public class CanvasOptions extends JPanel {
 
         // border and layout
         setBorder(Borders.DIALOG_BORDER);
-        setLayout(new FormLayout(new ColumnSpec[] { new ColumnSpec("200px"),//NOI18N
+        setLayout(new FormLayout(new ColumnSpec[] { new ColumnSpec("200px"),// NOI18N
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-                new ColumnSpec("200px") }, new RowSpec[] {//NOI18N
+                new ColumnSpec("200px") }, new RowSpec[] {// NOI18N
                 FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
                         FormFactory.DEFAULT_ROWSPEC,
                         FormFactory.LINE_GAP_ROWSPEC,
@@ -128,9 +137,9 @@ public class CanvasOptions extends JPanel {
                         FormFactory.DEFAULT_ROWSPEC }));
         add(hmodeSeparator, cc.xywh(1, 1, 3, 1));
 
-        //---- borderFrameBtn ----
-        borderFrameBtn.setText(bundle.getString("LBL_BorderFrame"));//NOI18N
-        borderFrameBtn.setToolTipText(bundle.getString("LBL_BorderFrame"));//NOI18N
+        // ---- borderFrameBtn ----
+        borderFrameBtn.setText(bundle.getString("LBL_BorderFrame"));// NOI18N
+        borderFrameBtn.setToolTipText(bundle.getString("LBL_BorderFrame"));// NOI18N
         borderFrameBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setHighlightingMode(2);
@@ -139,9 +148,9 @@ public class CanvasOptions extends JPanel {
         add(borderFrameBtn, cc.xywh(1, 3, 1, 1, CellConstraints.FILL,
                 CellConstraints.FILL));
 
-        //---- rootNodeBtn ----
-        rootNodeBtn.setText(bundle.getString("LBL_RootNode"));//NOI18N
-        rootNodeBtn.setToolTipText(bundle.getString("HINT_RootNode"));//NOI18N
+        // ---- rootNodeBtn ----
+        rootNodeBtn.setText(bundle.getString("LBL_RootNode"));// NOI18N
+        rootNodeBtn.setToolTipText(bundle.getString("HINT_RootNode"));// NOI18N
         rootNodeBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setHighlightingMode(3);
@@ -150,9 +159,9 @@ public class CanvasOptions extends JPanel {
         add(rootNodeBtn, cc.xywh(3, 3, 1, 1, CellConstraints.FILL,
                 CellConstraints.FILL));
 
-        //---- plainFrameBtn ----
-        plainFrameBtn.setText(bundle.getString("LBL_PlainFrame"));//NOI18N
-        plainFrameBtn.setToolTipText(bundle.getString("HINT_PlainFrame"));//NOI18N
+        // ---- plainFrameBtn ----
+        plainFrameBtn.setText(bundle.getString("LBL_PlainFrame"));// NOI18N
+        plainFrameBtn.setToolTipText(bundle.getString("HINT_PlainFrame"));// NOI18N
         plainFrameBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setHighlightingMode(1);
@@ -161,9 +170,9 @@ public class CanvasOptions extends JPanel {
         add(plainFrameBtn, cc.xywh(1, 5, 1, 1, CellConstraints.FILL,
                 CellConstraints.FILL));
 
-        //---- noHighBtn ----
-        noHighBtn.setText(bundle.getString("LBL_NoHigh"));//NOI18N
-        noHighBtn.setToolTipText(bundle.getString("HINT_NoHigh"));//NOI18N
+        // ---- noHighBtn ----
+        noHighBtn.setText(bundle.getString("LBL_NoHigh"));// NOI18N
+        noHighBtn.setToolTipText(bundle.getString("HINT_NoHigh"));// NOI18N
         noHighBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setHighlightingMode(4);
@@ -173,9 +182,9 @@ public class CanvasOptions extends JPanel {
                 CellConstraints.FILL));
         add(layoutSeparator, cc.xywh(1, 7, 3, 1));
 
-        //---- showBLCbx ----
-        showBLCbx.setText(bundle.getString("LBL_ShowBL"));//NOI18N
-        showBLCbx.setToolTipText(bundle.getString("HINT_ShowBL"));//NOI18N
+        // ---- showBLCbx ----
+        showBLCbx.setText(bundle.getString("LBL_ShowBL"));// NOI18N
+        showBLCbx.setToolTipText(bundle.getString("HINT_ShowBL"));// NOI18N
         showBLCbx.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setShowBranchLength(
@@ -185,9 +194,9 @@ public class CanvasOptions extends JPanel {
         add(showBLCbx, cc.xywh(1, 9, 1, 1, CellConstraints.FILL,
                 CellConstraints.FILL));
 
-        //---- alignCbx ----
-        alignCbx.setText(bundle.getString("LBL_AlignTerminalNodes"));//NOI18N
-        alignCbx.setToolTipText(bundle.getString("HINT_AlignTerminalNodes"));//NOI18N
+        // ---- alignCbx ----
+        alignCbx.setText(bundle.getString("LBL_AlignTerminalNodes"));// NOI18N
+        alignCbx.setToolTipText(bundle.getString("HINT_AlignTerminalNodes"));// NOI18N
         alignCbx.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setAlignTerminalNodes(
@@ -197,10 +206,10 @@ public class CanvasOptions extends JPanel {
         add(alignCbx, cc.xywh(3, 9, 1, 1, CellConstraints.FILL,
                 CellConstraints.FILL));
 
-        //---- terminalBoxingCbx ----
-        terminalBoxingCbx.setText(bundle.getString("LBL_TerminalBoxed"));//NOI18N
+        // ---- terminalBoxingCbx ----
+        terminalBoxingCbx.setText(bundle.getString("LBL_TerminalBoxed"));// NOI18N
         terminalBoxingCbx
-                .setToolTipText(bundle.getString("HINT_TerminalBoxed"));//NOI18N
+                .setToolTipText(bundle.getString("HINT_TerminalBoxed"));// NOI18N
         terminalBoxingCbx.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setTerminalsBoxed(
@@ -211,9 +220,9 @@ public class CanvasOptions extends JPanel {
                 CellConstraints.FILL));
         add(xpressionValuesSeparztor, cc.xywh(1, 13, 3, 1));
 
-        //---- showXPCbx ----
-        showXPCbx.setText(bundle.getString("LBL_ShowXPV"));//NOI18N
-        showXPCbx.setToolTipText(bundle.getString("HINT_ShowXPV"));//NOI18N
+        // ---- showXPCbx ----
+        showXPCbx.setText(bundle.getString("LBL_ShowXPV"));// NOI18N
+        showXPCbx.setToolTipText(bundle.getString("HINT_ShowXPV"));// NOI18N
         showXPCbx.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setShowExpressionValues(

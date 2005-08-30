@@ -1,11 +1,17 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.settings;
 
+import java.util.Hashtable;
+
 import org.openide.options.SystemOption;
 import org.openide.util.NbBundle;
 
 /**
  * Common options for the ontology explorer.
+ * 
  * @author Saïd El Kasmi
+ */
+/**
+ * @author claude
  */
 public class OESettings extends SystemOption {
 
@@ -35,10 +41,10 @@ public class OESettings extends SystemOption {
 
     /** The last browsed directory when loading a classification */
     private static String lastBrowsedDirectory = System
-            .getProperty("user.home");//NOI18N
+            .getProperty("user.home");// NOI18N
 
     /** The configuration file for thea. */
-    private static String configFilePath = "";//NOI18N
+    private static String configFilePath = "";// NOI18N
 
     /** Last selected lastSelectedEvidences */
     private static String[] lastSelectedEvidences = null;
@@ -49,8 +55,15 @@ public class OESettings extends SystemOption {
     /** <i>lastBrowsedDirectory </i> property name. */
     public static final String PROP_LAST_BROWSED_DIRECTORY = "lastBrowsedDirectory"; // NOI18N
 
-    /** <i>lastBrowsedDirectory </i> property name. */
+    /** <i>configFilePath</i> property name. */
     public static final String PROP_CONFIG_FILE_PATH = "configFilePath"; // NOI18N
+
+    /**
+     * The map of configuration files associated with each Knowledge bases
+     */
+    public static final String PROP_KB_CONFIG_FILE_PATHS = "kbConfigFilePaths"; // NOI18N
+
+    public static final String PROP_TEST = "test";
 
     /** lastSelectedEvidences property name */
     public static final String PROP_EVIDENCES = "lastSelectedEvidences"; // NOI18N
@@ -65,25 +78,11 @@ public class OESettings extends SystemOption {
 
     /** Store the last browsed directory's path. */
     public void setLastBrowsedDirectory(String value) {
-        value = (value == null) ? "" : value;//NOI18N
+        value = (value == null) ? "" : value;// NOI18N
         String old = getLastBrowsedDirectory();
         if (!value.equals(old)) {
             lastBrowsedDirectory = value;
             firePropertyChange(PROP_LAST_BROWSED_DIRECTORY, old, value);
-        }
-    }
-
-    /** Returns the configuration file's absolute path. */
-    public String getConfigFilePath() {
-        return configFilePath;
-    }
-
-    /** Sets the configuration file's absolute path. */
-    public void setConfigFilePath(String value) {
-        String old = getConfigFilePath();
-        if (!value.equals(old)) {
-            configFilePath = value;
-            firePropertyChange(PROP_CONFIG_FILE_PATH, old, value);
         }
     }
 
@@ -108,4 +107,34 @@ public class OESettings extends SystemOption {
         lastSelectedSvnames = value;
         firePropertyChange(PROP_SV_NAMES, old, value);
     }
+
+    /** Returns the configuration file's absolute path. */
+    public String getConfigFilePath() {
+        return configFilePath;
+    }
+
+    /** Sets the configuration file's absolute path. */
+    public void setConfigFilePath(String value) {
+        String old = getConfigFilePath();
+        if (!value.equals(old)) {
+            configFilePath = value;
+            firePropertyChange(PROP_CONFIG_FILE_PATH, old, value);
+        }
+    }
+
+    /**
+     * @return A hashtable associating a configuration file paths to nodes
+     */
+    public Hashtable getKbConfigFilePaths() {
+        return (Hashtable) getProperty(PROP_KB_CONFIG_FILE_PATHS);
+    }
+
+    /**
+     * Associates to a given node, a path to a configuration file
+     * @param h The Hashtable associating configuration file path to nodes
+     */
+    public void setKbConfigFilePaths(Hashtable h) {
+        putProperty(PROP_KB_CONFIG_FILE_PATHS, h, true);
+    }
+
 }

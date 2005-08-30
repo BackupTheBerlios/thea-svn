@@ -23,7 +23,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.actions.NewOntologyLocationAction;
 public class OntologiesRootNode extends AbstractNode implements Comparable {
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.nodes.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.nodes.Bundle"); // NOI18N;
 
     /**
      * Main constructor for {@link OntologiesRootNode}class.
@@ -32,15 +32,15 @@ public class OntologiesRootNode extends AbstractNode implements Comparable {
         super(new Children.Array());
 
         // Set the bean name
-        setName(bundle.getString("LBL_OntologiesRootNode_Name")); //NOI18N
+        setName(bundle.getString("LBL_OntologiesRootNode_Name")); // NOI18N
 
         // Add a nice icon
-        setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/OntologiesNodeIcon");//NOI18N
+        setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/OntologiesNodeIcon");// NOI18N
         // Set the display name
-        setDisplayName(bundle.getString("LBL_OntologiesRootNode_DisplayName")); //NOI18N
+        setDisplayName(bundle.getString("LBL_OntologiesRootNode_DisplayName")); // NOI18N
 
         // Give a short description which is shown on the mouse rolls on
-        setShortDescription(bundle.getString("LBL_OntologiesRootNode_Hint")); //NOI18N
+        setShortDescription(bundle.getString("LBL_OntologiesRootNode_Hint")); // NOI18N
     }
 
     /*

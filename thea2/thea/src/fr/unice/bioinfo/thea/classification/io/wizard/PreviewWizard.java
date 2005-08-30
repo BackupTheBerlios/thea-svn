@@ -14,6 +14,7 @@ import org.openide.util.HelpCtx;
 public class PreviewWizard implements WizardDescriptor.Panel {
 
     private OpenClassificationWizardDescriptor descriptor;
+
     private PreviewPanel panel;
 
     public PreviewWizard(OpenClassificationWizardDescriptor descriptor) {
@@ -41,10 +42,10 @@ public class PreviewWizard implements WizardDescriptor.Panel {
      * @see org.openide.WizardDescriptor.Panel#readSettings(java.lang.Object)
      */
     public void readSettings(Object arg0) {
-        //        if (arg0 instanceof WizardDescriptor) {
-        //            WizardDescriptor wd = (WizardDescriptor) arg0;
-        //            wd.addPropertyChangeListener(panel);
-        //        }
+        // if (arg0 instanceof WizardDescriptor) {
+        // WizardDescriptor wd = (WizardDescriptor) arg0;
+        // wd.addPropertyChangeListener(panel);
+        // }
     }
 
     /*
@@ -61,14 +62,14 @@ public class PreviewWizard implements WizardDescriptor.Panel {
      * @see org.openide.WizardDescriptor.Panel#isValid()
      */
     public boolean isValid() {
-        //        ClassificationInfo info = ClassificationInfo.getInstance();
-        //        String string = info.getFileFormat();
-        //        if(string.equals(SupportedFormat.EISEN)){
-        //            if((info.getClusteredDataFile() == null) ||
+        // ClassificationInfo info = ClassificationInfo.getInstance();
+        // String string = info.getFileFormat();
+        // if(string.equals(SupportedFormat.EISEN)){
+        // if((info.getClusteredDataFile() == null) ||
         // (info.getTabularDataFile() == null)){
-        //                return false;
-        //            }
-        //        }
+        // return false;
+        // }
+        // }
         return true;
     }
 

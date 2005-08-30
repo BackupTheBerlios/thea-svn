@@ -25,10 +25,12 @@ public class OntologyRootsListPanel extends JPanel {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); // NOI18N
 
     private JComponent rootsSeparator;
+
     private JLabel selectLabel;
+
     private JComboBox comboBox;
 
     private Node[] roots = null;
@@ -42,7 +44,7 @@ public class OntologyRootsListPanel extends JPanel {
         DefaultComponentFactory compFactory = DefaultComponentFactory
                 .getInstance();
         rootsSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_OntologyRootsList"));//NOI18N);
+                .getString("LBL_OntologyRootsList"));// NOI18N);
         selectLabel = new JLabel();
         // create the combo box
         // if no ontology, the combo box is empty
@@ -54,7 +56,7 @@ public class OntologyRootsListPanel extends JPanel {
                 s[cnt] = roots[cnt].getDisplayName();
             }
             comboBox = new JComboBox(s);
-            //comboBox.setSelectedIndex(0);
+            // comboBox.setSelectedIndex(0);
         }
 
         CellConstraints cc = new CellConstraints();
@@ -69,7 +71,7 @@ public class OntologyRootsListPanel extends JPanel {
 
         add(rootsSeparator, cc.xywh(1, 1, 2, 1));
 
-        //---- selectLabel ----
+        // ---- selectLabel ----
         selectLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         selectLabel.setText(bundle.getString("LBL_SelectRootLabel"));
         add(selectLabel, cc.xy(1, 3));

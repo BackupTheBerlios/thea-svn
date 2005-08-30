@@ -39,19 +39,24 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
  */
 public class ResourceNodePropertiesEditor extends TopComponent {
 
-    //  Serial Version UID
+    // Serial Version UID
     static final long serialVersionUID = 463902162650994901L;
+
     /** The support for firing property changes */
     private PropertyChangeSupport propertySupport;
+
     /** preferred ID:geneeditor */
-    private String PREFERRED_ID = "propertieseditor";//NOI18N
+    private String PREFERRED_ID = "propertieseditor";// NOI18N
+
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.Bundle"); // NOI18N
+
     /** The Gene Editor looks for genes annotated by this resource. */
     private Resource resource;
+
     /** Genes table. */
-    //private JTable table;
+    // private JTable table;
     private PrintableJTable table;
 
     /** Button to print the genes table. */
@@ -70,7 +75,7 @@ public class ResourceNodePropertiesEditor extends TopComponent {
 
         propertySupport = new PropertyChangeSupport(this);
 
-        propertySupport.firePropertyChange("initializing", null, null);//NOI18N
+        propertySupport.firePropertyChange("initializing", null, null);// NOI18N
 
         // give a title to this window using the resource's name
         setName(node.getDisplayName());
@@ -78,11 +83,11 @@ public class ResourceNodePropertiesEditor extends TopComponent {
         setIcon(Utilities
                 .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/PropertiesEditorIcon16.gif")); // NOI18N
 
-        //      layout
+        // layout
         setLayout(new BorderLayout());
-        propertySupport.firePropertyChange("processing", null, null);//NOI18N
+        propertySupport.firePropertyChange("processing", null, null);// NOI18N
         add(createMainPanel(), BorderLayout.CENTER);
-        propertySupport.firePropertyChange("endprocessing", null, null);//NOI18N
+        propertySupport.firePropertyChange("endprocessing", null, null);// NOI18N
     }
 
     private JPanel createMainPanel() {
@@ -91,7 +96,7 @@ public class ResourceNodePropertiesEditor extends TopComponent {
         panel.setOpaque(true);
         panel.setBackground(Color.WHITE);
         panel.setBorder(new EtchedBorder());
-        //panel.setLayout(new BorderLayout());
+        // panel.setLayout(new BorderLayout());
         panel.setLayout(new FormLayout(new ColumnSpec[] {
                 new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT,
                         FormSpec.DEFAULT_GROW),
@@ -106,8 +111,8 @@ public class ResourceNodePropertiesEditor extends TopComponent {
         CellConstraints cc = new CellConstraints();
 
         // create the table
-        TableSorter sorter = new TableSorter(new ResourceNodePropertiesTableModel(
-                this.resource));
+        TableSorter sorter = new TableSorter(
+                new ResourceNodePropertiesTableModel(this.resource));
         table = new PrintableJTable(sorter);
         sorter.setTableHeader(table.getTableHeader());
 
@@ -126,8 +131,8 @@ public class ResourceNodePropertiesEditor extends TopComponent {
         printBtn
                 .setIcon(new ImageIcon(
                         Utilities
-                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/PrintIcon16.gif"))); //NOI18N
-        printBtn.setToolTipText(bundle.getString("HINT_PrintPropertiesBtn"));//NOI18N
+                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/PrintIcon16.gif"))); // NOI18N
+        printBtn.setToolTipText(bundle.getString("HINT_PrintPropertiesBtn"));// NOI18N
         printBtn.setBorder(new EtchedBorder());
         panel.add(printBtn, cc.xy(5, 3));
         // return the panel

@@ -32,7 +32,7 @@ public class NewOntologyLocationAction extends NodeAction {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
 
     /*
      * (non-Javadoc)
@@ -50,8 +50,8 @@ public class NewOntologyLocationAction extends NodeAction {
         final DatabaseConnection dbc = new DatabaseConnection();
         final PropertyChangeListener connectionListener = new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getPropertyName().equals("connected")) { //NOI18N
-                } else if (evt.getPropertyName().equals("failed")) { //NOI18N
+                if (evt.getPropertyName().equals("connected")) { // NOI18N
+                } else if (evt.getPropertyName().equals("failed")) { // NOI18N
 
                     if (dialog != null) {
                         dialog.setVisible(false);
@@ -59,7 +59,7 @@ public class NewOntologyLocationAction extends NodeAction {
 
                     String message = MessageFormat.format(bundle
                             .getString("ERR_UnableToAddOntology"),
-                            new String[] { dbc.getDatabase() }); //NOI18N
+                            new String[] { dbc.getDatabase() }); // NOI18N
                     DialogDisplayer.getDefault().notify(
                             new NotifyDescriptor.Message(message,
                                     NotifyDescriptor.ERROR_MESSAGE));
@@ -69,7 +69,7 @@ public class NewOntologyLocationAction extends NodeAction {
 
         dbc.addPropertyChangeListener(connectionListener);
 
-        //Create the panel
+        // Create the panel
         final NewOntologyPanel panel = new NewOntologyPanel(dbc);
 
         // Create the listener for buttons actions/ Ok/Cancel
@@ -81,20 +81,20 @@ public class NewOntologyLocationAction extends NodeAction {
                     StringBuffer b = new StringBuffer();
 
                     // A name is allways required
-                    if (name.equalsIgnoreCase("")) { //NOI18N
-                        //b.append(bundle.getString("NewOntologyDialog_NoName"));
+                    if (name.equalsIgnoreCase("")) { // NOI18N
+                        // b.append(bundle.getString("NewOntologyDialog_NoName"));
                         // //NOI18N
                     }
 
-                    if (panel.getSelectedDatabaseName().equalsIgnoreCase("")) { //NOI18N
-                        b.append(bundle.getString("NewOntologyDialog_NoDB")); //NOI18N
+                    if (panel.getSelectedDatabaseName().equalsIgnoreCase("")) { // NOI18N
+                        b.append(bundle.getString("NewOntologyDialog_NoDB")); // NOI18N
                     }
 
                     // Show a dialog with errors if any
                     if (b.length() > 0) {
                         String message = MessageFormat.format(bundle
                                 .getString("NewOntologyDialog_ErrMsg"),
-                                new String[] { b.toString() }); //NOI18N
+                                new String[] { b.toString() }); // NOI18N
                         DialogDisplayer.getDefault().notify(
                                 new NotifyDescriptor.Message(message,
                                         NotifyDescriptor.INFORMATION_MESSAGE));
@@ -110,7 +110,7 @@ public class NewOntologyLocationAction extends NodeAction {
                     // and create a DatabaseConnection
                     panel.setConnectionInfo();
 
-                    //Create a node that represents an Ontology
+                    // Create a node that represents an Ontology
                     OntologyNode on = new OntologyNode(dbc.getDatabase(), hint,
                             dbc);
                     // Create its nodeInfo
@@ -123,7 +123,7 @@ public class NewOntologyLocationAction extends NodeAction {
                             dbc.connect();
                         }
                     } catch (SQLException exc) {
-                        //isClosed() method failed, try to connect
+                        // isClosed() method failed, try to connect
                         dbc.connect();
                     }
 
@@ -136,7 +136,7 @@ public class NewOntologyLocationAction extends NodeAction {
 
         // Use DialogDescriptor to show the panel
         DialogDescriptor descriptor = new DialogDescriptor(panel, bundle
-                .getString("NewOntologyDialogTitle"), true, al); //NOI18N
+                .getString("NewOntologyDialogTitle"), true, al); // NOI18N
         Object[] closingOptions = { DialogDescriptor.CANCEL_OPTION };
         descriptor.setClosingOptions(closingOptions);
         dialog = DialogDisplayer.getDefault().createDialog(descriptor);
@@ -179,7 +179,7 @@ public class NewOntologyLocationAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        return bundle.getString("LBL_NewOntologyLocationAction_Name"); //NOI18N
+        return bundle.getString("LBL_NewOntologyLocationAction_Name"); // NOI18N
     }
 
     /*
@@ -195,7 +195,7 @@ public class NewOntologyLocationAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#iconResource()
      */
     protected String iconResource() {
-        return "fr/unice/bioinfo/thea/ontologyexplorer/resources/NewOntologyLocationIcon.png"; //NOI18N
+        return "fr/unice/bioinfo/thea/ontologyexplorer/resources/NewOntologyLocationIcon.png"; // NOI18N
     }
 
     /*

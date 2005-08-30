@@ -20,8 +20,11 @@ import javax.swing.border.EtchedBorder;
 public class ModeBar extends JToolBar {
 
     private JToggleButton mouseBtn;
+
     private JToggleButton zoomBtn;
+
     private ButtonGroup group;
+
     private Zoomable zoomable;
 
     public ModeBar(Zoomable zoomable) {
@@ -35,7 +38,7 @@ public class ModeBar extends JToolBar {
 
     private void init() {
         // set a nice border around this panel.
-        //setBorder(new EtchedBorder());
+        // setBorder(new EtchedBorder());
         // make the background white
         setBackground(Color.WHITE);
         // create button
@@ -45,7 +48,7 @@ public class ModeBar extends JToolBar {
         zoomBtn = new JToggleButton();
         group.add(zoomBtn);
 
-        //---- mouseBtn ----
+        // ---- mouseBtn ----
         mouseBtn.setBorder(new EtchedBorder());
         mouseBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -57,7 +60,7 @@ public class ModeBar extends JToolBar {
                 "resources/MouseCursorIcon.gif")));
         add(mouseBtn);
 
-        //---- zoomBtn ----
+        // ---- zoomBtn ----
         zoomBtn.setBorder(new EtchedBorder());
         zoomBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

@@ -21,7 +21,7 @@ public class EditClAction extends NodeAction {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
 
     private CEditor editor;
 
@@ -73,7 +73,7 @@ public class EditClAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        return bundle.getString("LBL_EditClAction_Name");//NOI18N
+        return bundle.getString("LBL_EditClAction_Name");// NOI18N
     }
 
     /*

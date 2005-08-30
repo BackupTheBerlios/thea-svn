@@ -2,10 +2,20 @@ package fr.unice.bioinfo.thea.ontologyexplorer.nodes;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+import java.text.MessageFormat;
+import java.util.Hashtable;
 import java.util.ResourceBundle;
 
 import javax.swing.Action;
 
+import net.sf.hibernate.HibernateException;
+
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.XMLConfiguration;
 import org.openide.actions.PropertiesAction;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
@@ -16,14 +26,20 @@ import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
 import org.openide.util.actions.SystemAction;
 
+import fr.unice.bioinfo.allonto.datamodel.AllontoException;
+import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
+import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
+import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ConnectAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.DeleteOntologyNodeAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.DisconnectAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ExploreOntologyAction;
-import fr.unice.bioinfo.thea.ontologyexplorer.actions.InitializeKnowledgeBaseAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ImportOwlAction;
+import fr.unice.bioinfo.thea.ontologyexplorer.actions.InitializeKnowledgeBaseAction;
+import fr.unice.bioinfo.thea.ontologyexplorer.actions.SpecifyConfigurationFileAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.OntologyNodeInfo;
+import fr.unice.bioinfo.thea.ontologyexplorer.settings.OESettings;
 
 /**
  * A node that represents an Ontology inside the <i>Ontology Explorer </i>.
@@ -32,12 +48,29 @@ import fr.unice.bioinfo.thea.ontologyexplorer.infos.OntologyNodeInfo;
 public class OntologyNode extends AbstractNode implements Node.Cookie {
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.nodes.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.nodes.Bundle"); // NOI18N
 
     /**
-     * A flag that indicates if the ontology represented by this node is loaded.
+     * A flag that indicates if the database represented by this node is
+     * connected.
      */
     private boolean connected = false;
+
+    /**
+     * A flag that indicates if the database represented by this node contains a
+     * compatible knowledge base.
+     */
+    private boolean compatibleKB = false;
+
+    /**
+     * The number of nodes (resources + literals) stored in the database.
+     */
+    private int nbResources = 0;
+
+    /**
+     * The local configuration associated with this node
+     */
+    private Configuration config = null;
 
     private OntologyNodeInfo nodeInfo;
 
@@ -55,18 +88,19 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
         this.connection = dbc;
         connectionListener = new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent event) {
-                if (event.getPropertyName().equals("connecting")) { //NOI18N
-                }
-
-                if (event.getPropertyName().equals("connected")) { //NOI18N
-                    setConnected(true);
-                }
-
-                if (event.getPropertyName().equals("failed")) { //NOI18N
+                if (event.getPropertyName().equals("connecting")) { // NOI18N
                     setConnected(false);
                 }
 
-                if (event.getPropertyName().equals("disconnected")) { //NOI18N
+                if (event.getPropertyName().equals("connected")) { // NOI18N
+                    setConnected(true);
+                }
+
+                if (event.getPropertyName().equals("failed")) { // NOI18N
+                    setConnected(false);
+                }
+
+                if (event.getPropertyName().equals("disconnected")) { // NOI18N
                     setConnected(false);
                 }
             }
@@ -79,7 +113,7 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
         setName(name);
 
         // Add a nice icon
-        setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/OntologyDisconnectedIcon"); //NOI18N
+        setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/OntologyDisconnectedIcon"); // NOI18N
 
         // Set the display name: The display name comes from user input
         setDisplayName(name);
@@ -94,17 +128,16 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
      */
     public Action[] getActions(boolean context) {
         if (context) {
+            System.out.println("getActions with context called");
             return null;
         } else {
             return new Action[] { NodeAction.get(ConnectAction.class),
                     NodeAction.get(DisconnectAction.class),
-                    null,
-                    NodeAction.get(ExploreOntologyAction.class),
-                    null,
-                    NodeAction.get(DeleteOntologyNodeAction.class),
-                    null,
+                    NodeAction.get(DeleteOntologyNodeAction.class), null,
+                    NodeAction.get(ExploreOntologyAction.class), null,
+                    NodeAction.get(SpecifyConfigurationFileAction.class), null,
                     NodeAction.get(InitializeKnowledgeBaseAction.class),
-                    NodeAction.get(ImportOwlAction.class)};
+                    NodeAction.get(ImportOwlAction.class) };
         }
     }
 
@@ -143,7 +176,7 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
     /** Sets a name */
     public void setName(String name) {
         super.setName(name);
-        //nodeInfo.setName(name);
+        // nodeInfo.setName(name);
     }
 
     /** Returns cookies for this node */
@@ -169,16 +202,70 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
         this.connected = b;
 
         if (b) {
-            setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/OntologyConnectedIcon"); //NOI18N
-
-            //setShortDescription(getShortDescription() + " Connected");
+            setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/OntologyConnectedIcon"); // NOI18N
+            setCompatibleKB(isCompatibleKB());
             // //NOI18N
         } else {
-            setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/OntologyDisconnectedIcon"); //NOI18N
-
-            //setShortDescription(getShortDescription() + " Disconnected");
+            setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/OntologyDisconnectedIcon"); // NOI18N
+            setCompatibleKB(false);
+            setShortDescription("");
             // //NOI18N
         }
+    }
+
+    /**
+     * @return Returns the compatibleKB.
+     */
+    public boolean isCompatibleKB() {
+        // Create a Session using a Connection
+        DatabaseConnection dbc = getConnection();
+        try {
+            HibernateUtil.createSession(dbc.getConnection());
+        } catch (HibernateException ae) {
+            compatibleKB = false;
+            setShortDescription(bundle.getString("LBL_IncompatibleKB")); // NOI18N
+        }
+
+        ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
+                .getResourceFactory();
+        try {
+            nbResources = resourceFactory.getNbNodes();
+            compatibleKB = true;
+            if (nbResources == 0) {
+                setShortDescription(bundle.getString("LBL_EmptyKnowledgeBase")); // NOI18N
+            } else {
+                String message = MessageFormat.format(bundle
+                        .getString("LBL_NbOfResources"), new String[] { Integer
+                        .toString(nbResources) }); // NOI18N
+
+                setShortDescription(message);
+            }
+        } catch (AllontoException ae) {
+            compatibleKB = false;
+            setShortDescription(bundle.getString("LBL_IncompatibleKB")); // NOI18N
+        }
+        return compatibleKB;
+    }
+
+    /**
+     * @param compatibleKB The compatibleKB to set.
+     */
+    public void setCompatibleKB(boolean compatibleKB) {
+        this.compatibleKB = compatibleKB;
+    }
+
+    /**
+     * @return Returns the nbResources.
+     */
+    public synchronized int getNbResources() {
+        return nbResources;
+    }
+
+    /**
+     * @param nbResources The nbResources to set.
+     */
+    public synchronized void setNbResources(int nbResources) {
+        this.nbResources = nbResources;
     }
 
     /** Returns cookie */
@@ -190,4 +277,62 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
     public void setNodeInfo(OntologyNodeInfo nodeInfo) {
         this.nodeInfo = nodeInfo;
     }
+
+    /** Returns the configuration associated with the node */
+    public Configuration getConfiguration() {
+        if (config != null)
+            return config;
+        Hashtable h = OESettings.getInstance().getKbConfigFilePaths();
+        if (h == null)
+            return null;
+        String filePath = (String) h.get(getKBIdentifier());
+        try {
+            config = new XMLConfiguration(filePath);
+        } catch (ConfigurationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return config;
+    }
+
+    /** Sets a configuration */
+    public void setConfiguration(XMLConfiguration conf) {
+        config = conf;
+        Hashtable h = OESettings.getInstance().getKbConfigFilePaths();
+        if (h == null) {
+            h = new Hashtable();
+        }
+        if (conf == null) {
+            h.remove(getKBIdentifier());
+        } else {
+            h.put(getKBIdentifier(), conf.getFile().getAbsolutePath());
+        }
+        OESettings.getInstance().setKbConfigFilePaths(h);
+    }
+
+    /**
+     * @return a String identifying the Knowledge base associated with the node
+     */
+    public String getKBIdentifier() {
+        DatabaseConnection dbc = getConnection();
+        if (dbc == null)
+            return null;
+        Connection con = dbc.getConnection();
+        if (con == null)
+            return null;
+        String name = null;
+        try {
+            DatabaseMetaData dmd = con.getMetaData();
+            if (dmd == null)
+                return null;
+            name = dmd.getUserName() + ":" + dmd.getURL() + ":"
+                    + dmd.getSchemaTerm();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return name;
+    }
+
 }

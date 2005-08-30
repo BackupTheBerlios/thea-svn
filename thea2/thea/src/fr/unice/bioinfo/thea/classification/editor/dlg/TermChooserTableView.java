@@ -29,13 +29,19 @@ import fr.unice.bioinfo.thea.util.OWLProperties;
 public class TermChooserTableView extends JPanel {
 
     private JTable table;
+
     private JScrollPane jsp;
+
     private List scores;
+
     private Resource selectedTerm;
+
     /** Columns names. */
     private String[] columnNames;
+
     /** Data */
     private Object[][] data;
+
     private Vector vector = new Vector();
 
     public TermChooserTableView(List scores) {
@@ -53,17 +59,17 @@ public class TermChooserTableView extends JPanel {
         ListSelectionModel rowSM = table.getSelectionModel();
         rowSM.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
-                //Ignore extra messages.
+                // Ignore extra messages.
                 if (e.getValueIsAdjusting())
                     return;
 
                 ListSelectionModel lsm = (ListSelectionModel) e.getSource();
                 if (lsm.isSelectionEmpty()) {
-                    //no rows are selected
+                    // no rows are selected
                 } else {
                     int selectedRow = lsm.getMinSelectionIndex();
-                    //selectedRow is selected
-                    //                    selectedTerm = (Resource) data[selectedRow][0];
+                    // selectedRow is selected
+                    // selectedTerm = (Resource) data[selectedRow][0];
                     selectedTerm = (Resource) vector.get(selectedRow);
                 }
             }
@@ -81,8 +87,8 @@ public class TermChooserTableView extends JPanel {
     public class TermsTableModel extends AbstractTableModel {
 
         public TermsTableModel() {
-            columnNames = new String[] { "Term", "Label", "Score",//NOI18N
-                    "Represented" };//NOI18N
+            columnNames = new String[] { "Term", "Label", "Score",// NOI18N
+                    "Represented" };// NOI18N
             data = new Object[scores.size()][columnNames.length];
             Iterator scoresIt = scores.iterator();
             int i = -1;
@@ -107,7 +113,7 @@ public class TermChooserTableView extends JPanel {
                     if (sv != null) {
                         data[i][j + 1] = new String(sv.getValue());
                     } else {
-                        data[i][j + 1] = new String("");//NOI18N
+                        data[i][j + 1] = new String("");// NOI18N
                     }
                 } catch (AllontoException ae) {
                 }
@@ -115,10 +121,10 @@ public class TermChooserTableView extends JPanel {
                 data[i][j + 2] = score;
                 String expression = String.valueOf(s.isOverexpressed());
 
-                if (expression == "true") {//NOI18N
-                    data[i][j + 3] = "over";//NOI18N
+                if (expression == "true") {// NOI18N
+                    data[i][j + 3] = "over";// NOI18N
                 } else {
-                    data[i][j + 3] = "under";//NOI18N
+                    data[i][j + 3] = "under";// NOI18N
                 }
             }
         }

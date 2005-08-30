@@ -37,18 +37,28 @@ public class DataFormatPanel extends JPanel implements PropertyChangeListener {
 
     /** Resource Bundle */
     private static ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.classification.io.wizard.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.classification.io.wizard.Bundle"); // NOI18N;
 
     private JLabel nameLbl;
+
     private JTextField nameField;
+
     private JLabel hintLbl;
+
     private JTextField hintField;
+
     private JLabel descriptionLbl;
+
     private JPanel descriptionPanel;
+
     private JLabel formatLbl;
+
     private JComboBox comboBox;
+
     private String[] extensions;
+
     private String[] descriptions;
+
     private int WIDTH = 300;
 
     /** Creates components. */
@@ -72,8 +82,8 @@ public class DataFormatPanel extends JPanel implements PropertyChangeListener {
         constraints.fill = GridBagConstraints.BOTH;
 
         nameLbl = new JLabel();
-        nameLbl.setText(bundle.getString("LBL_Name"));//NOI18N
-        nameLbl.setToolTipText(bundle.getString("TIP_Name"));//NOI18N
+        nameLbl.setText(bundle.getString("LBL_Name"));// NOI18N
+        nameLbl.setToolTipText(bundle.getString("TIP_Name"));// NOI18N
         gbl.setConstraints(nameLbl, constraints);
         add(nameLbl);
 
@@ -88,8 +98,8 @@ public class DataFormatPanel extends JPanel implements PropertyChangeListener {
         constraints.gridy = 1;
 
         hintLbl = new JLabel();
-        hintLbl.setText(bundle.getString("LBL_Description"));//NOI18N
-        hintLbl.setToolTipText(bundle.getString("TIP_Description"));//NOI18N
+        hintLbl.setText(bundle.getString("LBL_Description"));// NOI18N
+        hintLbl.setToolTipText(bundle.getString("TIP_Description"));// NOI18N
         gbl.setConstraints(hintLbl, constraints);
         add(hintLbl);
 
@@ -104,7 +114,7 @@ public class DataFormatPanel extends JPanel implements PropertyChangeListener {
         constraints.gridy = 2;
 
         formatLbl = new JLabel();
-        formatLbl.setText(bundle.getString("LBL_DataFormat"));//NOI18N
+        formatLbl.setText(bundle.getString("LBL_DataFormat"));// NOI18N
         gbl.setConstraints(formatLbl, constraints);
         add(formatLbl);
 
@@ -127,7 +137,7 @@ public class DataFormatPanel extends JPanel implements PropertyChangeListener {
         descriptionPanel = new JPanel();
         descriptionPanel.setLayout(new BorderLayout());
         descriptionPanel.setBorder(new TitledBorder(bundle
-                .getString("LBL_DescriptionPanelTitle")));//NOI18N
+                .getString("LBL_DescriptionPanelTitle")));// NOI18N
         descriptionPanel.setMinimumSize(new Dimension(WIDTH, 80));
         descriptionPanel.setPreferredSize(descriptionPanel.getMinimumSize());
         gbl.setConstraints(descriptionPanel, constraints);

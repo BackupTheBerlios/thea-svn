@@ -28,9 +28,10 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
  */
 public class SelectOntologyAction extends NodeAction {
     private Dialog dialog;
+
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
 
     /*
      * (non-Javadoc)
@@ -66,11 +67,11 @@ public class SelectOntologyAction extends NodeAction {
         // Listener to the linking operation from here
         final PropertyChangeListener pcl = new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent event) {
-                if (event.getPropertyName().equals("linked")) { //NOI18N
+                if (event.getPropertyName().equals("linked")) { // NOI18N
                     if (dialog != null) {
                         dialog.setVisible(false);
                     }
-                } else if (event.getPropertyName().equals("failed")) { //NOI18N
+                } else if (event.getPropertyName().equals("failed")) { // NOI18N
                     DialogDisplayer.getDefault().notify(
                             new NotifyDescriptor.Message(
                                     "Linking to the ontlogy failed.",
@@ -78,9 +79,9 @@ public class SelectOntologyAction extends NodeAction {
                 }
             }
         };
-        //cni.getClassification().addPropertyChangeListener(pcl);
+        // cni.getClassification().addPropertyChangeListener(pcl);
 
-        //Create the panel
+        // Create the panel
         final OntologiesListPanel panel = new OntologiesListPanel(
                 ontologiesRootNode.getChildren().getNodes(), cni);
 
@@ -102,7 +103,7 @@ public class SelectOntologyAction extends NodeAction {
 
         // Use DialogDescriptor to show the panel
         DialogDescriptor descriptor = new DialogDescriptor(panel, bundle
-                .getString("SelectOntologyDialogTitle"), true, al); //NOI18N
+                .getString("SelectOntologyDialogTitle"), true, al); // NOI18N
         Object[] closingOptions = { DialogDescriptor.CANCEL_OPTION };
         descriptor.setClosingOptions(closingOptions);
         dialog = DialogDisplayer.getDefault().createDialog(descriptor);
@@ -133,7 +134,7 @@ public class SelectOntologyAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        return bundle.getString("LBL_SelectOntologyAction_Name");//NO18N
+        return bundle.getString("LBL_SelectOntologyAction_Name");// NO18N
     }
 
     /*
@@ -152,7 +153,7 @@ public class SelectOntologyAction extends NodeAction {
         return false;
     }
 
-    //  Closes dialog
+    // Closes dialog
     private void closeDialog() {
         if (dialog != null) {
             dialog.dispose();

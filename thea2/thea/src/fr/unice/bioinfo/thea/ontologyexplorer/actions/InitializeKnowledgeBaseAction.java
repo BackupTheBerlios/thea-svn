@@ -22,7 +22,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
 public class InitializeKnowledgeBaseAction extends NodeAction {
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
 
     /*
      * (non-Javadoc)
@@ -30,7 +30,7 @@ public class InitializeKnowledgeBaseAction extends NodeAction {
      */
     protected void performAction(Node[] arg0) {
 
-        //Get the explorer manager from the ontology explorer
+        // Get the explorer manager from the ontology explorer
         OntologyExplorer e = OntologyExplorer.findDefault();
 
         // Extract the node
@@ -41,7 +41,7 @@ public class InitializeKnowledgeBaseAction extends NodeAction {
         }
 
         String message = bundle
-        .getString("LBL_InitializeKnowledgeBaseAction_Confirmation"); //NOI18N
+                .getString("LBL_InitializeKnowledgeBaseAction_Confirmation"); // NOI18N
         if (DialogDisplayer.getDefault().notify(
                 new NotifyDescriptor.Confirmation(message,
                         NotifyDescriptor.OK_CANCEL_OPTION)) != NotifyDescriptor.OK_OPTION) {
@@ -51,14 +51,18 @@ public class InitializeKnowledgeBaseAction extends NodeAction {
         DatabaseConnection dbc = ((OntologyNode) node).getConnection();
         try {
             Properties prop = new Properties();
-            prop.setProperty("hibernate.connection.driver_class", dbc.getDriver());
+            prop.setProperty("hibernate.connection.driver_class", dbc
+                    .getDriver());
             prop.setProperty("hibernate.connection.url", dbc.getDatabase());
             prop.setProperty("hibernate.connection.username", dbc.getUser());
-            prop.setProperty("hibernate.connectino.password", dbc.getPassword());
-            net.sf.hibernate.tool.hbm2ddl.SchemaExport se = new net.sf.hibernate.tool.hbm2ddl.SchemaExport(HibernateUtil.getConfiguration(), prop);
+            prop
+                    .setProperty("hibernate.connectino.password", dbc
+                            .getPassword());
+            net.sf.hibernate.tool.hbm2ddl.SchemaExport se = new net.sf.hibernate.tool.hbm2ddl.SchemaExport(
+                    HibernateUtil.getConfiguration(), prop);
             se.drop(false, true);
             se.create(false, true);
-        } catch (HibernateException he){
+        } catch (HibernateException he) {
             he.printStackTrace();
         }
     }
@@ -68,7 +72,7 @@ public class InitializeKnowledgeBaseAction extends NodeAction {
      * @see org.openide.util.actions.NodeAction#enable(org.openide.nodes.Node[])
      */
     protected boolean enable(Node[] nodes) {
-        //Enable this action only for the OntologyNode
+        // Enable this action only for the OntologyNode
         nodes = OntologyExplorer.findDefault().getExplorerManager()
                 .getSelectedNodes();
         Node node;
@@ -98,7 +102,7 @@ public class InitializeKnowledgeBaseAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        return bundle.getString("LBL_InitializeKnowledgeBaseAction_Name");//NOI18N
+        return bundle.getString("LBL_InitializeKnowledgeBaseAction_Name");// NOI18N
     }
 
     /*

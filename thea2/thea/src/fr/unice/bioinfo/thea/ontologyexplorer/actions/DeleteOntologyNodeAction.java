@@ -21,7 +21,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
 public class DeleteOntologyNodeAction extends NodeAction {
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
 
     /*
      * (non-Javadoc)

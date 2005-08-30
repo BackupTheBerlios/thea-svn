@@ -16,12 +16,16 @@ public class SelectionEvent extends EventObject {
 
     /** A name to attribute to the selection */
     private String selectionName;
+
     private String selectionLabel;
+
     private Color selectionColor;
 
     /** The color used to colorize the bar that materialize the selection */
     private Color selectionBgColor;
+
     private String nbGlobalHits;
+
     private String nbLocalHits;
 
     /** List of nodes correspending to the selection. */

@@ -37,25 +37,34 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
  */
 public class GeneEditor extends TopComponent {
 
-    //  Serial Version UID
+    // Serial Version UID
     static final long serialVersionUID = 6857108441469780252L;
+
     /** The support for firing property changes */
     private PropertyChangeSupport propertySupport;
+
     /** preferred ID:geneeditor */
-    private String PREFERRED_ID = "geneeditor";//NOI18N
+    private String PREFERRED_ID = "geneeditor";// NOI18N
+
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.Bundle"); // NOI18N
+
     /** The Gene Editor loks for genes annotated by this resource. */
     private Resource resource;
+
     /** Genes table. */
-    //private JTable table;
+    // private JTable table;
     private PrintableJTable table;
+
     /** Button to print the genes table. */
     private JButton printBtn;
+
     /** Save button. */
     private JButton saveBtn;
+
     private String[] evidences;
+
     private String[] properties;
 
     /**
@@ -74,7 +83,7 @@ public class GeneEditor extends TopComponent {
 
         propertySupport = new PropertyChangeSupport(this);
 
-        propertySupport.firePropertyChange("initializing", null, null);//NOI18N
+        propertySupport.firePropertyChange("initializing", null, null);// NOI18N
 
         // give a title to this window using the resource's name
         setName(node.getDisplayName());
@@ -82,11 +91,11 @@ public class GeneEditor extends TopComponent {
         setIcon(Utilities
                 .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/GeneEditorIcon16.gif")); // NOI18N
 
-        //      layout
+        // layout
         setLayout(new BorderLayout());
-        propertySupport.firePropertyChange("processing", null, null);//NOI18N
+        propertySupport.firePropertyChange("processing", null, null);// NOI18N
         add(createMainPanel(), BorderLayout.CENTER);
-        propertySupport.firePropertyChange("endprocessing", null, null);//NOI18N
+        propertySupport.firePropertyChange("endprocessing", null, null);// NOI18N
     }
 
     private JPanel createMainPanel() {
@@ -95,7 +104,7 @@ public class GeneEditor extends TopComponent {
         panel.setOpaque(true);
         panel.setBackground(Color.WHITE);
         panel.setBorder(new EtchedBorder());
-        //panel.setLayout(new BorderLayout());
+        // panel.setLayout(new BorderLayout());
         panel.setLayout(new FormLayout(new ColumnSpec[] {
                 new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT,
                         FormSpec.DEFAULT_GROW),
@@ -122,12 +131,12 @@ public class GeneEditor extends TopComponent {
                 CellConstraints.FILL));
         // careate and add the save button
         saveBtn = new JButton();
-        saveBtn.setToolTipText(bundle.getString("HINT_SaveBtn"));//NOI18N
+        saveBtn.setToolTipText(bundle.getString("HINT_SaveBtn"));// NOI18N
         saveBtn.setBorder(new EtchedBorder());
         saveBtn
                 .setIcon(new ImageIcon(
                         Utilities
-                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/SaveIcon16.gif"))); //NOI18N
+                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/SaveIcon16.gif"))); // NOI18N
         panel.add(saveBtn, cc.xy(3, 3));
         // careet and add the print button
         printBtn = new JButton();
@@ -139,8 +148,8 @@ public class GeneEditor extends TopComponent {
         printBtn
                 .setIcon(new ImageIcon(
                         Utilities
-                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/PrintIcon16.gif"))); //NOI18N
-        printBtn.setToolTipText(bundle.getString("HINT_PrintBtn"));//NOI18N
+                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/PrintIcon16.gif"))); // NOI18N
+        printBtn.setToolTipText(bundle.getString("HINT_PrintBtn"));// NOI18N
         printBtn.setBorder(new EtchedBorder());
         panel.add(printBtn, cc.xy(5, 3));
         // return the panel

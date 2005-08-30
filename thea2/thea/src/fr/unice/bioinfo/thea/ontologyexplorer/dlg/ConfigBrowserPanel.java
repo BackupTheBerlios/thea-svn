@@ -3,6 +3,9 @@ package fr.unice.bioinfo.thea.ontologyexplorer.dlg;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
@@ -26,17 +29,25 @@ import com.jgoodies.forms.layout.FormSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.Sizes;
 
+import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
 import fr.unice.bioinfo.thea.ontologyexplorer.settings.OESettings;
 
 public class ConfigBrowserPanel extends JPanel {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); // NOI18N
 
-    private JLabel msgLbl;
+    private JLabel msgLbl1;
+
+    private JLabel msgLbl2;
+
+    private JLabel msgLbl3;
+
     private JLabel label;
+
     private JTextField pathField;
+
     private JButton browseBtn;
 
     public ConfigBrowserPanel() {
@@ -45,7 +56,9 @@ public class ConfigBrowserPanel extends JPanel {
 
     private void initComponents() {
 
-        msgLbl = new JLabel();
+        msgLbl1 = new JLabel();
+        msgLbl2 = new JLabel();
+        msgLbl3 = new JLabel();
         label = new JLabel();
         pathField = new JTextField();
         browseBtn = new JButton();
@@ -53,24 +66,32 @@ public class ConfigBrowserPanel extends JPanel {
 
         setBorder(Borders.DIALOG_BORDER);
         setLayout(new FormLayout(new ColumnSpec[] {
-                new ColumnSpec("max(default;70px)"),//NOI18N
+                new ColumnSpec("max(default;70px)"),// NOI18N
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
                 new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT,
                         FormSpec.DEFAULT_GROW),
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-                new ColumnSpec("max(default;10px)") }, RowSpec //NOI18N
-                .decodeSpecs("default, default")));//NOI18N
+                new ColumnSpec("max(default;10px)") }, RowSpec // NOI18N
+                .decodeSpecs("default, default, default, default")));// NOI18N
 
-        //---- msgLbl ----
-        msgLbl.setText(bundle.getString("LBL_BrowserMsg"));//NOI18N
-        add(msgLbl, cc.xywh(1, 1, 5, 1));
+        // ---- msgLbl1 ----
+        msgLbl1.setText(bundle.getString("LBL_BrowserMsg1"));// NOI18N
+        add(msgLbl1, cc.xywh(1, 1, 5, 1));
 
-        //---- label ----
-        label.setText(bundle.getString("LBL_Path"));//NOI18N
-        add(label, cc.xy(1, 2));
-        add(pathField, cc.xy(3, 2));
+        // ---- msgLbl2 ----
+        msgLbl2.setText(bundle.getString("LBL_BrowserMsg2"));// NOI18N
+        add(msgLbl2, cc.xywh(1, 2, 5, 1));
 
-        //---- browseBtn ----
+        // ---- msgLbl3 ----
+        msgLbl3.setText(bundle.getString("LBL_BrowserMsg3"));// NOI18N
+        add(msgLbl3, cc.xywh(1, 3, 5, 1));
+
+        // ---- label ----
+        label.setText(bundle.getString("LBL_Path"));// NOI18N
+        add(label, cc.xy(1, 4));
+        add(pathField, cc.xy(3, 4));
+
+        // ---- browseBtn ----
         browseBtn.setBorder(new EtchedBorder());
         browseBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -80,8 +101,8 @@ public class ConfigBrowserPanel extends JPanel {
         browseBtn
                 .setIcon(new ImageIcon(
                         Utilities
-                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/BrowseIcon16.gif"))); //NOI18N
-        add(browseBtn, cc.xy(5, 2));
+                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/BrowseIcon16.gif"))); // NOI18N
+        add(browseBtn, cc.xy(5, 4));
     }
 
     private void performBroserBtnAction(ActionEvent e) {
@@ -93,6 +114,9 @@ public class ConfigBrowserPanel extends JPanel {
         }
         File file = chooser.getSelectedFile();
         pathField.setText(file.getAbsolutePath());
-        OESettings.getInstance().setConfigFilePath(file.getAbsolutePath());
+    }
+
+    public String getFilePath() {
+        return pathField.getText();
     }
 }

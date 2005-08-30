@@ -12,7 +12,9 @@ import javax.swing.SwingUtilities;
  */
 public abstract class SwingWorker {
     private Object value; // see getValue(), setValue()
+
     private Thread thread;
+
     private ThreadVar threadVar;
 
     /**
@@ -34,9 +36,9 @@ public abstract class SwingWorker {
 
         Runnable doConstruct = new Runnable() {
             public void run() {
-                //                try {
-                //                    SwingUtilities.invokeAndWait(doBeforeStart);
-                //                } catch (Exception e) {}
+                // try {
+                // SwingUtilities.invokeAndWait(doBeforeStart);
+                // } catch (Exception e) {}
                 try {
                     setValue(construct());
                 } finally {

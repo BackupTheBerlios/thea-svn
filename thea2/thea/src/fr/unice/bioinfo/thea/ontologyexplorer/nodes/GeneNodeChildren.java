@@ -34,24 +34,26 @@ public class GeneNodeChildren extends Children.Array {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.nodes.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.nodes.Bundle"); // NOI18N;
 
     private TreeSet children;
+
     private transient PropertyChangeSupport propertySupport = new PropertyChangeSupport(
             this);
+
     private static Object sync = new Object(); // synchronizing object
 
     private PropertyChangeListener listener = new PropertyChangeListener() {
         public void propertyChange(PropertyChangeEvent event) {
-            if (event.getPropertyName().equals("finished")) { //NOI18N
-                //                Mutex.EVENT.writeAccess(new Runnable() {
-                //                    public void run() {
-                remove(getNodes()); //remove wait node
+            if (event.getPropertyName().equals("finished")) { // NOI18N
+                // Mutex.EVENT.writeAccess(new Runnable() {
+                // public void run() {
+                remove(getNodes()); // remove wait node
                 nodes = getCh(); // change children ...
                 refresh(); // ... and refresh them
                 removeListener();
-                //                    }
-                //                });
+                // }
+                // });
             }
         }
     };
@@ -61,50 +63,50 @@ public class GeneNodeChildren extends Children.Array {
 
         RequestProcessor.getDefault().post(new Runnable() {
             public void run() {
-                //                DatabaseNodeInfo nodeinfo =
+                // DatabaseNodeInfo nodeinfo =
                 // ((DatabaseNode)getNode()).getInfo();
-                //                java.util.Map nodeord =
+                // java.util.Map nodeord =
                 // (java.util.Map)nodeinfo.get(DatabaseNodeInfo.CHILDREN_ORDERING);
-                //                boolean sort = (nodeinfo.getName().equals("Drivers") ||
+                // boolean sort = (nodeinfo.getName().equals("Drivers") ||
                 // (nodeinfo instanceof TableNodeInfo) || (nodeinfo instanceof
                 // ViewNodeInfo)) ? false : true; //NOI18N
-                //                TreeSet children = new TreeSet(new NodeComparator(nodeord,
+                // TreeSet children = new TreeSet(new NodeComparator(nodeord,
                 // sort));
                 //
-                //                try {
-                //                    Vector chlist;
-                //                    synchronized (sync) {
-                //                        chlist = nodeinfo.getChildren();
-                //                    }
+                // try {
+                // Vector chlist;
+                // synchronized (sync) {
+                // chlist = nodeinfo.getChildren();
+                // }
                 //
-                //                    for (int i=0;i<chlist.size();i++) {
-                //                        Node snode = null;
-                //                        Object sinfo = chlist.elementAt(i);
+                // for (int i=0;i<chlist.size();i++) {
+                // Node snode = null;
+                // Object sinfo = chlist.elementAt(i);
                 //
-                //                        if (sinfo instanceof DatabaseNodeInfo) {
-                //                            DatabaseNodeInfo dni = (DatabaseNodeInfo) sinfo;
+                // if (sinfo instanceof DatabaseNodeInfo) {
+                // DatabaseNodeInfo dni = (DatabaseNodeInfo) sinfo;
                 //
-                //                            // aware! in this method is clone of instance dni created
-                //                            snode = createNode(dni);
+                // // aware! in this method is clone of instance dni created
+                // snode = createNode(dni);
                 //
-                //                        }
-                //                        else
-                //                            if (sinfo instanceof Node)
-                //                                snode = (Node)sinfo;
-                //                        if (snode != null)
-                //                            children.add(snode);
-                //                    }
-                //                } catch (Exception e) {
-                //                        e.printStackTrace();
-                //                        children.clear();
-                //                }
+                // }
+                // else
+                // if (sinfo instanceof Node)
+                // snode = (Node)sinfo;
+                // if (snode != null)
+                // children.add(snode);
+                // }
+                // } catch (Exception e) {
+                // e.printStackTrace();
+                // children.clear();
+                // }
                 String propertyName;
                 ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                         .getResourceFactory();
                 Configuration con = TheaConfiguration.getDefault()
                         .getConfiguration();
                 propertyName = (String) con
-                        .getProperty("ontologyexplorer.nodes.annotates");//NOI18N
+                        .getProperty("ontologyexplorer.nodes.annotates");// NOI18N
 
                 TreeSet children = new TreeSet();
 
@@ -124,7 +126,7 @@ public class GeneNodeChildren extends Children.Array {
 
                 setCh(children);
 
-                propertySupport.firePropertyChange("finished", null, null); //NOI18N
+                propertySupport.firePropertyChange("finished", null, null); // NOI18N
             }
         }, 0);
 
@@ -140,8 +142,8 @@ public class GeneNodeChildren extends Children.Array {
      */
     private Node createWaitNode() {
         AbstractNode n = new AbstractNode(Children.LEAF);
-        n.setName(bundle.getString("WaitNode")); //NOI18N
-        n.setIconBase("org/netbeans/modules/db/resources/waitIcon"); //NOI18N
+        n.setName(bundle.getString("WaitNode")); // NOI18N
+        n.setIconBase("org/netbeans/modules/db/resources/waitIcon"); // NOI18N
         return n;
     }
 

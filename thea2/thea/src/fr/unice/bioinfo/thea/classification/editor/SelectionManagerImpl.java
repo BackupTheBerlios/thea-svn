@@ -26,7 +26,7 @@ public class SelectionManagerImpl implements SelectionManager {
     private List selectionsList = new Vector();
 
     /** The number of selections done */
-    private int counter;//initially was declared as nbSel
+    private int counter;// initially was declared as nbSel
 
     private DrawableClassification drawable = null;
 
@@ -151,7 +151,7 @@ public class SelectionManagerImpl implements SelectionManager {
             // modify the selected state of the parent if necessary
             updateSelectedState(aNode.getParent());
         }
-        //sendSelectionEvent();
+        // sendSelectionEvent();
         drawable.updateGraphics();
     }
 
@@ -164,7 +164,7 @@ public class SelectionManagerImpl implements SelectionManager {
         setSelectedNodeAndChilds(aNode, state);
         // modify the selected state of the parent if necessary
         updateSelectedState(aNode.getParent());
-        //sendSelectionEvent();
+        // sendSelectionEvent();
         // repaint the area
         Rectangle2D.Double rectangle = (Rectangle2D.Double) aNode.getArea();
         if (rectangle != null) {
@@ -226,11 +226,11 @@ public class SelectionManagerImpl implements SelectionManager {
      */
     public void removeSelectedNodes() {
         String selId = String.valueOf(counter);
-        //        org.bdgp.apps.dagedit.gui.event.ClassifSelectionEvent event = new
+        // org.bdgp.apps.dagedit.gui.event.ClassifSelectionEvent event = new
         // org.bdgp.apps.dagedit.gui.event.ClassifSelectionEvent(
-        //                this, selId);
-        //        org.bdgp.apps.dagedit.gui.Controller.getController()
-        //                .fireSelectionClearedInClassif(event);
+        // this, selId);
+        // org.bdgp.apps.dagedit.gui.Controller.getController()
+        // .fireSelectionClearedInClassif(event);
 
         selectedNodes.clear();
     }
@@ -247,12 +247,12 @@ public class SelectionManagerImpl implements SelectionManager {
         Selection selection = new Selection(getSelectedLeaves(true),
                 selectionID, colors[counter % 18]);
 
-        //        org.bdgp.apps.dagedit.gui.event.ClassifSelectionEvent event = new
+        // org.bdgp.apps.dagedit.gui.event.ClassifSelectionEvent event = new
         // org.bdgp.apps.dagedit.gui.event.ClassifSelectionEvent(
-        //                this, selID, null,
-        //                (Color) selectionToKeep.getUserData("color"), null, null, null);
-        //        org.bdgp.apps.dagedit.gui.Controller.getController()
-        //                .fireSelectionDoneInClassif(event);
+        // this, selID, null,
+        // (Color) selectionToKeep.getUserData("color"), null, null, null);
+        // org.bdgp.apps.dagedit.gui.Controller.getController()
+        // .fireSelectionDoneInClassif(event);
         selectionsList.add(selection);
         counter++;
         removeSelectedNodes();
@@ -333,11 +333,11 @@ public class SelectionManagerImpl implements SelectionManager {
      */
     public void remove(Selection selection) {
         String selectionID = (String) selection.getId();
-        //        org.bdgp.apps.dagedit.gui.event.ClassifSelectionEvent event = new
+        // org.bdgp.apps.dagedit.gui.event.ClassifSelectionEvent event = new
         // org.bdgp.apps.dagedit.gui.event.ClassifSelectionEvent(
-        //                this, selId);
-        //        org.bdgp.apps.dagedit.gui.Controller.getController()
-        //                .fireSelectionClearedInClassif(event);
+        // this, selId);
+        // org.bdgp.apps.dagedit.gui.Controller.getController()
+        // .fireSelectionClearedInClassif(event);
 
         if (selectionsList.contains(selection)) {
             selectionsList.remove(selection);
@@ -350,25 +350,25 @@ public class SelectionManagerImpl implements SelectionManager {
      * @see fr.unice.bioinfo.thea.classification.editor.SelectionManager#groupSelection(fr.unice.bioinfo.thea.classification.Selection)
      */
     public void group(Selection selection) {
-        //        List l = new Vector(selection.getNodes());
-        //        while (!l.isEmpty()) {
-        //            Node aNode = (Node) l.get(0);
-        //            Boolean frozen = (Boolean) aNode.getProperty(Selection.FROZEN);
-        //            if ((frozen == null) || frozen.equals(Boolean.FALSE)) {
-        //                Node parent = aNode.getParent();
-        //                List children = parent.getChildren();
-        //                for (int i = 0; i < children.size(); i++) {
-        //                    frozen = (Boolean) ((Node) children.get(i))
-        //                            .getProperty(Selection.FROZEN);
-        //                    if ((frozen == null) || frozen.equals(Boolean.FALSE)) {
-        //                        parent.moveChild(aNode, i);
-        //                        break;
-        //                    }
-        //                }
-        //            }
-        //            l.remove(aNode);
-        //        }
-        //        drawable.updateGraphics();
+        // List l = new Vector(selection.getNodes());
+        // while (!l.isEmpty()) {
+        // Node aNode = (Node) l.get(0);
+        // Boolean frozen = (Boolean) aNode.getProperty(Selection.FROZEN);
+        // if ((frozen == null) || frozen.equals(Boolean.FALSE)) {
+        // Node parent = aNode.getParent();
+        // List children = parent.getChildren();
+        // for (int i = 0; i < children.size(); i++) {
+        // frozen = (Boolean) ((Node) children.get(i))
+        // .getProperty(Selection.FROZEN);
+        // if ((frozen == null) || frozen.equals(Boolean.FALSE)) {
+        // parent.moveChild(aNode, i);
+        // break;
+        // }
+        // }
+        // }
+        // l.remove(aNode);
+        // }
+        // drawable.updateGraphics();
     }
 
     /*

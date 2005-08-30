@@ -16,27 +16,37 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationNode;
  */
 public class ClassificationNodeInfo extends Hashtable implements Node.Cookie {
 
-    public static final String NAME = "name"; //NOI18N
+    public static final String NAME = "name"; // NOI18N
+
     // File format
-    public static final String TYPE = "type"; //NOI18N
+    public static final String TYPE = "type"; // NOI18N
+
     // Index of First Ignored Row
-    public static final String IFIR = "ifir"; //NOI18N
+    public static final String IFIR = "ifir"; // NOI18N
+
     // Index of Last Ignored Row
-    public static final String ILIR = "ilir"; //NOI18N
+    public static final String ILIR = "ilir"; // NOI18N
+
     // Index of First Ignored Column
-    public static final String IFIC = "ific"; //NOI18N
-    //  Index of Last Ignored Column
-    public static final String ILIC = "ilic"; //NOI18N
+    public static final String IFIC = "ific"; // NOI18N
+
+    // Index of Last Ignored Column
+    public static final String ILIC = "ilic"; // NOI18N
+
     // Index of Gene Column
-    public static final String IGC = "igc"; //NOI18N
+    public static final String IGC = "igc"; // NOI18N
+
     // Index of Title Row
-    public static final String ITR = "itr"; //NOI18N
+    public static final String ITR = "itr"; // NOI18N
+
     // number of columns
-    public static final String NBC = "nbc"; //NOI18N
+    public static final String NBC = "nbc"; // NOI18N
+
     // Clustered data file
-    public static final String CDF = "cdf"; //NOI18N
+    public static final String CDF = "cdf"; // NOI18N
+
     // Tabulat Data File
-    public static final String TDF = "tdf"; //NOI18N
+    public static final String TDF = "tdf"; // NOI18N
 
     /* Owning node */
     private WeakReference nodewr = null;
@@ -60,7 +70,7 @@ public class ClassificationNodeInfo extends Hashtable implements Node.Cookie {
      * @see java.util.Dictionary#put(java.lang.Object, java.lang.Object)
      */
     public synchronized Object put(Object key, Object value) {
-        //return super.put(key, value);
+        // return super.put(key, value);
         Object old = get(key);
 
         if (key == null)

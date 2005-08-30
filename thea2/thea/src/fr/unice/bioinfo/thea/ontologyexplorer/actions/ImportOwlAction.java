@@ -29,7 +29,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.settings.OESettings;
 public class ImportOwlAction extends NodeAction {
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
 
     /*
      * (non-Javadoc)
@@ -37,7 +37,7 @@ public class ImportOwlAction extends NodeAction {
      */
     protected void performAction(Node[] arg0) {
 
-        //Get the explorer manager from the ontology explorer
+        // Get the explorer manager from the ontology explorer
         OntologyExplorer e = OntologyExplorer.findDefault();
 
         // Extract the node
@@ -51,7 +51,8 @@ public class ImportOwlAction extends NodeAction {
         chooser.setCurrentDirectory(new File(OESettings.getInstance()
                 .getLastBrowsedDirectory()));
         chooser.setMultiSelectionEnabled(true);
-        JCheckBox useInferenceCheckBox = new JCheckBox(bundle.getString("LBL_ImportOntologyAction_UseInference"));//NOI18N);
+        JCheckBox useInferenceCheckBox = new JCheckBox(bundle
+                .getString("LBL_ImportOntologyAction_UseInference"));// NOI18N);
         chooser.setAccessory(useInferenceCheckBox);
         int r = chooser.showOpenDialog(WindowManager.getDefault()
                 .getMainWindow());
@@ -63,28 +64,25 @@ public class ImportOwlAction extends NodeAction {
         try {
             HibernateUtil.createSession(dbc.getConnection());
         } catch (HibernateException he) {
-            //TODO handle this exception
+            // TODO handle this exception
         }
-        
-        
+
         boolean useInference = useInferenceCheckBox.isSelected();
         File[] files = chooser.getSelectedFiles();
-        for (int counter = 0 ; counter < files.length ; counter++) {
+        for (int counter = 0; counter < files.length; counter++) {
             String filePath = files[counter].toURI().toString();
-            //getAbsolutePath();
+            // getAbsolutePath();
             fr.unice.bioinfo.batch.ImportOwlModel parser = new fr.unice.bioinfo.batch.ImportOwlModel();
             try {
                 parser.parse(filePath, useInference);
             } catch (AllontoException ae) {
-                //TODO handle this exception
+                // TODO handle this exception
             }
         }
 
-        //Save the new used path
-        //OESettings.getInstance().setLastBrowsedDirectory(file.getParent());
+        // Save the new used path
+        // OESettings.getInstance().setLastBrowsedDirectory(file.getParent());
 
-        
-        
     }
 
     /*
@@ -92,7 +90,7 @@ public class ImportOwlAction extends NodeAction {
      * @see org.openide.util.actions.NodeAction#enable(org.openide.nodes.Node[])
      */
     protected boolean enable(Node[] nodes) {
-        //Enable this action only for the OntologyNode
+        // Enable this action only for the OntologyNode
         nodes = OntologyExplorer.findDefault().getExplorerManager()
                 .getSelectedNodes();
         Node node;
@@ -102,7 +100,8 @@ public class ImportOwlAction extends NodeAction {
             return false;
         }
         if (node instanceof OntologyNode) {
-            if (((OntologyNode) node).isConnected()) {
+            if (((OntologyNode) node).isConnected()
+                    && ((OntologyNode) node).isCompatibleKB()) {
                 return true;
             }
         }
@@ -122,7 +121,7 @@ public class ImportOwlAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        return bundle.getString("LBL_ImportOntologyAction_Name");//NOI18N
+        return bundle.getString("LBL_ImportOntologyAction_Name");// NOI18N
     }
 
     /*

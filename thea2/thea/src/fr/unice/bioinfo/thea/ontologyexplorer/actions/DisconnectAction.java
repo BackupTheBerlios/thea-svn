@@ -20,14 +20,14 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
 public class DisconnectAction extends NodeAction {
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
 
     /*
      * (non-Javadoc)
      * @see org.openide.util.actions.NodeAction#performAction(org.openide.nodes.Node[])
      */
     protected void performAction(Node[] arg0) {
-        //Get the explorer manager from the ontology explorer
+        // Get the explorer manager from the ontology explorer
         OntologyExplorer e = OntologyExplorer.findDefault();
 
         // Extract the node
@@ -62,7 +62,7 @@ public class DisconnectAction extends NodeAction {
      * @see org.openide.util.actions.NodeAction#enable(org.openide.nodes.Node[])
      */
     protected boolean enable(Node[] nodes) {
-        //Enable this action only for the OntologyNode
+        // Enable this action only for the OntologyNode
         nodes = OntologyExplorer.findDefault().getExplorerManager()
                 .getSelectedNodes();
 
@@ -96,7 +96,7 @@ public class DisconnectAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        return bundle.getString("LBL_DisconnectAction_Name");//NOI18N
+        return bundle.getString("LBL_DisconnectAction_Name");// NOI18N
     }
 
     /*

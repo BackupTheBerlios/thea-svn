@@ -11,13 +11,13 @@ import org.openide.util.NbBundle;
  */
 public class OpenClassificationWizardDescriptor extends WizardDescriptor {
 
-    //  Iterator on the sequence of panels used to build
+    // Iterator on the sequence of panels used to build
     // the Load Ontology Wizard
     private final Wizard wizard;
 
     /** Resource Bundle */
     private static ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.classification.io.wizard.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.classification.io.wizard.Bundle"); // NOI18N;
 
     public OpenClassificationWizardDescriptor() {
         this(new Wizard());
@@ -31,7 +31,7 @@ public class OpenClassificationWizardDescriptor extends WizardDescriptor {
         setTitleFormat(new MessageFormat(" {0}")); // NOI18N
         // Give a title to the Dialog
         setTitle(bundle.getString("LBL_OpenDialogDescriptor_WizardTitle"));
-        //Make the left pane appear:
+        // Make the left pane appear:
         putProperty("WizardPanel_autoWizardStyle", Boolean.TRUE); // NOI18N
         // Make the left pane show list of steps etc.:
         putProperty("WizardPanel_contentDisplayed", Boolean.TRUE); // NOI18N

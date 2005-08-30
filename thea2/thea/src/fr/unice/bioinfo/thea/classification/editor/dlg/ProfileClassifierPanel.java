@@ -44,14 +44,20 @@ public class ProfileClassifierPanel extends JPanel {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.classification.editor.dlg.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.classification.editor.dlg.Bundle"); // NOI18N
 
     private Node aNode;
+
     private JLabel baseLbl;
+
     private JTextField geneNameField;
+
     private JButton sortBtn;
+
     private JTable table;
+
     private ClTableModel model;
+
     private JScrollPane scroll;
 
     /** Create a profile classifier panel using a selected node. */
@@ -98,21 +104,21 @@ public class ProfileClassifierPanel extends JPanel {
                         new RowSpec(RowSpec.FILL, Sizes.DEFAULT,
                                 FormSpec.DEFAULT_GROW) }));
 
-        //---- baseLbl ----
-        baseLbl.setText(bundle.getString("LBL_Base"));//NOI18N
-        baseLbl.setToolTipText(bundle.getString("HINT_Base"));//NOI18N
+        // ---- baseLbl ----
+        baseLbl.setText(bundle.getString("LBL_Base"));// NOI18N
+        baseLbl.setToolTipText(bundle.getString("HINT_Base"));// NOI18N
         add(baseLbl, cc.xywh(1, 1, 1, 1, CellConstraints.FILL,
                 CellConstraints.FILL));
 
-        //---- geneNameField ----
+        // ---- geneNameField ----
         geneNameField.setEditable(false);
         geneNameField.setBackground(Color.WHITE);
         add(geneNameField, cc.xywh(3, 1, 1, 1, CellConstraints.FILL,
                 CellConstraints.FILL));
 
-        //---- sortBtn ----
-        sortBtn.setText(bundle.getString("LBL_Sort"));//NOI18N
-        sortBtn.setToolTipText(bundle.getString("HINT_Sort"));//NOI18N
+        // ---- sortBtn ----
+        sortBtn.setText(bundle.getString("LBL_Sort"));// NOI18N
+        sortBtn.setToolTipText(bundle.getString("HINT_Sort"));// NOI18N
         sortBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 Node root = aNode;
@@ -156,8 +162,8 @@ public class ProfileClassifierPanel extends JPanel {
             Iterator iterator = nodes.iterator();
             while (iterator.hasNext()) {
                 Node aNode = (Node) iterator.next();
-                //                RowContent rowContent = new RowContent(aNode, 0, (List) aNode
-                //                        .getUserData("measures"));
+                // RowContent rowContent = new RowContent(aNode, 0, (List) aNode
+                // .getUserData("measures"));
                 RowContent rowContent = new RowContent(aNode, 0, (List) aNode
                         .getProperty(Node.MEASURES));
                 rows.add(rowContent);
@@ -213,7 +219,7 @@ public class ProfileClassifierPanel extends JPanel {
         }
 
         public void sortNodes(Node aNode) {
-            //            List baseMeasures = (List) aNode.getUserData("measures");
+            // List baseMeasures = (List) aNode.getUserData("measures");
             List baseMeasures = (List) aNode.getProperty(Node.MEASURES);
             int nbMeasures = baseMeasures.size();
             Iterator it = rows.iterator();
@@ -237,7 +243,9 @@ public class ProfileClassifierPanel extends JPanel {
 
     private class RowContent { // the content of a row
         private double score;
+
         private Node node;
+
         private List measures;
 
         public RowContent(Node node, double score, List measures) {

@@ -56,7 +56,7 @@ public class SotaUtil {
                     if (fatherNode == null) {
                         fatherNode = new Node();
                         fatherNode.setName("");
-                        //                        fatherNode.setUserData("idInClassif", "");
+                        // fatherNode.setUserData("idInClassif", "");
                         fatherNode.addProperty(Node.ID_IN_CLASSIF, "");
                         name2Node.put(nodeId, fatherNode);
                     }
@@ -107,7 +107,7 @@ public class SotaUtil {
                         if (child1Node == null) {
                             child1Node = new Node();
                             child1Node.setName("");
-                            //                            child1Node.setUserData("idInClassif", "");
+                            // child1Node.setUserData("idInClassif", "");
                             child1Node.addProperty(Node.ID_IN_CLASSIF, "");
                             name2Node.put(child1Name, child1Node);
                         }
@@ -164,7 +164,7 @@ public class SotaUtil {
                         if (child2Node == null) {
                             child2Node = new Node();
                             child2Node.setName("");
-                            //                            child2Node.setUserData("idInClassif", "");
+                            // child2Node.setUserData("idInClassif", "");
                             child2Node.addProperty(Node.ID_IN_CLASSIF, "");
                             name2Node.put(child2Name, child2Node);
                         }
@@ -201,12 +201,12 @@ public class SotaUtil {
 
                         Node childNode = new Node();
 
-                        //						String nodeName = (String)geneId2DbKey.get(nodeId);
+                        // String nodeName = (String)geneId2DbKey.get(nodeId);
                         childNode.setName(nodeId);
-                        //                        childNode.setUserData("idInClassif", nodeId);
+                        // childNode.setUserData("idInClassif", nodeId);
                         childNode.addProperty(Node.ID_IN_CLASSIF, nodeId);
 
-                        //						childNode.setUserData("dbKey", nodeName);
+                        // childNode.setUserData("dbKey", nodeName);
                         name2Node.put(nodeId, childNode);
 
                         List childs = fatherNode.getChildren();

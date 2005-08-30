@@ -28,7 +28,7 @@ public class ShowAnnotetdGenesAction extends NodeAction {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
 
     /*
      * (non-Javadoc)
@@ -42,9 +42,9 @@ public class ShowAnnotetdGenesAction extends NodeAction {
         final ResourceNodeInfo rni = (ResourceNodeInfo) node
                 .getCookie(ResourceNodeInfo.class);
 
-        //      Create the panel
+        // Create the panel
         final ShowAnnotatedGenesPanel panel = new ShowAnnotatedGenesPanel();
-        //          Create the listener for buttons actions/ Ok/Cancel
+        // Create the listener for buttons actions/ Ok/Cancel
         ActionListener al = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == DialogDescriptor.OK_OPTION) {
@@ -66,9 +66,9 @@ public class ShowAnnotetdGenesAction extends NodeAction {
                 }
             }
         };
-        //Use DialogDescriptor to show the panel
+        // Use DialogDescriptor to show the panel
         DialogDescriptor descriptor = new DialogDescriptor(panel, bundle
-                .getString("LBL_EvidencesDialogTitle"), true, al); //NOI18N
+                .getString("LBL_EvidencesDialogTitle"), true, al); // NOI18N
         Object[] closingOptions = { DialogDescriptor.CANCEL_OPTION };
         descriptor.setClosingOptions(closingOptions);
         dialog = DialogDisplayer.getDefault().createDialog(descriptor);
@@ -80,7 +80,7 @@ public class ShowAnnotetdGenesAction extends NodeAction {
      * @see org.openide.util.actions.NodeAction#enable(org.openide.nodes.Node[])
      */
     protected boolean enable(Node[] nodes) {
-        //      Enable this action only for the OntologyNode
+        // Enable this action only for the OntologyNode
         nodes = OntologyExplorer.findDefault().getExplorerManager()
                 .getSelectedNodes();
         Node node;
@@ -101,7 +101,7 @@ public class ShowAnnotetdGenesAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        return bundle.getString("LBL_ShowAnnotatedGenesAction");//NOI18N
+        return bundle.getString("LBL_ShowAnnotatedGenesAction");// NOI18N
     }
 
     /*
@@ -120,7 +120,7 @@ public class ShowAnnotetdGenesAction extends NodeAction {
         return false;
     }
 
-    //  Closes dialog
+    // Closes dialog
     private void closeDialog() {
         if (dialog != null) {
             dialog.dispose();

@@ -14,7 +14,9 @@ import fr.unice.bioinfo.thea.classification.settings.CESettings;
  */
 public class Discretization implements PropertyChangeListener {
     public static int PALETTE_GREEN_BLACK_RED = 1;
+
     public static int PALETTE_BLUE_WHITE_YELLOW = 2;
+
     public static int PALETTE_BLUE_WHITE_PINK = 3;
 
     /** the list of upper slice values */
@@ -22,18 +24,28 @@ public class Discretization implements PropertyChangeListener {
 
     /** the list of associated colors */
     static List colors;
+
     private static int nbSlices = 1;
+
     private static float medianPos = 0;
+
     private static Double medianValue;
+
     private static List sortedMeasures;
 
     /** The color palette used to display expression values: <br> */
     private static int colorPalette = PALETTE_GREEN_BLACK_RED;
+
     private static float underExpDecileValue;
+
     private static float overExpDecileValue;
+
     private static boolean isInitialized = false;
+
     Double minValue;
+
     Double maxValue;
+
     boolean isLogValues;
 
     private Discretization() {

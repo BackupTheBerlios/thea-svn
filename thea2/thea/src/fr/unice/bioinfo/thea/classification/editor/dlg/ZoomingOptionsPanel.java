@@ -30,17 +30,24 @@ import fr.unice.bioinfo.thea.classification.settings.CESettings;
 public class ZoomingOptionsPanel extends JPanel {
 
     private JPanel btnPanel;
+
     private JButton applyBtn;
+
     private JPanel widgetsPanel;
+
     private JComponent factorsSeparator;
+
     private JLabel xFactorLbl;
+
     private JTextField xFactorField;
+
     private JLabel yFactorLbl;
+
     private JTextField yFactorField;
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.classification.editor.dlg.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.classification.editor.dlg.Bundle"); // NOI18N
 
     public ZoomingOptionsPanel() {
         init();
@@ -58,7 +65,7 @@ public class ZoomingOptionsPanel extends JPanel {
 
         setBorder(Borders.DIALOG_BORDER);
 
-        //======== btnPanel ========
+        // ======== btnPanel ========
         {
             applyBtn = new JButton();
             applyBtn.addActionListener(new ActionListener() {
@@ -72,13 +79,13 @@ public class ZoomingOptionsPanel extends JPanel {
             btnPanel = new JPanel();
             btnPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
-            //---- applyBtn ----
+            // ---- applyBtn ----
             applyBtn.setText(bundle.getString("LBL_ApplyBtn"));
             btnPanel.add(applyBtn);
         }
         add(btnPanel, BorderLayout.SOUTH);
 
-        //======== widgetsPanel ========
+        // ======== widgetsPanel ========
         {
             widgetsPanel = new JPanel();
             widgetsPanel.setLayout(new FormLayout(new ColumnSpec[] {
@@ -91,7 +98,7 @@ public class ZoomingOptionsPanel extends JPanel {
                     FormFactory.DEFAULT_ROWSPEC }));
             widgetsPanel.add(factorsSeparator, cc.xywh(1, 1, 3, 1));
 
-            //---- xFactorLbl ----
+            // ---- xFactorLbl ----
             xFactorLbl = new JLabel();
             xFactorLbl.setHorizontalAlignment(SwingConstants.RIGHT);
             xFactorLbl.setText(bundle.getString("LBL_HorizontalZoomingFactor"));
@@ -102,7 +109,7 @@ public class ZoomingOptionsPanel extends JPanel {
                     .setText("" + CESettings.getInstance().getZoomFactorX());
             widgetsPanel.add(xFactorField, cc.xy(3, 3));
 
-            //---- yFactorLbl ----
+            // ---- yFactorLbl ----
             yFactorLbl = new JLabel();
             yFactorLbl.setHorizontalAlignment(SwingConstants.RIGHT);
             yFactorLbl.setText(bundle.getString("LBL_VerticalZoomingFactor"));

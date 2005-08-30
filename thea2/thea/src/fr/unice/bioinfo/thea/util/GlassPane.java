@@ -39,7 +39,9 @@ import javax.swing.SwingUtilities;
  */
 public class GlassPane extends JComponent implements AWTEventListener {
     private Window theWindow;
+
     private Component activeComponent;
+
     private boolean beep;
 
     /**

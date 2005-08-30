@@ -23,9 +23,10 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationNode;
  */
 public class AnnotateAction extends NodeAction {
     private Dialog dialog;
+
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
 
     /*
      * (non-Javadoc)
@@ -43,7 +44,7 @@ public class AnnotateAction extends NodeAction {
         final ClassificationNodeInfo cni = (ClassificationNodeInfo) node
                 .getCookie(ClassificationNodeInfo.class);
 
-        //Create the panel
+        // Create the panel
         final AnnotationEvidencesPanel panel = new AnnotationEvidencesPanel();
 
         // Create the listener for buttons actions/ Ok/Cancel
@@ -64,7 +65,7 @@ public class AnnotateAction extends NodeAction {
 
         // Use DialogDescriptor to show the panel
         DialogDescriptor descriptor = new DialogDescriptor(panel, bundle
-                .getString("LBL_EvidencesDialogTitle"), true, al); //NOI18N
+                .getString("LBL_EvidencesDialogTitle"), true, al); // NOI18N
         Object[] closingOptions = { DialogDescriptor.CANCEL_OPTION };
         descriptor.setClosingOptions(closingOptions);
         dialog = DialogDisplayer.getDefault().createDialog(descriptor);
@@ -99,7 +100,7 @@ public class AnnotateAction extends NodeAction {
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
-        return bundle.getString("LBL_AnnotateAction_Name");//NO18N
+        return bundle.getString("LBL_AnnotateAction_Name");// NO18N
     }
 
     /*
@@ -118,7 +119,7 @@ public class AnnotateAction extends NodeAction {
         return false;
     }
 
-    //  Closes dialog
+    // Closes dialog
     private void closeDialog() {
         if (dialog != null) {
             dialog.dispose();

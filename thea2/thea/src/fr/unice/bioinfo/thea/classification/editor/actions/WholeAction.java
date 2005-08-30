@@ -19,8 +19,8 @@ public class WholeAction extends GenericAction {
         // call super constructor
         super(name, accelerator, icon, shortDescription, drawable);
         this.aNode = aNode;
-        //        this.setEnabled(drawable.getClassificationRootNode() != drawable
-        //                .getCurrentRootNode());
+        // this.setEnabled(drawable.getClassificationRootNode() != drawable
+        // .getCurrentRootNode());
     }
 
     /*

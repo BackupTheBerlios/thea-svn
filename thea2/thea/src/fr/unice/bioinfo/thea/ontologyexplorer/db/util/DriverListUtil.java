@@ -11,7 +11,9 @@ import fr.unice.bioinfo.thea.ontologyexplorer.db.driver.JDBCDriverManager;
 
 public class DriverListUtil {
     private static List drivers = new LinkedList();
+
     private static List urls = new LinkedList();
+
     private static List names = new LinkedList();
 
     static {
@@ -31,19 +33,19 @@ public class DriverListUtil {
         drivers.add("weblogic.jdbc.mssqlserver4.Driver");
         urls.add("jdbc:weblogic:mssqlserver4:<DB>@<HOST>:<PORT>");
 
-        names.add("Oracle"); //thin
+        names.add("Oracle"); // thin
         drivers.add("oracle.jdbc.driver.OracleDriver");
         urls.add("jdbc:oracle:thin:@<HOST>:<PORT>:<SID>");
 
-        names.add("PointBase"); //Network Server
+        names.add("PointBase"); // Network Server
         drivers.add("com.pointbase.jdbc.jdbcUniversalDriver");
         urls.add("jdbc:pointbase://<HOST>[:<PORT>]/<DB>");
 
-        names.add("PointBase"); //Embedded Server
+        names.add("PointBase"); // Embedded Server
         drivers.add("com.pointbase.jdbc.jdbcUniversalDriver");
         urls.add("jdbc:pointbase://embedded[:<PORT>]/<DB>");
 
-        names.add("PointBase"); //Mobile Edition
+        names.add("PointBase"); // Mobile Edition
         drivers.add("com.pointbase.jdbc.jdbcUniversalDriver");
         urls.add("jdbc:pointbase:<DB>");
 
@@ -59,11 +61,11 @@ public class DriverListUtil {
         drivers.add("org.firebirdsql.jdbc.FBDriver");
         urls.add("jdbc:firebirdsql:[//<HOST>[:<PORT>]/]<DB>");
 
-        names.add("FirstSQL/J"); //Enterprise Server Edition
+        names.add("FirstSQL/J"); // Enterprise Server Edition
         drivers.add("COM.FirstSQL.Dbcp.DbcpDriver");
         urls.add("jdbc:dbcp://<HOST>:<PORT>");
 
-        names.add("FirstSQL/J"); //Professional Edition
+        names.add("FirstSQL/J"); // Professional Edition
         drivers.add("COM.FirstSQL.Dbcp.DbcpDriver");
         urls.add("jdbc:dbcp://local");
 
@@ -97,19 +99,19 @@ public class DriverListUtil {
         drivers.add("interbase.interclient.Driver");
         urls.add("jdbc:interbase://<HOST>/<DB>");
 
-        names.add("HSQLDB"); //(server)
+        names.add("HSQLDB"); // (server)
         drivers.add("org.hsqldb.jdbcDriver");
         urls.add("jdbc:hsqldb:hsql://<HOST>[:<PORT>]");
 
-        names.add("HSQLDB"); //(standalone)
+        names.add("HSQLDB"); // (standalone)
         drivers.add("org.hsqldb.jdbcDriver");
         urls.add("jdbc:hsqldb:<DB>");
 
-        names.add("HSQLDB"); //(webserver)
+        names.add("HSQLDB"); // (webserver)
         drivers.add("org.hsqldb.jdbcDriver");
         urls.add("jdbc:hsqldb:http://<HOST>[:<PORT>]");
 
-        names.add("HSQLDB"); //(in-memory)
+        names.add("HSQLDB"); // (in-memory)
         drivers.add("org.hsqldb.jdbcDriver");
         urls.add("jdbc:hsqldb:.");
 
@@ -121,11 +123,11 @@ public class DriverListUtil {
         drivers.add("org.hsql.jdbcDriver");
         urls.add("jdbc:HypersonicSQL:<DB>");
 
-        names.add("Mckoi SQL Database"); //(server)
+        names.add("Mckoi SQL Database"); // (server)
         drivers.add("com.mckoi.JDBCDriver");
         urls.add("jdbc:mckoi://<HOST>[:<PORT>]");
 
-        names.add("Mckoi SQL Database"); //(standalone)
+        names.add("Mckoi SQL Database"); // (standalone)
         drivers.add("com.mckoi.JDBCDriver");
         urls.add("jdbc:mckoi:local://<DB>");
 
@@ -151,11 +153,11 @@ public class DriverListUtil {
         drivers.add("org.gjt.mm.mysql.Driver");
         urls.add("jdbc:mysql://<HOST>:<PORT>/<DB>");
 
-        names.add("Oracle"); //OCI 8i
+        names.add("Oracle"); // OCI 8i
         drivers.add("oracle.jdbc.driver.OracleDriver");
         urls.add("jdbc:oracle:oci8:@<SID>");
 
-        names.add("Oracle"); //OCI 9i
+        names.add("Oracle"); // OCI 9i
         drivers.add("oracle.jdbc.driver.OracleDriver");
         urls.add("jdbc:oracle:oci:@<SID>");
 
@@ -208,7 +210,7 @@ public class DriverListUtil {
         urls.add("jdbc:sun:sybase://server_name[:portNumber]");
     }
 
-    //private default constructor -> singleton
+    // private default constructor -> singleton
     private DriverListUtil() {
     }
 

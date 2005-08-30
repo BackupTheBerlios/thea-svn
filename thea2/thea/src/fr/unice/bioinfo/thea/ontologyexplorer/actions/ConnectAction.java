@@ -30,14 +30,14 @@ public class ConnectAction extends NodeAction {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
 
     /*
      * (non-Javadoc)
      * @see org.openide.util.actions.NodeAction#performAction(org.openide.nodes.Node[])
      */
     protected void performAction(Node[] arg0) {
-        //Get the explorer manager from the ontology explorer
+        // Get the explorer manager from the ontology explorer
         OntologyExplorer e = OntologyExplorer.findDefault();
 
         // Extract the node
@@ -54,12 +54,12 @@ public class ConnectAction extends NodeAction {
         // Listener to the connection from here
         final PropertyChangeListener connectionListener = new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent event) {
-                if (event.getPropertyName().equals("connected")) { //NOI18N
+                if (event.getPropertyName().equals("connected")) { // NOI18N
 
                     if (dialog != null) {
                         dialog.setVisible(false);
                     }
-                } else if (event.getPropertyName().equals("failed")) { //NOI18N
+                } else if (event.getPropertyName().equals("failed")) { // NOI18N
                     DialogDisplayer.getDefault().notify(
                             new NotifyDescriptor.Message("Connection failed.",
                                     NotifyDescriptor.INFORMATION_MESSAGE));
@@ -83,16 +83,16 @@ public class ConnectAction extends NodeAction {
                             dbc.connect();
                         }
                     } catch (SQLException exc) {
-                        //isClosed() method failed, try to connect
+                        // isClosed() method failed, try to connect
                         dbc.connect();
                     }
                 }
             }
         };
 
-        //      Use DialogDescriptor to show the panel
+        // Use DialogDescriptor to show the panel
         DialogDescriptor descriptor = new DialogDescriptor(cp, bundle
-                .getString("ConnectDialog_Title"), true, actionListener); //NOI18N
+                .getString("ConnectDialog_Title"), true, actionListener); // NOI18N
         Object[] closingOptions = { DialogDescriptor.CANCEL_OPTION };
         descriptor.setClosingOptions(closingOptions);
         dialog = DialogDisplayer.getDefault().createDialog(descriptor);
@@ -104,7 +104,7 @@ public class ConnectAction extends NodeAction {
      * @see org.openide.util.actions.NodeAction#enable(org.openide.nodes.Node[])
      */
     protected boolean enable(Node[] nodes) {
-        //Enable this action only for the OntologyNode
+        // Enable this action only for the OntologyNode
         nodes = OntologyExplorer.findDefault().getExplorerManager()
                 .getSelectedNodes();
 

@@ -75,13 +75,13 @@ public final class JDBCDriverManager {
 
     public void addDriver(JDBCDriver drv) throws IOException {
         JDBCDriverConvertor.create(drv);
-        propertySupport.firePropertyChange("add", null, drv); //NOI18N
+        propertySupport.firePropertyChange("add", null, drv); // NOI18N
     }
 
     public void removeDriver(JDBCDriver drv) {
         try {
             JDBCDriverConvertor.remove(drv);
-            propertySupport.firePropertyChange("remove", drv, null); //NOI18N
+            propertySupport.firePropertyChange("remove", drv, null); // NOI18N
         } catch (IOException ioe) {
             ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, ioe);
         }

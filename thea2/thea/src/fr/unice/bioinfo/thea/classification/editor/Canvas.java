@@ -94,6 +94,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /** The size of the component with a zoom factor of (1,1) */
     private double currentZoomX = 1;
+
     private double currentZoomY = 1;
 
     /** The map between nodes and their detailed states */
@@ -140,10 +141,15 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /** data relative to expression values */
     private int expValNbMeasures = 0;
+
     private int expValColumnWidth = 0;
+
     private List expValUnderExpDeciles;
+
     private List expValOverExpDeciles;
+
     private double expValMinMeasure = 0;
+
     private double expValMaxMeasure = 0;
 
     /** Popup menu. */
@@ -151,6 +157,7 @@ public class Canvas extends JComponent implements DrawableClassification,
 
     /** A mouse standardListener */
     private CanvasMouseManager standardListener = null;
+
     private ZoomManager zoomListener = null;
 
     /** The image used to create the cursor for the zooming mode. */
@@ -174,7 +181,7 @@ public class Canvas extends JComponent implements DrawableClassification,
         selectionManager = new SelectionManagerImpl(this);
         PropertyChangeListener selectionListener = new PropertyChangeListener() {
             public void propertyChange(final PropertyChangeEvent event) {
-                if (event.getPropertyName().equals("selectionsList")) { //NOI18N
+                if (event.getPropertyName().equals("selectionsList")) { // NOI18N
                     selectionsList = (List) event.getNewValue();
                     baseBranchLength = -1;
                     updateGraphics();
@@ -351,10 +358,10 @@ public class Canvas extends JComponent implements DrawableClassification,
                 .rint(miny), Math.rint(x + branchLength), Math.rint(maxy)));
         aNode.setPosition(new Point2D.Double(x + branchLength,
                 (miny + maxy) / 2));
-        //the maximum height available to write the label
+        // the maximum height available to write the label
         double maxLabelHeight = Math.min((y + (height / 2)) - miny, maxy - y
                 - (height / 2));
-        //the maximum width available to write the label
+        // the maximum width available to write the label
         drawNonTerminalNode(aNode, graphics, context, x + (branchLength * 0.2),
                 (Math.rint((miny + maxy) / 2)) - (maxLabelHeight / 2), /* maxLabelWidth */
                 width, maxLabelHeight);
@@ -1256,7 +1263,7 @@ public class Canvas extends JComponent implements DrawableClassification,
         if (hnode == aNode) {
             return;
         }
-        //        List selectionsList;
+        // List selectionsList;
         Graphics graphics = getGraphics();
         Rectangle2D.Double hnodeArea = null;
         Point2D.Double hnodePosition = null;
@@ -1335,7 +1342,7 @@ public class Canvas extends JComponent implements DrawableClassification,
         }
         hnode = aNode;
         graphics.setPaintMode();
-        //        repaint();
+        // repaint();
     }
 
     /*

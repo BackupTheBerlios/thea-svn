@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.swing.Action;
 
+import org.apache.commons.configuration.CompositeConfiguration;
+import org.apache.commons.configuration.Configuration;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
 import org.openide.nodes.Node;
@@ -19,10 +21,11 @@ import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.StringValue;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
+import fr.unice.bioinfo.thea.TheaConfiguration;
+import fr.unice.bioinfo.thea.ontologyexplorer.OntologyProperties;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowAnnotetdGenesAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowResourceNodeProperties;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
-import fr.unice.bioinfo.thea.util.OWLProperties;
 
 /**
  * This class uses the nodes API to build a node that represents a resource from
@@ -37,7 +40,8 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
             .getResourceFactory();
 
     /** This node's display name. */
-    private String name = "";//NOI18N
+    private String name = "";// NOI18N
+
     /** A resource associated with a node in the Ontology Explorer. */
     private Resource resource;
 
@@ -45,12 +49,50 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         super((resource == null) ? Children.LEAF : new ResourceNodeChildren(
                 resource));
         this.resource = resource;
-        // Build a display name:
+        // // Build a display name:
+        // try {
+        // resourceFactory.setMemoryCached(true);
+        // String nodeName =
+        // OntologyProperties.getInstance().getNodeNameProperty(
+        // getConfiguration());
+        // Resource nodeNameProperty = null;
+        // if (nodeName != null) {
+        // nodeNameProperty = resourceFactory.getResource(nodeName);
+        // }
+        //
+        // resourceFactory.setMemoryCached(false);
+        // if (nodeNameProperty != null) {
+        //
+        // StringValue sv = (StringValue) resource
+        // .getTarget(nodeNameProperty);
+        // if (sv != null) {
+        // name = sv.getValue();
+        // } else {
+        // name = "" + resource.getId();// NOI18N
+        // }
+        // }
+        // } catch (AllontoException ae) {
+        // resourceFactory.setMemoryCached(false);
+        //
+        // }
+        // // Set the node name and display name:
+        // setName(name);
+        // setDisplayName(name);
+    }
+
+    public String getName() {
+        String name = "";
+        System.out.println("getName called");
+        // Build the display name:
         try {
             resourceFactory.setMemoryCached(true);
-            Resource nodeNameProperty = resourceFactory
-                    .getResource(OWLProperties.getInstance()
-                            .getNodeNameProperty());
+            String nodeName = OntologyProperties.getInstance()
+                    .getNodeNameProperty(getConfiguration());
+            Resource nodeNameProperty = null;
+            if (nodeName != null) {
+                nodeNameProperty = resourceFactory.getResource(nodeName);
+            }
+
             resourceFactory.setMemoryCached(false);
             if (nodeNameProperty != null) {
 
@@ -59,16 +101,19 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
                 if (sv != null) {
                     name = sv.getValue();
                 } else {
-                    name = "" + resource.getId();//NOI18N
+                    name = "" + resource.getId();// NOI18N
                 }
             }
         } catch (AllontoException ae) {
             resourceFactory.setMemoryCached(false);
 
         }
-        // Set the node name and display name:
-        setName(name);
-        setDisplayName(name);
+        return name;
+    }
+
+    public String getDisplayName() {
+        System.out.println("getDisplayName called");
+        return getName();
     }
 
     /** Returns cookie */
@@ -79,8 +124,8 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
     /** Sets cookie */
     public void setInfo(ResourceNodeInfo info) {
         this.info = info;
-        info.setName(getName());
-        //processNodeInfo(info);
+        // info.setName(getName());
+        // processNodeInfo(info);
     }
 
     private void processNodeInfo(final ResourceNodeInfo info) {
@@ -92,7 +137,7 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         while (mapIt.hasNext()) {
             entry = (Map.Entry) mapIt.next();
             e = (Entity) entry.getValue();
-            //System.out.println("key = " + entry.getKey());
+            // System.out.println("key = " + entry.getKey());
             // Since values in the Map are not all instances of
             // StringValue,
             // do tests using the instanceof operator
@@ -124,9 +169,9 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
 
         // Create properties extracted from the ontology
         Sheet.Set advanced = new Sheet.Set();
-        advanced.setDisplayName("Resource properties");//NOI18N
-        advanced.setName("advanced");//NOI18N
-        advanced.setShortDescription("Properties from Ontology");//NOI18N
+        advanced.setDisplayName("Resource properties");// NOI18N
+        advanced.setName("advanced");// NOI18N
+        advanced.setShortDescription("Properties from Ontology");// NOI18N
         processNodeInfo(info);
         Enumeration enum = info.keys();
         while (enum.hasMoreElements()) {
@@ -136,7 +181,7 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
                 continue;
             }
             advanced.put(new ResourcePropertySupport(key, String.class, key,
-                    "", info, false));//NOI18N
+                    "", info, false));// NOI18N
         }
 
         // Add advanced properties
@@ -145,13 +190,13 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         return sheet;
     }
 
-    //    /*
-    //     * (non-Javadoc)
-    //     * @see org.openide.nodes.Node#getPreferredAction()
-    //     */
-    //    public Action getPreferredAction() {
-    //        return SystemAction.get(PropertiesAction.class);
-    //    }
+    // /*
+    // * (non-Javadoc)
+    // * @see org.openide.nodes.Node#getPreferredAction()
+    // */
+    // public Action getPreferredAction() {
+    // return SystemAction.get(PropertiesAction.class);
+    // }
 
     /*
      * (non-Javadoc)
@@ -177,5 +222,31 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
     /** Make this node destroyable. */
     public boolean canDestroy() {
         return true;
+    }
+
+    private OntologyNode getOntologyNode() {
+        Node ancestor = getParentNode();
+        while ((ancestor != null) && !(ancestor instanceof OntologyNode)) {
+            ancestor = ancestor.getParentNode();
+        }
+        return (OntologyNode) ancestor;
+    }
+
+    public Configuration getConfiguration() {
+
+        Configuration localConfiguration = getOntologyNode().getConfiguration();
+
+        Configuration defaultConfiguration = TheaConfiguration.getDefault()
+                .getConfiguration();
+
+        CompositeConfiguration cc = new CompositeConfiguration();
+        if (defaultConfiguration != null) {
+            cc.addConfiguration(defaultConfiguration);
+        }
+        if (localConfiguration != null) {
+            cc.addConfiguration(localConfiguration);
+        }
+        return cc;
+
     }
 }

@@ -19,9 +19,10 @@ import fr.unice.bioinfo.thea.classification.editor.DrawableClassification;
 public class ColorAction extends GenericAction {
 
     private Selection selection;
+
     /** Resource Bundle */
     private static ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.classification.editor.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.classification.editor.Bundle"); // NOI18N;
 
     public ColorAction(String name, String accelerator, ImageIcon icon,
             String shortDescription, DrawableClassification drawable,

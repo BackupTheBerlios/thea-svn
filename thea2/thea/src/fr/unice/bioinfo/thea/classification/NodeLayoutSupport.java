@@ -8,8 +8,11 @@ import java.awt.Font;
  */
 public class NodeLayoutSupport {
     public static int NO_FRAME = 0;
+
     public static int RECTANGLE = 1;
+
     public static int ROUND_RECTANGLE = 2;
+
     public static int ELLIPSE = 3;
 
     /** The font used to write the label of the node */

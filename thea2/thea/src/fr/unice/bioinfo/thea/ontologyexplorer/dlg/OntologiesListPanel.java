@@ -27,13 +27,16 @@ public class OntologiesListPanel extends JPanel {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); // NOI18N
 
     private JComponent ontologiesSeparator;
+
     private JLabel selectLabel;
+
     private JComboBox comboBox;
 
     private Node[] ontologies = null;
+
     private ClassificationNodeInfo cni;
 
     public OntologiesListPanel(Node[] ontologies, ClassificationNodeInfo cni) {
@@ -46,7 +49,7 @@ public class OntologiesListPanel extends JPanel {
         DefaultComponentFactory compFactory = DefaultComponentFactory
                 .getInstance();
         ontologiesSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_OntologiesList"));//NOI18N);
+                .getString("LBL_OntologiesList"));// NOI18N);
         selectLabel = new JLabel();
         // create the combo box
         // if no ontology, the combo box is empty
@@ -58,7 +61,7 @@ public class OntologiesListPanel extends JPanel {
                 s[cnt] = ontologies[cnt].getDisplayName();
             }
             comboBox = new JComboBox(s);
-            //comboBox.setSelectedIndex(0);
+            // comboBox.setSelectedIndex(0);
         }
 
         CellConstraints cc = new CellConstraints();
@@ -73,7 +76,7 @@ public class OntologiesListPanel extends JPanel {
 
         add(ontologiesSeparator, cc.xywh(1, 1, 2, 1));
 
-        //---- selectLabel ----
+        // ---- selectLabel ----
         selectLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         selectLabel.setText(bundle.getString("LBL_SelectLabel"));
         add(selectLabel, cc.xy(1, 3));

@@ -43,7 +43,7 @@ public class SotaParser implements ClassificationParser {
         // ignore lines that begins with "node"
         try {
             line = buffer.readLine();
-            while (!line.startsWith("node ")) {//NO18N
+            while (!line.startsWith("node ")) {// NO18N
                 line = buffer.readLine();
             }
         } catch (IOException ioe) {
@@ -53,16 +53,16 @@ public class SotaParser implements ClassificationParser {
         // when the read line doesn't begins with "node":
         Map map = new HashMap();
         while (line != null) {
-            StringTokenizer token = new StringTokenizer(line, " ");//NOI18N
+            StringTokenizer token = new StringTokenizer(line, " ");// NOI18N
             try {
                 String string = token.nextToken();
-                if (string.equals("node")) {//NOI18N
+                if (string.equals("node")) {// NOI18N
                     String nodeId = token.nextToken();
                     Node aNode = (Node) map.get(nodeId);
                     if (aNode == null) {
                         aNode = new Node();
-                        //                        aNode.setName("");//NOI18N
-                        //                        aNode.setUserData("idInClassif", "");
+                        // aNode.setName("");//NOI18N
+                        // aNode.setUserData("idInClassif", "");
                         aNode.addProperty(Node.ID_IN_CLASSIF, "");
                         map.put(nodeId, aNode);
                     }
@@ -76,7 +76,7 @@ public class SotaParser implements ClassificationParser {
 
                     Node aNodeChild1 = null;
                     StringTokenizer aNodeChild1Token = new StringTokenizer(
-                            line, " ");//NOI18N
+                            line, " ");// NOI18N
 
                     try {
                         String sep1 = aNodeChild1Token.nextToken();
@@ -85,14 +85,14 @@ public class SotaParser implements ClassificationParser {
                         String sep3 = aNodeChild1Token.nextToken();
                         String distance = aNodeChild1Token.nextToken();
 
-                        if (!sep1.equals("Dist.") || !sep2.equals("to")//NOI18N
-                                || !sep3.equals("=")) {//NOI18N
+                        if (!sep1.equals("Dist.") || !sep2.equals("to")// NOI18N
+                                || !sep3.equals("=")) {// NOI18N
                             return null;
                         }
 
                         double branchLength = 0;
 
-                        if (!distance.trim().equals("")) {//NOI18N
+                        if (!distance.trim().equals("")) {// NOI18N
                             try {
                                 branchLength = Double.parseDouble(distance);
                                 if (branchLength <= 0) {
@@ -108,8 +108,8 @@ public class SotaParser implements ClassificationParser {
                         aNodeChild1 = (Node) map.get(aNodeChild1Name);
                         if (aNodeChild1 == null) {
                             aNodeChild1 = new Node();
-                            //                            aNodeChild1.setName("");//NOI18N
-                            //                            aNodeChild1.setUserData("idInClassif", "");
+                            // aNodeChild1.setName("");//NOI18N
+                            // aNodeChild1.setUserData("idInClassif", "");
                             aNodeChild1.addProperty(Node.ID_IN_CLASSIF, "");
                             map.put(aNodeChild1Name, aNodeChild1);
                         }
@@ -127,7 +127,7 @@ public class SotaParser implements ClassificationParser {
                     }
 
                     Node aNodeChild2 = null;
-                    aNodeChild1Token = new StringTokenizer(line, " ");//NOI18N
+                    aNodeChild1Token = new StringTokenizer(line, " ");// NOI18N
 
                     try {
                         String sep1 = aNodeChild1Token.nextToken();
@@ -136,12 +136,12 @@ public class SotaParser implements ClassificationParser {
                         String sep3 = aNodeChild1Token.nextToken();
                         String distance = aNodeChild1Token.nextToken();
 
-                        if (!sep1.equals("Dist.") || !sep2.equals("to")//NOI18N
-                                || !sep3.equals("=")) {//NOI18N
+                        if (!sep1.equals("Dist.") || !sep2.equals("to")// NOI18N
+                                || !sep3.equals("=")) {// NOI18N
                             return null;
                         }
                         double branchLength = 0;
-                        if (!distance.trim().equals("")) {//NOI18N
+                        if (!distance.trim().equals("")) {// NOI18N
                             try {
                                 branchLength = Double.parseDouble(distance);
                                 if (branchLength <= 0) {
@@ -156,8 +156,8 @@ public class SotaParser implements ClassificationParser {
                         aNodeChild2 = (Node) map.get(aNodeChild2Name);
                         if (aNodeChild2 == null) {
                             aNodeChild2 = new Node();
-                            //                            aNodeChild2.setName("");//NOI18N
-                            //                            aNodeChild2.setUserData("idInClassif", "");
+                            // aNodeChild2.setName("");//NOI18N
+                            // aNodeChild2.setUserData("idInClassif", "");
                             aNodeChild2.addProperty(Node.ID_IN_CLASSIF, "");
                             map.put(aNodeChild2Name, aNodeChild2);
                         }
@@ -174,7 +174,7 @@ public class SotaParser implements ClassificationParser {
                 } else {
                     String sep1 = token.nextToken();
                     String sep2 = token.nextToken();
-                    if (sep1.equals("goes") && sep2.equals("to")) {//NOI18N
+                    if (sep1.equals("goes") && sep2.equals("to")) {// NOI18N
                         // ok, this
                         // is a line
                         // describing
@@ -186,8 +186,8 @@ public class SotaParser implements ClassificationParser {
                             return null;
                         }
                         Node aChild = new Node();
-                        //                        aChild.setName(nodeId);
-                        //                        aChild.setUserData("idInClassif", nodeId);
+                        // aChild.setName(nodeId);
+                        // aChild.setUserData("idInClassif", nodeId);
                         aChild.addProperty(Node.ID_IN_CLASSIF, nodeId);
                         map.put(nodeId, aChild);
                         List children = aNode.getChildren();

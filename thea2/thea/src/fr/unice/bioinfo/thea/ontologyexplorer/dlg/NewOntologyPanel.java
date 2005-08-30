@@ -52,27 +52,48 @@ import fr.unice.bioinfo.thea.ontologyexplorer.db.util.DriverListUtil;
 public class NewOntologyPanel extends JPanel implements PropertyChangeListener {
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); // NOI18N
+
     private Dialog dialog;
+
     private JComponent ontologySeparator;
+
     private JLabel ontologyNameLbl;
+
     private JTextField ontologyNameField;
+
     private JLabel ontologyDescriptionLbl;
+
     private JTextField ontologyDescriptionField;
+
     private JComponent databaseSeparator;
+
     private JLabel databaseDriverLbl;
+
     private JComboBox databaseNameComboBox;
+
     private JButton addDriverBtn;
+
     private JLabel databaseNameLbl;
+
     private JTextField databaseDriverField;
+
     private JLabel databaseUrlLbl;
+
     private JComboBox databaseUrlComboBox;
+
     private JComponent authenticationSeparator;
+
     private JLabel loginNameLbl;
+
     private JTextField loginNameField;
+
     private JLabel passwordLbl;
+
     private JPasswordField passwordField;
+
     private JLabel savePasswordLbl;
+
     private JCheckBox savePasswordCheckBox;
 
     // a Database connection
@@ -97,13 +118,13 @@ public class NewOntologyPanel extends JPanel implements PropertyChangeListener {
         DefaultComponentFactory compFactory = DefaultComponentFactory
                 .getInstance();
         ontologySeparator = compFactory.createSeparator(bundle
-                .getString("LBL_Ontology")); //NOI18N
+                .getString("LBL_Ontology")); // NOI18N
         ontologyNameLbl = new JLabel();
         ontologyNameField = new JTextField();
         ontologyDescriptionLbl = new JLabel();
         ontologyDescriptionField = new JTextField();
         databaseSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_DataBase")); //NOI18N
+                .getString("LBL_DataBase")); // NOI18N
         databaseDriverLbl = new JLabel();
 
         // Create the databaseComboBox and initialise it
@@ -123,7 +144,7 @@ public class NewOntologyPanel extends JPanel implements PropertyChangeListener {
         databaseDriverField = new JTextField();
         databaseUrlLbl = new JLabel();
         databaseUrlComboBox = new JComboBox();
-        databaseUrlComboBox.setEditable(true); //Make editable
+        databaseUrlComboBox.setEditable(true); // Make editable
         authenticationSeparator = compFactory.createSeparator(bundle
                 .getString("LBL_Athentication"));
         loginNameLbl = new JLabel();
@@ -143,7 +164,7 @@ public class NewOntologyPanel extends JPanel implements PropertyChangeListener {
                 new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT,
                         FormSpec.DEFAULT_GROW),
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-                new ColumnSpec("150px:grow"), //NOI18N
+                new ColumnSpec("150px:grow"), // NOI18N
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
                 new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT,
                         FormSpec.DEFAULT_GROW) }, new RowSpec[] {
@@ -162,64 +183,64 @@ public class NewOntologyPanel extends JPanel implements PropertyChangeListener {
         // Add Ontolog separator
         add(ontologySeparator, cc.xywh(1, 1, 5, 1));
 
-        //---- ontologyNameLbl ----
+        // ---- ontologyNameLbl ----
         ontologyNameLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        ontologyNameLbl.setText(bundle.getString("LBL_OntologyName")); //NOI18N
+        ontologyNameLbl.setText(bundle.getString("LBL_OntologyName")); // NOI18N
         add(ontologyNameLbl, cc.xy(1, 3));
         add(ontologyNameField, cc.xywh(3, 3, 3, 1));
 
-        //---- ontologyDescriptionLbl ----
+        // ---- ontologyDescriptionLbl ----
         ontologyDescriptionLbl.setHorizontalAlignment(SwingConstants.RIGHT);
         ontologyDescriptionLbl.setText(bundle
-                .getString("LBL_OntologyDescription")); //NOI18N
+                .getString("LBL_OntologyDescription")); // NOI18N
         add(ontologyDescriptionLbl, cc.xy(1, 5));
         add(ontologyDescriptionField, cc.xywh(3, 5, 3, 1));
         add(databaseSeparator, cc.xywh(1, 7, 5, 1));
 
-        //---- databaseNameLbl ----
+        // ---- databaseNameLbl ----
         databaseNameLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        databaseNameLbl.setText(bundle.getString("LBL_DataBaseName")); //NOI18N
+        databaseNameLbl.setText(bundle.getString("LBL_DataBaseName")); // NOI18N
         add(databaseNameLbl, cc.xy(1, 9));
 
-        //------ databaseNameComboBox
+        // ------ databaseNameComboBox
         add(databaseNameComboBox, cc.xy(3, 9));
 
-        //---- addDriverBtn ----
-        addDriverBtn.setText(bundle.getString("LBL_AddDriver")); //NOI18N
+        // ---- addDriverBtn ----
+        addDriverBtn.setText(bundle.getString("LBL_AddDriver")); // NOI18N
         add(addDriverBtn, cc.xy(5, 9));
 
-        //---- databaseDriverLbl ----
+        // ---- databaseDriverLbl ----
         databaseDriverLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        databaseDriverLbl.setText(bundle.getString("LBL_DataBaseDriver")); //NOI18N
+        databaseDriverLbl.setText(bundle.getString("LBL_DataBaseDriver")); // NOI18N
         add(databaseDriverLbl, cc.xy(1, 11));
 
         add(databaseDriverField, cc.xywh(3, 11, 3, 1));
 
-        //---- databaseUrlLbl ----
+        // ---- databaseUrlLbl ----
         databaseUrlLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        databaseUrlLbl.setText(bundle.getString("LBL_DataBaseURL")); //NOI18N
+        databaseUrlLbl.setText(bundle.getString("LBL_DataBaseURL")); // NOI18N
         add(databaseUrlLbl, cc.xy(1, 13));
         add(databaseUrlComboBox, cc.xywh(3, 13, 3, 1));
         add(authenticationSeparator, cc.xywh(1, 15, 5, 1));
 
-        //---- loginNameLbl ----
+        // ---- loginNameLbl ----
         loginNameLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        loginNameLbl.setText(bundle.getString("LBL_LoginName")); //NOI18N
+        loginNameLbl.setText(bundle.getString("LBL_LoginName")); // NOI18N
         add(loginNameLbl, cc.xy(1, 17));
         add(loginNameField, cc.xywh(3, 17, 3, 1));
 
-        //---- passwordLbl ----
+        // ---- passwordLbl ----
         passwordLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        passwordLbl.setText(bundle.getString("LBL_Password")); //NOI18N
+        passwordLbl.setText(bundle.getString("LBL_Password")); // NOI18N
         add(passwordLbl, cc.xy(1, 19));
         add(passwordField, cc.xywh(3, 19, 3, 1));
 
-        //---- savePasswordLbl ----
+        // ---- savePasswordLbl ----
         savePasswordLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        savePasswordLbl.setText(bundle.getString("LBL_SavePassword")); //NOI18N
+        savePasswordLbl.setText(bundle.getString("LBL_SavePassword")); // NOI18N
         add(savePasswordLbl, cc.xy(1, 21));
 
-        //---- savePasswordCheckBox ----
+        // ---- savePasswordCheckBox ----
         savePasswordCheckBox.setHorizontalAlignment(SwingConstants.LEFT);
         add(savePasswordCheckBox, cc.xy(3, 21));
     }
@@ -238,22 +259,22 @@ public class NewOntologyPanel extends JPanel implements PropertyChangeListener {
 
                     if (drvLoc.size() < 1) {
                         err.append(bundle
-                                .getString("AddDriverDialog_MissingFile")); //NOI18N
+                                .getString("AddDriverDialog_MissingFile")); // NOI18N
                     }
 
                     if ((drvClass == null) || drvClass.equals("")) {
                         if (err.length() > 0) {
-                            err.append(", "); //NOI18N
+                            err.append(", "); // NOI18N
                         }
 
                         err.append(bundle
-                                .getString("AddDriverDialog_MissingClass")); //NOI18N
+                                .getString("AddDriverDialog_MissingClass")); // NOI18N
                     }
 
                     if (err.length() > 0) {
                         String message = MessageFormat.format(bundle
                                 .getString("AddDriverDialog_ErrorMessage"),
-                                new String[] { err.toString() }); //NOI18N
+                                new String[] { err.toString() }); // NOI18N
                         DialogDisplayer.getDefault().notify(
                                 new NotifyDescriptor.Message(message,
                                         NotifyDescriptor.INFORMATION_MESSAGE));
@@ -263,7 +284,7 @@ public class NewOntologyPanel extends JPanel implements PropertyChangeListener {
 
                     closeDialog();
 
-                    //create driver instance and save it in the XML format
+                    // create driver instance and save it in the XML format
                     if ((name == null) || name.equals("")) {
                         name = drvClass;
                     }
@@ -273,14 +294,14 @@ public class NewOntologyPanel extends JPanel implements PropertyChangeListener {
                                 new JDBCDriver(name, drvClass, (URL[]) drvLoc
                                         .toArray(new URL[drvLoc.size()])));
                     } catch (IOException exc) {
-                        //PENDING
+                        // PENDING
                     }
                 }
             }
         };
 
         DialogDescriptor descriptor = new DialogDescriptor(dlgPanel, bundle
-                .getString("AddDriverDialogTitle"), true, actionListener); //NOI18N
+                .getString("AddDriverDialogTitle"), true, actionListener); // NOI18N
         Object[] closingOptions = { DialogDescriptor.CANCEL_OPTION };
         descriptor.setClosingOptions(closingOptions);
         dialog = DialogDisplayer.getDefault().createDialog(descriptor);
@@ -295,7 +316,7 @@ public class NewOntologyPanel extends JPanel implements PropertyChangeListener {
 
     // Initializes databaseNameComboBox
     private void initDatabaseNameComboBox() {
-        //com.mysql.jdbc.Driver
+        // com.mysql.jdbc.Driver
         Vector drvs = new Vector();
         JDBCDriver[] drivers = JDBCDriverManager.getDefault().getDrivers();
 
@@ -306,8 +327,8 @@ public class NewOntologyPanel extends JPanel implements PropertyChangeListener {
         }
 
         // Add a default driver
-        drvs.add(new JDBCDriver("MySQL (MM.MySQL driver)", //NOI18N
-                "org.gjt.mm.mysql.Driver")); //NOI18N
+        drvs.add(new JDBCDriver("MySQL (MM.MySQL driver)", // NOI18N
+                "org.gjt.mm.mysql.Driver")); // NOI18N
 
         databaseNameComboBox = new JComboBox(drvs);
     }
@@ -351,7 +372,7 @@ public class NewOntologyPanel extends JPanel implements PropertyChangeListener {
      * Returns selected Database's name
      */
     public String getSelectedDatabaseName() {
-        String db = ""; //NOI18N
+        String db = ""; // NOI18N
 
         if (databaseNameComboBox.getSelectedItem() != null) {
             db = ((JDBCDriver) databaseNameComboBox.getSelectedItem())
@@ -396,9 +417,9 @@ public class NewOntologyPanel extends JPanel implements PropertyChangeListener {
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equalsIgnoreCase("add")) { //NOI18N
+        if (evt.getPropertyName().equalsIgnoreCase("add")) { // NOI18N
             databaseNameComboBox.addItem(((JDBCDriver) evt.getNewValue()));
-        } else if (evt.getPropertyName().equalsIgnoreCase("remove")) { //NOI18N
+        } else if (evt.getPropertyName().equalsIgnoreCase("remove")) { // NOI18N
             databaseNameComboBox.removeItem(((JDBCDriver) evt.getOldValue()));
         }
     }

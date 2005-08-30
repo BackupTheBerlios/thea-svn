@@ -27,14 +27,18 @@ import fr.unice.bioinfo.thea.classification.settings.CESettings;
 public class ExpressionValuesOptionsPanel extends JPanel {
 
     private JComponent expressionValuesSeparator;
+
     private JLabel slotsLbl;
+
     private JTextField slotsField;
+
     private JComponent lineSeparator;
+
     private JButton applyBtn;
 
     /** Resource Bundle */
     private static ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.dlg.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.dlg.Bundle"); // NOI18N;
 
     public ExpressionValuesOptionsPanel() {
         init();
@@ -44,7 +48,7 @@ public class ExpressionValuesOptionsPanel extends JPanel {
         DefaultComponentFactory compFactory = DefaultComponentFactory
                 .getInstance();
         expressionValuesSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_ExpressionValuesSeparator"));//NOI18N
+                .getString("LBL_ExpressionValuesSeparator"));// NOI18N
         lineSeparator = compFactory.createSeparator("");
 
         slotsLbl = new JLabel();
@@ -61,7 +65,7 @@ public class ExpressionValuesOptionsPanel extends JPanel {
                 new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT,
                         FormSpec.DEFAULT_GROW),
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-                new ColumnSpec("max(min;50px)") }, new RowSpec[] {//NOI18N
+                new ColumnSpec("max(min;50px)") }, new RowSpec[] {// NOI18N
                 FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
                         FormFactory.DEFAULT_ROWSPEC,
                         FormFactory.LINE_GAP_ROWSPEC,
@@ -70,17 +74,17 @@ public class ExpressionValuesOptionsPanel extends JPanel {
                         FormFactory.DEFAULT_ROWSPEC }));
         add(expressionValuesSeparator, cc.xywh(1, 1, 5, 1));
 
-        //---- slotsLbl ----
-        slotsLbl.setText(bundle.getString("TXT_SlotsLbl"));//NOI18N
-        slotsLbl.setToolTipText(bundle.getString("TIP_SlotsLbl"));//NOI18N
+        // ---- slotsLbl ----
+        slotsLbl.setText(bundle.getString("TXT_SlotsLbl"));// NOI18N
+        slotsLbl.setToolTipText(bundle.getString("TIP_SlotsLbl"));// NOI18N
         add(slotsLbl, cc.xywh(1, 3, 3, 1));
 
         slotsField.setText("" + CESettings.getInstance().getSlots());
         add(slotsField, cc.xy(5, 3));
         add(lineSeparator, cc.xywh(1, 5, 5, 1));
 
-        //---- applyBtn ----
-        applyBtn.setText(bundle.getString("TXT_ApplyBtn"));//NOI18N
+        // ---- applyBtn ----
+        applyBtn.setText(bundle.getString("TXT_ApplyBtn"));// NOI18N
         applyBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setSlots(

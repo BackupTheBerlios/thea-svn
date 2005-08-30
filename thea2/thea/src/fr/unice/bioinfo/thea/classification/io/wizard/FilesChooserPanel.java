@@ -42,13 +42,18 @@ public class FilesChooserPanel extends JPanel implements PropertyChangeListener 
 
     /** Resource Bundle */
     private static ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.classification.io.wizard.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.classification.io.wizard.Bundle"); // NOI18N;
 
     private JButton cdfBtn;
+
     private JButton tdfBtn;
+
     private JLabel cdfLbl;
+
     private JLabel tdfLbl;
+
     private JTextField cdfField;
+
     private JTextField tdfField;
 
     private boolean isTabularDataFileSelected = false;
@@ -88,7 +93,7 @@ public class FilesChooserPanel extends JPanel implements PropertyChangeListener 
         cdfBtn
                 .setIcon(new ImageIcon(
                         Utilities
-                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/BrowseIcon16.gif"))); //NOI18N
+                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/BrowseIcon16.gif"))); // NOI18N
         cdfBtn.addActionListener(new BrowseCDFBtnActionListener());
         gbl.setConstraints(cdfBtn, constraints);
         add(cdfBtn);
@@ -114,7 +119,7 @@ public class FilesChooserPanel extends JPanel implements PropertyChangeListener 
         tdfBtn
                 .setIcon(new ImageIcon(
                         Utilities
-                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/BrowseIcon16.gif"))); //NOI18N
+                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/BrowseIcon16.gif"))); // NOI18N
         tdfBtn.addActionListener(new BrowseTDFBtnActionListener());
         gbl.setConstraints(tdfBtn, constraints);
         add(tdfBtn);
@@ -152,7 +157,7 @@ public class FilesChooserPanel extends JPanel implements PropertyChangeListener 
             }
             File file = chooser.getSelectedFile();
 
-            //Save the new used path
+            // Save the new used path
             OESettings.getInstance().setLastBrowsedDirectory(file.getParent());
             performCDFAction(file);
         }
@@ -164,12 +169,12 @@ public class FilesChooserPanel extends JPanel implements PropertyChangeListener 
     private void performCDFAction(File file) {
         // No file available:
         if (file == null) {
-            cdfField.setText("");//NOI18N
+            cdfField.setText("");// NOI18N
             return;
         }
         // read access:
         if (!file.canRead()) {
-            cdfField.setText("");//NOI18N
+            cdfField.setText("");// NOI18N
             return;
         }
         // store file for next steps:
@@ -194,25 +199,25 @@ public class FilesChooserPanel extends JPanel implements PropertyChangeListener 
                 return;
             }
             String string = null;
-            if (extension.equalsIgnoreCase(".gtr")) {//NOI18N
+            if (extension.equalsIgnoreCase(".gtr")) {// NOI18N
                 // cluster format
-                string = "cdt";//NOI18N
-            } else if (extension.equalsIgnoreCase(".sot")) {//NOI18N
+                string = "cdt";// NOI18N
+            } else if (extension.equalsIgnoreCase(".sot")) {// NOI18N
                 // sota format
-                string = "sdt";//NOI18N
-            } else if (extension.equalsIgnoreCase(".nw")//NOI18N
-                    || extension.equalsIgnoreCase(".nh")) {//NOI18N
+                string = "sdt";// NOI18N
+            } else if (extension.equalsIgnoreCase(".nw")// NOI18N
+                    || extension.equalsIgnoreCase(".nh")) {// NOI18N
             }
             if (isTabularDataFileSelected == true) {
                 return;
             }
             try {
-                File tdf = new File(baseFileName + "."//NOI18N
+                File tdf = new File(baseFileName + "."// NOI18N
                         + string);
                 if (tdf.canRead()) {
                     ClassificationInfo.getInstance().setTabularDataFile(tdf);
                 } else {
-                    tdf = new File(baseFileName + ".txt");//NOI18N
+                    tdf = new File(baseFileName + ".txt");// NOI18N
                     if (tdf.canRead()) {
                         ClassificationInfo.getInstance()
                                 .setTabularDataFile(tdf);
@@ -239,19 +244,19 @@ public class FilesChooserPanel extends JPanel implements PropertyChangeListener 
             return;
         }
         if (!file.canRead()) {
-            tdfField.setText("");//NOI18N
+            tdfField.setText("");// NOI18N
             return;
         }
-        //        if (!typeSelectionMadeByUser && (clusteredDataFile == null)) {
-        //            dataFormatComboBox.setSelectedIndex(TYPE_UNCLUSTERED);
-        //            selectedFormat = TYPE_UNCLUSTERED;
-        //            typeSelectionMadeByUser = false;
-        //        }
+        // if (!typeSelectionMadeByUser && (clusteredDataFile == null)) {
+        // dataFormatComboBox.setSelectedIndex(TYPE_UNCLUSTERED);
+        // selectedFormat = TYPE_UNCLUSTERED;
+        // typeSelectionMadeByUser = false;
+        // }
         ClassificationInfo.getInstance().setTabularDataFile(file);
         tdfField.setText(file.getAbsolutePath());
         isTabularDataFileSelected = true;
-        //        ClPreviewPanel.previewDataFile(ClassificationInfo.getInstance()
-        //                .getTabularDataFile());
+        // ClPreviewPanel.previewDataFile(ClassificationInfo.getInstance()
+        // .getTabularDataFile());
     }
 
     /**

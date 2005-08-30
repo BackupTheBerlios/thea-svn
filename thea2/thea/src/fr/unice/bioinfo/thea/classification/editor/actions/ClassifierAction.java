@@ -22,9 +22,10 @@ import fr.unice.bioinfo.thea.classification.editor.dlg.ProfileClassifierPanel;
 public class ClassifierAction extends GenericAction {
 
     private Node aNode;
+
     /** Resource Bundle */
     private static ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.classification.editor.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.classification.editor.Bundle"); // NOI18N;
 
     public ClassifierAction(String name, String accelerator, ImageIcon icon,
             String shortDescription, DrawableClassification drawable, Node aNode) {
@@ -41,7 +42,7 @@ public class ClassifierAction extends GenericAction {
      */
     public void actionPerformed(ActionEvent e) {
         ProfileClassifierPanel p = new ProfileClassifierPanel(aNode);
-        //create the hide button
+        // create the hide button
         JButton hideBtn = new JButton(bundle.getString("LBL_HideButton_Name"));
         hideBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

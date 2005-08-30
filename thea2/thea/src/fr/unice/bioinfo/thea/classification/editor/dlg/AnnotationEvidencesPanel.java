@@ -40,28 +40,34 @@ public class AnnotationEvidencesPanel extends JPanel {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); //NOI18N
-    //separators
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); // NOI18N
+
+    // separators
     private JComponent evidencesSeparator;
 
-    //  labels
+    // labels
     private JLabel allEvidencesLbl;
+
     private JLabel selectedEvidencesLbl;
 
-    //  lists
+    // lists
     private JList allEvidencesList;
+
     private JList selectedEvidencesList;
 
-    //  scroll panes
+    // scroll panes
     private JScrollPane allEvidencesJsp;
+
     private JScrollPane selectedEvidencesJsp;
 
     // buttons
     private JButton addEvidencesBtn;
+
     private JButton removeEvidencesBtn;
 
-    //  lists' models
+    // lists' models
     private DefaultListModel allEvidencesModel;
+
     private DefaultListModel selectedEvidencesModel;
 
     private String[] evidences;
@@ -72,16 +78,16 @@ public class AnnotationEvidencesPanel extends JPanel {
     }
 
     private void init() {
-        //      create separators
+        // create separators
         DefaultComponentFactory compFactory = DefaultComponentFactory
                 .getInstance();
-        evidencesSeparator = compFactory.createSeparator("Evidences");//NOI18N
+        evidencesSeparator = compFactory.createSeparator("Evidences");// NOI18N
 
-        //      labels
+        // labels
         allEvidencesLbl = new JLabel();
         selectedEvidencesLbl = new JLabel();
 
-        //      lists
+        // lists
         allEvidencesList = new JList(allEvidencesModel);
         allEvidencesList
                 .addListSelectionListener(new AllEvidencesListSelectionListener());
@@ -92,13 +98,13 @@ public class AnnotationEvidencesPanel extends JPanel {
                 .addListSelectionListener(new SelectedEvidencesListSelectionListener());
         selectedEvidencesJsp = new JScrollPane(selectedEvidencesList);
 
-        //      selection mode
+        // selection mode
         allEvidencesList
                 .setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         selectedEvidencesList
                 .setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        //      buttons
+        // buttons
         addEvidencesBtn = new JButton();
         addEvidencesBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -137,40 +143,40 @@ public class AnnotationEvidencesPanel extends JPanel {
         CellConstraints cc = new CellConstraints();
         add(evidencesSeparator, cc.xywh(1, 1, 5, 1));
 
-        //---- allEvidencesLbl ----
-        allEvidencesLbl.setText(bundle.getString("LBL_AllEvidencesList"));//NOI18N
+        // ---- allEvidencesLbl ----
+        allEvidencesLbl.setText(bundle.getString("LBL_AllEvidencesList"));// NOI18N
         allEvidencesLbl.setToolTipText(bundle
-                .getString("HINT_AllEvidencesList"));//NOI18N
+                .getString("HINT_AllEvidencesList"));// NOI18N
         add(allEvidencesLbl, cc.xy(1, 3));
 
-        //---- selectedEvidencesLbl ----
+        // ---- selectedEvidencesLbl ----
         selectedEvidencesLbl.setText(bundle
-                .getString("LBL_SelectedEvidencesList"));//NOI18N
+                .getString("LBL_SelectedEvidencesList"));// NOI18N
         selectedEvidencesLbl.setToolTipText(bundle
-                .getString("HINT_SelectedEvidencesList"));//NOI18N
+                .getString("HINT_SelectedEvidencesList"));// NOI18N
         add(selectedEvidencesLbl, cc.xy(5, 3));
         add(allEvidencesJsp, cc.xywh(1, 4, 1, 8, CellConstraints.FILL,
                 CellConstraints.FILL));
         add(selectedEvidencesJsp, cc.xywh(5, 4, 1, 8, CellConstraints.FILL,
                 CellConstraints.FILL));
 
-        //---- addEvidenceBtn ----
+        // ---- addEvidenceBtn ----
         addEvidencesBtn.setBorder(new EtchedBorder());
-        addEvidencesBtn.setToolTipText(bundle.getString("HINT_AddEvidence"));//NOI18N
+        addEvidencesBtn.setToolTipText(bundle.getString("HINT_AddEvidence"));// NOI18N
         addEvidencesBtn
                 .setIcon(new ImageIcon(
                         Utilities
-                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/AddIcon16.gif"))); //NOI18N
+                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/AddIcon16.gif"))); // NOI18N
         add(addEvidencesBtn, cc.xy(3, 7));
 
-        //---- removeEvidenceBtn ----
+        // ---- removeEvidenceBtn ----
         removeEvidencesBtn.setBorder(new EtchedBorder());
         removeEvidencesBtn.setToolTipText(bundle
-                .getString("HINT_RemoveEvidence"));//NOI18N
+                .getString("HINT_RemoveEvidence"));// NOI18N
         removeEvidencesBtn
                 .setIcon(new ImageIcon(
                         Utilities
-                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/RemoveIcon16.gif"))); //NOI18N
+                                .loadImage("fr/unice/bioinfo/thea/ontologyexplorer/resources/RemoveIcon16.gif"))); // NOI18N
         add(removeEvidencesBtn, cc.xy(3, 9));
     }
 
@@ -180,20 +186,20 @@ public class AnnotationEvidencesPanel extends JPanel {
      * user would have selected in the last run.
      */
     private void createModels() {
-        //      create the list's allEvidencesModel
+        // create the list's allEvidencesModel
         allEvidencesModel = new DefaultListModel();
         // get evidences list form the configuration file.
-        //      get the configuration
+        // get the configuration
         Configuration con = TheaConfiguration.getDefault().getConfiguration();
         // get list of columns (properties)
-        Object o = con.getProperty("evidences.uri");//NOI18N
+        Object o = con.getProperty("evidences.uri");// NOI18N
         if (o instanceof Collection) {
             ArrayList al = new ArrayList((Collection) o);
             Object[] names = al.toArray();
             evidences = new String[al.size()];
             for (int counter = 0; counter < al.size(); counter++) {
                 String name = (String) names[counter];
-                evidences[counter] = name;//.substring(name.indexOf("#") +
+                evidences[counter] = name;// .substring(name.indexOf("#") +
                 // 1);//NOI18N
                 allEvidencesModel.addElement(evidences[counter]);
             }
@@ -243,7 +249,7 @@ public class AnnotationEvidencesPanel extends JPanel {
     }
 
     private void performAddEvidencesBtnAction(ActionEvent e) {
-        //      Get the index of all the selected items
+        // Get the index of all the selected items
         int[] selectedIx = allEvidencesList.getSelectedIndices();
         // Get all the selected items using the indices
         for (int i = 0; i < selectedIx.length; i++) {
@@ -260,9 +266,9 @@ public class AnnotationEvidencesPanel extends JPanel {
         int size = selectedEvidencesModel.getSize();
         if (size == 0) {
             removeEvidencesBtn.setEnabled(false);
-        } else { //Select an index.
+        } else { // Select an index.
             if (index == selectedEvidencesModel.getSize()) {
-                //removed item in last position
+                // removed item in last position
                 index--;
             }
             selectedEvidencesList.setSelectedIndex(index);

@@ -28,20 +28,34 @@ import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 public class ConnectPanel extends JPanel {
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); // NOI18N
+
     private JComponent databaseSeparator;
+
     private JLabel driverLbl;
+
     private JTextField driverField;
+
     private JLabel urlLbl;
+
     private JTextField urlField;
+
     private JComponent authenticationSeparator;
+
     private JLabel loginLbl;
+
     private JTextField loginField;
+
     private JLabel passwordLbl;
+
     private JPasswordField passwordField;
+
     private JComponent barSeparator;
+
     private JLabel progressionLbl;
+
     private JProgressBar bar;
+
     private DatabaseConnection connection;
 
     public ConnectPanel(DatabaseConnection connection) {
@@ -58,15 +72,15 @@ public class ConnectPanel extends JPanel {
             public void propertyChange(final PropertyChangeEvent event) {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        if (event.getPropertyName().equals("connecting")) { //NOI18N
+                        if (event.getPropertyName().equals("connecting")) { // NOI18N
                             startProgress();
                         }
 
-                        if (event.getPropertyName().equals("connected")) { //NOI18N
+                        if (event.getPropertyName().equals("connected")) { // NOI18N
                             stopProgress(true);
                         }
 
-                        if (event.getPropertyName().equals("failed")) { //NOI18N
+                        if (event.getPropertyName().equals("failed")) { // NOI18N
                             stopProgress(false);
                         }
                     }
@@ -82,11 +96,11 @@ public class ConnectPanel extends JPanel {
         DefaultComponentFactory compFactory = DefaultComponentFactory
                 .getInstance();
         databaseSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_DataBase")); //NOI18N
+                .getString("LBL_DataBase")); // NOI18N
         authenticationSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_Athentication")); //NOI18N
+                .getString("LBL_Athentication")); // NOI18N
         barSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_Connection")); //NOI18N
+                .getString("LBL_Connection")); // NOI18N
 
         driverLbl = new JLabel();
         driverField = new JTextField();
@@ -105,9 +119,9 @@ public class ConnectPanel extends JPanel {
         setBorder(Borders.DIALOG_BORDER);
 
         setLayout(new FormLayout(new ColumnSpec[] {
-                new ColumnSpec("max(min;120px)"), //NOI18N
+                new ColumnSpec("max(min;120px)"), // NOI18N
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-                new ColumnSpec("max(min;250px)") }, new RowSpec[] { //NOI18N
+                new ColumnSpec("max(min;250px)") }, new RowSpec[] { // NOI18N
 
                 FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
                         FormFactory.DEFAULT_ROWSPEC,
@@ -126,37 +140,37 @@ public class ConnectPanel extends JPanel {
 
         add(databaseSeparator, cc.xywh(1, 1, 3, 1));
 
-        //---- driverLbl ----
+        // ---- driverLbl ----
         driverLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        driverLbl.setText(bundle.getString("LBL_DataBaseDriver")); //NOI18N
+        driverLbl.setText(bundle.getString("LBL_DataBaseDriver")); // NOI18N
         add(driverLbl, cc.xy(1, 3));
 
-        //---- driverField ----
+        // ---- driverField ----
         driverField.setEditable(false);
         add(driverField, cc.xy(3, 3));
 
-        //---- urlLbl ----
+        // ---- urlLbl ----
         urlLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        urlLbl.setText(bundle.getString("LBL_DataBaseURL")); //NOI18N
+        urlLbl.setText(bundle.getString("LBL_DataBaseURL")); // NOI18N
         add(urlLbl, cc.xy(1, 5));
         add(urlField, cc.xy(3, 5));
         add(authenticationSeparator, cc.xywh(1, 7, 3, 1));
 
-        //---- loginLbl ----
+        // ---- loginLbl ----
         loginLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        loginLbl.setText(bundle.getString("LBL_LoginName")); //NOI18N
+        loginLbl.setText(bundle.getString("LBL_LoginName")); // NOI18N
         add(loginLbl, cc.xy(1, 9));
         add(loginField, cc.xy(3, 9));
 
-        //---- passwordLbl ----
+        // ---- passwordLbl ----
         passwordLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        passwordLbl.setText(bundle.getString("LBL_Password")); //NOI18N
+        passwordLbl.setText(bundle.getString("LBL_Password")); // NOI18N
         add(passwordLbl, cc.xy(1, 11));
         add(passwordField, cc.xy(3, 11));
 
         // ---- progressionLbl ----
         progressionLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        progressionLbl.setText(bundle.getString("LBL_ConnectionStatus")); //NOI18N
+        progressionLbl.setText(bundle.getString("LBL_ConnectionStatus")); // NOI18N
         add(progressionLbl, cc.xy(1, 15));
         add(bar, cc.xy(3, 15));
     }
@@ -164,7 +178,7 @@ public class ConnectPanel extends JPanel {
     private void startProgress() {
         bar.setBorderPainted(true);
         bar.setIndeterminate(true);
-        bar.setString(bundle.getString("ConnectionProgress_Connecting")); //NOI18N
+        bar.setString(bundle.getString("ConnectionProgress_Connecting")); // NOI18N
     }
 
     private void stopProgress(boolean connected) {
@@ -172,10 +186,10 @@ public class ConnectPanel extends JPanel {
 
         if (connected) {
             bar.setValue(bar.getMaximum());
-            bar.setString(bundle.getString("ConnectionProgress_Established")); //NOI18N
+            bar.setString(bundle.getString("ConnectionProgress_Established")); // NOI18N
         } else {
             bar.setValue(bar.getMinimum());
-            bar.setString(bundle.getString("ConnectionProgress_Failed")); //NOI18N
+            bar.setString(bundle.getString("ConnectionProgress_Failed")); // NOI18N
         }
     }
 

@@ -26,12 +26,14 @@ import fr.unice.bioinfo.thea.classification.settings.CESettings;
 public class OntologyOptionsPanel extends JPanel {
 
     private JComponent ontologySeparator;
+
     private JCheckBox showIDBtn;
+
     private JCheckBox showNameBtn;
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.dlg.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.dlg.Bundle"); // NOI18N
 
     public OntologyOptionsPanel() {
         init();
@@ -60,7 +62,7 @@ public class OntologyOptionsPanel extends JPanel {
                 FormFactory.DEFAULT_ROWSPEC }));
         add(ontologySeparator, cc.xywh(1, 1, 5, 1));
 
-        //---- showIDBtn ----
+        // ---- showIDBtn ----
         showIDBtn.setText(bundle.getString("TXT_ShowIDBtn"));
         showIDBtn.setToolTipText(bundle.getString("TIP_ShowIDBtn"));
         showIDBtn.setSelected(CESettings.getInstance().isShowTermID());
@@ -71,7 +73,7 @@ public class OntologyOptionsPanel extends JPanel {
         });
         add(showIDBtn, cc.xywh(1, 3, 5, 1));
 
-        //---- showNameBtn ----
+        // ---- showNameBtn ----
         showNameBtn.setText(bundle.getString("TXT_ShowNameBtn"));
         showNameBtn.setToolTipText(bundle.getString("TIP_ShowNameBtn"));
         showNameBtn.setSelected(CESettings.getInstance().isShowTermName());

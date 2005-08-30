@@ -32,8 +32,10 @@ import fr.unice.bioinfo.thea.classification.settings.CESettings;
 public class ZoomManager extends MouseInputAdapter {
     /** The {@link Zoomable}components to be managet by this adapter. */
     private Zoomable zoomable;
+
     /** The zoom factor used for zooming using the zooming icon. */
     private double zoomFactorX;
+
     private double zoomFactorY;
 
     public ZoomManager(Zoomable zoomable) {
@@ -84,7 +86,7 @@ public class ZoomManager extends MouseInputAdapter {
                     || ((currentZoomY - zoomFactorY) < 0)) {
                 return;
             }
-            //If the Shif key is pressed, zoom only on the x-axis
+            // If the Shif key is pressed, zoom only on the x-axis
             if (e.isShiftDown()) {
                 zoomable.zoom(currentZoomX - zoomFactorX, currentZoomY);
             }

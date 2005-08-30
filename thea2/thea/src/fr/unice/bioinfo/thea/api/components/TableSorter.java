@@ -69,7 +69,9 @@ public class TableSorter extends AbstractTableModel {
     protected TableModel tableModel;
 
     public static final int DESCENDING = -1;
+
     public static final int NOT_SORTED = 0;
+
     public static final int ASCENDING = 1;
 
     private static Directive EMPTY_DIRECTIVE = new Directive(-1, NOT_SORTED);
@@ -79,6 +81,7 @@ public class TableSorter extends AbstractTableModel {
             return ((Comparable) o1).compareTo(o2);
         }
     };
+
     public static final Comparator LEXICAL_COMPARATOR = new Comparator() {
         public int compare(Object o1, Object o2) {
             return o1.toString().compareTo(o2.toString());
@@ -86,12 +89,17 @@ public class TableSorter extends AbstractTableModel {
     };
 
     private Row[] viewToModel;
+
     private int[] modelToView;
 
     private JTableHeader tableHeader;
+
     private MouseListener mouseListener;
+
     private TableModelListener tableModelListener;
+
     private Map columnComparators = new HashMap();
+
     private List sortingColumns = new ArrayList();
 
     public TableSorter() {
@@ -411,7 +419,9 @@ public class TableSorter extends AbstractTableModel {
 
     private static class Arrow implements Icon {
         private boolean descending;
+
         private int size;
+
         private int priority;
 
         public Arrow(boolean descending, int size, int priority) {
@@ -487,6 +497,7 @@ public class TableSorter extends AbstractTableModel {
 
     private static class Directive {
         private int column;
+
         private int direction;
 
         public Directive(int column, int direction) {

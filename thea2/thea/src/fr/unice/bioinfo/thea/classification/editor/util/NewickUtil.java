@@ -45,7 +45,7 @@ public class NewickUtil {
 
             n.setChildren(newick(in));
 
-            //			System.err.print("final : "); n.toStringg();
+            // System.err.print("final : "); n.toStringg();
             return n;
         } catch (IOException e) {
         }
@@ -67,11 +67,11 @@ public class NewickUtil {
                 c = in.read();
                 n.setChildren(newick(in));
 
-                //				System.err.print("built : ");n.toStringg();
-                //				n.setName(readLabel(in));
-                //				readBranchLength(in);
-                //				childs.add(n);
-                //				n = new Node();
+                // System.err.print("built : ");n.toStringg();
+                // n.setName(readLabel(in));
+                // readBranchLength(in);
+                // childs.add(n);
+                // n = new Node();
             } else if (c == ')') {
                 childs.add(initNodeOrNodeGroup(n, label, branchLength));
                 c = in.read();
@@ -102,7 +102,7 @@ public class NewickUtil {
 
         childs.add(n);
 
-        //System.err.println("childs="+childs);
+        // System.err.println("childs="+childs);
         return childs;
     }
 
@@ -120,7 +120,7 @@ public class NewickUtil {
         if (label.indexOf('|') == -1) {
             // there is only one label in the string
             n.setName(label);
-            //            n.setUserData("idInClassif", label);
+            // n.setUserData("idInClassif", label);
             n.addProperty(Node.ID_IN_CLASSIF, label);
             n.setBranchLength(branchLength);
 
@@ -156,14 +156,14 @@ public class NewickUtil {
 
                 Node childNode = new Node();
                 childNode.setName(nodeLabel);
-                //                childNode.setUserData("idInClassif", nodeLabel);
+                // childNode.setUserData("idInClassif", nodeLabel);
                 childNode.addProperty(Node.ID_IN_CLASSIF, nodeLabel);
                 childNode.setBranchLength(bLength);
                 childs.add(childNode);
             } else {
                 Node childNode = new Node();
                 childNode.setName(nodeIdent);
-                //                childNode.setUserData("idInClassif", nodeIdent);
+                // childNode.setUserData("idInClassif", nodeIdent);
                 childNode.addProperty(Node.ID_IN_CLASSIF, nodeIdent);
                 childs.add(childNode);
             }
@@ -214,21 +214,22 @@ public class NewickUtil {
                 // two double quotes is converted into one
             }
 
-            //             if ((c == '_') && !quoted) { // Underscore characters in unquoted
+            // if ((c == '_') && !quoted) { // Underscore characters in unquoted
             // labels are converted to blanks
-            //                 c = ' ';
-            //             }
-            if (" \t".indexOf(c) != -1) { // Blanks or tabs may appear anywhere
+            // c = ' ';
+            // }
+            if (" \t".indexOf(c) != -1) { // Blanks or tabs may appear
+                // anywhere
 
                 // in quoted labels
-                //				if (!quoted) break;
+                // if (!quoted) break;
             }
 
             label += (char) c;
             c = in.read();
         }
 
-        //System.err.println("Label read="+label);
+        // System.err.println("Label read="+label);
         return label;
     }
 

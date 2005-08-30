@@ -10,7 +10,7 @@ import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
 
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
-import fr.unice.bioinfo.thea.ontologyexplorer.PropertiesEditor;
+import fr.unice.bioinfo.thea.ontologyexplorer.ResourceNodePropertiesEditor;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 
@@ -21,7 +21,7 @@ public class ShowResourceNodeProperties extends NodeAction {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
 
     /*
      * (non-Javadoc)
@@ -35,11 +35,12 @@ public class ShowResourceNodeProperties extends NodeAction {
         final ResourceNodeInfo rni = (ResourceNodeInfo) node
                 .getCookie(ResourceNodeInfo.class);
 
-        //      Create the panel and display the panel in a thread
+        // Create the panel and display the panel in a thread
 
         Runnable doTopComponent = new Runnable() {
             public void run() {
-                PropertiesEditor editor = new PropertiesEditor(node);
+                ResourceNodePropertiesEditor editor = new ResourceNodePropertiesEditor(
+                        node);
                 editor.open();
                 editor.requestActive();
             }

@@ -20,15 +20,22 @@ public class ClassificationInfo {
     /** Tabular data's file . */
     private File tabularDataFile;
 
-    private String name = "";//NOI18N
+    private String name = "";// NOI18N
+
     private String hint;
+
     private static int counter = 0;
 
     private int minIgnoredRow = -1;
+
     private int maxIgnoredRow = -1;
+
     private int minIgnoredColumn = -1;
+
     private int maxIgnoredColumn = -1;
+
     private int geneLabels = -1;
+
     private int columnLabels = -1;
 
     private int nbColumns;

@@ -21,10 +21,10 @@ public class CESettings extends SystemOption {
     public static final String PROP_EVIDENCES = "lastSelectedEvidences"; // NOI18N
 
     /** zoomFactorX property name */
-    public static final String ZOOM_FACTOR_X = "zoomFactorX";//NOI18N
+    public static final String ZOOM_FACTOR_X = "zoomFactorX";// NOI18N
 
     /** zoomFactorY property name */
-    public static final String ZOOM_FACTOR_Y = "zoomFactorY";//NOI18N
+    public static final String ZOOM_FACTOR_Y = "zoomFactorY";// NOI18N
 
     /** showTermID property name */
     public static final String PROP_SHOW_TERM_ID = "showTermID"; // NOI18N
@@ -220,14 +220,14 @@ public class CESettings extends SystemOption {
      * The following variables corresponds to Gene Product Labelling Panel
      */
 
-    //    /** Show Chromosome Name property */
-    //    private static boolean showChromosomeName = false;
+    // /** Show Chromosome Name property */
+    // private static boolean showChromosomeName = false;
     //
-    //    /** Show Start Position property */
-    //    private static boolean showStartPosition = false;
+    // /** Show Start Position property */
+    // private static boolean showStartPosition = false;
     //
-    //    /** Show End Position property */
-    //    private static boolean showEndPosition = false;
+    // /** Show End Position property */
+    // private static boolean showEndPosition = false;
     /** The accessor for String values */
     private static String accessor;
 
@@ -332,7 +332,7 @@ public class CESettings extends SystemOption {
     private static boolean userSpecifiedBaseSelected = false;
 
     /** User specified base of calculation file name property */
-    private static String genesFilePath = "";//NPOI18N
+    private static String genesFilePath = "";// NPOI18N
 
     /* The following variables corresponds to Gene Product Selection panel */
 
@@ -511,47 +511,47 @@ public class CESettings extends SystemOption {
                 : Boolean.FALSE, showTermName ? Boolean.TRUE : Boolean.FALSE);
     }
 
-    //    /**
-    //     * Returns the showChromosomeName.
-    //     * @return showChromosomeName.
-    //     */
-    //    public boolean isShowChromosomeName() {
-    //        return showChromosomeName;
-    //    }
+    // /**
+    // * Returns the showChromosomeName.
+    // * @return showChromosomeName.
+    // */
+    // public boolean isShowChromosomeName() {
+    // return showChromosomeName;
+    // }
     //
-    //    /**
-    //     * Setter for <i>showChromosomeName </i> property.
-    //     * @param showChromosomeName The showChromosomeName to set.
-    //     */
-    //    public void setShowChromosomeName(boolean value) {
-    //        if (showChromosomeName == value)
-    //            return;
-    //        showChromosomeName = value;
-    //        firePropertyChange(PROP_SHOW_CHROMOSOME_NAME,
-    //                !showChromosomeName ? Boolean.TRUE : Boolean.FALSE,
-    //                showChromosomeName ? Boolean.TRUE : Boolean.FALSE);
-    //    }
+    // /**
+    // * Setter for <i>showChromosomeName </i> property.
+    // * @param showChromosomeName The showChromosomeName to set.
+    // */
+    // public void setShowChromosomeName(boolean value) {
+    // if (showChromosomeName == value)
+    // return;
+    // showChromosomeName = value;
+    // firePropertyChange(PROP_SHOW_CHROMOSOME_NAME,
+    // !showChromosomeName ? Boolean.TRUE : Boolean.FALSE,
+    // showChromosomeName ? Boolean.TRUE : Boolean.FALSE);
+    // }
     //
-    //    /**
-    //     * Returns the showEndPosition.
-    //     * @return showEndPosition.
-    //     */
-    //    public boolean isShowEndPosition() {
-    //        return showEndPosition;
-    //    }
+    // /**
+    // * Returns the showEndPosition.
+    // * @return showEndPosition.
+    // */
+    // public boolean isShowEndPosition() {
+    // return showEndPosition;
+    // }
     //
-    //    /**
-    //     * Setter for <i>showEndPosition </i> property.
-    //     * @param value The showEndPosition to set.
-    //     */
-    //    public void setShowEndPosition(boolean value) {
-    //        if (showEndPosition == value)
-    //            return;
-    //        showEndPosition = value;
-    //        firePropertyChange(PROP_SHOW_END_POSITION,
-    //                !showEndPosition ? Boolean.TRUE : Boolean.FALSE,
-    //                showEndPosition ? Boolean.TRUE : Boolean.FALSE);
-    //    }
+    // /**
+    // * Setter for <i>showEndPosition </i> property.
+    // * @param value The showEndPosition to set.
+    // */
+    // public void setShowEndPosition(boolean value) {
+    // if (showEndPosition == value)
+    // return;
+    // showEndPosition = value;
+    // firePropertyChange(PROP_SHOW_END_POSITION,
+    // !showEndPosition ? Boolean.TRUE : Boolean.FALSE,
+    // showEndPosition ? Boolean.TRUE : Boolean.FALSE);
+    // }
 
     /**
      * Returns the showOverRepresented.
@@ -576,25 +576,25 @@ public class CESettings extends SystemOption {
                 showOverRepresented ? Boolean.TRUE : Boolean.FALSE);
     }
 
-    //    /**
-    //     * Returns the showStartPosition.
-    //     * @return showStartPosition.
-    //     */
-    //    public boolean isShowStartPosition() {
-    //        return showStartPosition;
-    //    }
+    // /**
+    // * Returns the showStartPosition.
+    // * @return showStartPosition.
+    // */
+    // public boolean isShowStartPosition() {
+    // return showStartPosition;
+    // }
     //
-    //    /**
-    //     * @param value The showStartPosition to set.
-    //     */
-    //    public void setShowStartPosition(boolean value) {
-    //        if (showStartPosition == value)
-    //            return;
-    //        showStartPosition = value;
-    //        firePropertyChange(PROP_SHOW_START_POSITION,
-    //                !showStartPosition ? Boolean.TRUE : Boolean.FALSE,
-    //                showStartPosition ? Boolean.TRUE : Boolean.FALSE);
-    //    }
+    // /**
+    // * @param value The showStartPosition to set.
+    // */
+    // public void setShowStartPosition(boolean value) {
+    // if (showStartPosition == value)
+    // return;
+    // showStartPosition = value;
+    // firePropertyChange(PROP_SHOW_START_POSITION,
+    // !showStartPosition ? Boolean.TRUE : Boolean.FALSE,
+    // showStartPosition ? Boolean.TRUE : Boolean.FALSE);
+    // }
 
     /**
      * @return Returns the showUnderRepresented.

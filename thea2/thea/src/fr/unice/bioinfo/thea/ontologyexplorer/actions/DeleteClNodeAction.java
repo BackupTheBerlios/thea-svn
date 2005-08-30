@@ -19,7 +19,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationNode;
 public class DeleteClNodeAction extends NodeAction {
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
 
     /*
      * (non-Javadoc)
@@ -47,16 +47,16 @@ public class DeleteClNodeAction extends NodeAction {
         // This commented bloc is used to close
         // The window that edits the classif. It caused
         // an ecpetion
-        //        Iterator opened = TopComponent.getRegistry().getOpened().iterator();
-        //        while (opened.hasNext()) {
-        //            Object tc = opened.next();
-        //            if (tc instanceof CEditor) {
-        //                CEditor ce = (CEditor) tc;
-        //                if(ce.getName().equals(cni.getName())){
-        //                    ce.close();
-        //                    }
-        //            }
-        //        }
+        // Iterator opened = TopComponent.getRegistry().getOpened().iterator();
+        // while (opened.hasNext()) {
+        // Object tc = opened.next();
+        // if (tc instanceof CEditor) {
+        // CEditor ce = (CEditor) tc;
+        // if(ce.getName().equals(cni.getName())){
+        // ce.close();
+        // }
+        // }
+        // }
 
         try {
             node.destroy();

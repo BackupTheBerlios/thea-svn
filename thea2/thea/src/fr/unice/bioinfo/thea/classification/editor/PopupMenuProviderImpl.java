@@ -45,14 +45,20 @@ import fr.unice.bioinfo.thea.classification.editor.actions.WholeAction;
 public class PopupMenuProviderImpl implements PopupMenuProvider {
 
     private JPopupMenu popup = null;
+
     private JMenuItem menuItem = null;
+
     private ImageIcon icon = null;
+
     private String name = "";
+
     private String shortDescription = "";
+
     private String accelerator = "";
+
     /** Resource Bundle */
     private static ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.classification.editor.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.classification.editor.Bundle"); // NOI18N;
 
     private JPopupMenu getNodePopupMenu(DrawableClassification drawable,
             Node aNode) {
@@ -82,7 +88,7 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
         // 10 - Whole Tree:
         // It causes a NullPointerException sometimes,
         // commenting it until this bug is fixed.
-        //popup.add(createWholeMenuItem(drawable, aNode));
+        // popup.add(createWholeMenuItem(drawable, aNode));
         // add a separator here
         popup.addSeparator();
         // 11 - Classifier:
@@ -465,9 +471,9 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
             DrawableClassification drawable, Node aNode) {
         this.getNodePopupMenu(drawable, aNode).show(e.getComponent(), e.getX(),
                 e.getY());
-        //        JPopupMenu pm = this.getNodePopupMenu(drawable, aNode);
-        //        drawable.setPopupMenu(pm);
-        //        pm.show(e.getComponent(), e.getX(), e.getY());
+        // JPopupMenu pm = this.getNodePopupMenu(drawable, aNode);
+        // drawable.setPopupMenu(pm);
+        // pm.show(e.getComponent(), e.getX(), e.getY());
     }
 
     /*
@@ -480,9 +486,9 @@ public class PopupMenuProviderImpl implements PopupMenuProvider {
             DrawableClassification drawable, Selection selection) {
         this.getSelectionPopupMenu(drawable, selection).show(e.getComponent(),
                 e.getX(), e.getY());
-        //        JPopupMenu pm = this.getSelectionPopupMenu(drawable, selection);
-        //        drawable.setPopupMenu(pm);
-        //        pm.show(e.getComponent(), e.getX(), e.getY());
+        // JPopupMenu pm = this.getSelectionPopupMenu(drawable, selection);
+        // drawable.setPopupMenu(pm);
+        // pm.show(e.getComponent(), e.getX(), e.getY());
     }
 
 }

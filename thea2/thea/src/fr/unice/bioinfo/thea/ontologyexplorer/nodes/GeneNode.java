@@ -21,7 +21,7 @@ import fr.unice.bioinfo.thea.TheaConfiguration;
 public class GeneNode extends AbstractNode {
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.nodes.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.nodes.Bundle"); // NOI18N;
 
     /***/
     private Resource resource;
@@ -31,18 +31,20 @@ public class GeneNode extends AbstractNode {
 
     static {
         Configuration con = TheaConfiguration.getDefault().getConfiguration();
-        Object o = con.getProperty("ontologyexplorer.nodes.genename");//NOI18N
+        Object o = con.getProperty("ontologyexplorer.nodes.genename");// NOI18N
         nodeNameProperty = (String) o;
         fullNameProperty = (String) con
-                .getProperty("ontologyexplorer.nodes.genefullname");//NOI18N
+                .getProperty("ontologyexplorer.nodes.genefullname");// NOI18N
     }
 
     /** The property to use to reach for a node's display name. */
     private static String nodeNameProperty;
+
     private static String fullNameProperty;
 
-    private String displayName = "";//NOI18N
-    private String toolTip = "";//NOI18N
+    private String displayName = "";// NOI18N
+
+    private String toolTip = "";// NOI18N
 
     private Hashtable properties = new Hashtable();
 
@@ -60,7 +62,7 @@ public class GeneNode extends AbstractNode {
         if (sv != null) {
             displayName = sv.getValue();
         } else {
-            displayName = "" + resource.getId();//NOI18N
+            displayName = "" + resource.getId();// NOI18N
         }
         StringValue tt = null;
         try {
@@ -71,14 +73,14 @@ public class GeneNode extends AbstractNode {
         if (tt != null) {
             toolTip = tt.getValue();
         } else {
-            toolTip = "The full name of this gene is not available";//NOI18N
+            toolTip = "The full name of this gene is not available";// NOI18N
         }
         // set the display name
         setDisplayName(displayName);
         setName(displayName);
         setShortDescription(toolTip);
         // Icon
-        setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/empty");//NOI18N
+        setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/empty");// NOI18N
     }
 
     /** Returns the resource represented by this node. */

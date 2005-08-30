@@ -15,8 +15,11 @@ import java.net.URL;
 
 public class JDBCDriver {
     private PropertyChangeSupport supp;
+
     private URL[] urls;
+
     private String clazz;
+
     private String name;
 
     /*

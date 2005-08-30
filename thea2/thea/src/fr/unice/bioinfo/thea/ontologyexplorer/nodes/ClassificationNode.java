@@ -30,15 +30,15 @@ public class ClassificationNode extends AbstractNode implements Node.Cookie {
         super(new Children.Array());
 
         // add it as a cookie
-        //getCookieSet().add(this);
+        // getCookieSet().add(this);
         // Set the bean name
         setName(name);
 
         // Add a nice icon
-        setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/ClassificationNodeIcon"); //NOI18N
+        setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/ClassificationNodeIcon"); // NOI18N
 
         // Set the display name: The display name comes from user input
-        setDisplayName(name);//NOI18N
+        setDisplayName(name);// NOI18N
 
         // Give a short description which is shown on the mouse rolls on
         // setShortDescription(description);

@@ -54,33 +54,46 @@ import fr.unice.bioinfo.thea.ontologyexplorer.db.util.DriverListUtil;
  */
 public class AddDriverPanel extends JPanel {
     private DefaultListModel dlm;
+
     private boolean customizer;
 
     // List of drivers
     private List drvs;
+
     private JComponent filesSeparator;
+
     private JList filesList;
+
     private JScrollPane jsp;
+
     private JButton addFileBtn;
+
     private JButton removeFileBtn;
+
     private JComponent driverSeparator;
+
     private JLabel classLbl;
+
     private JComboBox classComboBox;
+
     private JButton findClassBtn;
+
     private JLabel nameLbl;
+
     private JTextField nameField;
+
     private JProgressBar findBar;
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.dlg.Bundle"); // NOI18N
 
     public AddDriverPanel() {
         customizer = false;
         initComponents();
         findBar.setBorderPainted(false);
 
-        //initAccessibility();
+        // initAccessibility();
         dlm = (DefaultListModel) filesList.getModel();
         drvs = new LinkedList();
     }
@@ -107,9 +120,9 @@ public class AddDriverPanel extends JPanel {
         DefaultComponentFactory compFactory = DefaultComponentFactory
                 .getInstance();
         filesSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_FilesSeparator")); //NOI18N
+                .getString("LBL_FilesSeparator")); // NOI18N
         driverSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_DriverSeparator")); //NOI18N
+                .getString("LBL_DriverSeparator")); // NOI18N
 
         // create the list to contains drivers' files
         filesList = new JList();
@@ -163,11 +176,11 @@ public class AddDriverPanel extends JPanel {
                 new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT,
                         FormSpec.DEFAULT_GROW),
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-                new ColumnSpec("max(default;150dlu):grow"), //NOI18N
+                new ColumnSpec("max(default;150dlu):grow"), // NOI18N
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-                new ColumnSpec("max(min;10dlu)"), //NOI18N
+                new ColumnSpec("max(min;10dlu)"), // NOI18N
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-                new ColumnSpec("max(default;10dlu)") }, new RowSpec[] { //NOI18N
+                new ColumnSpec("max(default;10dlu)") }, new RowSpec[] { // NOI18N
 
                         FormFactory.DEFAULT_ROWSPEC,
                         FormFactory.LINE_GAP_ROWSPEC,
@@ -189,28 +202,28 @@ public class AddDriverPanel extends JPanel {
         add(jsp, cc
                 .xywh(3, 3, 5, 1, CellConstraints.FILL, CellConstraints.FILL));
 
-        //---- addFileBtn ----
-        addFileBtn.setText(bundle.getString("LBL_AddBtn")); //NOI18N
+        // ---- addFileBtn ----
+        addFileBtn.setText(bundle.getString("LBL_AddBtn")); // NOI18N
         add(addFileBtn, cc.xy(5, 5));
 
-        //---- removeFileBtn ----
-        removeFileBtn.setText(bundle.getString("LBL_RemoveBtn")); //NOI18N
+        // ---- removeFileBtn ----
+        removeFileBtn.setText(bundle.getString("LBL_RemoveBtn")); // NOI18N
         add(removeFileBtn, cc.xy(7, 5));
         add(driverSeparator, cc.xywh(1, 7, 7, 1));
 
-        //---- classLbl ----
+        // ---- classLbl ----
         classLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        classLbl.setText(bundle.getString("LBL_Class")); //NOI18N
+        classLbl.setText(bundle.getString("LBL_Class")); // NOI18N
         add(classLbl, cc.xy(1, 9));
         add(classComboBox, cc.xywh(3, 9, 3, 1));
 
-        //---- findClassBtn ----
-        findClassBtn.setText(bundle.getString("LBL_FindBtn")); //NOI18N
+        // ---- findClassBtn ----
+        findClassBtn.setText(bundle.getString("LBL_FindBtn")); // NOI18N
         add(findClassBtn, cc.xy(7, 9));
 
-        //---- nameLbl ----
+        // ---- nameLbl ----
         nameLbl.setHorizontalAlignment(SwingConstants.RIGHT);
-        nameLbl.setText(bundle.getString("LBL_Name")); //NOI18N
+        nameLbl.setText(bundle.getString("LBL_Name")); // NOI18N
         add(nameLbl, cc.xy(1, 11));
         add(nameField, cc.xywh(3, 11, 5, 1));
         add(findBar, cc.xywh(3, 13, 5, 1));
@@ -237,23 +250,23 @@ public class AddDriverPanel extends JPanel {
 
         JFileChooser fc = new JFileChooser();
         FileUtil.preventFileChooserSymlinkTraversal(fc, null);
-        fc.setDialogTitle(bundle.getString("AddDriver_Chooser_Title")); //NOI18N
+        fc.setDialogTitle(bundle.getString("AddDriver_Chooser_Title")); // NOI18N
         fc.setMultiSelectionEnabled(true);
         fc.setAcceptAllFileFilterUsed(false);
 
-        //.jar and .zip file filter
+        // .jar and .zip file filter
         fc.setFileFilter(new javax.swing.filechooser.FileFilter() {
             public boolean accept(File f) {
                 return (f.isDirectory() || f.getName().endsWith(".jar") || f
-                        .getName().endsWith(".zip")); //NOI18N
+                        .getName().endsWith(".zip")); // NOI18N
             }
 
             public String getDescription() {
-                return bundle.getString("AddDriver_Chooser_Filter"); //NOI18N
+                return bundle.getString("AddDriver_Chooser_Filter"); // NOI18N
             }
         });
 
-        if (fc.showOpenDialog(WindowManager.getDefault().getMainWindow()) == JFileChooser.APPROVE_OPTION) { //NOI18N
+        if (fc.showOpenDialog(WindowManager.getDefault().getMainWindow()) == JFileChooser.APPROVE_OPTION) { // NOI18N
 
             File[] files = fc.getSelectedFiles();
 
@@ -264,7 +277,7 @@ public class AddDriverPanel extends JPanel {
                     try {
                         drvs.add(files[i].toURL());
                     } catch (MalformedURLException exc) {
-                        //PENDING
+                        // PENDING
                     }
                 }
 
@@ -335,16 +348,16 @@ public class AddDriverPanel extends JPanel {
                                             addDriverClass(className);
                                         }
                                 } catch (Exception exc) {
-                                    //PENDING
+                                    // PENDING
                                 } catch (Error err) {
-                                    //PENDING
+                                    // PENDING
                                 }
                             }
                         }
 
                         jf.close();
                     } catch (IOException exc) {
-                        //PENDING
+                        // PENDING
                     }
                 }
 
@@ -372,13 +385,13 @@ public class AddDriverPanel extends JPanel {
                 jf = new JarFile(new File(((URL) drvs.get(i)).getFile()));
 
                 for (int j = 0; j < drivers.length; j++)
-                    if (jf.getEntry(drivers[j].replace('.', '/') + ".class") != null) { //NOI18N
+                    if (jf.getEntry(drivers[j].replace('.', '/') + ".class") != null) { // NOI18N
                         addDriverClass(drivers[j]);
                     }
 
                 jf.close();
             } catch (IOException exc) {
-                //PENDING
+                // PENDING
             }
         }
     }
@@ -394,7 +407,7 @@ public class AddDriverPanel extends JPanel {
             public void run() {
                 findBar.setBorderPainted(true);
                 findBar.setIndeterminate(true);
-                findBar.setString(bundle.getString("AddDriverProgressStart")); //NOI18N
+                findBar.setString(bundle.getString("AddDriverProgressStart")); // NOI18N
             }
         });
     }
@@ -403,7 +416,7 @@ public class AddDriverPanel extends JPanel {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 findBar.setValue(findBar.getMaximum());
-                findBar.setString(bundle.getString("AddDriverProgressStop")); //NOI18N
+                findBar.setString(bundle.getString("AddDriverProgressStop")); // NOI18N
                 findBar.setIndeterminate(false);
             }
         });
@@ -414,7 +427,7 @@ public class AddDriverPanel extends JPanel {
             public void run() {
                 findBar.setBorderPainted(false);
                 findBar.setIndeterminate(false);
-                findBar.setString(""); //NOI18N
+                findBar.setString(""); // NOI18N
                 findBar.setValue(findBar.getMinimum());
             }
         });

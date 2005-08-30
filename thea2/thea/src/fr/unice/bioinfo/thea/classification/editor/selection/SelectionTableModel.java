@@ -43,9 +43,9 @@ public class SelectionTableModel extends AbstractTableModel {
         }
 
         Node node = (Node) nodes.get(0);
-        //        List measures = (List) node.getUserData("measures");
+        // List measures = (List) node.getUserData("measures");
         List measures = (List) node.getProperty(Node.MEASURES);
-        //        List measures = (List) node.getMeasures();
+        // List measures = (List) node.getMeasures();
 
         if (measures == null) {
             return 1;
@@ -73,9 +73,9 @@ public class SelectionTableModel extends AbstractTableModel {
         if (columnIndex == 0) {
             value = node.getName();
         } else {
-            //            List measures = (List) node.getUserData("measures");
+            // List measures = (List) node.getUserData("measures");
             List measures = (List) node.getProperty(Node.MEASURES);
-            //List measures = (List) node.getMeasures();
+            // List measures = (List) node.getMeasures();
             value = ((Double) measures.get(columnIndex - 1));
         }
 

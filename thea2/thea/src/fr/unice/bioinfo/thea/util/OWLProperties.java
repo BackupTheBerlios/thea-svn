@@ -38,22 +38,33 @@ public final class OWLProperties {
      */
 
     private static Map hierarchyDescription = new HashMap();
+
     /** The property to use to reach for a node's display name. */
     private static String nodeNameProperty;
 
     /** The partof relationship property name */
     private static String propdbkeyPropertyName;
+
     /** The is a relationship property name */
     private static String xrefPropertyName;
+
     /** annotatedbyname property name */
     private static String annotatedByPropertyName;
+
     private static String annotatePropertyName;
+
     private static String hasEvidenceProperty;
+
     private static String chromosomePropertyName;
+
     private static String endPosPropertyName;
+
     private static String strandPropertyName;
+
     private static String transcribedFromPropertyName;
+
     private static String startPosPropertyName;
+
     private static String symbolPropertyName;
 
     static {
@@ -61,7 +72,7 @@ public final class OWLProperties {
                 .getResourceFactory();
         Configuration con = TheaConfiguration.getDefault().getConfiguration();
         Object ob = con
-                .getProperty("ontologyexplorer.hierarchy.relationship.name");//NOI18N
+                .getProperty("ontologyexplorer.hierarchy.relationship.name");// NOI18N
         if (ob instanceof Collection) {
             List al = new ArrayList((Collection) ob);
             Object[] names = al.toArray();
@@ -73,14 +84,14 @@ public final class OWLProperties {
                     Resource property = resourceFactory
                             .getResource((String) con
                                     .getProperty("ontologyexplorer.hierarchy.relationship("
-                                            + counter + ").predicate"));//NOI18N
+                                            + counter + ").predicate"));// NOI18N
                     Criterion criterion = null;
                     Object valueOf = con
                             .getProperty("ontologyexplorer.hierarchy.relationship("
-                                    + counter + ").context.valueof");//NOI18N
+                                    + counter + ").context.valueof");// NOI18N
                     Object equals = con
                             .getProperty("ontologyexplorer.hierarchy.relationship("
-                                    + counter + ").context.equals");//NOI18N
+                                    + counter + ").context.equals");// NOI18N
                     if ((valueOf != null) && (equals != null)) {
                         Resource valueOfResource = resourceFactory
                                 .getResource((String) valueOf);
@@ -95,7 +106,7 @@ public final class OWLProperties {
                     }
                     Object iconUrl = con
                             .getProperty("ontologyexplorer.hierarchy.relationship("
-                                    + counter + ").icon");//NOI18N
+                                    + counter + ").icon");// NOI18N
                     hierarchyDescription.put(name, new Object[] { property,
                             criterion, (String) iconUrl });
                 } catch (AllontoException ae) {
@@ -103,30 +114,30 @@ public final class OWLProperties {
             }
         }
 
-        Object obj = con.getProperty("ontologyexplorer.nodes.nodename");//NOI18N
+        Object obj = con.getProperty("ontologyexplorer.nodes.nodename");// NOI18N
         nodeNameProperty = (String) obj;
 
-        Object o = con.getProperty("ontologyexplorer.nodes.xrefname");//NOI18N
+        Object o = con.getProperty("ontologyexplorer.nodes.xrefname");// NOI18N
         xrefPropertyName = (String) o;
-        o = con.getProperty("annotation.propdbkeyname");//NOI18N
+        o = con.getProperty("annotation.propdbkeyname");// NOI18N
         propdbkeyPropertyName = (String) o;
-        o = con.getProperty("annotation.annotatedbyname");//NOI18N
+        o = con.getProperty("annotation.annotatedbyname");// NOI18N
         annotatedByPropertyName = (String) o;
-        o = con.getProperty("ontologyexplorer.nodes.annotates");//NOI18N
+        o = con.getProperty("ontologyexplorer.nodes.annotates");// NOI18N
         annotatePropertyName = (String) o;
-        o = con.getProperty("ontologyexplorer.nodes.hasevidence");//NOI18N
+        o = con.getProperty("ontologyexplorer.nodes.hasevidence");// NOI18N
         hasEvidenceProperty = (String) o;
-        o = con.getProperty("annotation.chromosomename");//NOI18N
+        o = con.getProperty("annotation.chromosomename");// NOI18N
         chromosomePropertyName = (String) o;
-        o = con.getProperty("annotation.endPosname");//NOI18N
+        o = con.getProperty("annotation.endPosname");// NOI18N
         endPosPropertyName = (String) o;
-        o = con.getProperty("annotation.strandname");//NOI18N
+        o = con.getProperty("annotation.strandname");// NOI18N
         strandPropertyName = (String) o;
-        o = con.getProperty("annotation.transcribedFromname");//NOI18N
+        o = con.getProperty("annotation.transcribedFromname");// NOI18N
         transcribedFromPropertyName = (String) o;
-        o = con.getProperty("annotation.startPosname");//NOI18N
+        o = con.getProperty("annotation.startPosname");// NOI18N
         startPosPropertyName = (String) o;
-        o = con.getProperty("annotation.symbolname");//NOI18N
+        o = con.getProperty("annotation.symbolname");// NOI18N
         symbolPropertyName = (String) o;
     }
 

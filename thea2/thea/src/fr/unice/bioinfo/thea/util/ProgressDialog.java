@@ -39,7 +39,7 @@ public class ProgressDialog extends JDialog {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.core.util.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.core.util.Bundle"); // NOI18N;
 
     /** The JProgressBar used in this progression indicator dialog. */
     private JProgressBar progressBar;
@@ -114,7 +114,7 @@ public class ProgressDialog extends JDialog {
         gbl.setConstraints(progressBar, constraints);
         getContentPane().add(progressBar);
 
-        //percentLabel
+        // percentLabel
         percentLabel = new JLabel();
         percentLabel.setPreferredSize(new Dimension(75, 22));
         percentLabel.setMinimumSize(percentLabel.getPreferredSize());
@@ -122,7 +122,7 @@ public class ProgressDialog extends JDialog {
         gbl.setConstraints(percentLabel, constraints);
         getContentPane().add(percentLabel);
 
-        //cancelButton
+        // cancelButton
         cancelButton = new JButton();
         cancelButton.setPreferredSize(new Dimension(75, 22));
         cancelButton.setMinimumSize(cancelButton.getPreferredSize());
@@ -141,18 +141,18 @@ public class ProgressDialog extends JDialog {
      * @return ProgressDialog.
      */
     public static ProgressDialog getDefault() {
-        //        final Frame[] frameReceiver = new Frame[1];
-        //        try {
-        //            SwingUtilities.invokeAndWait(new Runnable() {
-        //                public void run() {
-        //                    frameReceiver[0] = WindowManager.getDefault()
-        //                            .getMainWindow();
-        //                }
-        //            });
-        //        } catch (Exception e) {
-        //            ErrorManager.getDefault().notify(e);
-        //        }
-        //        DEFAULT = new ProgressDialog(frameReceiver[0]);
+        // final Frame[] frameReceiver = new Frame[1];
+        // try {
+        // SwingUtilities.invokeAndWait(new Runnable() {
+        // public void run() {
+        // frameReceiver[0] = WindowManager.getDefault()
+        // .getMainWindow();
+        // }
+        // });
+        // } catch (Exception e) {
+        // ErrorManager.getDefault().notify(e);
+        // }
+        // DEFAULT = new ProgressDialog(frameReceiver[0]);
         DEFAULT = new ProgressDialog((Frame) WindowManager.getDefault()
                 .getMainWindow());
 
@@ -187,8 +187,8 @@ public class ProgressDialog extends JDialog {
         progressBar.setValue(index);
         textLabel.setText(bundle.getString("LBL_TextLabel") + " " + taskname);
 
-        //        progressBar.setString(Integer.toString(index) + '/'
-        //                + progressBar.getMaximum());
+        // progressBar.setString(Integer.toString(index) + '/'
+        // + progressBar.getMaximum());
         return !isCancelled();
     }
 

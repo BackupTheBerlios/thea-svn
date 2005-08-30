@@ -18,11 +18,11 @@ public class ClDataLoader extends UniFileLoader {
         super("fr.unice.bioinfo.thea.ontologyexplorer.ClDataObject");
 
         ExtensionList list = new ExtensionList();
-        list.addExtension("sot"); //NOI18N
-        list.addExtension("sdt"); //NOI18N
+        list.addExtension("sot"); // NOI18N
+        list.addExtension("sdt"); // NOI18N
         setExtensions(list);
 
-        //setDisplayName(NbBundle.getMessage(ClDataLoader.class,
+        // setDisplayName(NbBundle.getMessage(ClDataLoader.class,
         // "TYPE_Povray")); //NOI18N
     }
 

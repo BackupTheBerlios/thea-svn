@@ -1,11 +1,11 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.infos;
 
-import java.sql.Connection;
 import java.util.Hashtable;
 
 import org.openide.nodes.Node;
 
 import fr.unice.bioinfo.allonto.datamodel.Resource;
+import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
 
 /**
  * @author Saïd El Kasmi
@@ -13,8 +13,9 @@ import fr.unice.bioinfo.allonto.datamodel.Resource;
 public class ResourceNodeInfo extends Hashtable implements Node.Cookie {
     // Serial Version UID for serialization
     static final long serialVersionUID = 1176243907461868244L;
-    public static final String NAME = "name"; //NOI18N
-    public static final String CONNECTION = "conection"; //NOI18N
+
+    public static final String NAME = "name"; // NOI18N
+    // public static final String ONTOLOGY_NODE = "ontology_node"; //NOI18N
 
     private Resource resource = null;
 
@@ -23,7 +24,7 @@ public class ResourceNodeInfo extends Hashtable implements Node.Cookie {
      * @see java.util.Dictionary#put(java.lang.Object, java.lang.Object)
      */
     public synchronized Object put(Object key, Object value) {
-        //return super.put(key, value);
+        // return super.put(key, value);
         Object old = get(key);
 
         if (key == null)
@@ -57,15 +58,15 @@ public class ResourceNodeInfo extends Hashtable implements Node.Cookie {
         put(NAME, name);
     }
 
-    /** Returns the JDBC Connection */
-    public Connection getConnection() {
-        return (Connection) get(CONNECTION);
-    }
-
-    /** Sets a JDBC Connection */
-    public void setConnection(Connection con) {
-        put(CONNECTION, con);
-    }
+    // /** Returns the ontology node of this resource */
+    // public OntologyNode getOntologyNode() {
+    // return (OntologyNode) get(ONTOLOGY_NODE);
+    // }
+    //
+    // /** Sets the ontology node for this resource */
+    // public void setOntologyNode(OntologyNode on) {
+    // put(ONTOLOGY_NODE, on);
+    // }
 
     public Resource getResource() {
         return resource;

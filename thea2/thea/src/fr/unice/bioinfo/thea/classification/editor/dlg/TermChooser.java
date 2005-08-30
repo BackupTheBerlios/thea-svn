@@ -54,24 +54,32 @@ import fr.unice.bioinfo.thea.util.OWLProperties;
 public class TermChooser extends JPanel {
 
     private JTabbedPane tp;
+
     private TermChooserTreeView treeViewPanel;
+
     private TermChooserTableView tableViewPanel;
 
     private List scores;
+
     private Resource selectedTerm;
+
     private List ln;/* leave nodes */
+
     private String nodeName;
+
     private Node aNode;
+
     private String ontologyBranchName;
 
     private DrawableClassification drawable;
 
     private JButton selectBtn;
+
     private JButton exportBtn;
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.classification.editor.dlg.Bundle"); //NOI18N
+            .getBundle("fr.unice.bioinfo.thea.classification.editor.dlg.Bundle"); // NOI18N
 
     public TermChooser(Node aNode, String ontologyBranchName,
             DrawableClassification drawable) {
@@ -95,14 +103,14 @@ public class TermChooser extends JPanel {
 
         setBorder(Borders.DIALOG_BORDER);
         setLayout(new FormLayout(ColumnSpec
-                .decodeSpecs("default:grow, default, default, default:grow"),//NOI18N
+                .decodeSpecs("default:grow, default, default, default:grow"),// NOI18N
                 new RowSpec[] {
                         new RowSpec(RowSpec.CENTER, Sizes.DEFAULT,
                                 FormSpec.DEFAULT_GROW),
                         FormFactory.LINE_GAP_ROWSPEC,
                         FormFactory.DEFAULT_ROWSPEC }));
 
-        //---- tp ----
+        // ---- tp ----
         tp.setTabPlacement(JTabbedPane.TOP);
         ImageIcon tableViewIcon = new ImageIcon(
                 Utilities
@@ -111,14 +119,14 @@ public class TermChooser extends JPanel {
                 Utilities
                         .loadImage("fr/unice/bioinfo/thea/classification/editor/resources/TreeViewIcon.gif"));
         tp.addTab(bundle.getString("LBL_TermChooserTreeView"), treeViewIcon,
-                treeViewPanel);//NOI18N
+                treeViewPanel);// NOI18N
         tp.addTab(bundle.getString("LBL_TermChooserTableView"), tableViewIcon,
-                tableViewPanel);//NOI18N
+                tableViewPanel);// NOI18N
         add(tp, cc.xywh(1, 1, 4, 1, CellConstraints.FILL, CellConstraints.FILL));
 
-        //---- selectBtn ----
-        selectBtn.setText(bundle.getString("TXT_SelectBtn"));//NOI18N
-        selectBtn.setToolTipText(bundle.getString("TIP_SelectBtn"));//NOI18N
+        // ---- selectBtn ----
+        selectBtn.setText(bundle.getString("TXT_SelectBtn"));// NOI18N
+        selectBtn.setToolTipText(bundle.getString("TIP_SelectBtn"));// NOI18N
         selectBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 performSelectBtnAction(e);
@@ -126,9 +134,9 @@ public class TermChooser extends JPanel {
         });
         add(selectBtn, cc.xy(2, 3));
 
-        //---- exportBtn ----
-        exportBtn.setText(bundle.getString("TXT_ExportBtn"));//NOI18N
-        exportBtn.setToolTipText(bundle.getString("TIP_ExportBtn"));//NOI18N
+        // ---- exportBtn ----
+        exportBtn.setText(bundle.getString("TXT_ExportBtn"));// NOI18N
+        exportBtn.setToolTipText(bundle.getString("TIP_ExportBtn"));// NOI18N
         add(exportBtn, cc.xy(3, 3));
     }
 
@@ -163,7 +171,7 @@ public class TermChooser extends JPanel {
                         if (!"".equals(label)) {
                             label += ":";
                         }
-                        //label += (termAndScore.getTerm().getTerm() + " ");
+                        // label += (termAndScore.getTerm().getTerm() + " ");
                         try {
                             StringValue sv = (StringValue) score
                                     .getTerm()
@@ -218,7 +226,7 @@ public class TermChooser extends JPanel {
     private Set createWholeBranchTermsList(ResourceFactory resourceFactory,
             Resource aResource) {
         Set descendants = new HashSet();
-        //    Get direct children of the the resource:
+        // Get direct children of the the resource:
         Set children = new HashSet();
         java.util.Map hierarchyDescription = OWLProperties.getInstance()
                 .getHierarchyDescription();

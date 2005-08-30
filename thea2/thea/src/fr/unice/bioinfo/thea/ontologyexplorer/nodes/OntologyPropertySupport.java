@@ -24,7 +24,7 @@ public class OntologyPropertySupport extends PropertySupport {
     public OntologyPropertySupport(String name, Class type, String displayName,
             String shortDescription, Object oni, boolean canW) {
         // Call super constructor
-        //  Properties are all readable: true is passed to super
+        // Properties are all readable: true is passed to super
         super(name, type, displayName, shortDescription, true, canW);
         this.oni = oni;
     }

@@ -24,10 +24,12 @@ public class GenesTableModel extends AbstractTableModel {
 
     /** Columns names. */
     private String[] columnNames;
+
     /** Data */
     private Object[][] data;
 
     private String[] properties;
+
     private String[] evidences;
 
     public GenesTableModel(Resource resource, String[] evidences,
@@ -39,7 +41,7 @@ public class GenesTableModel extends AbstractTableModel {
         columnNames = new String[properties.length];
         for (int counter = 0; counter < properties.length; counter++) {
             String name = properties[counter];
-            columnNames[counter] = name.substring(name.indexOf("#") + 1);//NOI18N;
+            columnNames[counter] = name.substring(name.indexOf("#") + 1);// NOI18N;
         }
 
         // get the configuration
@@ -50,9 +52,9 @@ public class GenesTableModel extends AbstractTableModel {
         ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                 .getResourceFactory();
         annotatePropertyName = (String) con
-                .getProperty("ontologyexplorer.nodes.annotates");//NOI18N
+                .getProperty("ontologyexplorer.nodes.annotates");// NOI18N
         String hasEvidenceProperty = (String) con
-                .getProperty("ontologyexplorer.nodes.hasevidence");//NOI18N
+                .getProperty("ontologyexplorer.nodes.hasevidence");// NOI18N
 
         resourceFactory.setMemoryCached(true);
         LinkedList ll = new LinkedList();
@@ -98,10 +100,10 @@ public class GenesTableModel extends AbstractTableModel {
                         if (sv != null) {
                             data[counter][cnt] = sv.getValue();
                         } else if (sv == null) {
-                            data[counter][cnt] = "";//NOI18N
+                            data[counter][cnt] = "";// NOI18N
                         }
                     } catch (AllontoException ae) {
-                        data[counter][cnt] = "";//NOI18N
+                        data[counter][cnt] = "";// NOI18N
                         resourceFactory.setMemoryCached(false);
                     }
                 }

@@ -24,77 +24,89 @@ import fr.unice.bioinfo.thea.classification.settings.CESettings;
 public class Node {
 
     /** this node's name property. */
-    public static final String NAME = "name";//NOI18N
+    public static final String NAME = "name";// NOI18N
+
     /** Annotations of this node */
-    public static final String ANNOTATIONS = "annotations";//NOI18N
+    public static final String ANNOTATIONS = "annotations";// NOI18N
+
     /***/
-    public static final String MEASURES = "measures";//NOI18N
+    public static final String MEASURES = "measures";// NOI18N
+
     /***/
-    public static final String NB_MEASURES = "nbMeasures";//NOI18N
+    public static final String NB_MEASURES = "nbMeasures";// NOI18N
+
     /***/
-    public static final String USER_ANNOTATIONS = "userAnnotations";//NOI18N
+    public static final String USER_ANNOTATIONS = "userAnnotations";// NOI18N
+
     /***/
-    public static final String ANNOTATION = "annotation";//NOI18N
+    public static final String ANNOTATION = "annotation";// NOI18N
+
     /***/
-    public static final String MIN_MEASURE = "minMeasure";//NOI18N
+    public static final String MIN_MEASURE = "minMeasure";// NOI18N
+
     /***/
-    public static final String MAX_MEASURE = "maxMeasure";//NOI18N
+    public static final String MAX_MEASURE = "maxMeasure";// NOI18N
+
     /***/
-    public static final String UNDER_EXP_DECILES = "underExpDeciles";//NOI18N
+    public static final String UNDER_EXP_DECILES = "underExpDeciles";// NOI18N
+
     /***/
-    public static final String OVER_EXP_DECILES = "overExpDeciles";//NOI18N
+    public static final String OVER_EXP_DECILES = "overExpDeciles";// NOI18N
+
     /***/
-    public static final String FROZEN = "frozen";//NOI18N
+    public static final String FROZEN = "frozen";// NOI18N
+
     /***/
-    public static final String ID_IN_CLASSIF = "idInClassif";//NOI18N
+    public static final String ID_IN_CLASSIF = "idInClassif";// NOI18N
+
     /***/
-    public static final String DB_KEY = "dbKey";//NOI18N
+    public static final String DB_KEY = "dbKey";// NOI18N
 
-    public static final String CHROMOSOME = "chromosome";//NOI18N
+    public static final String CHROMOSOME = "chromosome";// NOI18N
 
-    public static final String COMPLEMENT_POS = "complementPos";//NOI18N
+    public static final String COMPLEMENT_POS = "complementPos";// NOI18N
 
-    public static final String CHROMOSOMAL_POSITION = "chromosomal_position";//NOI18N
+    public static final String CHROMOSOMAL_POSITION = "chromosomal_position";// NOI18N
 
-    public static final String STRAND_POSITION = "strand_position";//NOI18N
+    public static final String STRAND_POSITION = "strand_position";// NOI18N
 
-    public static final String START_POS = "startPos";//NOI18N
+    public static final String START_POS = "startPos";// NOI18N
 
-    public static final String END_POS = "endPos";//NOI18N
+    public static final String END_POS = "endPos";// NOI18N
 
-    public static final String DB_KEY_MAP = "dbKeyMap";//NOI18N
+    public static final String DB_KEY_MAP = "dbKeyMap";// NOI18N
 
-    public static final String SYMBOL = "symbol";//NOI18N
+    public static final String SYMBOL = "symbol";// NOI18N
 
-    public static final String GENE_PRODUCT_ID = "GeneProductID";//NOI18N
+    public static final String GENE_PRODUCT_ID = "GeneProductID";// NOI18N
 
-    public static final String SPECIES_MAP = "speciesMap";//NOI18N
+    public static final String SPECIES_MAP = "speciesMap";// NOI18N
 
-    public static final String NB_GENE_PRODUCTS_IN_SPECIE = "nbGeneProductsInSpecie";//NOI18N
+    public static final String NB_GENE_PRODUCTS_IN_SPECIE = "nbGeneProductsInSpecie";// NOI18N
 
-    public static final String ASSOC_TERMS = "assocTerms";//NOI18N
+    public static final String ASSOC_TERMS = "assocTerms";// NOI18N
 
-    public static final String ASSOC_TERM = "assocTerm";//NOI18N
+    public static final String ASSOC_TERM = "assocTerm";// NOI18N
 
-    public static final String TERMS_MAP = "termsMap";//NOI18N
+    public static final String TERMS_MAP = "termsMap";// NOI18N
 
-    public static final String TERMS_GMAP = "termsGMap";//NOI18N
+    public static final String TERMS_GMAP = "termsGMap";// NOI18N
 
-    public static final String TERMS_LIST_MAP = "termsListMap";//NOI18N
+    public static final String TERMS_LIST_MAP = "termsListMap";// NOI18N
 
-    public static final String GENE_NA = "geneNA";//NOI18N
+    public static final String GENE_NA = "geneNA";// NOI18N
 
-    public static final String GENE_UNKNOWN = "geneUnknown";//NOI18N
+    public static final String GENE_UNKNOWN = "geneUnknown";// NOI18N
 
-    public static final String TERM_AND_SCORE = "termAndScore";//NOI18N
+    public static final String TERM_AND_SCORE = "termAndScore";// NOI18N
 
-    public static final String BEST_SCORE = "bestScore";//NOI18N
+    public static final String BEST_SCORE = "bestScore";// NOI18N
 
-    public static final String NB_ASSOC_IN_LIST = "nbAssocInList";//NOI18N
+    public static final String NB_ASSOC_IN_LIST = "nbAssocInList";// NOI18N
 
-    public static final String NB_GENE_PRODUCTS_IN_LIST = "nbGeneProductsInList";//NOI18N
+    public static final String NB_GENE_PRODUCTS_IN_LIST = "nbGeneProductsInList";// NOI18N
 
-    public static final String NB_ASSOC = "nbAssoc";//NOI18N
+    public static final String NB_ASSOC = "nbAssoc";// NOI18N
 
     /** Node's children. This contains only direct children. */
     private List children = null;
@@ -613,7 +625,7 @@ public class Node {
         Double medianValue = null;
         boolean logValues = false;
 
-        if (minMeasure < 0) { //log values
+        if (minMeasure < 0) { // log values
             medianValue = new Double(0);
             logValues = true;
         } else {

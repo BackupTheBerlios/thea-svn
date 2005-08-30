@@ -41,7 +41,7 @@ public class NewickParser implements ClassificationParser {
         try {
             c = buffer.read();
             skipExtraChar(buffer);
-            if (c != '(') {//NO18N
+            if (c != '(') {// NO18N
                 throw new IOException();
             }
             Node aNode = new Node();
@@ -62,24 +62,24 @@ public class NewickParser implements ClassificationParser {
         String label = null;
         double branchLength = 0;
         Node aNode = null;
-        while ((c != -1) && (c != ';')) {//NO18N
+        while ((c != -1) && (c != ';')) {// NO18N
             skipExtraChar(buffer);
-            if (c == '(') {//NO18N
+            if (c == '(') {// NO18N
                 aNode = new Node();
                 c = buffer.read();
                 aNode.setChildren(newick(buffer));
-            } else if (c == ')') {//NO18N
+            } else if (c == ')') {// NO18N
                 children.add(initNodeOrNodeGroup(aNode, label, branchLength));
                 c = buffer.read();
                 return children;
-            } else if (c == ',') {//NO18N
+            } else if (c == ',') {// NO18N
                 children.add(initNodeOrNodeGroup(aNode, label, branchLength));
                 aNode = new Node();
                 c = buffer.read();
             } else {
                 label = readLabel(buffer);
                 String bl = readBranchLength(buffer).trim();
-                if (!bl.equals("")) {//NOI18N
+                if (!bl.equals("")) {// NOI18N
                     try {
                         branchLength = Double.parseDouble(bl);
                         if (branchLength <= 0) {
@@ -106,26 +106,26 @@ public class NewickParser implements ClassificationParser {
             aNode.setBranchLength(branchLength);
             return aNode;
         }
-        if (label.indexOf('|') == -1) {//NOI18N
+        if (label.indexOf('|') == -1) {// NOI18N
             // there is only one label in the string
-            //aNode.setName(label);
-            //aNode.setUserData("idInClassif", label);
+            // aNode.setName(label);
+            // aNode.setUserData("idInClassif", label);
             aNode.addProperty(Node.ID_IN_CLASSIF, label);
             aNode.setBranchLength(branchLength);
             return aNode;
         }
         List children = new LinkedList();
         // There is several labels in the string. decompose it
-        StringTokenizer token = new StringTokenizer(label, "|");//NOI18N
+        StringTokenizer token = new StringTokenizer(label, "|");// NOI18N
         while (token.hasMoreTokens()) {
             String nodeIdent = token.nextToken();
-            int index = nodeIdent.indexOf('=');//NOI18N
+            int index = nodeIdent.indexOf('=');// NOI18N
             if (index != -1) {
                 // there is a branch length specified
                 String nodeLabel = nodeIdent.substring(0, index).trim();
                 String bl = nodeIdent.substring(index).trim();
                 double bLength = 0;
-                if (!bl.equals("")) {//NOI18N
+                if (!bl.equals("")) {// NOI18N
                     try {
                         bLength = Double.parseDouble(bl);
                         if (bLength <= 0) {
@@ -138,15 +138,15 @@ public class NewickParser implements ClassificationParser {
                     }
                 }
                 Node aChild = new Node();
-                //aChild.setName(nodeLabel);
-                //aChild.setUserData("idInClassif", nodeLabel);
+                // aChild.setName(nodeLabel);
+                // aChild.setUserData("idInClassif", nodeLabel);
                 aChild.addProperty(Node.ID_IN_CLASSIF, nodeLabel);
                 aChild.setBranchLength(bLength);
                 children.add(aChild);
             } else {
                 Node aChild = new Node();
-                //aChild.setName(nodeIdent);
-                //aChild.setUserData("idInClassif", nodeIdent);
+                // aChild.setName(nodeIdent);
+                // aChild.setUserData("idInClassif", nodeIdent);
                 aChild.addProperty(Node.ID_IN_CLASSIF, nodeIdent);
                 children.add(aChild);
             }
@@ -156,7 +156,7 @@ public class NewickParser implements ClassificationParser {
     }
 
     private String readLabel(BufferedReader in) throws IOException {
-        String label = "";//NOI18N
+        String label = "";// NOI18N
         skipExtraChar(in);
         boolean quoted = false;
         boolean doubleQuoted = false;
@@ -169,24 +169,25 @@ public class NewickParser implements ClassificationParser {
         }
 
         while (c != -1) {
-            if (!quoted && !doubleQuoted && ("\n\r\f()[]:;,".indexOf(c) != -1)) {//NOI18N
+            if (!quoted && !doubleQuoted && ("\n\r\f()[]:;,".indexOf(c) != -1)) {// NOI18N
                 break;
             }
-            if ((c == '\'') && quoted) {//NO18N
+            if ((c == '\'') && quoted) {// NO18N
                 c = in.read();
-                if (c != '\'') {//NO18N
+                if (c != '\'') {// NO18N
                     break;
                 }
                 // two single quote is converted to single quote
             }
-            if ((c == '"') && doubleQuoted) {//NO18N
+            if ((c == '"') && doubleQuoted) {// NO18N
                 c = in.read();
-                if (c != '"') {//NO18N
+                if (c != '"') {// NO18N
                     break;
                 }
                 // two double quotes is converted into one
             }
-            if (" \t".indexOf(c) != -1) { // Blanks or tabs may appear anywhere
+            if (" \t".indexOf(c) != -1) { // Blanks or tabs may appear
+                // anywhere
                 // //NO18N
             }
             label += (char) c;
@@ -196,18 +197,18 @@ public class NewickParser implements ClassificationParser {
     }
 
     private String readBranchLength(BufferedReader buffer) throws IOException {
-        String branchLength = "";//NO18N
+        String branchLength = "";// NO18N
         skipExtraChar(buffer);
         if (c == -1) {
             return branchLength;
         }
-        if (c != ':') {//NOI18N
+        if (c != ':') {// NOI18N
             return branchLength;
         }
         c = buffer.read();
         skipExtraChar(buffer);
         while (c != -1) {
-            if ("0123456789.e-".indexOf(c) == -1) {//NO18N
+            if ("0123456789.e-".indexOf(c) == -1) {// NO18N
                 break;
             }
             branchLength += (char) c;
@@ -218,14 +219,14 @@ public class NewickParser implements ClassificationParser {
 
     private void skipExtraChar(BufferedReader buffer) throws IOException {
         while (c != -1) {
-            if (c == '[') {//NO18N
+            if (c == '[') {// NO18N
                 c = buffer.read();
                 while ((c != -1) && (c != ']'))
-                    //NO18N
+                    // NO18N
                     c = buffer.read();
                 c = buffer.read();
             }
-            if (" \t\n\r\f".indexOf(c) == -1) {//NO18N
+            if (" \t\n\r\f".indexOf(c) == -1) {// NO18N
                 break;
             }
             c = buffer.read();

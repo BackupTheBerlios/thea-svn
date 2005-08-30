@@ -32,12 +32,19 @@ import javax.swing.SwingUtilities;
  */
 public abstract class BlockingSwingWorker {
     private Thread thread;
+
     private ThreadVar threadVar;
+
     private GlassPane glassPane;
+
     private MessagePopup dialog;
+
     private String message;
+
     private String title;
+
     private boolean beep;
+
     private java.awt.Component aComponent;
 
     /**

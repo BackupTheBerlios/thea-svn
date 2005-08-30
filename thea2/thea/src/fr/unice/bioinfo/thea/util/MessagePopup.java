@@ -26,8 +26,11 @@ import com.jgoodies.forms.layout.Sizes;
 public class MessagePopup extends JDialog {
 
     private JLabel msgLbl;
+
     private JLabel statusLbl;
+
     private JProgressBar bar;
+
     private boolean beep = false;
 
     /**
@@ -48,7 +51,7 @@ public class MessagePopup extends JDialog {
 
         CellConstraints cc = new CellConstraints();
 
-        //======== this ========
+        // ======== this ========
         Container contentPane = getContentPane();
 
         contentPane.setLayout(new BorderLayout());
@@ -64,7 +67,7 @@ public class MessagePopup extends JDialog {
                 FormFactory.LINE_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC }));
         p.setPreferredSize(new Dimension(300, 100));
 
-        //---- msgLbl ----
+        // ---- msgLbl ----
         msgLbl = new JLabel();
         msgLbl.setText(message);
         msgLbl.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -76,12 +79,12 @@ public class MessagePopup extends JDialog {
         });
         p.add(msgLbl, cc.xywh(1, 1, 3, 1));
 
-        //---- statusLbl ----
+        // ---- statusLbl ----
         statusLbl = new JLabel();
         statusLbl.setText("Running:");
         p.add(statusLbl, cc.xy(1, 3));
 
-        //---- bar ----
+        // ---- bar ----
         bar = new JProgressBar();
         bar.setIndeterminate(true);
         bar.setBorder(new BevelBorder(BevelBorder.LOWERED));

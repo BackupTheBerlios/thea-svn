@@ -24,7 +24,7 @@ public class ResourcePropertySupport extends PropertySupport {
     public ResourcePropertySupport(String name, Class type, String displayName,
             String shortDescription, Object rni, boolean canW) {
         // Call super constructor
-        //  Properties are all readable: true is passed to super
+        // Properties are all readable: true is passed to super
         super(name, type, displayName, shortDescription, true, canW);
         this.rni = rni;
     }

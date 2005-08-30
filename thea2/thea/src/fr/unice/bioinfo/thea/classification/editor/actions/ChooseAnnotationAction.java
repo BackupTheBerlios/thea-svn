@@ -23,9 +23,10 @@ import fr.unice.bioinfo.thea.classification.editor.dlg.TermChooser;
 public class ChooseAnnotationAction extends GenericAction {
 
     private Node aNode;
+
     /** Resource Bundle */
     private static ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.classification.editor.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.classification.editor.Bundle"); // NOI18N;
 
     public ChooseAnnotationAction(String name, String accelerator,
             ImageIcon icon, String shortDescription,
@@ -36,7 +37,7 @@ public class ChooseAnnotationAction extends GenericAction {
 
         List l = (List) (aNode.getProperty(Node.TERM_AND_SCORE));
         if ((l != null) && (l.size() > 1) && (aNode.getLabel() != null)
-                && !aNode.getLabel().equals("")) {//NOI18N
+                && !aNode.getLabel().equals("")) {// NOI18N
             this.setEnabled(true);
         } else {
             this.setEnabled(false);
@@ -49,7 +50,7 @@ public class ChooseAnnotationAction extends GenericAction {
      */
     public void actionPerformed(ActionEvent e) {
         TermChooser chooser = new TermChooser(aNode, "", drawable);
-        //create the hide button
+        // create the hide button
         JButton hideBtn = new JButton(bundle.getString("LBL_HideButton_Name"));
         hideBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

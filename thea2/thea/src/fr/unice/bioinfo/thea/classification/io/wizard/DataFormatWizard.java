@@ -14,6 +14,7 @@ import org.openide.util.HelpCtx;
 public class DataFormatWizard implements WizardDescriptor.Panel {
 
     private OpenClassificationWizardDescriptor descriptor;
+
     private DataFormatPanel panel;
 
     public DataFormatWizard(OpenClassificationWizardDescriptor descriptor) {
@@ -41,10 +42,10 @@ public class DataFormatWizard implements WizardDescriptor.Panel {
      * @see org.openide.WizardDescriptor.Panel#readSettings(java.lang.Object)
      */
     public void readSettings(Object arg0) {
-        //        if (arg0 instanceof WizardDescriptor) {
-        //            WizardDescriptor wd = (WizardDescriptor) arg0;
-        //            wd.addPropertyChangeListener(panel);
-        //        }
+        // if (arg0 instanceof WizardDescriptor) {
+        // WizardDescriptor wd = (WizardDescriptor) arg0;
+        // wd.addPropertyChangeListener(panel);
+        // }
     }
 
     /*

@@ -15,6 +15,7 @@ import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.expression.Criterion;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
+import fr.unice.bioinfo.thea.ontologyexplorer.OntologyProperties;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 import fr.unice.bioinfo.thea.util.OWLProperties;
 
@@ -30,7 +31,7 @@ public class ResourceNodeChildren extends Children.Keys {
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.nodes.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.nodes.Bundle"); // NOI18N;
 
     /** Resource associated with this children. */
     private Resource resource;
@@ -91,15 +92,19 @@ public class ResourceNodeChildren extends Children.Keys {
     }
 
     /**
-     * Updates keys. A key is represented by an array of two elements: a
+     * Updates keys. A key is represented by an array of three elements: a
      * resource and a path to the associated icon
      * @param resource Resource
      * @return List of keys.
      */
     private Set findSubResources(Resource resource) {
+
+        System.out.println("RF=" + AllontoFactory.getResourceFactory());
+        System.out.println("CONF=" + AllontoFactory.getConfig());
         Set allTargets = new HashSet();
-        java.util.Map hierarchyDescription = OWLProperties.getInstance()
-                .getHierarchyDescription();
+        java.util.Map hierarchyDescription = OntologyProperties.getInstance()
+                .getHierarchyDescription(
+                        ((ResourceNode) getNode()).getConfiguration());
 
         Iterator it = hierarchyDescription.values().iterator();
 
@@ -112,6 +117,9 @@ public class ResourceNodeChildren extends Children.Keys {
 
             Set targets = null;
             try {
+                System.out
+                        .println("RF2=" + AllontoFactory.getResourceFactory());
+                System.out.println("CONF2=" + AllontoFactory.getConfig());
                 targets = resource.getTargets(prop, crit);
             } catch (AllontoException ae) {
             }
@@ -123,7 +131,7 @@ public class ResourceNodeChildren extends Children.Keys {
                 }
             }
         }
-
+        System.out.println("targets=" + allTargets);
         if (allTargets.isEmpty()) {
             allTargets = null;
         }

@@ -30,23 +30,36 @@ import fr.unice.bioinfo.thea.classification.settings.CESettings;
 public class AnnotationSelectionPanel extends JPanel {
 
     private JComponent geneProductSelectionSeperator;
+
     private JCheckBox ignoreUnknownBtn;
+
     private JCheckBox ignoreNotAnnotatedBtn;
+
     private JCheckBox hideSimilarBtn;
+
     private JCheckBox showAdjacentsBtn;
+
     private JCheckBox showOverBtn;
+
     private JCheckBox showUnderBtn;
+
     private JComponent clusterSelectionSeparator;
+
     private JLabel minClusterSizeLbl;
+
     private JTextField minClusterSizeField;
+
     private JLabel minAssociatedLbl;
+
     private JTextField minAssociatedField;
+
     private JComponent lineSeparator;
+
     private JButton applyBtn;
 
     /** Resource Bundle */
     private static ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.dlg.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.dlg.Bundle"); // NOI18N;
 
     public AnnotationSelectionPanel() {
         init();
@@ -57,10 +70,10 @@ public class AnnotationSelectionPanel extends JPanel {
         DefaultComponentFactory compFactory = DefaultComponentFactory
                 .getInstance();
         geneProductSelectionSeperator = compFactory.createSeparator(bundle
-                .getString("LBL_GeneProductSelectionSeperator"));//NOI18N
+                .getString("LBL_GeneProductSelectionSeperator"));// NOI18N
         clusterSelectionSeparator = compFactory.createSeparator(bundle
-                .getString("LBL_ClusterSelectionSeparator"));//NOI18N
-        lineSeparator = compFactory.createSeparator("");//NOI18N
+                .getString("LBL_ClusterSelectionSeparator"));// NOI18N
+        lineSeparator = compFactory.createSeparator("");// NOI18N
 
         ignoreUnknownBtn = new JCheckBox();
         ignoreNotAnnotatedBtn = new JCheckBox();
@@ -85,7 +98,7 @@ public class AnnotationSelectionPanel extends JPanel {
                 new ColumnSpec(ColumnSpec.FILL, Sizes.DEFAULT,
                         FormSpec.DEFAULT_GROW),
                 FormFactory.LABEL_COMPONENT_GAP_COLSPEC,
-                new ColumnSpec("max(min;50px)") }, new RowSpec[] {//NOI18N
+                new ColumnSpec("max(min;50px)") }, new RowSpec[] {// NOI18N
                 FormFactory.DEFAULT_ROWSPEC, FormFactory.LINE_GAP_ROWSPEC,
                         FormFactory.DEFAULT_ROWSPEC,
                         FormFactory.LINE_GAP_ROWSPEC,
@@ -110,10 +123,10 @@ public class AnnotationSelectionPanel extends JPanel {
                         FormFactory.DEFAULT_ROWSPEC }));
         add(geneProductSelectionSeperator, cc.xywh(1, 1, 5, 1));
 
-        //---- ignoreUnknownBtn ----
-        ignoreUnknownBtn.setText(bundle.getString("TXT_IgnoreUnknownBtn"));//NOI18N
+        // ---- ignoreUnknownBtn ----
+        ignoreUnknownBtn.setText(bundle.getString("TXT_IgnoreUnknownBtn"));// NOI18N
         ignoreUnknownBtn.setToolTipText(bundle
-                .getString("TIP_IgnoreUnknownBtn"));//NOI18N
+                .getString("TIP_IgnoreUnknownBtn"));// NOI18N
         ignoreUnknownBtn.setSelected(CESettings.getInstance()
                 .isIgnoreUnknownSelected());
         ignoreUnknownBtn.addChangeListener(new ChangeListener() {
@@ -124,11 +137,11 @@ public class AnnotationSelectionPanel extends JPanel {
         });
         add(ignoreUnknownBtn, cc.xywh(1, 3, 5, 1));
 
-        //---- ignoreNotAnnotatedBtn ----
+        // ---- ignoreNotAnnotatedBtn ----
         ignoreNotAnnotatedBtn.setText(bundle
-                .getString("TXT_IgnoreNotAnnotatedBtn"));//NOI18N
+                .getString("TXT_IgnoreNotAnnotatedBtn"));// NOI18N
         ignoreNotAnnotatedBtn.setToolTipText(bundle
-                .getString("TIP_IgnoreNotAnnotatedBtn"));//NOI18N
+                .getString("TIP_IgnoreNotAnnotatedBtn"));// NOI18N
         ignoreNotAnnotatedBtn.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 CESettings.getInstance().setIgnoreNotAnnotatedSelected(
@@ -139,9 +152,9 @@ public class AnnotationSelectionPanel extends JPanel {
                 .isIgnoreNotAnnotatedSelected());
         add(ignoreNotAnnotatedBtn, cc.xywh(1, 5, 5, 1));
 
-        //---- hideSimilarBtn ----
-        hideSimilarBtn.setText(bundle.getString("TXT_HideSimilarBtn"));//NOI18N
-        hideSimilarBtn.setToolTipText(bundle.getString("TIP_HideSimilarBtn"));//NOI18N
+        // ---- hideSimilarBtn ----
+        hideSimilarBtn.setText(bundle.getString("TXT_HideSimilarBtn"));// NOI18N
+        hideSimilarBtn.setToolTipText(bundle.getString("TIP_HideSimilarBtn"));// NOI18N
         hideSimilarBtn.setSelected(CESettings.getInstance()
                 .isHideSimilarAnnotation());
         hideSimilarBtn.addChangeListener(new ChangeListener() {
@@ -152,10 +165,10 @@ public class AnnotationSelectionPanel extends JPanel {
         });
         add(hideSimilarBtn, cc.xywh(1, 7, 5, 1));
 
-        //---- showAdjacentsBtn ----
-        showAdjacentsBtn.setText(bundle.getString("TXT_ShowAdjacentsBtn"));//NOI18N
+        // ---- showAdjacentsBtn ----
+        showAdjacentsBtn.setText(bundle.getString("TXT_ShowAdjacentsBtn"));// NOI18N
         showAdjacentsBtn.setToolTipText(bundle
-                .getString("TIP_ShowAdjacentsBtn"));//NOI18N
+                .getString("TIP_ShowAdjacentsBtn"));// NOI18N
         showAdjacentsBtn.setSelected(CESettings.getInstance()
                 .isShowPhysicallyAdjacent());
         showAdjacentsBtn.addChangeListener(new ChangeListener() {
@@ -166,9 +179,9 @@ public class AnnotationSelectionPanel extends JPanel {
         });
         add(showAdjacentsBtn, cc.xywh(1, 9, 5, 1));
 
-        //---- showOverBtn ----
-        showOverBtn.setText(bundle.getString("TXT_ShowOverBtn"));//NOI18N
-        showOverBtn.setToolTipText(bundle.getString("TIP_ShowOverBtn"));//NOI18N
+        // ---- showOverBtn ----
+        showOverBtn.setText(bundle.getString("TXT_ShowOverBtn"));// NOI18N
+        showOverBtn.setToolTipText(bundle.getString("TIP_ShowOverBtn"));// NOI18N
         showOverBtn.setSelected(CESettings.getInstance()
                 .isShowOverRepresented());
         showOverBtn.addChangeListener(new ChangeListener() {
@@ -179,9 +192,9 @@ public class AnnotationSelectionPanel extends JPanel {
         });
         add(showOverBtn, cc.xywh(1, 11, 5, 1));
 
-        //---- showUnderBtn ----
-        showUnderBtn.setText(bundle.getString("TXT_ShowUnderBtn"));//NOI18N
-        showUnderBtn.setToolTipText(bundle.getString("TIP_ShowUnderBtn"));//NOI18N
+        // ---- showUnderBtn ----
+        showUnderBtn.setText(bundle.getString("TXT_ShowUnderBtn"));// NOI18N
+        showUnderBtn.setToolTipText(bundle.getString("TIP_ShowUnderBtn"));// NOI18N
         showUnderBtn.setSelected(CESettings.getInstance()
                 .isShowUnderRepresented());
         showUnderBtn.addChangeListener(new ChangeListener() {
@@ -193,28 +206,28 @@ public class AnnotationSelectionPanel extends JPanel {
         add(showUnderBtn, cc.xywh(1, 13, 5, 1));
         add(clusterSelectionSeparator, cc.xywh(1, 15, 5, 1));
 
-        //---- minClusterSizeLbl ----
-        minClusterSizeLbl.setText(bundle.getString("TXT_MinClusterSizeLbl"));//NOI18N
+        // ---- minClusterSizeLbl ----
+        minClusterSizeLbl.setText(bundle.getString("TXT_MinClusterSizeLbl"));// NOI18N
         minClusterSizeLbl.setToolTipText(bundle
-                .getString("TIP_MinClusterSizeLbl"));//NOI18N
+                .getString("TIP_MinClusterSizeLbl"));// NOI18N
         add(minClusterSizeLbl, cc.xywh(1, 17, 3, 1));
         minClusterSizeField.setText(""
-                + CESettings.getInstance().getMinClusterSize());//NOI18N
+                + CESettings.getInstance().getMinClusterSize());// NOI18N
         add(minClusterSizeField, cc.xy(5, 17));
 
-        //---- minAssociatedLbl ----
-        minAssociatedLbl.setText(bundle.getString("TXT_MinAssociatedLbl"));//NOI18N
+        // ---- minAssociatedLbl ----
+        minAssociatedLbl.setText(bundle.getString("TXT_MinAssociatedLbl"));// NOI18N
         minAssociatedLbl.setToolTipText(bundle
-                .getString("TIP_MinAssociatedLbl"));//NOI18N
+                .getString("TIP_MinAssociatedLbl"));// NOI18N
         add(minAssociatedLbl, cc.xywh(1, 19, 3, 1));
 
         minAssociatedField.setText(""
-                + CESettings.getInstance().getMinAssociatedGenes());//NOI18N
+                + CESettings.getInstance().getMinAssociatedGenes());// NOI18N
         add(minAssociatedField, cc.xy(5, 19));
         add(lineSeparator, cc.xywh(1, 21, 5, 1));
 
-        //---- applyBtn ----
-        applyBtn.setText(bundle.getString("TXT_ApplyBtn"));//NOI18N
+        // ---- applyBtn ----
+        applyBtn.setText(bundle.getString("TXT_ApplyBtn"));// NOI18N
         applyBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CESettings.getInstance().setMinClusterSize(

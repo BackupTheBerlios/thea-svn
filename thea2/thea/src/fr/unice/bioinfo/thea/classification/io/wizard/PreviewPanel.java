@@ -28,9 +28,12 @@ public class PreviewPanel extends JPanel implements PropertyChangeListener {
 
     /** Resource Bundle */
     private static ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.classification.io.wizard.Bundle"); //NOI18N;
+            .getBundle("fr.unice.bioinfo.thea.classification.io.wizard.Bundle"); // NOI18N;
+
     private JTable table;
+
     private PreviewTableModel model;
+
     private JScrollPane jsp;
 
     public PreviewPanel() {
@@ -42,7 +45,7 @@ public class PreviewPanel extends JPanel implements PropertyChangeListener {
     }
 
     private void init() {
-        setName(bundle.getString("LBL_PreviewWizard"));//NOI18N
+        setName(bundle.getString("LBL_PreviewWizard"));// NOI18N
         setLayout(new BorderLayout());
         model = new PreviewTableModel();
         table = new JTable(model);
