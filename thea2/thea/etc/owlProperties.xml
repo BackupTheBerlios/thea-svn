@@ -1,94 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <owlproperties>
-	<ontologyexplorer>
-		<!-- List of root entries in the ontology.-->
-		<roots>
-			<uri>http://www.geneontology.org/owl#GO_0008150</uri>
-			<uri>http://www.geneontology.org/owl#GO_0005575</uri>
-			<uri>http://www.geneontology.org/owl#GO_0003674</uri>
-		</roots>
-		<!-- hieararchy bloc defines list of properties to be used
-			to build the tree in the ontology explorer.
-			-->
-		<hierarchy>
-			<relationship>
-				<name>partof</name>
-				<predicate>http://www.unice.fr/bioinfo/owl/biowl#superClassOf</predicate>
-				<context>
-					<valueof>http://www.w3.org/2002/07/owl#onProperty</valueof>
-					<equals>http://www.geneontology.org/owl#part_of</equals>
-				</context>
-				<icon>fr/unice/bioinfo/thea/ontologyexplorer/resources/partOfIcon</icon>
-			</relationship>
-			<relationship>
-				<name>isa</name>
-				<predicate>http://www.unice.fr/bioinfo/owl/biowl#superClassOf</predicate>
-				<!-- deflaut context == true -->
-				<icon>fr/unice/bioinfo/thea/ontologyexplorer/resources/isAIcon</icon>
-			</relationship>
-		</hierarchy>
-		<nodes>
-			<!-- nodename tels how to create a display name for nodes -->
-			<nodename>http://www.w3.org/2000/01/rdf-schema#label</nodename>
-			<!-- the property used to extract genes annotated with a given resource-->
-			<annotates> 
-				http://www.unice.fr/bioinfo/owl/biowl#annotates</annotates>
-			<hasevidence>
-				http://www.unice.fr/bioinfo/owl/biowl#hasEvidence</hasevidence>
-			<!-- genename tels how to create a display name for an annotated gene -->
-			<genename>http://www.unice.fr/bioinfo/owl/biowl#symbol</genename>
-			<!-- property that allows access to the full name of a gene-->
-			<genefullname> 
-				http://www.unice.fr/bioinfo/owl/biowl#fullName</genefullname>
-			<!-- xrefname is the property ised to find a DB XREF-->
-			<xrefname>http://www.unice.fr/bioinfo/owl/biowl#xref</xrefname>
-			<dbname>http://www.unice.fr/bioinfo/owl/biowl#db</dbname>
-			<dbkeyname> 
-				http://www.unice.fr/bioinfo/owl/biowl#dbname</dbkeyname>
-			<!-- property used to get the database name as a string valeue-->
-			<dbsvname>http://www.unice.fr/bioinfo/owl/biowl#name</dbsvname>
-		</nodes>
-	</ontologyexplorer>
-	<!-- CODES EVIDENCES -->
-	<evidences>
-		<uri>http://www.unice.fr/bioinfo/owl/biowl#IMP</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/biowl#IC</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/biowl#IPI</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/biowl#IEP</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/biowl#NA</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/biowl#NR</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/biowl#IGI</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/biowl#ISS</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/biowl#ND</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/biowl#ASS</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/biowl#NAS</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/biowl#TAS</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/biowl#IEA</uri>
-		<uri>http://www.unice.fr/bioinfo/owl/biowl#IDA</uri>
-	</evidences>
-	<!-- END CODE EVEIDENCES BLOC-->
-	<!-- Gene editor related properties-->
-	<geneeditor>
-		<column>
-			<name>http://www.unice.fr/bioinfo/owl/biowl#symbol</name>
-			<name>http://www.unice.fr/bioinfo/owl/biowl#fullName</name>
-			<name>http://www.unice.fr/bioinfo/owl/biowl#chromosome</name>
-			<name>http://www.unice.fr/bioinfo/owl/biowl#startPos</name>
-			<name>http://www.unice.fr/bioinfo/owl/biowl#endPos</name>
-			<name>http://www.unice.fr/bioinfo/owl/biowl#strand</name>
-		</column>
-	</geneeditor>
-	<annotation>
-		<propdbkeyname>http://www.unice.fr/bioinfo/owl/biowl#acc</propdbkeyname>
-		<annotatedbyname>http://www.unice.fr/bioinfo/owl/biowl#annotatedBy</annotatedbyname>
-		<chromosomename>http://www.unice.fr/bioinfo/owl/biowl#chromosome</chromosomename>
-		<endPosname>http://www.unice.fr/bioinfo/owl/biowl#endPos</endPosname>
-		<strandname>http://www.unice.fr/bioinfo/owl/biowl#strand</strandname>
-		<!--transcribedFromname>http://www.unice.fr/bioinfo/owl/biowl#</transcribedFromname-->
-		<startPosname>http://www.unice.fr/bioinfo/owl/biowl#startPos</startPosname>
-		<symbolname>http://www.unice.fr/bioinfo/owl/biowl#symbol</symbolname>
-		<speciename>http://www.unice.fr/bioinfo/owl/biowl#specie</speciename>
-	</annotation>
+  <ontology>
+    <root>http://www.geneontology.org/owl#GO_0008150</root>
+    <root>http://www.geneontology.org/owl#GO_0005575</root>
+    <root>http://www.geneontology.org/owl#GO_0003674</root>
+  </ontology>
+
   <predicate>
     <instanceof>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</instanceof>
     <name>http://www.w3.org/2000/01/rdf-schema#label</name>
@@ -103,4 +20,67 @@
     <annotates>http://www.unice.fr/bioinfo/owl/biowl#annotates</annotates>
     <identifies>http://www.unice.fr/bioinfo/owl/biowl#identifies</identifies>
   </predicate>
+  <statements.mapping>
+    <map>
+      <whenFound>
+        <subject ident="X"/>
+        <predicate ident="P" match="annotates"/>
+        <object ident="Y"/>
+      </whenFound>
+      <thenCreates>
+        <subject ident="X"/>
+        <predicate ident="P"/>
+        <object ident="Y.identifies"/>
+      </thenCreates>
+    </map>
+  </statements.mapping>
+  <classes.mapping>
+    <map>
+      <uri>http://www.w3.org/2002/07/owl#Class</uri>
+      <class>fr.unice.bioinfo.allonto.datamodel.Resource</class>
+    </map>
+    <map>
+      <uri>http://www.w3.org/2000/01/rdf-schema#Resource</uri>
+      <class>fr.unice.bioinfo.allonto.datamodel.Resource</class>
+    </map>
+    <map>
+      <uri>http://www.w3.org/2000/01/rdf-schema#Class</uri>
+      <class>fr.unice.bioinfo.allonto.datamodel.Resource</class>
+    </map>
+    <map>
+      <uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#Property</uri>
+      <class>fr.unice.bioinfo.allonto.datamodel.Resource</class>
+    </map>
+    <map>
+      <uri>http://www.w3.org/2002/07/owl#ObjectProperty</uri>
+      <class>fr.unice.bioinfo.allonto.datamodel.Resource</class>
+    </map>
+    <map>
+      <uri>http://www.w3.org/2002/07/owl#DatatypeProperty</uri>
+      <class>fr.unice.bioinfo.allonto.datamodel.Resource</class>
+    </map>
+  </classes.mapping>
+  <ignored>
+    <predicate>http://www.w3.org/2002/07/owl#equivalentClass</predicate>
+    <predicate>http://www.w3.org/2002/07/owl#disjointWith</predicate>
+    <predicate>http://www.w3.org/2000/01/rdf-schema#range</predicate>
+    <predicate>http://www.w3.org/2000/01/rdf-schema#domain</predicate>
+    <predicate>http://www.w3.org/2000/01/rdf-schema#comment</predicate>
+    <predicate>http://www.w3.org/2000/01/rdf-schema#seeAlso</predicate>
+    <predicate>http://www.w3.org/2002/07/owl#versionInfo</predicate>
+    <predicate>http://www.w3.org/2002/07/owl#intersectionOf</predicate>
+    <!--predicate>http://www.w3.org/1999/02/22-rdf-syntax-ns#rest</predicate>
+    <predicate>http://www.w3.org/1999/02/22-rdf-syntax-ns#first</predicate-->
+    <!--predicate>http://www.w3.org/2002/07/owl#someValuesFrom</predicate>
+    <predicate>http://www.w3.org/2002/07/owl#onProperty</predicate-->
+    <!--predicate>http://www.w3.org/2000/01/rdf-schema#subPropertyOf</predicate-->
+    <!--predicate>http://www.w3.org/2000/01/rdf-schema#subClassOf</predicate-->
+    <!--predicate>http://www.w3.org/2002/07/owl#subPropertyOf</predicate-->
+    <predicate>urn:x-hp-jena:rubrik/xsdBase</predicate>
+    <predicate>http://www.w3.org/1999/02/22-rdf-syntax-ns#object</predicate>
+    <predicate>http://www.w3.org/1999/02/22-rdf-syntax-ns#subject</predicate>
+    <predicate></predicate>
+    <predicate></predicate>
+
+  </ignored>
 </owlproperties>
