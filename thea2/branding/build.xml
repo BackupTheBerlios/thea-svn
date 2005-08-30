@@ -36,9 +36,8 @@
 		<property name="bin.dir" value="${netbeans.dest.dir}/${cluster.dir}/bin"/>
 		<mkdir dir="${bin.dir}"/>
 		<echo file="${bin.dir}/${shell.script}">#!/bin/sh
-	NETBEANS_HOME=${netbeans.dest.dir}
-	CLUSTER=${clustername}
-	$NETBEANS_HOME/platform4/lib/nbexec -ui	com.jgoodies.plaf.plastic.PlasticXPLookAndFeel -J-DPlastic.defaultTheme=DesertBlue	-J-Dhibernate.dialect=net.sf.hibernate.dialect.MySQLDialect	-J-Xmx500M -J-Dhibernate.max_fetch_depth=0	-J-Dfr.unice.bioinfo.allonto.datamodel.ResourceFactory=fr.unice.bioinfo.allonto.persistence.PersistentResourceFactory --userdir $NETBEANS_HOME/.thea --branding thea --clusters $NETBEANS_HOME/$CLUSTER
+	NETBEANS_HOME=${netbeans.dest.dir} CLUSTER=${clustername}
+	$NETBEANS_HOME/platform4/lib/nbexec -ui	com.jgoodies.plaf.plastic.PlasticXPLookAndFeel -J-DPlastic.defaultTheme=DesertBlue	-J-Dhibernate.dialect=net.sf.hibernate.dialect.MySQLDialect	-J-Xmx500M -J-Dhibernate.max_fetch_depth=0	-J-Dfr.unice.bioinfo.allonto.datamodel.ResourceFactory=fr.unice.bioinfo.allonto.persistence.PersistentResourceFactory	-J-Dfr.unice.bioinfo.util.Config=fr.unice.bioinfo.thea.TheaConfiguration --userdir $NETBEANS_HOME/.thea --branding thea --clusters $NETBEANS_HOME/$CLUSTER
 	        </echo>
 		<!-- make sure the shell script is executable -->
 		<chmod dir="${bin.dir}" 
@@ -49,7 +48,7 @@
 	set NETBEANS_HOME=${netbeans.dest.dir}
 	set CLUSTER=${clustername}
 
-	%NETBEANS_HOME%\platform4\lib\nbexec.exe -ui com.jgoodies.plaf.plastic.PlasticXPLookAndFeel -J-DPlastic.defaultTheme=DesertBlue -J-Xmx500M -J-Dhibernate.dialect=net.sf.hibernate.dialect.MySQLDialect -J-Dhibernate.max_fetch_depth=0 -J-Dfr.unice.bioinfo.allonto.datamodel.ResourceFactory=fr.unice.bioinfo.allonto.persistence.PersistentResourceFactory --userdir %NETBEANS_HOME%\.thea --branding thea --clusters %NETBEANS_HOME%\%CLUSTER%
+	%NETBEANS_HOME%\platform4\lib\nbexec.exe -ui com.jgoodies.plaf.plastic.PlasticXPLookAndFeel -J-DPlastic.defaultTheme=DesertBlue -J-Xmx500M -J-Dhibernate.dialect=net.sf.hibernate.dialect.MySQLDialect -J-Dhibernate.max_fetch_depth=0 -J-Dfr.unice.bioinfo.allonto.datamodel.ResourceFactory=fr.unice.bioinfo.allonto.persistence.PersistentResourceFactory -J-Dfr.unice.bioinfo.util.Config=fr.unice.bioinfo.thea.TheaConfiguration --userdir %NETBEANS_HOME%\.thea --branding thea --clusters %NETBEANS_HOME%\%CLUSTER%
 	        </echo>
 	</target>
 
