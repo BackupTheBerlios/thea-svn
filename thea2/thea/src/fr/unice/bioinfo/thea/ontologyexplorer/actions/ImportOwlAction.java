@@ -10,6 +10,8 @@ import javax.swing.JFileChooser;
 import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Session;
 
+import org.apache.commons.configuration.CompositeConfiguration;
+import org.apache.commons.configuration.Configuration;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
@@ -18,6 +20,7 @@ import org.openide.windows.WindowManager;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
+import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
@@ -68,6 +71,20 @@ public class ImportOwlAction extends NodeAction {
             // TODO handle this exception
         }
 
+        // creates the configuration by merging default and local config files
+        
+        CompositeConfiguration cc = new CompositeConfiguration();
+        Configuration defaultConfiguration = TheaConfiguration.getDefault()
+                .getConfiguration();
+        if (defaultConfiguration != null) {
+            cc.addConfiguration(defaultConfiguration);
+        }
+        Configuration localConfiguration = ((OntologyNode) node)
+                .getConfiguration();
+        if (localConfiguration != null) {
+            cc.addConfiguration(localConfiguration);
+        }
+
         boolean useInference = useInferenceCheckBox.isSelected();
         File[] files = chooser.getSelectedFiles();
         for (int counter = 0; counter < files.length; counter++) {
@@ -75,7 +92,7 @@ public class ImportOwlAction extends NodeAction {
             // getAbsolutePath();
             fr.unice.bioinfo.batch.ImportOwlModel parser = new fr.unice.bioinfo.batch.ImportOwlModel();
             try {
-                parser.parse(filePath, useInference);
+                parser.load(filePath, cc, useInference);
             } catch (AllontoException ae) {
                 // TODO handle this exception
             }
