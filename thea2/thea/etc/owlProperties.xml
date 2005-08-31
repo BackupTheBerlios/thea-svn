@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <owlproperties>
-  <ontology>
+  <!--ontology>
     <root>http://www.geneontology.org/owl#GO_0008150</root>
     <root>http://www.geneontology.org/owl#GO_0005575</root>
     <root>http://www.geneontology.org/owl#GO_0003674</root>
-  </ontology>
+  </ontology-->
 
   <predicate>
     <instanceof>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</instanceof>
@@ -17,23 +17,23 @@
     <inverse>http://www.w3.org/2002/07/owl#inverseOf</inverse>
     <transitive>http://www.w3.org/2002/07/owl#TransitiveProperty</transitive>
     <true>http://www.unice.fr/bioinfo/owl/biowl#true</true>
-    <annotates>http://www.unice.fr/bioinfo/owl/biowl#annotates</annotates>
-    <identifies>http://www.unice.fr/bioinfo/owl/biowl#identifies</identifies>
   </predicate>
-  <statements.mapping>
+  <statementsCreation>
+    <defvar name="annotates" ident="http://www.unice.fr/bioinfo/owl/biowl#annotates"/>
+    <defvar name="identifies" ident="http://www.unice.fr/bioinfo/owl/biowl#identifies"/>
     <map>
       <whenFound>
         <subject ident="X"/>
-        <predicate ident="P" match="annotates"/>
+        <predicate ident="annotates"/>
         <object ident="Y"/>
       </whenFound>
       <thenCreates>
         <subject ident="X"/>
-        <predicate ident="P"/>
+        <predicate ident="annotates"/>
         <object ident="Y.identifies"/>
       </thenCreates>
     </map>
-  </statements.mapping>
+  </statementsCreation>
   <classes.mapping>
     <map>
       <uri>http://www.w3.org/2002/07/owl#Class</uri>
