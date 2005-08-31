@@ -106,8 +106,6 @@ public class ResourceNodeChildren extends Children.Keys {
      */
     private Set findSubResources(Resource resource) {
 
-        System.out.println("RF=" + AllontoFactory.getResourceFactory());
-        System.out.println("CONF=" + AllontoFactory.getConfig());
         Set allTargets = new HashSet();
         java.util.Map hierarchyDescription = OntologyProperties.getInstance()
                 .getHierarchyDescription(
@@ -124,9 +122,6 @@ public class ResourceNodeChildren extends Children.Keys {
 
             Set targets = null;
             try {
-                System.out
-                        .println("RF2=" + AllontoFactory.getResourceFactory());
-                System.out.println("CONF2=" + AllontoFactory.getConfig());
                 targets = resource.getTargets(prop, crit);
             } catch (AllontoException ae) {
             }
@@ -138,7 +133,6 @@ public class ResourceNodeChildren extends Children.Keys {
                 }
             }
         }
-        System.out.println("targets=" + allTargets);
         if (allTargets.isEmpty()) {
             allTargets = null;
         }
