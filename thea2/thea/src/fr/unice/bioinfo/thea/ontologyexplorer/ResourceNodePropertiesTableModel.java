@@ -1,12 +1,9 @@
 package fr.unice.bioinfo.thea.ontologyexplorer;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import java.util.LinkedList;
-import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -15,12 +12,9 @@ import org.openide.util.NbBundle;
 
 import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
-import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.StringValue;
-import fr.unice.bioinfo.allonto.datamodel.expression.Criterion;
-import fr.unice.bioinfo.allonto.datamodel.expression.Expression;
-import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.TheaConfiguration;
+import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
@@ -37,7 +31,7 @@ public class ResourceNodePropertiesTableModel extends AbstractTableModel {
     /** Data */
     private Object[][] data;
 
-    public ResourceNodePropertiesTableModel(Resource resource) {
+    public ResourceNodePropertiesTableModel(ResourceNode node) {
         super();
         // init columns
         columnNames = new String[2];
@@ -45,7 +39,8 @@ public class ResourceNodePropertiesTableModel extends AbstractTableModel {
         columnNames[1] = bundle.getString("LBL_PropertiesValue");
 
         // get the configuration
-        Configuration con = TheaConfiguration.getDefault().getConfiguration();
+        Configuration con = node.getConfiguration();
+        Resource resource = node.getResource();
 
         Iterator mapIt = resource.getArcs().entrySet().iterator();
         Map propname2value = new HashMap();
