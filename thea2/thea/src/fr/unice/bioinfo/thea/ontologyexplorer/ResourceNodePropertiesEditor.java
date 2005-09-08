@@ -52,8 +52,8 @@ public class ResourceNodePropertiesEditor extends TopComponent {
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.Bundle"); // NOI18N
 
-    /** The Gene Editor looks for genes annotated by this resource. */
-    private Resource resource;
+    /** The Properties Editor displays properties associated with this node. */
+    private ResourceNode node;
 
     /** Genes table. */
     // private JTable table;
@@ -73,7 +73,7 @@ public class ResourceNodePropertiesEditor extends TopComponent {
      */
     public ResourceNodePropertiesEditor(Node node) {
         super();
-        this.resource = ((ResourceNode) node).getResource();
+        this.node = ((ResourceNode) node);
 
         propertySupport = new PropertyChangeSupport(this);
 
@@ -114,7 +114,7 @@ public class ResourceNodePropertiesEditor extends TopComponent {
 
         // create the table
         TableSorter sorter = new TableSorter(
-                new ResourceNodePropertiesTableModel(this.resource));
+                new ResourceNodePropertiesTableModel(this.node));
         table = new PrintableJTable(sorter);
         sorter.setTableHeader(table.getTableHeader());
 
