@@ -1,5 +1,6 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.Properties;
 import net.sf.hibernate.HibernateException;
@@ -50,6 +51,7 @@ public class InitializeKnowledgeBaseAction extends NodeAction {
         }
 
         DatabaseConnection dbc = ((OntologyNode) node).getConnection();
+
         try {
             Properties prop = new Properties();
             prop.setProperty("hibernate.connection.driver_class", dbc
@@ -66,6 +68,9 @@ public class InitializeKnowledgeBaseAction extends NodeAction {
         } catch (HibernateException he) {
             he.printStackTrace();
         }
+        ((OntologyNode) node).getChildren().remove(
+                ((OntologyNode) node).getChildren().getNodes());
+        dbc.connect();
     }
 
     /*
