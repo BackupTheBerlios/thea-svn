@@ -1,9 +1,10 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
+import java.awt.Frame;
 import java.io.File;
+import java.sql.Connection;
 import java.util.ResourceBundle;
 
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 
@@ -25,6 +26,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
 import fr.unice.bioinfo.thea.ontologyexplorer.settings.OESettings;
+import fr.unice.bioinfo.thea.util.BlockingSwingWorker;
 
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
@@ -33,6 +35,8 @@ public class ImportOwlAction extends NodeAction {
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
+
+    private Connection connection = null;
 
     /*
      * (non-Javadoc)
@@ -50,6 +54,7 @@ public class ImportOwlAction extends NodeAction {
         if (!(node instanceof OntologyNode)) {
             return;
         }
+        connection = ((OntologyNode) node).getConnection().getConnection();
 
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File(OESettings.getInstance()
@@ -63,16 +68,9 @@ public class ImportOwlAction extends NodeAction {
         if (r != JFileChooser.APPROVE_OPTION) {
             return;
         }
-        // Create a Session using a Connection
-        DatabaseConnection dbc = ((OntologyNode) node).getConnection();
-        try {
-            HibernateUtil.createSession(dbc.getConnection());
-        } catch (HibernateException he) {
-            // TODO handle this exception
-        }
 
         // creates the configuration by merging default and local config files
-        
+
         CompositeConfiguration cc = new CompositeConfiguration();
         Configuration defaultConfiguration = TheaConfiguration.getDefault()
                 .getConfiguration();
@@ -87,20 +85,49 @@ public class ImportOwlAction extends NodeAction {
 
         boolean useInference = useInferenceCheckBox.isSelected();
         File[] files = chooser.getSelectedFiles();
-        for (int counter = 0; counter < files.length; counter++) {
-            String filePath = files[counter].toURI().toString();
-            // getAbsolutePath();
-            fr.unice.bioinfo.batch.ImportOwlModel parser = new fr.unice.bioinfo.batch.ImportOwlModel();
-            try {
-                parser.load(filePath, cc, useInference);
-            } catch (AllontoException ae) {
-                // TODO handle this exception
-            }
-        }
+        importTask(files, cc, useInference);
 
         // Save the new used path
         // OESettings.getInstance().setLastBrowsedDirectory(file.getParent());
 
+    }
+
+    public void importTask(final File[] files,
+            final Configuration configuration, final boolean useInference) {
+        BlockingSwingWorker worker = new BlockingSwingWorker(
+                (Frame) WindowManager.getDefault().getMainWindow(),
+                "Importing files...", "Import in progress, please wait...",
+                true) {
+            protected void doNonUILogic() throws RuntimeException {
+                for (int counter = 0; counter < files.length; counter++) {
+                    String filePath = files[counter].toURI().toString();
+                    try {
+                        fr.unice.bioinfo.batch.ImportOwlModel parser = new fr.unice.bioinfo.batch.ImportOwlModel();
+                        try {
+                            HibernateUtil.createSession(connection);
+                        } catch (HibernateException e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();
+                        }
+                        parser.load(filePath, configuration, useInference);
+                        try {
+                            HibernateUtil.closeSession();
+                        } catch (HibernateException e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();
+                        }
+                        System.out.println("processing of file: " + filePath
+                                + " successfull");
+                    } catch (AllontoException ae) {
+                        // ae.printStackTrace();
+                        System.out.println("error in the processing of file: "
+                                + filePath);
+                        // TODO handle this exception
+                    }
+                }
+            }
+        };
+        worker.start();
     }
 
     /*
