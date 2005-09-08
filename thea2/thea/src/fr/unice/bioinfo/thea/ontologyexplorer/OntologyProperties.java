@@ -32,7 +32,7 @@ public class OntologyProperties {
     }
 
     public synchronized Collection getRootNodesURIs(Configuration config) {
-        Object o = config.getProperty("ontologyexplorer.roots.uri");// NOI18N
+        Object o = config.getList("ontologyexplorer.roots.uri");// NOI18N
         if (o instanceof Collection) {
             return (Collection) o;
         } else {
