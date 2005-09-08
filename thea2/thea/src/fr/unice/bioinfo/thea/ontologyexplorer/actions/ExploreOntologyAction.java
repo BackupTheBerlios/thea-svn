@@ -143,14 +143,21 @@ public class ExploreOntologyAction extends NodeAction {
             return;
         }
         CompositeConfiguration cc = new CompositeConfiguration();
-        if (defaultConfiguration != null) {
-            cc.addConfiguration(defaultConfiguration);
-        }
         if (localConfiguration != null) {
             cc.addConfiguration(localConfiguration);
         }
+        if (defaultConfiguration != null) {
+            cc.addConfiguration(defaultConfiguration);
+        }
 
         DatabaseConnection dbc = ((OntologyNode) node).getConnection();
+
+        try {
+            HibernateUtil.createSession(dbc.getConnection());
+        } catch (HibernateException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
 
         List result = null;
         Resource[] roots = null;
@@ -168,14 +175,9 @@ public class ExploreOntologyAction extends NodeAction {
                 return;
             }
 
-            // Create a Session using a Connection
-            HibernateUtil.createSession(dbc.getConnection());
-            Session sess = HibernateUtil.currentSession();
-
             ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                     .getResourceFactory();
             ArrayList rootsNotFound = new ArrayList();
-            // Object o = cc.getProperty("ontologyexplorer.roots.uri");// NOI18N
             Object o = OntologyProperties.getInstance().getRootNodesURIs(cc);
 
             if (o instanceof Collection) {
@@ -183,6 +185,7 @@ public class ExploreOntologyAction extends NodeAction {
                 Iterator rootIt = ((Collection) o).iterator();
                 while (rootIt.hasNext()) {
                     String name = (String) rootIt.next();
+                    System.out.println("processing root=" + name);
                     try {
                         Resource root = resourceFactory.getResource(name);
                         if (root != null) {
@@ -222,8 +225,6 @@ public class ExploreOntologyAction extends NodeAction {
 
         } catch (StackOverflowError s) {
             ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, s);
-        } catch (HibernateException he) {
-            ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, he);
         } catch (NullPointerException npe) {
             ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, npe);
         }
@@ -249,6 +250,12 @@ public class ExploreOntologyAction extends NodeAction {
                     .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/RootResourceIcon16");
             node.getChildren().add(new Node[] { rootNodes[cnt] });
         }
+        try {
+            HibernateUtil.closeSession();
+        } catch (HibernateException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
     }
 
     /*
@@ -268,8 +275,7 @@ public class ExploreOntologyAction extends NodeAction {
         }
         if (node instanceof OntologyNode) {
             if (((OntologyNode) node).isConnected()
-                    && ((OntologyNode) node).isCompatibleKB()
-                    && (((OntologyNode) node).getNbResources() > 0)) {
+                    && ((OntologyNode) node).isCompatibleKB()) {
                 return true;
             }
         }
