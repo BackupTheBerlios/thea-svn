@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javax.swing.Action;
 
 import net.sf.hibernate.HibernateException;
+import net.sf.hibernate.Session;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
@@ -130,7 +131,6 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
      */
     public Action[] getActions(boolean context) {
         if (context) {
-            System.out.println("getActions with context called");
             return null;
         } else {
             return new Action[] { NodeAction.get(ConnectAction.class),
@@ -182,7 +182,6 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
     /** Sets a name */
     public void setName(String name) {
         super.setName(name);
-        // nodeInfo.setName(name);
     }
 
     /** Returns cookies for this node */
@@ -210,13 +209,12 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
 
         if (b) {
             setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/OntologyConnectedIcon"); // NOI18N
+            computeCompatibleKB();
             setCompatibleKB(isCompatibleKB());
-            // //NOI18N
         } else {
             setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/OntologyDisconnectedIcon"); // NOI18N
             setCompatibleKB(false);
             setShortDescription("");
-            // //NOI18N
         }
     }
 
@@ -224,34 +222,35 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
      * @return Returns the compatibleKB.
      */
     public boolean isCompatibleKB() {
-        // Create a Session using a Connection
-        DatabaseConnection dbc = getConnection();
-        try {
-            HibernateUtil.createSession(dbc.getConnection());
-        } catch (HibernateException ae) {
-            compatibleKB = false;
-            setShortDescription(bundle.getString("LBL_IncompatibleKB")); // NOI18N
-        }
+        return compatibleKB;
+    }
 
+    /**
+     * Computes the compatibility of the Knowledge base
+     */
+    public void computeCompatibleKB() {
+        try {
+            HibernateUtil.createSession(getConnection().getConnection());
+        } catch (HibernateException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
         ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                 .getResourceFactory();
         try {
             nbResources = resourceFactory.getNbNodes();
             compatibleKB = true;
-            if (nbResources == 0) {
-                setShortDescription(bundle.getString("LBL_EmptyKnowledgeBase")); // NOI18N
-            } else {
-                String message = MessageFormat.format(bundle
-                        .getString("LBL_NbOfResources"), new String[] { Integer
-                        .toString(nbResources) }); // NOI18N
-
-                setShortDescription(message);
-            }
+            setShortDescription("");
         } catch (AllontoException ae) {
             compatibleKB = false;
             setShortDescription(bundle.getString("LBL_IncompatibleKB")); // NOI18N
         }
-        return compatibleKB;
+        try {
+            HibernateUtil.closeSession();
+        } catch (HibernateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -327,21 +326,7 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
         DatabaseConnection dbc = getConnection();
         if (dbc == null)
             return null;
-        Connection con = dbc.getConnection();
-        if (con == null)
-            return null;
-        String name = null;
-        try {
-            DatabaseMetaData dmd = con.getMetaData();
-            if (dmd == null)
-                return null;
-            name = dmd.getUserName() + ":" + dmd.getURL() + ":"
-                    + dmd.getSchemaTerm();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return name;
+        return dbc.getUser() + ":" + dbc.getDatabase() + ":" + dbc.getSchema();
     }
 
 }
