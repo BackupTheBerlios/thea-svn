@@ -6,6 +6,9 @@ import java.util.Map;
 
 import javax.swing.Action;
 
+import net.sf.hibernate.HibernateException;
+import net.sf.hibernate.Session;
+
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.openide.nodes.AbstractNode;
@@ -20,11 +23,13 @@ import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.StringValue;
+import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyProperties;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowAnnotetdGenesAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowResourceNodeProperties;
+import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 
 /**
@@ -47,38 +52,8 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
     private Resource resource;
 
     public ResourceNode(final Resource resource) {
-        super((resource == null) ? Children.LEAF : new ResourceNodeChildren(
-                resource));
+        super((resource == null) ? Children.LEAF : new ResourceNodeChildren());
         this.resource = resource;
-        // // Build a display name:
-        // try {
-        // resourceFactory.setMemoryCached(true);
-        // String nodeName =
-        // OntologyProperties.getInstance().getNodeNameProperty(
-        // getConfiguration());
-        // Resource nodeNameProperty = null;
-        // if (nodeName != null) {
-        // nodeNameProperty = resourceFactory.getResource(nodeName);
-        // }
-        //
-        // resourceFactory.setMemoryCached(false);
-        // if (nodeNameProperty != null) {
-        //
-        // StringValue sv = (StringValue) resource
-        // .getTarget(nodeNameProperty);
-        // if (sv != null) {
-        // name = sv.getValue();
-        // } else {
-        // name = "" + resource.getId();// NOI18N
-        // }
-        // }
-        // } catch (AllontoException ae) {
-        // resourceFactory.setMemoryCached(false);
-        //
-        // }
-        // // Set the node name and display name:
-        // setName(name);
-        // setDisplayName(name);
     }
 
     public String getName() {
@@ -86,6 +61,14 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         System.out.println("getName called");
         // Build the display name:
         try {
+            try {
+                HibernateUtil.createSession(getConnection().getConnection());
+                Session sess = HibernateUtil.currentSession();
+                sess.update(resource);
+            } catch (HibernateException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
             resourceFactory.setMemoryCached(true);
             String nodeName = OntologyProperties.getInstance()
                     .getNodeNameProperty(getConfiguration());
@@ -96,14 +79,19 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
 
             resourceFactory.setMemoryCached(false);
             if (nodeNameProperty != null) {
-
                 StringValue sv = (StringValue) resource
                         .getTarget(nodeNameProperty);
                 if (sv != null) {
                     name = sv.getValue();
                 } else {
-                    name = "" + resource.getId();// NOI18N
+                    name = resource.getAcc();// NOI18N
                 }
+            }
+            try {
+                HibernateUtil.closeSession();
+            } catch (HibernateException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
             }
         } catch (AllontoException ae) {
             resourceFactory.setMemoryCached(false);
@@ -125,8 +113,6 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
     /** Sets cookie */
     public void setInfo(ResourceNodeInfo info) {
         this.info = info;
-        // info.setName(getName());
-        // processNodeInfo(info);
     }
 
     private void processNodeInfo(final ResourceNodeInfo info) {
@@ -138,7 +124,6 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         while (mapIt.hasNext()) {
             entry = (Map.Entry) mapIt.next();
             e = (Entity) entry.getValue();
-            // System.out.println("key = " + entry.getKey());
             // Since values in the Map are not all instances of
             // StringValue,
             // do tests using the instanceof operator
@@ -235,6 +220,10 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
         return (OntologyNode) ancestor;
     }
 
+    public DatabaseConnection getConnection() {
+        return getOntologyNode().getConnection();
+    }
+
     public Configuration getConfiguration() {
 
         Configuration localConfiguration = getOntologyNode().getConfiguration();
@@ -243,11 +232,11 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
                 .getConfiguration();
 
         CompositeConfiguration cc = new CompositeConfiguration();
-        if (defaultConfiguration != null) {
-            cc.addConfiguration(defaultConfiguration);
-        }
         if (localConfiguration != null) {
             cc.addConfiguration(localConfiguration);
+        }
+        if (defaultConfiguration != null) {
+            cc.addConfiguration(defaultConfiguration);
         }
         return cc;
 
