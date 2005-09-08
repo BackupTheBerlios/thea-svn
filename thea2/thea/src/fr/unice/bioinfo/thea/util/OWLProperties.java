@@ -157,10 +157,13 @@ public final class OWLProperties {
         return hasEvidenceProperty;
     }
 
+    // TODO a supprimer et à remplacer par une méthode dans OntologyProperties
+
     public Map getHierarchyDescription() {
         return hierarchyDescription;
     }
 
+    // TODO a supprimer et à remplacer par une méthode dans OntologyProperties
     public synchronized String getNodeNameProperty() {
         return nodeNameProperty;
     }
