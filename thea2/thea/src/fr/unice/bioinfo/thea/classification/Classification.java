@@ -144,7 +144,7 @@ public class Classification implements Annotatable {
                 }
                 // Create a Session using a Connection
                 try {
-                    HibernateUtil.createSession(cnx);
+                    //HibernateUtil.createSession(cnx);
                     Session sess = HibernateUtil.currentSession();
                     ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                             .getResourceFactory();
@@ -219,7 +219,7 @@ public class Classification implements Annotatable {
                 List ln = classificationRootNode.getLeaves();
                 // Create a Session using a Connection
                 try {
-                    HibernateUtil.createSession(cnx);
+                    //HibernateUtil.createSession(cnx);
                     Session sess = HibernateUtil.currentSession();
                     ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                             .getResourceFactory();
@@ -592,7 +592,7 @@ public class Classification implements Annotatable {
             protected void doNonUILogic() throws RuntimeException {
                 // Create a Session using a Connection
                 try {
-                    HibernateUtil.createSession(cnx);
+                    //HibernateUtil.createSession(cnx);
                     Session sess = HibernateUtil.currentSession();
                     ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                             .getResourceFactory();
