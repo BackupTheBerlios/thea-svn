@@ -120,16 +120,16 @@ public abstract class BlockingSwingWorker {
             dialog.show();
         }
 
-        // Mount the glasspane on the component window
-        GlassPane aPane = GlassPane.mount(getAComponent(), true, beep);
-
-        // keep track of the glasspane as an instance variable
-        setGlassPane(aPane);
-
-        if (getGlassPane() != null) {
-            // Start interception UI interactions
-            getGlassPane().setVisible(true);
-        }
+//        // Mount the glasspane on the component window
+//        GlassPane aPane = GlassPane.mount(getAComponent(), true, beep);
+//
+//        // keep track of the glasspane as an instance variable
+//        setGlassPane(aPane);
+//
+//        if (getGlassPane() != null) {
+//            // Start interception UI interactions
+//            getGlassPane().setVisible(true);
+//        }
     }
 
     /**
