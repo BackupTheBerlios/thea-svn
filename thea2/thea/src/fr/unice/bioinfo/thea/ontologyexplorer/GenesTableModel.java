@@ -6,6 +6,9 @@ import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
+import net.sf.hibernate.HibernateException;
+import net.sf.hibernate.Session;
+
 import org.apache.commons.configuration.Configuration;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
@@ -14,8 +17,10 @@ import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.StringValue;
 import fr.unice.bioinfo.allonto.datamodel.expression.Criterion;
 import fr.unice.bioinfo.allonto.datamodel.expression.Expression;
+import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.TheaConfiguration;
+import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
@@ -32,7 +37,7 @@ public class GenesTableModel extends AbstractTableModel {
 
     private String[] evidences;
 
-    public GenesTableModel(Resource resource, String[] evidences,
+    public GenesTableModel(ResourceNode resourceNode, String[] evidences,
             String[] properties) {
         super();
         this.evidences = evidences;
@@ -47,6 +52,17 @@ public class GenesTableModel extends AbstractTableModel {
         // get the configuration
         Configuration con = TheaConfiguration.getDefault().getConfiguration();
 
+        try {
+            HibernateUtil.createSession(resourceNode
+                    .getConnection().getConnection());
+            Session sess = HibernateUtil.currentSession();
+            sess.update(resourceNode.getResource());
+        } catch (HibernateException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        
         // Get the annotated genes list
         String annotatePropertyName;
         ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
@@ -72,7 +88,7 @@ public class GenesTableModel extends AbstractTableModel {
 
             Resource annotateProperty = resourceFactory
                     .getResource(annotatePropertyName);
-            genes = resource.getTargets(annotateProperty, criterion);
+            genes = resourceNode.getResource().getTargets(annotateProperty, criterion);
         } catch (AllontoException ae) {
         }
         resourceFactory.setMemoryCached(false);
