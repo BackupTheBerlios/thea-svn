@@ -152,7 +152,7 @@ public class FilesChooserPanel extends JPanel implements PropertyChangeListener 
         public void actionPerformed(ActionEvent e) {
             JFileChooser chooser = new JFileChooser();
             chooser.setCurrentDirectory(new File(OESettings.getInstance()
-                    .getLastBrowsedDirectory()));
+                    .getLastBrowsedClassifDirectory()));
             int r = chooser.showOpenDialog(WindowManager.getDefault()
                     .getMainWindow());
             if (r != JFileChooser.APPROVE_OPTION) {
@@ -161,7 +161,7 @@ public class FilesChooserPanel extends JPanel implements PropertyChangeListener 
             File file = chooser.getSelectedFile();
 
             // Save the new used path
-            OESettings.getInstance().setLastBrowsedDirectory(file.getParent());
+            OESettings.getInstance().setLastBrowsedClassifDirectory(file.getParent());
             performCDFAction(file);
         }
     }
@@ -278,7 +278,7 @@ public class FilesChooserPanel extends JPanel implements PropertyChangeListener 
         public void actionPerformed(ActionEvent e) {
             JFileChooser chooser = new JFileChooser();
             chooser.setCurrentDirectory(new File(OESettings.getInstance()
-                    .getLastBrowsedDirectory()));
+                    .getLastBrowsedClassifDirectory()));
             int r = chooser.showOpenDialog(WindowManager.getDefault()
                     .getMainWindow());
             if (r != JFileChooser.APPROVE_OPTION) {
@@ -286,7 +286,7 @@ public class FilesChooserPanel extends JPanel implements PropertyChangeListener 
             }
             File file = chooser.getSelectedFile();
             // Save the new used path
-            OESettings.getInstance().setLastBrowsedDirectory(file.getParent());
+            OESettings.getInstance().setLastBrowsedClassifDirectory(file.getParent());
             performTDFAction(file);
         }
     }
