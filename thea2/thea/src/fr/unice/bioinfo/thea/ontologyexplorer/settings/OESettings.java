@@ -42,7 +42,11 @@ public class OESettings extends SystemOption {
     }
 
     /** The last browsed directory when loading a classification */
-    private static String lastBrowsedDirectory = System
+    private static String lastBrowsedClassifDirectory = System
+            .getProperty("user.home");// NOI18N
+
+    /** The last browsed directory when loading a classification */
+    private static String lastBrowsedOwlDirectory = System
             .getProperty("user.home");// NOI18N
 
     /** The configuration file for thea. */
@@ -54,8 +58,11 @@ public class OESettings extends SystemOption {
     /** Last selected string values properties */
     private static String[] lastSelectedSvnames = null;
 
-    /** <i>lastBrowsedDirectory </i> property name. */
-    public static final String PROP_LAST_BROWSED_DIRECTORY = "lastBrowsedDirectory"; // NOI18N
+    /** <i>lastBrowsedClassifDirectory </i> property name. */
+    public static final String PROP_LAST_BROWSED_CLASSIF_DIRECTORY = "lastBrowsedClassifDirectory"; // NOI18N
+
+    /** <i>lastBrowsedOwlDirectory </i> property name. */
+    public static final String PROP_LAST_BROWSED_OWL_DIRECTORY = "lastBrowsedOwlDirectory"; // NOI18N
 
     /** <i>configFilePath</i> property name. */
     public static final String PROP_CONFIG_FILE_PATH = "configFilePath"; // NOI18N
@@ -74,17 +81,32 @@ public class OESettings extends SystemOption {
     public static final String PROP_SV_NAMES = "lastSelectedSvnames"; // NOI18N
 
     /** Returns the last browsed directory. */
-    public String getLastBrowsedDirectory() {
-        return lastBrowsedDirectory;
+    public String getLastBrowsedClassifDirectory() {
+        return lastBrowsedClassifDirectory;
     }
 
     /** Store the last browsed directory's path. */
-    public void setLastBrowsedDirectory(String value) {
+    public void setLastBrowsedClassifDirectory(String value) {
         value = (value == null) ? "" : value;// NOI18N
-        String old = getLastBrowsedDirectory();
+        String old = getLastBrowsedClassifDirectory();
         if (!value.equals(old)) {
-            lastBrowsedDirectory = value;
-            firePropertyChange(PROP_LAST_BROWSED_DIRECTORY, old, value);
+            lastBrowsedClassifDirectory = value;
+            firePropertyChange(PROP_LAST_BROWSED_CLASSIF_DIRECTORY, old, value);
+        }
+    }
+
+    /** Returns the last browsed OWL directory. */
+    public String getLastBrowsedOwlDirectory() {
+        return lastBrowsedOwlDirectory;
+    }
+
+    /** Store the last browsed OWL directory's path. */
+    public void setLastBrowsedOwlDirectory(String value) {
+        value = (value == null) ? "" : value;// NOI18N
+        String old = getLastBrowsedOwlDirectory();
+        if (!value.equals(old)) {
+            lastBrowsedOwlDirectory = value;
+            firePropertyChange(PROP_LAST_BROWSED_OWL_DIRECTORY, old, value);
         }
     }
 
