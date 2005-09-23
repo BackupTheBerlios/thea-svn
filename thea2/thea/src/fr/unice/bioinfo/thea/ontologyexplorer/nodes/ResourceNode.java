@@ -28,6 +28,7 @@ import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyProperties;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowAnnotetdGenesAction;
+import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowResourceNodeInstances;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowResourceNodeProperties;
 import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
@@ -193,7 +194,8 @@ public class ResourceNode extends AbstractNode implements Node.Cookie {
     public Action[] getActions(boolean arg0) {
         Action[] actions = new Action[] {
                 SystemAction.get(ShowAnnotetdGenesAction.class), null,
-                SystemAction.get(ShowResourceNodeProperties.class) };
+                SystemAction.get(ShowResourceNodeProperties.class),
+                SystemAction.get(ShowResourceNodeInstances.class)};
         return actions;
     }
 
