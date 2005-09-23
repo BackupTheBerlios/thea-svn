@@ -58,7 +58,7 @@ public class ImportOwlAction extends NodeAction {
 
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File(OESettings.getInstance()
-                .getLastBrowsedDirectory()));
+                .getLastBrowsedOwlDirectory()));
         chooser.setMultiSelectionEnabled(true);
         JCheckBox useInferenceCheckBox = new JCheckBox(bundle
                 .getString("LBL_ImportOntologyAction_UseInference"));// NOI18N);
@@ -68,6 +68,14 @@ public class ImportOwlAction extends NodeAction {
         if (r != JFileChooser.APPROVE_OPTION) {
             return;
         }
+
+        boolean useInference = useInferenceCheckBox.isSelected();
+        File[] files = chooser.getSelectedFiles();
+        if (files.length == 0)
+            return;
+        // Save the new used path
+        OESettings.getInstance().setLastBrowsedOwlDirectory(
+                files[0].getParent());
 
         // creates the configuration by merging default and local config files
 
@@ -83,12 +91,9 @@ public class ImportOwlAction extends NodeAction {
             cc.addConfiguration(localConfiguration);
         }
 
-        boolean useInference = useInferenceCheckBox.isSelected();
-        File[] files = chooser.getSelectedFiles();
-        importTask(files, cc, useInference);
+        // Imports the list of files
 
-        // Save the new used path
-        // OESettings.getInstance().setLastBrowsedDirectory(file.getParent());
+        importTask(files, cc, useInference);
 
     }
 
@@ -102,7 +107,7 @@ public class ImportOwlAction extends NodeAction {
                 for (int counter = 0; counter < files.length; counter++) {
                     String filePath = files[counter].toURI().toString();
                     try {
-                        fr.unice.bioinfo.batch.ImportOwlModel parser = new fr.unice.bioinfo.batch.ImportOwlModel();
+                        fr.unice.bioinfo.batch.OwlReader parser = new fr.unice.bioinfo.batch.OwlReader();
                         try {
                             HibernateUtil.createSession(connection);
                         } catch (HibernateException e1) {
