@@ -27,6 +27,12 @@
 				<icon>fr/unice/bioinfo/thea/ontologyexplorer/resources/isAIcon</icon>
 			</relationship>
 		</hierarchy>
+		<nodeProperties>
+			<defvar name="value" ident="http://www.unice.fr/bioinfo/owl/biowl#value"/>
+			<defvar name="definition" ident="http://www.unice.fr/bioinfo/owl/biowl#definition"/>
+			<property name="label" ident="http://www.w3.org/2000/01/rdf-schema#label"/>
+			<property name="definition" ident="definition.value"/>
+		</nodeProperties>
 		<nodes>
 			<!-- nodename tels how to create a display name for nodes -->
 			<nodename>http://www.w3.org/2000/01/rdf-schema#label</nodename>
