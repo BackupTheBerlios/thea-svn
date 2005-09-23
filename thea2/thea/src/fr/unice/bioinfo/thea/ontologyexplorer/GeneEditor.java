@@ -50,8 +50,8 @@ public class GeneEditor extends TopComponent {
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.Bundle"); // NOI18N
 
-    /** The Gene Editor loks for genes annotated by this resource. */
-    private Resource resource;
+    /** The Gene Editor loks for genes annotated by the resource identified by this node. */
+    private ResourceNode resourceNode;
 
     /** Genes table. */
     // private JTable table;
@@ -82,7 +82,7 @@ public class GeneEditor extends TopComponent {
         super();
         this.evidences = evidences;
         this.properties = properties;
-        this.resource = ((ResourceNode) node).getResource();
+        this.resourceNode = (ResourceNode) node;
 
         propertySupport = new PropertyChangeSupport(this);
 
@@ -122,7 +122,7 @@ public class GeneEditor extends TopComponent {
         CellConstraints cc = new CellConstraints();
 
         // create the table
-        TableSorter sorter = new TableSorter(new GenesTableModel(this.resource,
+        TableSorter sorter = new TableSorter(new GenesTableModel(this.resourceNode,
                 this.evidences, this.properties));
         table = new PrintableJTable(sorter);
         sorter.setTableHeader(table.getTableHeader());
