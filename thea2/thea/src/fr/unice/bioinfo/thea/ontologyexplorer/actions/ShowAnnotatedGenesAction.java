@@ -15,14 +15,14 @@ import org.openide.util.actions.NodeAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.GeneEditor;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.dlg.ShowAnnotatedGenesPanel;
-import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 import fr.unice.bioinfo.thea.ontologyexplorer.settings.OESettings;
 
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
-public class ShowAnnotetdGenesAction extends NodeAction {
+public class ShowAnnotatedGenesAction extends NodeAction {
+    static final long serialVersionUID = 7443477155935990320L;
 
     private Dialog dialog;
 
@@ -40,8 +40,8 @@ public class ShowAnnotetdGenesAction extends NodeAction {
         OntologyExplorer e = OntologyExplorer.findDefault();
         // Extract the node
         final Node node = e.getExplorerManager().getSelectedNodes()[0];
-        final ResourceNodeInfo rni = (ResourceNodeInfo) node
-                .getCookie(ResourceNodeInfo.class);
+        // final ResourceNodeInfo rni = (ResourceNodeInfo) node
+        // .getCookie(ResourceNodeInfo.class);
 
         // Create the panel
         final ShowAnnotatedGenesPanel panel = new ShowAnnotatedGenesPanel();
