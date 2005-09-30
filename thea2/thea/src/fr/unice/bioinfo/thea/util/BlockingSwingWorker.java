@@ -18,6 +18,7 @@ package fr.unice.bioinfo.thea.util;
 
 import java.awt.Component;
 
+import javax.swing.JDialog;
 import javax.swing.SwingUtilities;
 
 /**
@@ -38,7 +39,7 @@ public abstract class BlockingSwingWorker {
 
     private GlassPane glassPane;
 
-    private MessagePopup dialog;
+    private JDialog dialog;
 
     private String message;
 
@@ -111,14 +112,55 @@ public abstract class BlockingSwingWorker {
     }
 
     /**
+     * Start a thread that will call the <code>construct</code> method and
+     * then exit.
+     * 
+     * @param aComponent
+     *            a reference to the UI component that's directly using
+     *            SwingWorker
+     * @param aDialog
+     *            a reference to the dialog that is displayed by this SwingWorker
+     */
+    public BlockingSwingWorker(Component aComponent, JDialog aDialog) {
+        setAComponent(aComponent);
+        this.dialog = aDialog;
+
+        final Runnable doFinished = new Runnable() {
+            public void run() {
+                finished();
+            }
+        };
+
+        Runnable doConstruct = new Runnable() {
+            public void run() {
+                try {
+                    construct();
+                } finally {
+                    threadVar.clear();
+                }
+
+                // Execute the doFinished runnable on the Swing dispatcher
+                // thread
+                SwingUtilities.invokeLater(doFinished);
+            }
+        };
+
+        // Group the new worker thread in the same group as the "spawner" thread
+        Thread t = new Thread(Thread.currentThread().getThreadGroup(),
+                doConstruct);
+        threadVar = new ThreadVar(t);
+    }
+
+    
+    /**
      * Activate the capabilities of glasspane
      */
     private void activateGlassPane() {
         // create the message dialog
-        if ((message != null) && !message.trim().equals("")) {
+        if ((dialog == null) && (message != null) && !message.trim().equals("")) {
             dialog = new MessagePopup(getAComponent(), title, message, beep);
-            dialog.show();
         }
+        dialog.show();
 
 //        // Mount the glasspane on the component window
 //        GlassPane aPane = GlassPane.mount(getAComponent(), true, beep);
@@ -150,7 +192,8 @@ public abstract class BlockingSwingWorker {
      */
     private void deactivateGlassPane() {
         if (dialog != null) {
-            dialog.close();
+            dialog.setVisible(false);
+            dialog.dispose();
         }
 
         if (getGlassPane() != null) {
