@@ -27,6 +27,8 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
  * @author Saïd El Kasmi
  */
 public class ConnectAction extends NodeAction {
+    static final long serialVersionUID = 2441554183821391282L;
+
     private Dialog dialog;
 
     /** Resource Bundle */

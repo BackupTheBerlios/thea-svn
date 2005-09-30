@@ -22,6 +22,8 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationNode;
  * @author Saïd El Kasmi
  */
 public class AnnotateAction extends NodeAction {
+    static final long serialVersionUID = -267747218848956952L;
+    
     private Dialog dialog;
 
     /** Resource Bundle */

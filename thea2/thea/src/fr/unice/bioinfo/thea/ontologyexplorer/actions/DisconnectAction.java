@@ -18,6 +18,8 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
  * @author Saïd El Kasmi
  */
 public class DisconnectAction extends NodeAction {
+    static final long serialVersionUID = -5366446126617838514L;
+
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N

@@ -11,7 +11,6 @@ import org.openide.util.actions.NodeAction;
 
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.ResourceNodeInstancesEditor;
-import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 
 /**
@@ -19,6 +18,10 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
  */
 public class ShowResourceNodeInstances extends NodeAction {
 
+    static final long serialVersionUID = -7331431990714575233L;
+;
+
+    
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
@@ -33,8 +36,8 @@ public class ShowResourceNodeInstances extends NodeAction {
         OntologyExplorer e = OntologyExplorer.findDefault();
         // Extract the node
         final Node node = e.getExplorerManager().getSelectedNodes()[0];
-        final ResourceNodeInfo rni = (ResourceNodeInfo) node
-                .getCookie(ResourceNodeInfo.class);
+//        final ResourceNodeInfo rni = (ResourceNodeInfo) node
+//                .getCookie(ResourceNodeInfo.class);
 
         // Creates the panel and displays it in a thread
 
@@ -88,4 +91,10 @@ public class ShowResourceNodeInstances extends NodeAction {
     public HelpCtx getHelpCtx() {
         return HelpCtx.DEFAULT_HELP;
     }
+
+    protected boolean asynchronous() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 }

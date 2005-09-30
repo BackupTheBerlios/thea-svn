@@ -3,7 +3,6 @@ package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.ObjectInputStream.GetField;
 import java.util.ResourceBundle;
 
 import org.apache.commons.configuration.Configuration;
@@ -26,6 +25,8 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class SpecifyConfigurationFileAction extends NodeAction {
+    static final long serialVersionUID = 3469456600316877354L;
+
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
@@ -90,8 +91,6 @@ public class SpecifyConfigurationFileAction extends NodeAction {
         // Use DialogDescriptor to show the panel
         DialogDescriptor descriptor = new DialogDescriptor(panel, bundle
                 .getString("LBL_ConfigurationFileEntryPanelTitle"), true, al); // NOI18N
-        Object[] closingOptions = { DialogDescriptor.CANCEL_OPTION };
-        // descriptor.setClosingOptions(closingOptions);
         Dialog dialog = DialogDisplayer.getDefault().createDialog(descriptor);
         dialog.show();
     }

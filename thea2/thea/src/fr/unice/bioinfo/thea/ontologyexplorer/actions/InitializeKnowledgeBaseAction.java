@@ -1,8 +1,8 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
-import java.sql.SQLException;
-import java.util.ResourceBundle;
 import java.util.Properties;
+import java.util.ResourceBundle;
+
 import net.sf.hibernate.HibernateException;
 
 import org.openide.DialogDisplayer;
@@ -18,9 +18,11 @@ import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
 
 /**
- * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
+ * @author <a href="mailto:claude.pasquier@unice.fr"> Claude Pasquier </a>
  */
 public class InitializeKnowledgeBaseAction extends NodeAction {
+    static final long serialVersionUID = 456213572242749827L;
+    
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N

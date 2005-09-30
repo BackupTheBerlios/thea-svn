@@ -14,6 +14,8 @@ import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
  * @author Saïd El Kasmi
  */
 public class OntologyExplorerAction extends CallableSystemAction {
+    static final long serialVersionUID = 2405952993640913605L;
+
     /*
      * (non-Javadoc)
      * 

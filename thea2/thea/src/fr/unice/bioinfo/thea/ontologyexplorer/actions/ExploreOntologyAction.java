@@ -3,26 +3,16 @@ package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.sql.DatabaseMetaData;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import net.sf.hibernate.HibernateException;
-import net.sf.hibernate.Session;
 
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.configuration.SystemConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.openide.DialogDescriptor;
 import org.openide.DialogDisplayer;
@@ -36,7 +26,6 @@ import org.openide.util.actions.NodeAction;
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
-import fr.unice.bioinfo.allonto.datamodel.StringValue;
 import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.TheaConfiguration;
@@ -47,12 +36,13 @@ import fr.unice.bioinfo.thea.ontologyexplorer.dlg.ConfigBrowserPanel;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
-import fr.unice.bioinfo.thea.ontologyexplorer.settings.OESettings;
 
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class ExploreOntologyAction extends NodeAction {
+    static final long serialVersionUID = 2845243805890067102L;
+
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
@@ -121,8 +111,6 @@ public class ExploreOntologyAction extends NodeAction {
                 // Use DialogDescriptor to show the panel
                 DialogDescriptor descriptor = new DialogDescriptor(panel,
                         bundle.getString("LBL_BrowseDialogTitle"), true, al); // NOI18N
-                Object[] closingOptions = { DialogDescriptor.CANCEL_OPTION };
-                // descriptor.setClosingOptions(closingOptions);
                 final Dialog dialog = DialogDisplayer.getDefault()
                         .createDialog(descriptor);
                 dialog.show();
@@ -159,7 +147,6 @@ public class ExploreOntologyAction extends NodeAction {
             e1.printStackTrace();
         }
 
-        List result = null;
         Resource[] roots = null;
         try {
 

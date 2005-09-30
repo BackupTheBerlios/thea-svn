@@ -27,7 +27,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationsRootNode;
  * @author Saïd El Kasmi.
  */
 public class AddClassificationAction extends NodeAction {
-    private Dialog dialog;
+    static final long serialVersionUID = 7470738713893152086L;
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
@@ -175,10 +175,4 @@ public class AddClassificationAction extends NodeAction {
         return "fr/unice/bioinfo/thea/ontologyexplorer/resources/NewClassificationFileIcon.png"; // NOI18N
     }
 
-    // Closes dialog
-    private void closeDialog() {
-        if (dialog != null) {
-            dialog.dispose();
-        }
-    }
 }

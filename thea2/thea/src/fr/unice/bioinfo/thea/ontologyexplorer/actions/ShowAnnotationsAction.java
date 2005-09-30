@@ -23,6 +23,8 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
  * @author Saïd El Kasmi
  */
 public class ShowAnnotationsAction extends NodeAction {
+    static final long serialVersionUID = -7275790349225327890L;
+    
     private Dialog dialog;
 
     /** Resource Bundle */

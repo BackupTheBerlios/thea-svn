@@ -9,7 +9,6 @@ import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
 
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
-import fr.unice.bioinfo.thea.ontologyexplorer.infos.ClassificationNodeInfo;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationNode;
 
 /**
@@ -18,6 +17,8 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationNode;
  * @author Saïd El Kasmi.
  */
 public class DeleteClNodeAction extends NodeAction {
+    static final long serialVersionUID = -3624488847309661350L;
+
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
@@ -42,8 +43,8 @@ public class DeleteClNodeAction extends NodeAction {
         // Remove its children
         node.getChildren().remove(node.getChildren().getNodes());
         // Close the windows that edit the classification if any:
-        final ClassificationNodeInfo cni = (ClassificationNodeInfo) node
-                .getCookie(ClassificationNodeInfo.class);
+        // final ClassificationNodeInfo cni = (ClassificationNodeInfo) node
+        // .getCookie(ClassificationNodeInfo.class);
 
         parent.getChildren().remove(new Node[] { node });
         // This commented bloc is used to close

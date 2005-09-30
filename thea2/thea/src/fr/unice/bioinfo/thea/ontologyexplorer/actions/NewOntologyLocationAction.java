@@ -28,6 +28,8 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
  * @author Saïd El Kasmi.
  */
 public class NewOntologyLocationAction extends NodeAction {
+    static final long serialVersionUID = -4960993205551770951L;
+
     private Dialog dialog;
 
     /** Resource Bundle */

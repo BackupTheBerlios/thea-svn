@@ -9,7 +9,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 
 import net.sf.hibernate.HibernateException;
-import net.sf.hibernate.Session;
 
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
@@ -23,15 +22,17 @@ import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
-import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
 import fr.unice.bioinfo.thea.ontologyexplorer.settings.OESettings;
 import fr.unice.bioinfo.thea.util.BlockingSwingWorker;
+import fr.unice.bioinfo.thea.util.OwlImportProgressDialog;
 
 /**
- * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
+ * @author <a href="mailto:claude.pasquier@unice.fr"> Claude Pasquier </a>
  */
 public class ImportOwlAction extends NodeAction {
+    static final long serialVersionUID = -8263503394950983654L;
+
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
@@ -99,22 +100,27 @@ public class ImportOwlAction extends NodeAction {
 
     public void importTask(final File[] files,
             final Configuration configuration, final boolean useInference) {
+        final OwlImportProgressDialog importProgressDialog = new OwlImportProgressDialog( WindowManager.getDefault().getMainWindow());
         BlockingSwingWorker worker = new BlockingSwingWorker(
                 (Frame) WindowManager.getDefault().getMainWindow(),
-                "Importing files...", "Import in progress, please wait...",
-                true) {
+                importProgressDialog
+                ) {
             protected void doNonUILogic() throws RuntimeException {
                 for (int counter = 0; counter < files.length; counter++) {
                     String filePath = files[counter].toURI().toString();
                     try {
                         fr.unice.bioinfo.batch.OwlReader parser = new fr.unice.bioinfo.batch.OwlReader();
+                        parser.addOwlParsingListener((fr.unice.bioinfo.batch.OwlParsingListener)importProgressDialog);
                         try {
                             HibernateUtil.createSession(connection);
                         } catch (HibernateException e1) {
                             // TODO Auto-generated catch block
                             e1.printStackTrace();
                         }
+
                         parser.load(filePath, configuration, useInference);
+                        System.out.println("parsing done");
+                        
                         try {
                             HibernateUtil.closeSession();
                         } catch (HibernateException e1) {
@@ -123,6 +129,7 @@ public class ImportOwlAction extends NodeAction {
                         }
                         System.out.println("processing of file: " + filePath
                                 + " successfull");
+                        parser.removeOwlParsingListener((fr.unice.bioinfo.batch.OwlParsingListener)importProgressDialog);
                     } catch (AllontoException ae) {
                         // ae.printStackTrace();
                         System.out.println("error in the processing of file: "

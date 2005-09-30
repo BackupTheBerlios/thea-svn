@@ -3,13 +3,10 @@ package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
 
 import org.openide.DialogDescriptor;
 import org.openide.DialogDisplayer;
-import org.openide.NotifyDescriptor;
 import org.openide.nodes.Node;
 import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
@@ -27,6 +24,8 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
  * @author Saïd El Kasmi
  */
 public class SelectOntologyAction extends NodeAction {
+    static final long serialVersionUID = -1724931389794923828L;
+
     private Dialog dialog;
 
     /** Resource Bundle */
@@ -66,20 +65,20 @@ public class SelectOntologyAction extends NodeAction {
         }
 
         // Listener to the linking operation from here
-        final PropertyChangeListener pcl = new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent event) {
-                if (event.getPropertyName().equals("linked")) { // NOI18N
-                    if (dialog != null) {
-                        dialog.setVisible(false);
-                    }
-                } else if (event.getPropertyName().equals("failed")) { // NOI18N
-                    DialogDisplayer.getDefault().notify(
-                            new NotifyDescriptor.Message(
-                                    "Linking to the ontlogy failed.",
-                                    NotifyDescriptor.INFORMATION_MESSAGE));
-                }
-            }
-        };
+//        final PropertyChangeListener pcl = new PropertyChangeListener() {
+//            public void propertyChange(PropertyChangeEvent event) {
+//                if (event.getPropertyName().equals("linked")) { // NOI18N
+//                    if (dialog != null) {
+//                        dialog.setVisible(false);
+//                    }
+//                } else if (event.getPropertyName().equals("failed")) { // NOI18N
+//                    DialogDisplayer.getDefault().notify(
+//                            new NotifyDescriptor.Message(
+//                                    "Linking to the ontlogy failed.",
+//                                    NotifyDescriptor.INFORMATION_MESSAGE));
+//                }
+//            }
+//        };
         // cni.getClassification().addPropertyChangeListener(pcl);
 
         // Create the panel
