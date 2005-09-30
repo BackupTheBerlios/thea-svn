@@ -29,13 +29,12 @@ import com.jgoodies.forms.layout.FormSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.Sizes;
 
-import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.thea.api.components.PrintableJTable;
 import fr.unice.bioinfo.thea.api.components.TableSorter;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 
 /**
- * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
+ * @author <a href="mailto:claude.pasquier@unice.fr"> Claude Pasquier </a>
  */
 public class ResourceNodePropertiesEditor extends TopComponent {
 
@@ -169,7 +168,15 @@ public class ResourceNodePropertiesEditor extends TopComponent {
         table.doPrintActions();
     }
 
-    protected String preferredID() {
+    protected String getPreferredID() {
         return PREFERRED_ID;
+    }
+
+    /* (non-Javadoc)
+     * @see org.openide.windows.TopComponent#getPersistenceType()
+     */
+    public int getPersistenceType() {
+        // TODO Auto-generated method stub
+        return TopComponent.PERSISTENCE_ONLY_OPENED;
     }
 }

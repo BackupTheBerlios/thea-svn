@@ -51,7 +51,6 @@ public class OntologyProperties {
 
                 try {
                     String name = (String) names[counter];
-                    List triple = new ArrayList();
                     Resource property = resourceFactory
                             .getResource((String) config
                                     .getProperty("ontologyexplorer.hierarchy.relationship("

@@ -29,7 +29,6 @@ import com.jgoodies.forms.layout.FormSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.Sizes;
 
-import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.thea.api.components.PrintableJTable;
 import fr.unice.bioinfo.thea.api.components.TableSorter;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
@@ -172,4 +171,15 @@ public class ResourceNodeInstancesEditor extends TopComponent {
     protected String preferredID() {
         return PREFERRED_ID;
     }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.openide.windows.TopComponent#getPersistenceType()
+     */
+    public int getPersistenceType() {
+        // TODO Auto-generated method stub
+        return TopComponent.PERSISTENCE_ONLY_OPENED;
+    }
+
 }

@@ -10,20 +10,19 @@ import javax.swing.table.AbstractTableModel;
 import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Session;
 
-import org.apache.commons.configuration.Configuration;
 import org.openide.util.NbBundle;
 
 import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.StringValue;
 import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
-import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 
 /**
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class ResourceNodePropertiesTableModel extends AbstractTableModel {
+    static final long serialVersionUID = -1189981033800112308L;
 
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
@@ -43,8 +42,7 @@ public class ResourceNodePropertiesTableModel extends AbstractTableModel {
         columnNames[1] = bundle.getString("LBL_PropertiesValue");
 
         try {
-            HibernateUtil.createSession(node
-                    .getConnection().getConnection());
+            HibernateUtil.createSession(node.getConnection().getConnection());
             Session sess = HibernateUtil.currentSession();
             sess.update(node.getResource());
         } catch (HibernateException e1) {
@@ -53,7 +51,7 @@ public class ResourceNodePropertiesTableModel extends AbstractTableModel {
         }
 
         // get the configuration
-        Configuration con = node.getConfiguration();
+        // Configuration con = node.getConfiguration();
         Resource resource = node.getResource();
 
         Iterator mapIt = resource.getArcs().entrySet().iterator();
@@ -68,11 +66,12 @@ public class ResourceNodePropertiesTableModel extends AbstractTableModel {
                 Resource property = (Resource) entry.getKey();
                 propname2value.put(property.getAcc(), ((StringValue) val)
                         .getValue());
-            } else if ((val instanceof Resource) && ((Resource)val).isConcrete()) {
+            } else if ((val instanceof Resource)
+                    && ((Resource) val).isConcrete()) {
                 Resource property = (Resource) entry.getKey();
-                propname2value.put(property.getAcc(), ((Resource) val)
-                        .getAcc());
-                
+                propname2value
+                        .put(property.getAcc(), ((Resource) val).getAcc());
+
             }
         }
 

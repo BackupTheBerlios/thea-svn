@@ -12,6 +12,8 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClDataNode;
  * @author SAÏD, EL KASMI.
  */
 public class ClDataObject extends MultiDataObject {
+    static final long serialVersionUID = 3216181533399358555L;
+
     public ClDataObject(FileObject file, MultiFileLoader ldr)
             throws DataObjectExistsException {
         super(file, ldr);

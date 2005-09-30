@@ -1,8 +1,6 @@
 package fr.unice.bioinfo.thea.ontologyexplorer;
 
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -11,14 +9,11 @@ import javax.swing.table.AbstractTableModel;
 import net.sf.hibernate.HibernateException;
 import net.sf.hibernate.Session;
 
-import org.apache.commons.configuration.Configuration;
 import org.openide.util.NbBundle;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
-import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
-import fr.unice.bioinfo.allonto.datamodel.StringValue;
 import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
@@ -27,7 +22,7 @@ import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
  * @author <a href="mailto:cpasquie@unice.fr"> Claude Pasquier </a>
  */
 public class ResourceNodeInstancesTableModel extends AbstractTableModel {
-
+    static final long serialVersionUID = -7006779448775667241L;
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.Bundle"); // NOI18N
@@ -56,8 +51,8 @@ public class ResourceNodeInstancesTableModel extends AbstractTableModel {
         }
 
         // get the configuration
-        Configuration con = node.getConfiguration();
-        Resource resource = node.getResource();
+//        Configuration con = node.getConfiguration();
+//        Resource resource = node.getResource();
         
         // Get the annotated genes list
         ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory

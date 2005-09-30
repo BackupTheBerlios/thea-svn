@@ -27,7 +27,6 @@ import com.jgoodies.forms.layout.FormSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.Sizes;
 
-import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.thea.api.components.PrintableJTable;
 import fr.unice.bioinfo.thea.api.components.TableSorter;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
@@ -50,7 +49,10 @@ public class GeneEditor extends TopComponent {
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.Bundle"); // NOI18N
 
-    /** The Gene Editor loks for genes annotated by the resource identified by this node. */
+    /**
+     * The Gene Editor loks for genes annotated by the resource identified by
+     * this node.
+     */
     private ResourceNode resourceNode;
 
     /** Genes table. */
@@ -122,8 +124,8 @@ public class GeneEditor extends TopComponent {
         CellConstraints cc = new CellConstraints();
 
         // create the table
-        TableSorter sorter = new TableSorter(new GenesTableModel(this.resourceNode,
-                this.evidences, this.properties));
+        TableSorter sorter = new TableSorter(new GenesTableModel(
+                this.resourceNode, this.evidences, this.properties));
         table = new PrintableJTable(sorter);
         sorter.setTableHeader(table.getTableHeader());
 
@@ -178,4 +180,19 @@ public class GeneEditor extends TopComponent {
     private void performPrintBtnAction(ActionEvent e) {
         table.doPrintActions();
     }
+
+    protected String getPreferredID() {
+        return PREFERRED_ID;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.openide.windows.TopComponent#getPersistenceType()
+     */
+    public int getPersistenceType() {
+        // TODO Auto-generated method stub
+        return TopComponent.PERSISTENCE_ONLY_OPENED;
+    }
+
 }

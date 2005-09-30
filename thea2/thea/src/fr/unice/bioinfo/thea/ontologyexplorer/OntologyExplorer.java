@@ -142,7 +142,7 @@ public class OntologyExplorer extends TopComponent implements Provider,
      * @see org.openide.windows.TopComponent#getPersistenceType()
      */
     public int getPersistenceType() {
-        return super.PERSISTENCE_ALWAYS;
+        return TopComponent.PERSISTENCE_ALWAYS;
     }
 
     /*
