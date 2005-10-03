@@ -5,8 +5,11 @@ import java.io.File;
 import java.sql.Connection;
 import java.util.ResourceBundle;
 
+import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 
 import net.sf.hibernate.HibernateException;
 
@@ -63,7 +66,15 @@ public class ImportOwlAction extends NodeAction {
         chooser.setMultiSelectionEnabled(true);
         JCheckBox useInferenceCheckBox = new JCheckBox(bundle
                 .getString("LBL_ImportOntologyAction_UseInference"));// NOI18N);
-        chooser.setAccessory(useInferenceCheckBox);
+        //chooser.setAccessory(useInferenceCheckBox);
+        JCheckBox processImportsCheckBox = new JCheckBox(bundle
+                .getString("LBL_ImportOntologyAction_ProcessImports"));// NOI18N);
+        //chooser.setAccessory(processImportsCheckBox);
+        JComponent accessory = new JPanel();
+        accessory.setLayout(new BoxLayout(accessory, BoxLayout.Y_AXIS));
+        accessory.add(useInferenceCheckBox);
+        accessory.add(processImportsCheckBox);
+        chooser.setAccessory(accessory);
         int r = chooser.showOpenDialog(WindowManager.getDefault()
                 .getMainWindow());
         if (r != JFileChooser.APPROVE_OPTION) {
@@ -71,6 +82,7 @@ public class ImportOwlAction extends NodeAction {
         }
 
         boolean useInference = useInferenceCheckBox.isSelected();
+        boolean processImports = processImportsCheckBox.isSelected();
         File[] files = chooser.getSelectedFiles();
         if (files.length == 0)
             return;
@@ -94,42 +106,41 @@ public class ImportOwlAction extends NodeAction {
 
         // Imports the list of files
 
-        importTask(files, cc, useInference);
+        importTask(files, cc, useInference, processImports);
 
     }
 
     public void importTask(final File[] files,
-            final Configuration configuration, final boolean useInference) {
-        final OwlImportProgressDialog importProgressDialog = new OwlImportProgressDialog( WindowManager.getDefault().getMainWindow());
+            final Configuration configuration, final boolean useInference,
+            final boolean processImports) {
+        final OwlImportProgressDialog importProgressDialog = new OwlImportProgressDialog(
+                WindowManager.getDefault().getMainWindow());
         BlockingSwingWorker worker = new BlockingSwingWorker(
                 (Frame) WindowManager.getDefault().getMainWindow(),
-                importProgressDialog
-                ) {
+                importProgressDialog) {
             protected void doNonUILogic() throws RuntimeException {
                 for (int counter = 0; counter < files.length; counter++) {
                     String filePath = files[counter].toURI().toString();
                     try {
                         fr.unice.bioinfo.batch.OwlReader parser = new fr.unice.bioinfo.batch.OwlReader();
-                        parser.addOwlParsingListener((fr.unice.bioinfo.batch.OwlParsingListener)importProgressDialog);
+                        parser
+                                .addOwlParsingListener((fr.unice.bioinfo.batch.OwlParsingListener) importProgressDialog);
                         try {
                             HibernateUtil.createSession(connection);
                         } catch (HibernateException e1) {
                             // TODO Auto-generated catch block
                             e1.printStackTrace();
                         }
+                        parser.load(filePath, configuration, useInference, processImports);
 
-                        parser.load(filePath, configuration, useInference);
-                        System.out.println("parsing done");
-                        
                         try {
                             HibernateUtil.closeSession();
                         } catch (HibernateException e1) {
                             // TODO Auto-generated catch block
                             e1.printStackTrace();
                         }
-                        System.out.println("processing of file: " + filePath
-                                + " successfull");
-                        parser.removeOwlParsingListener((fr.unice.bioinfo.batch.OwlParsingListener)importProgressDialog);
+                        parser
+                                .removeOwlParsingListener((fr.unice.bioinfo.batch.OwlParsingListener) importProgressDialog);
                     } catch (AllontoException ae) {
                         // ae.printStackTrace();
                         System.out.println("error in the processing of file: "
