@@ -14,6 +14,8 @@ import org.openide.nodes.Node;
 import org.openide.util.NbBundle;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
+import fr.unice.bioinfo.allonto.datamodel.Connector;
+import fr.unice.bioinfo.allonto.datamodel.ContextSwitch;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.expression.Criterion;
@@ -21,7 +23,6 @@ import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyProperties;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
-import fr.unice.bioinfo.thea.util.OWLProperties;
 
 /**
  * A Java class that represents node in the ontology explorer. It calculates
@@ -113,6 +114,25 @@ public class ResourceNodeChildren extends Children.Keys {
                     .getConnection().getConnection());
             Session sess = HibernateUtil.currentSession();
             sess.update(resource);
+            Iterator it = resource.getArcs().values().iterator();
+            while (it.hasNext()) {
+                Object target = it.next();
+                if (target instanceof ContextSwitch) {
+                    sess.update((ContextSwitch) target);
+                    Iterator it2 = ((ContextSwitch) target).getCarcs().values()
+                            .iterator();
+                    while (it2.hasNext()) {
+                        Object target2 = it2.next();
+                        sess.update(target2);
+                        Iterator it3 = ((Connector) target2).getTargets()
+                                .iterator();
+                        while (it3.hasNext()) {
+                            Object target3 = it3.next();
+                            sess.update(target3);
+                        }
+                    }
+                }
+            }
         } catch (HibernateException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
