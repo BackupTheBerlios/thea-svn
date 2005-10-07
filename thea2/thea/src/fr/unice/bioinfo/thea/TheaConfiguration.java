@@ -1,28 +1,18 @@
 package fr.unice.bioinfo.thea;
 
-import java.awt.Dialog;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ResourceBundle;
 
-import org.apache.commons.configuration.BaseConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.ConfigurationFactory;
 import org.openide.ErrorManager;
-import org.openide.util.NbBundle;
 
 import fr.unice.bioinfo.thea.ontologyexplorer.settings.OESettings;
 import fr.unice.bioinfo.util.Config;
 
 public class TheaConfiguration implements Config {
-    private Dialog dialog;
-
-    /** Resource Bundle */
-    private ResourceBundle bundle = NbBundle
-            .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.Bundle"); // NOI18N
-
     /** Instance for the singleton pattern. */
     private static TheaConfiguration instance = null;
 
@@ -94,10 +84,4 @@ public class TheaConfiguration implements Config {
         }
     }
 
-    // Closes dialog
-    private void closeDialog() {
-        if (dialog != null) {
-            dialog.dispose();
-        }
-    }
 }
