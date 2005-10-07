@@ -10,7 +10,7 @@ import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
 
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
-import fr.unice.bioinfo.thea.ontologyexplorer.ResourceNodePropertiesEditor;
+import fr.unice.bioinfo.thea.ontologyexplorer.ResourceNodePropertiesExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 
 /**
@@ -38,7 +38,7 @@ public class ShowResourceNodeProperties extends NodeAction {
 
         Runnable doTopComponent = new Runnable() {
             public void run() {
-                ResourceNodePropertiesEditor editor = new ResourceNodePropertiesEditor(
+                ResourceNodePropertiesExplorer editor = new ResourceNodePropertiesExplorer((ResourceNode)
                         node);
                 editor.open();
                 editor.requestActive();
