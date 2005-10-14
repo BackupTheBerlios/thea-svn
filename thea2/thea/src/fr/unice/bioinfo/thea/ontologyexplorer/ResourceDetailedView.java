@@ -462,14 +462,30 @@ public class ResourceDetailedView extends JScrollPane {
             Entity[] tuple = (Entity[]) it.next();
             tableContent[ctr][0] = ((Resource)tuple[0]).getName();
             if (tuple[1] instanceof Resource) {
-                tableContent[ctr++][1] = ((Resource)tuple[1]).getName();
+                Resource cntx = (Resource)tuple[1];
+                if (cntx.isConcrete()) {
+                    tableContent[ctr][1] = ((Resource)tuple[1]).getName();
+                } else {
+                    String content = "";
+                    Iterator cntx_it = cntx.getArcs().keySet().iterator();
+                    while (cntx_it.hasNext()) {
+                        Resource cntx_prop = (Resource)cntx_it.next();
+                        content += cntx_prop.getName() + " = ";
+                        content += cntx.getTargets(cntx_prop);
+                        if (cntx_it.hasNext()) {
+                            content += "\n";
+                        }
+                    }
+                    tableContent[ctr][1] = content;
+                }
             } else if (tuple[1] instanceof StringValue) {
-                tableContent[ctr++][1] = ((StringValue)tuple[1]).getValue();
+                tableContent[ctr][1] = ((StringValue)tuple[1]).getValue();
                 
             }
+            ctr++;
         }
-        JTable table = new JTable(tableContent, columnTitles);
-        panel.add(table, BorderLayout.WEST);
+        JTable p = new JTable(tableContent, columnTitles);
+        panel.add(p, BorderLayout.WEST);
 
     }
 
