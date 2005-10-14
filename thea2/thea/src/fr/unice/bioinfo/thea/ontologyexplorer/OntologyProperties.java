@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.apache.commons.configuration.Configuration;
+import org.openide.util.NbBundle;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
@@ -18,6 +20,10 @@ public class OntologyProperties {
     private static ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
             .getResourceFactory();
 
+    private ResourceBundle bundle = NbBundle
+    .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.Bundle"); // NOI18N
+
+   
     private static OntologyProperties instance = null;
 
     public static OntologyProperties getInstance() {
@@ -28,6 +34,7 @@ public class OntologyProperties {
     }
 
     public synchronized String getNodeNameProperty(Configuration config) {
+        if (config.isEmpty()) return bundle.getString("PROP_name");
         return config.getString("ontologyexplorer.nodes.nodename");// NOI18N;
     }
 
@@ -42,6 +49,21 @@ public class OntologyProperties {
 
     public synchronized Hashtable getHierarchyDescription(Configuration config) {
         Hashtable hierarchyDescription = new Hashtable();
+        if (config.isEmpty()) {
+            String name = bundle.getString("PROP_IsAName");
+            Resource property = null;
+            try {
+                property = resourceFactory
+                .getResource(bundle.getString("PROP_subclass")).getInverse();
+            } catch (AllontoException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }// NOI18N
+            Object iconUrl = bundle.getString("PROP_IsAIcon");// NOI18N
+            hierarchyDescription.put(name, new Object[] { property,
+                    null, (String) iconUrl });
+            return hierarchyDescription;
+        }
         Object ob = config
                 .getProperty("ontologyexplorer.hierarchy.relationship.name");// NOI18N
         if (ob instanceof Collection) {
