@@ -1,10 +1,15 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
 import net.sf.hibernate.HibernateException;
 
+import org.apache.commons.configuration.CompositeConfiguration;
 import org.openide.DialogDisplayer;
 import org.openide.NotifyDescriptor;
 import org.openide.nodes.Node;
@@ -12,6 +17,7 @@ import org.openide.util.HelpCtx;
 import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
 
+import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
@@ -67,6 +73,32 @@ public class InitializeKnowledgeBaseAction extends NodeAction {
                     HibernateUtil.getConfiguration(), prop);
             se.drop(false, true);
             se.create(false, true);
+            // Load standard RDF, RDFS and OWL descriptions
+            String rdfFile = this.getClass().getResource("/fr/unice/bioinfo/thea/resources/rdf.rdf").toString();
+            String rdfsFile = this.getClass().getResource("/fr/unice/bioinfo/thea/resources/rdfs.rdf").toString();
+            String owlFile = this.getClass().getResource("/fr/unice/bioinfo/thea/resources/owl.rdf").toString();
+            try {
+                fr.unice.bioinfo.batch.OwlReader parser = new fr.unice.bioinfo.batch.OwlReader();
+                try {
+                    HibernateUtil.createSession(dbc.getConnection());
+                } catch (HibernateException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+                parser.load(rdfFile, new CompositeConfiguration(), false, false);
+                parser.load(rdfsFile, new CompositeConfiguration(), false, false);
+                parser.load(owlFile, new CompositeConfiguration(), false, false);
+                try {
+                    HibernateUtil.closeSession();
+                } catch (HibernateException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+            } catch (AllontoException ae) {
+                ae.printStackTrace();
+                // TODO handle this exception
+            }
+
         } catch (HibernateException he) {
             he.printStackTrace();
         }
