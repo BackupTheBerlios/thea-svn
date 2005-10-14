@@ -1,20 +1,15 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
-import java.awt.Dialog;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import net.sf.hibernate.HibernateException;
 
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.XMLConfiguration;
-import org.openide.DialogDescriptor;
 import org.openide.DialogDisplayer;
 import org.openide.ErrorManager;
 import org.openide.NotifyDescriptor;
@@ -32,7 +27,6 @@ import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyProperties;
 import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
-import fr.unice.bioinfo.thea.ontologyexplorer.dlg.ConfigBrowserPanel;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
@@ -49,7 +43,6 @@ public class ExploreOntologyAction extends NodeAction {
 
     /*
      * (non-Javadoc)
-     * 
      * @see org.openide.util.actions.NodeAction#performAction(org.openide.nodes.Node[])
      */
     protected void performAction(Node[] arg0) {
@@ -69,67 +62,68 @@ public class ExploreOntologyAction extends NodeAction {
         Configuration defaultConfiguration = TheaConfiguration.getDefault()
                 .getConfiguration();
 
-        if (localConfiguration == null) {
-            if (defaultConfiguration == null) {
-                // No configuration available
-                // Select a default configuration in Prefences
-                // or choose a local one
-                // Create the panel
-                final ConfigBrowserPanel panel = new ConfigBrowserPanel();
-                // Create the listener for buttons actions/ Ok/Cancel
-                ActionListener al = new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        if (e.getSource() == DialogDescriptor.OK_OPTION) {
-
-                            String filePath = panel.getFilePath();
-
-                            if (filePath == null) {
-                                ((OntologyNode) node).setConfiguration(null);
-                                return;
-                            } else {
-                                try {
-                                    XMLConfiguration conf = new XMLConfiguration(
-                                            filePath);
-                                    ((OntologyNode) node)
-                                            .setConfiguration(conf);
-                                } catch (ConfigurationException ce) {
-                                    ((OntologyNode) node)
-                                            .setConfiguration(null);
-                                    ErrorManager.getDefault().notify(
-                                            ErrorManager.INFORMATIONAL, ce);
-                                    String message = bundle
-                                            .getString("ErrMsg_InvalidConfigurationFile"); // NOI18N
-                                    NotifyDescriptor d = new NotifyDescriptor.Message(
-                                            message,
-                                            NotifyDescriptor.INFORMATION_MESSAGE);
-                                    DialogDisplayer.getDefault().notify(d);
-                                }
-                            }
-                        }
-                    }
-                };
-                // Use DialogDescriptor to show the panel
-                DialogDescriptor descriptor = new DialogDescriptor(panel,
-                        bundle.getString("LBL_BrowseDialogTitle"), true, al); // NOI18N
-                final Dialog dialog = DialogDisplayer.getDefault()
-                        .createDialog(descriptor);
-                dialog.show();
-            } else {
-                // Only a default configuration file is found
-                // ask user if only default configuration should be used
-                String message = bundle
-                        .getString("LBL_ExploreOntologyAction_UseDefaultConfiguration_Confirmation"); // NOI18N
-                if (DialogDisplayer.getDefault().notify(
-                        new NotifyDescriptor.Confirmation(message,
-                                NotifyDescriptor.OK_CANCEL_OPTION)) != NotifyDescriptor.OK_OPTION) {
-                    return;
-                }
-            }
-        }
-        localConfiguration = ((OntologyNode) node).getConfiguration();
-        if ((localConfiguration == null) && (defaultConfiguration == null)) {
-            return;
-        }
+        // if (localConfiguration == null) {
+        // if (defaultConfiguration == null) {
+        // // No configuration available
+        // // Select a default configuration in Prefences
+        // // or choose a local one
+        // // Create the panel
+        // final ConfigBrowserPanel panel = new ConfigBrowserPanel();
+        // // Create the listener for buttons actions/ Ok/Cancel
+        // ActionListener al = new ActionListener() {
+        // public void actionPerformed(ActionEvent e) {
+        // if (e.getSource() == DialogDescriptor.OK_OPTION) {
+        //
+        // String filePath = panel.getFilePath();
+        //
+        // if (filePath == null) {
+        // ((OntologyNode) node).setConfiguration(null);
+        // return;
+        // } else {
+        // try {
+        // XMLConfiguration conf = new XMLConfiguration(
+        // filePath);
+        // ((OntologyNode) node)
+        // .setConfiguration(conf);
+        // } catch (ConfigurationException ce) {
+        // ((OntologyNode) node)
+        // .setConfiguration(null);
+        // ErrorManager.getDefault().notify(
+        // ErrorManager.INFORMATIONAL, ce);
+        // String message = bundle
+        // .getString("ErrMsg_InvalidConfigurationFile"); // NOI18N
+        // NotifyDescriptor d = new NotifyDescriptor.Message(
+        // message,
+        // NotifyDescriptor.INFORMATION_MESSAGE);
+        // DialogDisplayer.getDefault().notify(d);
+        // }
+        // }
+        // }
+        // }
+        // };
+        // // Use DialogDescriptor to show the panel
+        // DialogDescriptor descriptor = new DialogDescriptor(panel,
+        // bundle.getString("LBL_BrowseDialogTitle"), true, al); // NOI18N
+        // final Dialog dialog = DialogDisplayer.getDefault()
+        // .createDialog(descriptor);
+        // dialog.show();
+        // } else {
+        // // Only a default configuration file is found
+        // // ask user if only default configuration should be used
+        // String message = bundle
+        // .getString("LBL_ExploreOntologyAction_UseDefaultConfiguration_Confirmation");
+        // // NOI18N
+        // if (DialogDisplayer.getDefault().notify(
+        // new NotifyDescriptor.Confirmation(message,
+        // NotifyDescriptor.OK_CANCEL_OPTION)) != NotifyDescriptor.OK_OPTION) {
+        // return;
+        // }
+        // }
+        // }
+        // localConfiguration = ((OntologyNode) node).getConfiguration();
+        // if ((localConfiguration == null) && (defaultConfiguration == null)) {
+        // return;
+        // }
         CompositeConfiguration cc = new CompositeConfiguration();
         if (localConfiguration != null) {
             cc.addConfiguration(localConfiguration);
@@ -137,7 +131,6 @@ public class ExploreOntologyAction extends NodeAction {
         if (defaultConfiguration != null) {
             cc.addConfiguration(defaultConfiguration);
         }
-
         DatabaseConnection dbc = ((OntologyNode) node).getConnection();
 
         try {
@@ -164,12 +157,15 @@ public class ExploreOntologyAction extends NodeAction {
 
             ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                     .getResourceFactory();
-            ArrayList rootsNotFound = new ArrayList();
-            Object o = OntologyProperties.getInstance().getRootNodesURIs(cc);
-
-            if (o instanceof Collection) {
-                ArrayList rootList = new ArrayList();
-                Iterator rootIt = ((Collection) o).iterator();
+            Collection rootsNotFound = new ArrayList();
+            Collection rootList = null;
+            Collection c = OntologyProperties.getInstance()
+                    .getRootNodesURIs(cc);
+            if (c.isEmpty()) {
+                rootList = resourceFactory.getRootClasses();
+            } else {
+                rootList = new ArrayList();
+                Iterator rootIt = c.iterator();
                 while (rootIt.hasNext()) {
                     String name = (String) rootIt.next();
                     System.out.println("processing root=" + name);
@@ -185,28 +181,31 @@ public class ExploreOntologyAction extends NodeAction {
                     }
 
                 }
-                roots = new Resource[rootList.size()];
-                rootIt = rootList.iterator();
-                int counter = 0;
+            }
+            roots = new Resource[rootList.size()];
+            Iterator rootIt = rootList.iterator();
+            int counter = 0;
+            while (rootIt.hasNext()) {
+                System.out.println("root nb "+counter+1);
+                Resource root = (Resource)rootIt.next();
+                System.out.println("root="+root);
+                roots[counter] = root;
+                System.out.println("root="+roots[counter]);
+                counter += 1;
+            }
+            // display error message if needed
+            if (!rootsNotFound.isEmpty()) {
+                String message = bundle
+                        .getString("ErrMsg_OntologyRootNotFound"); // NOI18N
+
+                rootIt = rootsNotFound.iterator();
                 while (rootIt.hasNext()) {
-                    roots[counter] = (Resource) rootIt.next();
-                    counter += 1;
+                    message += "\n" + (String) rootIt.next();
                 }
-                // display error message if needed
-                if (!rootsNotFound.isEmpty()) {
-                    String message = bundle
-                            .getString("ErrMsg_OntologyRootNotFound"); // NOI18N
 
-                    rootIt = rootsNotFound.iterator();
-                    while (rootIt.hasNext()) {
-                        message += "\n" + (String) rootIt.next();
-                    }
-
-                    DialogDisplayer.getDefault().notify(
-                            new NotifyDescriptor.Message(message,
-                                    NotifyDescriptor.INFORMATION_MESSAGE));
-
-                }
+                DialogDisplayer.getDefault().notify(
+                        new NotifyDescriptor.Message(message,
+                                NotifyDescriptor.INFORMATION_MESSAGE));
 
             }
 
@@ -214,6 +213,8 @@ public class ExploreOntologyAction extends NodeAction {
             ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, s);
         } catch (NullPointerException npe) {
             ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, npe);
+        } catch (AllontoException ae) {
+            ErrorManager.getDefault().notify(ErrorManager.INFORMATIONAL, ae);
         }
 
         if (roots == null) {
@@ -247,7 +248,6 @@ public class ExploreOntologyAction extends NodeAction {
 
     /*
      * (non-Javadoc)
-     * 
      * @see org.openide.util.actions.NodeAction#enable(org.openide.nodes.Node[])
      */
     protected boolean enable(Node[] nodes) {
@@ -271,7 +271,6 @@ public class ExploreOntologyAction extends NodeAction {
 
     /*
      * (non-Javadoc)
-     * 
      * @see org.openide.util.actions.CallableSystemAction#asynchronous()
      */
     protected boolean asynchronous() {
@@ -280,7 +279,6 @@ public class ExploreOntologyAction extends NodeAction {
 
     /*
      * (non-Javadoc)
-     * 
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
@@ -289,7 +287,6 @@ public class ExploreOntologyAction extends NodeAction {
 
     /*
      * (non-Javadoc)
-     * 
      * @see org.openide.util.actions.SystemAction#getHelpCtx()
      */
     public HelpCtx getHelpCtx() {
