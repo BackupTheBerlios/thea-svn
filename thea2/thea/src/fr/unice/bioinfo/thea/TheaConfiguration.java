@@ -18,7 +18,8 @@ public class TheaConfiguration implements Config {
 
     /** A java object that would encapsulate the whole configuration. */
     private static Configuration configuration = null;
-
+    
+    /** path*/
     private String path = null;
 
     private URL configURL = null;
