@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+OpenIDE-Module: fr.unice.bioinfo.thea
+OpenIDE-Module-Layer: fr/unice/bioinfo/thea/resources/layer.xml
+OpenIDE-Module-Localizing-Bundle: fr/unice/bioinfo/thea/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+OpenIDE-Module-Install: fr/unice/bioinfo/thea/TheaModule.class
+Name: fr/unice/bioinfo/thea/ontologyexplorer/loaders/ClDataLoader.class
+OpenIDE-Module-Class: Loader

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE settings PUBLIC "-//NetBeans//DTD Session settings 1.0//EN" "http://www.netbeans.org/dtds/sessionsettings-1_0.dtd">
+<settings version="1.0">
+    <module name="fr.unice.bioinfo.thea/1"/>
+    <instanceof class="org.openide.util.SharedClassObject"/>
+    <instanceof class="org.openide.options.SystemOption"/>
+    <instanceof class="fr.unice.bioinfo.thea.classification.settings.CESettings"/>
+    <instanceof class="java.io.Serializable"/>
+    <instanceof class="java.io.Externalizable"/>
+    <instance class="fr.unice.bioinfo.thea.classification.settings.CESettings"/>
+</settings>

@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module: fr.unice.bioinfo.thea.libs
+OpenIDE-Module-Localizing-Bundle: fr/unice/bioinfo/thea/libs/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+
