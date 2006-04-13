@@ -24,9 +24,8 @@ import com.jgoodies.forms.layout.FormSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.Sizes;
 
-import fr.unice.bioinfo.batch.OwlParsingEvent;
 
-public class OwlImportProgressDialog extends JDialog implements fr.unice.bioinfo.batch.OwlParsingListener {
+public class OwlImportProgressDialog extends JDialog implements fr.unice.bioinfo.util.OwlParsingListener {
 
     private static final long serialVersionUID = -4934107302643029620L;
 
@@ -102,7 +101,7 @@ public class OwlImportProgressDialog extends JDialog implements fr.unice.bioinfo
         dispose();
     }
 
-    public void owlParsingEventReceived(OwlParsingEvent ope) {
+    public void owlParsingEventReceived(fr.unice.bioinfo.util.OwlParsingEvent ope) {
         messagesArea.append(ope.getMessage()+'\n');
         
     }
