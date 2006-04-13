@@ -76,6 +76,11 @@ public class ResourceNodeInstancesTableModel extends AbstractTableModel {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        try {
+            HibernateUtil.closeSession();
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
 
     }
 
