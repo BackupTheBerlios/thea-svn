@@ -59,15 +59,9 @@ public abstract class AbstractResourceNode extends AbstractNode implements Node.
         if ((n != null) && !n.equals("")) return n; 
         // Build the display name:
         try {
-            try {
-                HibernateUtil.createSession(getConnection().getConnection());
-                Session sess = HibernateUtil.currentSession();
-                sess.update(resource);
-            } catch (HibernateException e1) {
-                System.out.println("Hibernate exception when updating resource");
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
+            HibernateUtil.createSession(getConnection().getConnection());
+            Session sess = HibernateUtil.currentSession();
+            sess.update(resource);
             resourceFactory.setMemoryCached(true);
             String nodeName = OntologyProperties.getInstance()
                     .getNodeNameProperty(getConfiguration());
@@ -86,17 +80,21 @@ public abstract class AbstractResourceNode extends AbstractNode implements Node.
                     n = resource.getAcc();// NOI18N
                 }
             }
-            try {
-                HibernateUtil.closeSession();
-            } catch (HibernateException e1) {
-                System.out.println("Hibernate exception when closing the session");
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
+        } catch (HibernateException e1) {
+            System.out.println("Hibernate exception when updating resource");
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
         } catch (AllontoException ae) {
             resourceFactory.setMemoryCached(false);
-
         }
+        finally {
+            try {
+                HibernateUtil.closeSession();
+            } catch (HibernateException he) {
+                he.printStackTrace(System.out);
+            }
+        }
+        
         setName(n);
         return n;
     }
