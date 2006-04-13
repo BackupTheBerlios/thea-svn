@@ -120,29 +120,6 @@ public class ResourceNodeChildren extends Children.Keys {
             //sess.update(resource);
             //sess.lock(resource, LockMode.READ);
             sess.load(resource, new Integer(resource.getId()));
-//            Iterator it = resource.getArcs().entrySet().iterator();
-//            while (it.hasNext()) {
-//                Entry entry =  (Entry)it.next();
-//                Entity prop = (Entity)entry.getKey();
-//                Entity target = (Entity)entry.getValue();
-//                sess.update(prop);
-//                sess.update(target);
-////                if (target instanceof ContextSwitch) {
-////                    sess.update((ContextSwitch) target);
-////                    Iterator it2 = ((ContextSwitch) target).getCarcs().values()
-////                            .iterator();
-////                    while (it2.hasNext()) {
-////                        Object target2 = it2.next();
-////                        sess.update(target2);
-////                        Iterator it3 = ((Connector) target2).getTargets()
-////                                .iterator();
-////                        while (it3.hasNext()) {
-////                            Object target3 = it3.next();
-////                            sess.update(target3);
-////                        }
-////                    }
-////                }
-//            }
         } catch (HibernateException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -159,6 +136,12 @@ public class ResourceNodeChildren extends Children.Keys {
             Object[] tuple = (Object[]) it.next();
 
             Resource prop = (Resource) tuple[0];
+            try {
+                if (!prop.hasInverse()) continue;
+                prop = prop.getInverse();
+            } catch (AllontoException ex) {
+                ex.printStackTrace();
+            }
             Criterion crit = (Criterion) tuple[1];
             String iconUrl = (String) tuple[2];
             Set targets = null;
