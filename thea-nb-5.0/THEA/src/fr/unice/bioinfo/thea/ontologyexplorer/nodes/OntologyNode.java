@@ -67,7 +67,7 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
     /**
      * The number of nodes (resources + literals) stored in the database.
      */
-    private int nbResources = 0;
+//    private int nbResources = 0;
 
     /**
      * The local configuration associated with this node
@@ -238,7 +238,8 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
         ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                 .getResourceFactory();
         try {
-            nbResources = resourceFactory.getNbNodes();
+            // The following query is only used to test the correctness of the db schema
+            resourceFactory.getResource("ANYRESOURCE", false);
             compatibleKB = true;
             setShortDescription("");
         } catch (AllontoException ae) {
@@ -261,20 +262,20 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
         this.compatibleKB = compatibleKB;
     }
 
-    /**
-     * @return Returns the nbResources.
-     */
-    public synchronized int getNbResources() {
-        return nbResources;
-    }
-
-    /**
-     * @param nbResources
-     *            The nbResources to set.
-     */
-    public synchronized void setNbResources(int nbResources) {
-        this.nbResources = nbResources;
-    }
+//    /**
+//     * @return Returns the nbResources.
+//     */
+//    public synchronized int getNbResources() {
+//        return nbResources;
+//    }
+//
+//    /**
+//     * @param nbResources
+//     *            The nbResources to set.
+//     */
+//    public synchronized void setNbResources(int nbResources) {
+//        this.nbResources = nbResources;
+//    }
 
     /** Returns cookie */
     public OntologyNodeInfo getNodeInfo() {
