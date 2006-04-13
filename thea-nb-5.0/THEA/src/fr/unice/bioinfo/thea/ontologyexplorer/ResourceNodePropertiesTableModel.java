@@ -89,6 +89,11 @@ public class ResourceNodePropertiesTableModel extends AbstractTableModel {
                 counter++;
             }
         }
+        try {
+            HibernateUtil.closeSession();
+        } catch (HibernateException he) {
+            he.printStackTrace();
+        }
     }
 
     /*
