@@ -10,6 +10,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import jjtraveler.OnceBottomUp;
 
 import net.sf.hibernate.HibernateException;
 
@@ -35,34 +36,35 @@ import fr.unice.bioinfo.thea.util.OwlImportProgressDialog;
  */
 public class ImportOwlAction extends NodeAction {
     static final long serialVersionUID = -8263503394950983654L;
-
+    
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
-
+    
     private Connection connection = null;
-
+    
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.openide.util.actions.NodeAction#performAction(org.openide.nodes.Node[])
      */
     protected void performAction(Node[] arg0) {
-
+        
         // Get the explorer manager from the ontology explorer
         OntologyExplorer e = OntologyExplorer.findDefault();
-
+        
         // Extract the node
         final Node node = e.getExplorerManager().getSelectedNodes()[0];
-
+        
         if (!(node instanceof OntologyNode)) {
             return;
         }
-        connection = ((OntologyNode) node).getConnection().getConnection();
+                fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection dbc = ((OntologyNode) node).getConnection();
 
+        connection = ((OntologyNode) node).getConnection().getConnection();
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File(OESettings.getInstance()
-                .getLastBrowsedOwlDirectory()));
+        .getLastBrowsedOwlDirectory()));
         chooser.setMultiSelectionEnabled(true);
         JCheckBox useInferenceCheckBox = new JCheckBox(bundle
                 .getString("LBL_ImportOntologyAction_UseInference"));// NOI18N);
@@ -76,11 +78,11 @@ public class ImportOwlAction extends NodeAction {
         accessory.add(processImportsCheckBox);
         chooser.setAccessory(accessory);
         int r = chooser.showOpenDialog(WindowManager.getDefault()
-                .getMainWindow());
+        .getMainWindow());
         if (r != JFileChooser.APPROVE_OPTION) {
             return;
         }
-
+        
         boolean useInference = useInferenceCheckBox.isSelected();
         boolean processImports = processImportsCheckBox.isSelected();
         File[] files = chooser.getSelectedFiles();
@@ -89,27 +91,29 @@ public class ImportOwlAction extends NodeAction {
         // Save the new used path
         OESettings.getInstance().setLastBrowsedOwlDirectory(
                 files[0].getParent());
-
+        
         // creates the configuration by merging default and local config files
-
+        
         CompositeConfiguration cc = new CompositeConfiguration();
         Configuration defaultConfiguration = TheaConfiguration.getDefault()
-                .getConfiguration();
+        .getConfiguration();
         if (defaultConfiguration != null) {
+            System.out.println("a default configuration is specified");
             cc.addConfiguration(defaultConfiguration);
         }
         Configuration localConfiguration = ((OntologyNode) node)
-                .getConfiguration();
+        .getConfiguration();
         if (localConfiguration != null) {
+            System.out.println("a local configuration is specified");
             cc.addConfiguration(localConfiguration);
         }
-
+        
         // Imports the list of files
-
+        
         importTask(files, cc, useInference, processImports);
-
+        
     }
-
+    
     public void importTask(final File[] files,
             final Configuration configuration, final boolean useInference,
             final boolean processImports) {
@@ -122,46 +126,63 @@ public class ImportOwlAction extends NodeAction {
                 for (int counter = 0; counter < files.length; counter++) {
                     String filePath = files[counter].toURI().toString();
                     try {
-                        fr.unice.bioinfo.batch.OwlReader parser = new fr.unice.bioinfo.batch.OwlReader();
-                        parser
-                                .addOwlParsingListener((fr.unice.bioinfo.batch.OwlParsingListener) importProgressDialog);
-                        try {
                             HibernateUtil.createSession(connection);
+                            net.sf.hibernate.Session sess = HibernateUtil.currentSession();
+                        if (useInference) {
+                            fr.unice.bioinfo.util.OwlReader parser = new fr.unice.bioinfo.util.OwlReader();
+                            parser
+                                    .addOwlParsingListener((fr.unice.bioinfo.util.OwlParsingListener) importProgressDialog);
+                            parser.parse(filePath, configuration, useInference, processImports);
+                            parser
+                                    .removeOwlParsingListener((fr.unice.bioinfo.util.OwlParsingListener) importProgressDialog);
+                        } else if (processImports){
+                            fr.unice.bioinfo.util.OwlFastReader parser = new fr.unice.bioinfo.util.OwlFastReader();
+                            parser
+                                    .addOwlParsingListener((fr.unice.bioinfo.util.OwlParsingListener) importProgressDialog);
+                            parser.parse(filePath, configuration, processImports);
+                            parser
+                                    .removeOwlParsingListener((fr.unice.bioinfo.util.OwlParsingListener) importProgressDialog);
+                        } else{
+                            fr.unice.bioinfo.util.RdfReader parser = new fr.unice.bioinfo.util.RdfReader();
+                            parser
+                                    .addOwlParsingListener((fr.unice.bioinfo.util.OwlParsingListener) importProgressDialog);
+                            parser.parse(filePath, configuration);
+                            parser
+                                    .removeOwlParsingListener((fr.unice.bioinfo.util.OwlParsingListener) importProgressDialog);
+                        }
+                            sess.flush();
                         } catch (HibernateException e1) {
                             // TODO Auto-generated catch block
                             e1.printStackTrace();
-                        }
-                        parser.load(filePath, configuration, useInference, processImports);
-
-                        try {
-                            HibernateUtil.closeSession();
-                        } catch (HibernateException e1) {
-                            // TODO Auto-generated catch block
-                            e1.printStackTrace();
-                        }
-                        parser
-                                .removeOwlParsingListener((fr.unice.bioinfo.batch.OwlParsingListener) importProgressDialog);
                     } catch (AllontoException ae) {
-                        // ae.printStackTrace();
+                        ae.printStackTrace();
                         System.out.println("error in the processing of file: "
                                 + filePath);
                         // TODO handle this exception
                     }
+                    finally {
+                        try {
+                            HibernateUtil.closeSession();
+                        } catch (HibernateException he) {
+                            he.printStackTrace(System.out);
+                        }
+                    }
+                    
                 }
             }
         };
         worker.start();
     }
-
+    
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.openide.util.actions.NodeAction#enable(org.openide.nodes.Node[])
      */
     protected boolean enable(Node[] nodes) {
         // Enable this action only for the OntologyNode
         nodes = OntologyExplorer.findDefault().getExplorerManager()
-                .getSelectedNodes();
+        .getSelectedNodes();
         Node node;
         if ((nodes != null) && (nodes.length == 1)) {
             node = nodes[0];
@@ -170,34 +191,34 @@ public class ImportOwlAction extends NodeAction {
         }
         if (node instanceof OntologyNode) {
             if (((OntologyNode) node).isConnected()
-                    && ((OntologyNode) node).isCompatibleKB()) {
+            && ((OntologyNode) node).isCompatibleKB()) {
                 return true;
             }
         }
         return false;
     }
-
+    
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.openide.util.actions.CallableSystemAction#asynchronous()
      */
     protected boolean asynchronous() {
         return false;
     }
-
+    
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.openide.util.actions.SystemAction#getName()
      */
     public String getName() {
         return bundle.getString("LBL_ImportOntologyAction_Name");// NOI18N
     }
-
+    
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.openide.util.actions.SystemAction#getHelpCtx()
      */
     public HelpCtx getHelpCtx() {
