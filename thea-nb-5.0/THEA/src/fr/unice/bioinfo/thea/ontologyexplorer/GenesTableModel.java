@@ -72,7 +72,7 @@ public class GenesTableModel extends AbstractTableModel {
         String hasEvidenceProperty = (String) con
                 .getProperty("ontologyexplorer.nodes.hasevidence");// NOI18N
 
-        resourceFactory.setMemoryCached(true);
+//        resourceFactory.setMemoryCached(true);
         LinkedList ll = new LinkedList();
         for (int cnt = 0; cnt < evidences.length; cnt++) {
             try {
@@ -92,7 +92,7 @@ public class GenesTableModel extends AbstractTableModel {
                     criterion);
         } catch (AllontoException ae) {
         }
-        resourceFactory.setMemoryCached(false);
+//        resourceFactory.setMemoryCached(false);
 
         // if we find a list of genes:
         if (genes != null) {
@@ -106,7 +106,7 @@ public class GenesTableModel extends AbstractTableModel {
                 // for each gene: get the list of properties
                 for (int cnt = 0; cnt < properties.length; cnt++) {
                     try {
-                        resourceFactory.setMemoryCached(true);
+//                        resourceFactory.setMemoryCached(true);
 
                         Resource accessedProperty = resourceFactory
                                 .getResource(properties[cnt]);
@@ -121,11 +121,16 @@ public class GenesTableModel extends AbstractTableModel {
                         }
                     } catch (AllontoException ae) {
                         data[counter][cnt] = "";// NOI18N
-                        resourceFactory.setMemoryCached(false);
+//                        resourceFactory.setMemoryCached(false);
                     }
                 }
                 counter++;
             }
+        }
+        try {
+            HibernateUtil.closeSession();
+        } catch (HibernateException he) {
+            he.printStackTrace();
         }
     }
 
