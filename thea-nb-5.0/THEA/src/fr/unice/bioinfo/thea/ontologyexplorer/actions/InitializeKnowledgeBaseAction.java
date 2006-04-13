@@ -1,5 +1,8 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
+import fr.unice.bioinfo.util.ImportTask;
+import fr.unice.bioinfo.util.OwlFastReader;
+import fr.unice.bioinfo.util.SWReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,7 +63,6 @@ public class InitializeKnowledgeBaseAction extends NodeAction {
 
         DatabaseConnection dbc = ((OntologyNode) node).getConnection();
 
-        try {
             Properties prop = new Properties();
             prop.setProperty("hibernate.connection.driver_class", dbc
                     .getDriver());
@@ -69,8 +71,12 @@ public class InitializeKnowledgeBaseAction extends NodeAction {
             prop
                     .setProperty("hibernate.connectino.password", dbc
                             .getPassword());
-            net.sf.hibernate.tool.hbm2ddl.SchemaExport se = new net.sf.hibernate.tool.hbm2ddl.SchemaExport(
-                    HibernateUtil.getConfiguration(), prop);
+            net.sf.hibernate.tool.hbm2ddl.SchemaExport se = null;
+            try {
+                se = new net.sf.hibernate.tool.hbm2ddl.SchemaExport(HibernateUtil.getConfiguration(), prop);
+            } catch (HibernateException ex) {
+                ex.printStackTrace();
+            }
             se.drop(false, true);
             se.create(false, true);
             // Load standard RDF, RDFS and OWL descriptions
@@ -78,33 +84,33 @@ public class InitializeKnowledgeBaseAction extends NodeAction {
             String rdfsFile = this.getClass().getResource("/fr/unice/bioinfo/thea/resources/rdfs.rdf").toString();
             String owlFile = this.getClass().getResource("/fr/unice/bioinfo/thea/resources/owl.rdf").toString();
             try {
-                fr.unice.bioinfo.batch.OwlReader parser = new fr.unice.bioinfo.batch.OwlReader();
-                try {
-                    HibernateUtil.createSession(dbc.getConnection());
-                } catch (HibernateException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-                parser.load(rdfFile, new CompositeConfiguration(), false, false);
-                parser.load(rdfsFile, new CompositeConfiguration(), false, false);
-                parser.load(owlFile, new CompositeConfiguration(), false, false);
-                try {
-                    HibernateUtil.closeSession();
-                } catch (HibernateException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+//                fr.unice.bioinfo.util.ImportTask parser = new fr.unice.bioinfo.util.ImportTask();
+                fr.unice.bioinfo.util.OwlReader parser = new fr.unice.bioinfo.util.OwlReader();
+                HibernateUtil.createSession(dbc.getConnection());
+                net.sf.hibernate.Session sess = HibernateUtil.currentSession();
+                ImportTask.updateSchema();
+                parser.parse(rdfFile, new CompositeConfiguration(), true, false);
+                parser.parse(rdfsFile, new CompositeConfiguration(),true, false);
+                parser.parse(owlFile, new CompositeConfiguration(),true, false);
+                sess.flush();
             } catch (AllontoException ae) {
                 ae.printStackTrace();
                 // TODO handle this exception
+            } catch (HibernateException he) {
+                he.printStackTrace();
             }
+            finally {
+                try {
+                    HibernateUtil.closeSession();
+                } catch (HibernateException he) {
+                    he.printStackTrace(System.out);
+                }
+            }
+            
 
-        } catch (HibernateException he) {
-            he.printStackTrace();
-        }
         ((OntologyNode) node).getChildren().remove(
                 ((OntologyNode) node).getChildren().getNodes());
-        dbc.connect();
+//        dbc.connect();
     }
 
     /*
