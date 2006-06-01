@@ -1,5 +1,8 @@
 package fr.unice.bioinfo.thea.classification;
 
+import fr.unice.bioinfo.thea.ontologyexplorer.OntologyProperties;
+import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
+import fr.unice.bioinfo.thea.ontologyexplorer.infos.ClassificationNodeInfo;
 import java.awt.Color;
 import java.awt.Frame;
 import java.beans.PropertyChangeListener;
@@ -18,10 +21,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
-import net.sf.hibernate.HibernateException;
-import net.sf.hibernate.Query;
-import net.sf.hibernate.Session;
-
 import org.apache.commons.configuration.Configuration;
 import org.openide.windows.WindowManager;
 
@@ -30,10 +29,8 @@ import cern.jet.stat.Probability;
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
-import fr.unice.bioinfo.allonto.datamodel.StringValue;
 import fr.unice.bioinfo.allonto.datamodel.expression.Criterion;
 import fr.unice.bioinfo.allonto.datamodel.expression.Expression;
-import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.api.annotation.Annotatable;
@@ -51,6 +48,8 @@ import fr.unice.bioinfo.util.OwlQuery;
  * @author <a href="mailto:elkasmi@unice.fr"> Saïd El Kasmi </a>
  */
 public class Classification implements Annotatable {
+    
+    private ResourceFactory resourceFactory = null;
 
     private int nb_annotatedClusters = 0;
 
@@ -66,7 +65,7 @@ public class Classification implements Annotatable {
     private Node classificationRootNode;
 
     /** The connection to an ontology. */
-    private Connection cnx = null;
+//    private Connection cnx = null;
 
     /**
      * The resource correspending the root nod of the ontology's branch used to
@@ -117,11 +116,12 @@ public class Classification implements Annotatable {
         this.classificationRootNode = classificationRootNode;
     }
 
-    public void createGeneProducts(final Connection cnx) {
-        if (cnx == null)
-            return;
-
-        this.cnx = cnx;
+    public void createGeneProducts(final DatabaseConnection dbCon) {
+//        if (cnx == null)
+//            return;
+//
+//        this.cnx = dbCon.getConnection();
+        this.resourceFactory = AllontoFactory.getResourceFactory(dbCon.getName());
 
         BlockingSwingWorker worker = new BlockingSwingWorker(
                 (Frame) WindowManager.getDefault().getMainWindow(),
@@ -145,36 +145,10 @@ public class Classification implements Annotatable {
                 }
                 // Create a Session using a Connection
                 try {
-                    HibernateUtil.createSession(cnx);
-                    Session sess = HibernateUtil.currentSession();
-//                    ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-//                            .getResourceFactory();
-//                    Query q = sess
-//                            .createQuery("select dbxref, dbkey.value from Resource dbxref, StringValue dbkey where dbxref.arcs[:propdbkey] = dbkey and dbkey.value in (:dbkeyval)");
-                    Query q = sess
-                            .createQuery("select res from Resource res where res.acc in (:resval)");
-
-//                    resourceFactory.setMemoryCached(true);
-                    // Property p =
-                    // resourceFactory.getProperty(xrefPropertyName);
-//                    Resource p = resourceFactory.getResource(OWLProperties
-//                            .getInstance().getXrefPropertyName());
-//                    if (p != null)
-//                        p = p.getInverse();
-//
-//                    // q.setEntity("propidentifies", p.getInverse());
-//                    // q.setEntity("propdbkey", resourceFactory
-//                    // .getProperty(propdbkeyPropertyName));
-//                    q.setEntity("propdbkey", resourceFactory
-//                            .getResource(OWLProperties.getInstance()
-//                                    .getPropdbkeyPropertyName()));
-//                    resourceFactory.setMemoryCached(false);
-
-                    q.setParameterList("resval", keys);
+                    Collection list = resourceFactory.getResources(keys);
 
                     // Resources correspending to keys are now:
                     long t = System.currentTimeMillis();
-                    List list = q.list();
                     System.out.println("retrieved " + list.size()
                             + " objects in " + (System.currentTimeMillis() - t)
                             + "ms");
@@ -184,33 +158,14 @@ public class Classification implements Annotatable {
                     // associate to each Node its corespending Resource
                     Iterator listIt = list.iterator();
                     while (listIt.hasNext()) {
-//                        Object[] tuple = (Object[]) listIt.next();
                         Resource res = (Resource) listIt.next();
                         String acc = res.getAcc();
-                            ((Node) map.get(acc)).setEntity(res);
-//                        Set s = dbxref.getTargets(p);
-//                        // associate for each Node its correspending
-//                        // Resource(Entity)
-//                        Iterator itr = s.iterator();
-//                        while (itr.hasNext()) {
-//                            Resource entity = (Resource) itr.next();
-//                            ((Node) map.get(key)).setEntity(entity);
-//                        }
+                            ((Node) map.get(acc)).setResource(res);
                     }
                     System.out.println("all genes products retrieved in "
                             + (System.currentTimeMillis() - t) + "ms");
-                } catch (HibernateException he) {
-                    setLinked(false);
-                    he.printStackTrace(System.out);
-                } catch (Exception e) {
+                } catch (AllontoException e) {
                     e.printStackTrace(System.out);
-                }
-                finally {
-                    try {
-                        HibernateUtil.closeSession();
-                    } catch (HibernateException he) {
-                        he.printStackTrace(System.out);
-                    }
                 }
                 setLinked(true);
             }
@@ -230,24 +185,18 @@ public class Classification implements Annotatable {
                 List ln = classificationRootNode.getLeaves();
                 // Create a Session using a Connection
                 try {
-                    HibernateUtil.createSession(cnx);
-                    Session sess = HibernateUtil.currentSession();
-                    ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-                            .getResourceFactory();
 
-                    OwlQuery oq = new OwlQuery();
+                    OwlQuery oq = new OwlQuery(resourceFactory);
                     oq.addQuery("?x",// NOI18N
                             "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",// NOI18N
                             "http://www.unice.fr/bioinfo/owl/biowl#Translation");// NOI18N
-                    List l = new Vector();
+                    List l = new ArrayList();
                     l.add("x");// NOI18N
                     oq.setResultVars(l);
                     oq.prepareQuery();
-//                    oq.getResults();
                     classificationRootNode.addProperty(
                             Node.NB_GENE_PRODUCTS_IN_SPECIE, new Integer(oq
                                     .getResultCount()));
-//                    resourceFactory.setMemoryCached(true);
                     LinkedList ll;
                     Criterion criterion = null;
                     if (evidences != null) {
@@ -271,50 +220,36 @@ public class Classification implements Annotatable {
                     Iterator lnIt = ln.iterator();
                     while (lnIt.hasNext()) {
                         Node aNode = (Node) lnIt.next();
-                        Resource entity = (Resource) aNode.getEntity();
+                        Resource resource = aNode.getResource();
                         aNode.addProperty(Node.ASSOC_TERMS, new HashSet());
                         // Some genes don't have any resource. Check for
                         // nullity:
-                        if (entity != null) {
-                            sess.update(entity); // re-attach entity with the current session
+                        if (resource != null) {
                             // we don't need to retrieve these properties in the
                             // frame of
                             // the annotation process
-                            // createProperties(aNode, entity, resourceFactory);
-                            Set targets;
+                            // createProperties(aNode, resource, resourceFactory);
+                            Collection targets;
 
                             if (criterion != null) {
-                                targets = entity.getTargets(
-                                        annotatedByProperty, criterion);
+                                targets = resource.getTargets(annotatedByProperty, criterion);
                             } else {
-                                targets = entity
+                                targets = resource
                                         .getTargets(annotatedByProperty);
                             }
-                            if (targets != null) {
                                 // add a the list of terms to each leaf node
                                 aNode.addProperty(Node.ASSOC_TERMS, targets);
-                            }
                         }
                     }
                     System.out.println("retrieved annotation in "
                             + (System.currentTimeMillis() - t) + "ms");
                     long t0 = System.currentTimeMillis();
-                    initTermsMap(resourceFactory);
+                    initTermsMap();
                     System.out.println("retrieved ancestors in "
                             + (System.currentTimeMillis() - t0) + "ms");
-                } catch (HibernateException he) {
-                    setAnnotated(false);
-                    he.printStackTrace(System.out);
-                } catch (Exception e) {
+                } catch (AllontoException e) {
                     setAnnotated(false);
                     e.printStackTrace(System.out);
-                }
-                finally {
-                    try {
-                        HibernateUtil.closeSession();
-                    } catch (HibernateException he) {
-                        he.printStackTrace(System.out);
-                    }
                 }
                 
                 setAnnotated(true);
@@ -376,54 +311,48 @@ public class Classification implements Annotatable {
     // write javadoc later:
     // extract some properties from the given resources, and
     // attch them the given node.
-    private void createProperties(Node aNode, Resource resource,
-            ResourceFactory resourceFactory) {
-        StringValue sv = null;
+    private void createProperties(Node aNode, Resource resource) {
+        Resource res = null;
 
         try {
-            sv = (StringValue) resource.getTarget(resourceFactory
-                    .getResource(OWLProperties.getInstance()
-                            .getChromosomePropertyName()));
-            if (sv != null) {
-                aNode.addProperty(Node.CHROMOSOME, sv.getValue());
-            }
-        } catch (AllontoException ae) {
-        }
-
-        try {
-            sv = (StringValue) resource.getTarget(resourceFactory
-                    .getResource(OWLProperties.getInstance()
-                            .getEndPosPropertyName()));
-            if (sv != null) {
-                aNode.addProperty(Node.END_POS, sv.getValue());
+            res = resource.getTarget(OWLProperties.getInstance()
+                            .getChromosomePropertyName());
+            if (res != null) {
+                aNode.addProperty(Node.CHROMOSOME, res.getAcc());
             }
         } catch (AllontoException ae) {
         }
 
         try {
-            sv = (StringValue) resource.getTarget(resourceFactory
-                    .getResource(OWLProperties.getInstance()
-                            .getStartPosPropertyName()));
-            if (sv != null) {
-                aNode.addProperty(Node.START_POS, sv.getValue());
+            res = resource.getTarget(OWLProperties.getInstance()
+                            .getEndPosPropertyName());
+            if (res != null) {
+                aNode.addProperty(Node.END_POS, res.getAcc());
+            }
+        } catch (AllontoException ae) {
+        }
+
+        try {
+            res = resource.getTarget(OWLProperties.getInstance()
+                            .getStartPosPropertyName());
+            if (res != null) {
+                aNode.addProperty(Node.START_POS, res.getAcc());
             }
         } catch (AllontoException ae) {
         }
         try {
-            sv = (StringValue) resource.getTarget(resourceFactory
-                    .getResource(OWLProperties.getInstance()
-                            .getSymbolPropertyName()));
-            if (sv != null) {
-                aNode.addProperty(Node.SYMBOL, sv.getValue());
+            res = resource.getTarget(OWLProperties.getInstance()
+                            .getSymbolPropertyName());
+            if (res != null) {
+                aNode.addProperty(Node.SYMBOL, res.getAcc());
             }
         } catch (AllontoException ae) {
         }
         try {
-            sv = (StringValue) resource.getTarget(resourceFactory
-                    .getResource(OWLProperties.getInstance()
-                            .getStrandPropertyName()));
-            if (sv != null) {
-                String s = sv.getValue();
+            res = resource.getTarget(OWLProperties.getInstance()
+                            .getStrandPropertyName());
+            if (res != null) {
+                String s = res.getAcc();
                 aNode.addProperty(Node.STRAND_POSITION, s);
                 boolean comp = ((Integer.parseInt(s) == 1) ? false : true);
                 aNode.addProperty(Node.COMPLEMENT_POS, new Boolean(comp));
@@ -433,20 +362,16 @@ public class Classification implements Annotatable {
     }
 
     // to rename with something more significant !!
-    private void initTermsMap(ResourceFactory resourceFactory) {
+    private void initTermsMap() {
         // Collect the set of properties that are used to retrieve terms'
         // ancestors
         Set hierarchyProperties = new HashSet();
         java.util.Map hierarchyDescription = fr.unice.bioinfo.thea.ontologyexplorer.OntologyProperties.getInstance()
-                .getHierarchyDescription(TheaConfiguration.getDefault().getConfiguration());
-        try {
-            HibernateUtil.createSession(cnx);
-            Session sess = HibernateUtil.currentSession();
+                .getHierarchyDescription(resourceFactory,TheaConfiguration.getDefault().getConfiguration());
             Iterator it = hierarchyDescription.values().iterator();
             while (it.hasNext()) {
                Object[] tuple = (Object[]) it.next();
                 Resource prop = (Resource) tuple[0];
-                sess.update(prop);
                 Criterion crit = (Criterion) tuple[1];
                hierarchyProperties.add(prop);
             }
@@ -466,10 +391,11 @@ public class Classification implements Annotatable {
             // Add also ancestors of each Term to the list of terms
             while (iterator.hasNext()) {
                 Resource aResource = (Resource) iterator.next();
-                sess.update(aResource);
-                
-                all.addAll(createAncestorsList(aResource,
-                        hierarchyProperties));
+                    try {
+                        all.addAll(aResource.getTargets(hierarchyProperties, Resource.TRANSITIVE_SEARCH));
+                    } catch (AllontoException ex) {
+                        ex.printStackTrace();
+                    }
             }
             // Keys are associated Terms, Values are number of occurences
             Map lMap = new HashMap();
@@ -490,59 +416,21 @@ public class Classification implements Annotatable {
             aNode.addProperty(Node.TERMS_MAP, lMap);
         }
         classificationRootNode.addProperty(Node.TERMS_MAP, map);
-        } catch (HibernateException he) {
-            // TODO Auto-generated catch block
-            he.printStackTrace();
-        } finally {
-            try {
-                HibernateUtil.closeSession();
-        } catch (HibernateException he) {
-            // TODO Auto-generated catch block
-            he.printStackTrace();
-            }
-        }
 
-    }
-
-    /**
-     * Finds and return ancestors of the given resource.
-     * 
-     * @param aResource
-     *            The resource to find out ancestors.
-     * @param properties
-     *            Properties that fix the <i>ancestor </i> relationship.
-     * @return List of ancestors.
-     */
-    private Set createAncestorsList(Resource aResource, Set properties) {
-        Set ancestors = new HashSet();
-        Set targets = ((Resource) aResource).getTargets(properties);
-        if (targets != null) {
-            Iterator targetsIt = targets.iterator();
-            while (targetsIt.hasNext()) {
-                Resource target = (Resource) targetsIt.next();
-                ancestors.addAll(createAncestorsList(target, properties));
-            }
-            ancestors.addAll(targets);
-        }
-        return ancestors;
     }
 
     // TODO : RENAME THIS METHOD LATER
     // TODO : WRITE ALGORITHM FIRST
     // TODO : OPTIMIZE IT WHEN THE BEST ONE IS FOUND
-    private Set compute(Resource nodeResource, ResourceFactory resourceFactory)
+    private Set compute(Resource nodeResource)
             throws AllontoException {
         Set allAssociatedGenes = null;
-        try {
-            HibernateUtil.createSession(cnx);
-            Session sess = HibernateUtil.currentSession();
-            sess.update(nodeResource);
             Resource annotateProperty = resourceFactory.getResource(OWLProperties
                     .getInstance().getAnnotatePropertyName());
             // Get direct children of the the resource:
             Set children = new HashSet();
-            java.util.Map hierarchyDescription = OWLProperties.getInstance()
-            .getHierarchyDescription();
+        java.util.Map hierarchyDescription = fr.unice.bioinfo.thea.ontologyexplorer.OntologyProperties.getInstance()
+                .getHierarchyDescription(resourceFactory,TheaConfiguration.getDefault().getConfiguration());
             
             Iterator it = hierarchyDescription.values().iterator();
             
@@ -550,10 +438,9 @@ public class Classification implements Annotatable {
                 Object[] tuple = (Object[]) it.next();
                 
                 Resource prop = (Resource) tuple[0];
-                sess.update(prop);
                 Criterion crit = (Criterion) tuple[1];
                 
-                Set targets = nodeResource.getTargets(prop, crit);
+                Collection targets = nodeResource.getTargets(prop, crit);
                 
                 if (targets != null) {
                     children.addAll(targets);
@@ -586,13 +473,13 @@ public class Classification implements Annotatable {
                     // classification
                     if (terms.containsKey(aChild)) {
                         // recurses to compute utilMap for all childs
-                        allAssociatedGenes.addAll(compute(aChild, resourceFactory));
+                        allAssociatedGenes.addAll(compute(aChild));
                     }
                     
                 }
             }
             // Retrieve the set of genes annotated with the term
-            Set targets = nodeResource.getTargets(annotateProperty);
+            Collection targets = nodeResource.getTargets(annotateProperty);
             // If the term is used to annotate genes,
             // add the set of annotated genes to the set of
             // genes annotated with its childs
@@ -601,15 +488,6 @@ public class Classification implements Annotatable {
             }
             // updates utilMap
             utilMap.put(nodeResource, allAssociatedGenes);
-        } catch (HibernateException he) {
-            he.printStackTrace(System.out);
-        } finally {
-            try {
-                HibernateUtil.closeSession();
-            } catch (HibernateException he) {
-                he.printStackTrace(System.out);
-            }
-        }
         
         return allAssociatedGenes;
     }
@@ -632,12 +510,6 @@ public class Classification implements Annotatable {
                 "Comparing ...", "Operation in progress, please wait ...", true) {
             protected void doNonUILogic() throws RuntimeException {
                 // Create a Session using a Connection
-                try {
-                    HibernateUtil.createSession(cnx);
-//                    Session sess = HibernateUtil.currentSession();
-                    ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-                            .getResourceFactory();
-                    // resourceFactory.setMemoryCached(true);
 
                     boolean ignoreUnknown = CESettings.getInstance()
                             .isIgnoreUnknownSelected();
@@ -646,12 +518,10 @@ public class Classification implements Annotatable {
 
                     // allBranchTerms contains list of terms under a root node
                     // from the ontology
-                    Set allBranchTerms = createWholeBranchTermsList(
-                            resourceFactory, nodeResource);
+                    Collection allBranchTerms = createWholeBranchTermsList(nodeResource);
 
                     // Count Genes for the Top root node
-                    int genesCount = countGenes(resourceFactory,
-                            allBranchTerms, ignoreNotAnnotated, ignoreUnknown);
+                    int genesCount = countGenes(allBranchTerms, ignoreNotAnnotated, ignoreUnknown);
                     System.out.println("genesCount="+genesCount);
                     // Get terms that annotate the root node:
                     Map map = null; // before was called: rootTermsMap
@@ -661,8 +531,12 @@ public class Classification implements Annotatable {
                                 .getProperty(Node.TERMS_MAP);
                     } else if (CESettings.getInstance()
                             .isOntologyBaseSelected()) {
-                        // utilMap.clear();
-                        compute(nodeResource, resourceFactory);
+                        try {
+                            // utilMap.clear();
+                            compute(nodeResource);
+                        } catch (AllontoException ex) {
+                            ex.printStackTrace();
+                        }
                         int anInt = ((Set) utilMap.get(nodeResource)).size();
                         System.out.println("anInt="+anInt);
                         classificationRootNode.addProperty(branch
@@ -721,13 +595,13 @@ public class Classification implements Annotatable {
                     nb_overAnnotation = 0;
                     nb_underAnnotation = 0;
 
-                    createLabels(resourceFactory, classificationRootNode,
+                    createLabels(classificationRootNode,
                             branchTermsMap, genesCount, ignoreUnknown,
                             ignoreNotAnnotated, new HashMap());
 
                     // IF Show physically adjacent genes IS SELECTED
                     if (CESettings.getInstance().isShowPhysicallyAdjacent()) {
-                        compareWithMap(resourceFactory);
+                        compareWithMap();
                     } else {
                         propertySupport.firePropertyChange(
                                 "showPhysicallyAdjacents", null, null);// NOI18N
@@ -757,18 +631,6 @@ public class Classification implements Annotatable {
                             continue;
                         }
                     }
-                } catch (HibernateException he) {
-                    he.printStackTrace(System.out);
-                } catch (Exception e) {
-                    e.printStackTrace(System.out);
-                }
-                finally {
-                    try {
-                        HibernateUtil.closeSession();
-                    } catch (HibernateException he) {
-                        he.printStackTrace(System.out);
-                    }
-                }
                 
                 // Fire an event telling the annotation is done:
                 propertySupport.firePropertyChange("annotationChanged", null,
@@ -785,10 +647,9 @@ public class Classification implements Annotatable {
     }
 
     // give a significant name. Any idea Claude ?
-    private void compareWithMap(ResourceFactory resourceFactory) {
+    private void compareWithMap() {
         Set colocatedGeneSets = new HashSet();
-        compareWithMap(classificationRootNode, colocatedGeneSets,
-                resourceFactory);
+        compareWithMap(classificationRootNode, colocatedGeneSets);
         nb_colocalized_groups = colocatedGeneSets.size();
         nb_colocalized_genes = 0;
 
@@ -820,8 +681,7 @@ public class Classification implements Annotatable {
     }
 
     // give a significant name. Any idea Claude ?
-    private void compareWithMap(Node aNode, Set colocatedGeneSet,
-            ResourceFactory resourceFactory) {
+    private void compareWithMap(Node aNode, Set colocatedGeneSet) {
         if (aNode == null) {
             return;
         }
@@ -831,7 +691,7 @@ public class Classification implements Annotatable {
         Iterator childrenIt = aNode.getChildren().iterator();
         while (childrenIt.hasNext()) {
             Node aChild = (Node) childrenIt.next();
-            compareWithMap(aChild, colocatedGeneSet, resourceFactory);
+            compareWithMap(aChild, colocatedGeneSet);
         }
         aNode.removeProperty(Node.ANNOTATION);
         List ln = aNode.getLeaves();
@@ -941,17 +801,12 @@ public class Classification implements Annotatable {
      * @return Children of the term correspending to the resource <i>aResource
      *         </i>.
      */
-    private Set createWholeBranchTermsList(ResourceFactory resourceFactory,
-            Resource aResource) {
-        Set descendants = new HashSet();
+    private Collection createWholeBranchTermsList(Resource aResource) {
+        Collection descendants = new HashSet();
         // Get direct children of the the resource:
 //        Set children = new HashSet();
-        java.util.Map hierarchyDescription = OWLProperties.getInstance()
-                .getHierarchyDescription();
-        try {
-            HibernateUtil.createSession(cnx);
-            Session sess = HibernateUtil.currentSession();
-        
+        java.util.Map hierarchyDescription = fr.unice.bioinfo.thea.ontologyexplorer.OntologyProperties.getInstance()
+                .getHierarchyDescription(resourceFactory,TheaConfiguration.getDefault().getConfiguration());
             Set hierarchyProperties = new HashSet();
             Iterator it = hierarchyDescription.values().iterator();
             while (it.hasNext()) {
@@ -959,14 +814,19 @@ public class Classification implements Annotatable {
 
                 Resource prop = (Resource) tuple[0];
                 Criterion crit = (Criterion) tuple[1];
-                sess.update(prop);
+            try {
                 prop = prop.getInverse();
+            } catch (AllontoException ex) {
+                ex.printStackTrace();
+            }
                 if (prop == null) continue;
-                sess.update(prop);
                 hierarchyProperties.add(prop);
             }
-            sess.update(aResource);
+        try {
             descendants = aResource.getTargets(hierarchyProperties, Resource.TRANSITIVE_SEARCH);
+        } catch (AllontoException ex) {
+            ex.printStackTrace();
+        }
 //            try {
 //                prop = prop.getInverse();
 //                sess.update(prop);
@@ -981,18 +841,6 @@ public class Classification implements Annotatable {
 //            }
 //        }
 
-        } catch (HibernateException he) {
-            he.printStackTrace();
-        } catch (AllontoException ae) {
-            ae.printStackTrace();
-        }
-        finally {
-            try {
-                HibernateUtil.closeSession();
-            } catch (HibernateException he) {
-                he.printStackTrace(System.out);
-            }
-        }
 //        if (children.isEmpty()) {
 //            children = null;
 //        }
@@ -1012,7 +860,7 @@ public class Classification implements Annotatable {
     /**
      * Create a labels for classification' nodes using terms that annotate them.
      */
-    private int createLabels(ResourceFactory resourceFactory, Node aNode,
+    private int createLabels(Node aNode,
             Map rootTermsMap, int nbRootAssociatedGenes, boolean ignoreUnknown,
             boolean ignoreNotAnnotated, Map termsMap) {
         if (aNode == null) {
@@ -1048,7 +896,7 @@ public class Classification implements Annotatable {
             Node aChild = (Node) childrenIt.next();
             Map m = new HashMap();
             // For each child:
-            count += createLabels(resourceFactory, aChild, rootTermsMap,
+            count += createLabels(aChild, rootTermsMap,
                     nbRootAssociatedGenes, ignoreUnknown, ignoreNotAnnotated, m);
             Set keySet = m.keySet();
             Iterator ksIt = keySet.iterator();
@@ -1065,12 +913,6 @@ public class Classification implements Annotatable {
         }
         CESettings settings = CESettings.getInstance();
 
-        try {
-            HibernateUtil.createSession(cnx);
-        } catch (HibernateException he) {
-            he.printStackTrace();
-        }
-        
         // remove terms for which their occurence in this cluster
         // is greater than a given cutoff
         Set keySet = termsMap.keySet();
@@ -1082,18 +924,14 @@ public class Classification implements Annotatable {
         int nbTestedTerms = 0; // used for multiple testing correction
         while (it.hasNext()) {
             Resource aResource = (Resource) it.next();
-            try {
-                HibernateUtil.currentSession().update(aResource);
-            } catch (HibernateException he) {
-                he.printStackTrace();
-            }
             String aResourceName = "";// NOI18N
             try {
-                StringValue sv = (StringValue) aResource
-                        .getTarget(resourceFactory.getResource(OWLProperties
-                                .getInstance().getNodeNameProperty()));
-                if (sv != null) {
-                    aResourceName = sv.getValue();
+                
+                Resource res = aResource
+                        .getTarget(OWLProperties
+                                .getInstance().getNodeNameProperty());
+                if (res != null) {
+                    aResourceName = res.getAcc();
                 }
             } catch (AllontoException ae) {
             }
@@ -1302,11 +1140,6 @@ public class Classification implements Annotatable {
                 }
             }
         }
-        try {
-            HibernateUtil.closeSession();
-        } catch (HibernateException he) {
-            he.printStackTrace();
-        }
         if (overAndUnderExpTerms.isEmpty()) {
             return count;
         }
@@ -1366,18 +1199,18 @@ public class Classification implements Annotatable {
         Resource bestTerm = ((Score) commonTerms.get(0)).getTerm();
         String label = "";// NOI18N
         if (settings.isShowTermID()) {
-            label += bestTerm.getId();
+            label += bestTerm.getResource_id();
         }
         if (settings.isShowTermName()) {
             if (!"".equals(label)) {
                 label += ":";
             }
             try {
-                StringValue sv = (StringValue) bestTerm
-                        .getTarget(resourceFactory.getResource(OWLProperties
-                                .getInstance().getNodeNameProperty()));
-                if (sv != null) {
-                    label += (sv.getValue() + " ");
+                Resource res = bestTerm
+                        .getTarget(OWLProperties
+                                .getInstance().getNodeNameProperty());
+                if (res != null) {
+                    label += (res.getAcc() + " ");
                 }
             } catch (AllontoException ae) {
             }
@@ -1424,18 +1257,9 @@ public class Classification implements Annotatable {
      *            unknown genes or not.
      * @return number of gene products.
      */
-    private int countGenes(ResourceFactory resourceFactory, Set allBranchTerms,
+    private int countGenes(Collection allBranchTerms,
             boolean ignoreNotAnnotated, boolean ignoreUnknown) {
             System.out.println("allBranchTerms "+allBranchTerms);
-        Session sess = null;
-        try {
-            HibernateUtil.createSession(cnx);
-            sess = HibernateUtil.currentSession();
-
-        } catch (HibernateException he) {
-            // TODO Auto-generated catch block
-            he.printStackTrace();
-        }         
         // allBranchTerms contains all terms from the onotology branch
         List ln = classificationRootNode.getLeaves();
         // If we dont ignore:
@@ -1547,12 +1371,6 @@ public class Classification implements Annotatable {
 //                    count += 1;
 //                }
 //            }
-        }
-        try {
-            HibernateUtil.closeSession();
-        } catch (HibernateException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
         }
         return count;
     }

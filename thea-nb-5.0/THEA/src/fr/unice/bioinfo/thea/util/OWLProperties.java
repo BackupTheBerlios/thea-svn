@@ -9,7 +9,7 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
-import fr.unice.bioinfo.allonto.datamodel.Resource;
+//import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.expression.Criterion;
 import fr.unice.bioinfo.allonto.datamodel.expression.Expression;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
@@ -71,49 +71,6 @@ public final class OWLProperties {
         ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
                 .getResourceFactory();
         Configuration con = TheaConfiguration.getDefault().getConfiguration();
-        Object ob = con
-                .getProperty("ontologyexplorer.hierarchy.relationship.name");// NOI18N
-        if (ob instanceof Collection) {
-            List al = new ArrayList((Collection) ob);
-            Object[] names = al.toArray();
-            for (int counter = 0; counter < al.size(); counter++) {
-
-                try {
-                    String name = (String) names[counter];
-                    List triple = new ArrayList();
-                    Resource property = resourceFactory
-                            .getResource((String) con
-                                    .getProperty("ontologyexplorer.hierarchy.relationship("
-                                            + counter + ").predicate"));// NOI18N
-                    Criterion criterion = null;
-                    Object valueOf = con
-                            .getProperty("ontologyexplorer.hierarchy.relationship("
-                                    + counter + ").context.valueof");// NOI18N
-                    Object equals = con
-                            .getProperty("ontologyexplorer.hierarchy.relationship("
-                                    + counter + ").context.equals");// NOI18N
-                    if ((valueOf != null) && (equals != null)) {
-                        Resource valueOfResource = resourceFactory
-                                .getResource((String) valueOf);
-                        if (equals == null) {
-                            criterion = Expression.alwaysTrue();
-                        } else {
-                            Resource equalsResource = resourceFactory
-                                    .getResource((String) equals);
-                            criterion = Expression.eq(valueOfResource,
-                                    equalsResource);
-                        }
-                    }
-                    Object iconUrl = con
-                            .getProperty("ontologyexplorer.hierarchy.relationship("
-                                    + counter + ").icon");// NOI18N
-                    hierarchyDescription.put(name, new Object[] { property,
-                            criterion, (String) iconUrl });
-                } catch (AllontoException ae) {
-                }
-            }
-        }
-
         Object obj = con.getProperty("ontologyexplorer.nodes.nodename");// NOI18N
         nodeNameProperty = (String) obj;
 
@@ -155,12 +112,6 @@ public final class OWLProperties {
 
     public String getHasEvidenceProperty() {
         return hasEvidenceProperty;
-    }
-
-    // TODO a supprimer et à remplacer par une méthode dans OntologyProperties
-
-    public Map getHierarchyDescription() {
-        return hierarchyDescription;
     }
 
     // TODO a supprimer et à remplacer par une méthode dans OntologyProperties

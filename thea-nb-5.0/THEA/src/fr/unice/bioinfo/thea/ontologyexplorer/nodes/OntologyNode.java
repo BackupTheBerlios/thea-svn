@@ -11,9 +11,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.Action;
 
-import net.sf.hibernate.HibernateException;
-import net.sf.hibernate.Session;
-
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
@@ -29,7 +26,6 @@ import org.openide.util.actions.SystemAction;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
-import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ConnectAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.DeleteOntologyNodeAction;
@@ -158,6 +154,10 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
     public DatabaseConnection getConnection() {
         return connection;
     }
+    
+    protected ResourceFactory getResourceFactory() {
+        return AllontoFactory.getResourceFactory(getConnection().getName());
+    }
 
     /**
      * Sets the {@link DatabaseConnection}correspending to this node
@@ -229,14 +229,8 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
      * Computes the compatibility of the Knowledge base
      */
     public void computeCompatibleKB() {
-        try {
-            HibernateUtil.createSession(getConnection().getConnection());
-        } catch (HibernateException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-                .getResourceFactory();
+        getConnection();
+        ResourceFactory resourceFactory = getResourceFactory();
         try {
             // The following query is only used to test the correctness of the db schema
             resourceFactory.getResource("ANYRESOURCE", false);
@@ -245,12 +239,6 @@ public class OntologyNode extends AbstractNode implements Node.Cookie {
         } catch (AllontoException ae) {
             compatibleKB = false;
             setShortDescription(bundle.getString("LBL_IncompatibleKB")); // NOI18N
-        }
-        try {
-            HibernateUtil.closeSession();
-        } catch (HibernateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
     }
 

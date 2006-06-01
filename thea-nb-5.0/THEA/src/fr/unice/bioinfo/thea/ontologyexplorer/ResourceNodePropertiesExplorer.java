@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.sf.hibernate.HibernateException;
-import net.sf.hibernate.Session;
-
 import org.openide.explorer.ExplorerManager;
 import org.openide.explorer.ExplorerManager.Provider;
 import org.openide.nodes.FilterNode;
@@ -17,7 +14,6 @@ import org.openide.util.Utilities;
 import org.openide.windows.TopComponent;
 
 import fr.unice.bioinfo.allonto.datamodel.Resource;
-import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.AbstractResourceNode;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNodeProperty;
@@ -101,27 +97,12 @@ public class ResourceNodePropertiesExplorer extends TopComponent implements Prov
     private Node[] populateTree(ResourceNode node) {
         // the resource which is displayed
         Resource resource =  node.getResource();
-        try {
-            HibernateUtil.createSession(node.getConnection().getConnection());
-            Session sess = HibernateUtil.currentSession();
-            sess.update(resource);
-        } catch (HibernateException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
         
         List propertyNodes = new ArrayList();
-        Iterator mapIt = resource.getArcs().keySet().iterator();
+        Iterator mapIt = resource.getProperties().iterator();
         while (mapIt.hasNext()) {
             Resource key = (Resource)mapIt.next();
-            if (!key.isNamedProperty()) continue;
             propertyNodes.add(new ResourceNode(key));
-        }
-        try {
-            HibernateUtil.closeSession();
-        } catch (HibernateException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
         }
         Node[] childs = new Node[propertyNodes.size()];
         for (int i = 0 ; i < propertyNodes.size() ; i++) {

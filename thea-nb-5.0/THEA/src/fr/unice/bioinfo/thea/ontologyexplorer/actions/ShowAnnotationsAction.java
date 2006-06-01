@@ -1,5 +1,6 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
+import fr.unice.bioinfo.thea.util.OWLProperties;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -61,8 +62,7 @@ public class ShowAnnotationsAction extends NodeAction {
                     // close dialog
                     closeDialog();
                     Resource resource = rn.getResource();
-                    cni.getClassification().createAnnotations(resource,
-                            rn.getDisplayName());
+                    cni.getClassification().createAnnotations(resource, rn.getName());
                 }
             }
         };

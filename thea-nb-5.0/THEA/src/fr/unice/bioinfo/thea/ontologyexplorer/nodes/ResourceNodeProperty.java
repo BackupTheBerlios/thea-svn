@@ -11,7 +11,6 @@ import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowAnnotatedGenesAction;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowResourceNodeInstances;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowResourceNodeProperties;
-import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 
 /**
  * This class uses the nodes API to build a node that represents a resource from

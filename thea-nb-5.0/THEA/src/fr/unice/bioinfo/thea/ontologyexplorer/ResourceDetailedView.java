@@ -27,8 +27,6 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 
-import net.sf.hibernate.HibernateException;
-import net.sf.hibernate.Session;
 
 import org.openide.awt.MouseUtils;
 import org.openide.explorer.ExplorerManager;
@@ -40,11 +38,7 @@ import org.openide.util.actions.ActionPerformer;
 import org.openide.util.actions.CallbackSystemAction;
 import org.openide.util.actions.SystemAction;
 
-import fr.unice.bioinfo.allonto.datamodel.AllontoException;
-import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
-import fr.unice.bioinfo.allonto.datamodel.StringValue;
-import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.thea.classification.editor.selection.SelectionEvent;
 import fr.unice.bioinfo.thea.classification.editor.selection.SelectionListener;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.AbstractResourceNode;
@@ -412,17 +406,8 @@ public class ResourceDetailedView extends JScrollPane {
     // }
     private void addResourceDetails(Container panel, Node n) {
         Resource resource = ((AbstractResourceNode) n).getResource();
-        try {
-            HibernateUtil.createSession(((AbstractResourceNode) n)
-                    .getConnection().getConnection());
-            Session sess = HibernateUtil.currentSession();
-            sess.load(resource, new Integer(resource.getId()));
-        } catch (HibernateException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
 
-        Iterator prop_it = resource.getArcs().keySet().iterator();
+        Iterator prop_it = resource.getProperties().iterator();
         while (prop_it.hasNext()) {
             Resource prop = (Resource) prop_it.next();
             JLabel propLabel = new JLabel(prop.getName());
@@ -434,59 +419,52 @@ public class ResourceDetailedView extends JScrollPane {
             addTargetsDetails(panel, resource, prop);
 
         }
-        try {
-            HibernateUtil.closeSession();
-        } catch (HibernateException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-
-        }
     }
 
     private void addTargetsDetails(Container panel, Resource resource,
             Resource prop) {
-        Set contextualTargets;
-        try {
-            contextualTargets = resource.getContextualTargets(prop);
-        } catch (AllontoException e) {
-            return;
-        }
-        if (contextualTargets == null) {
-            return;
-        }
-        String[] columnTitles = { "context", "target" };
-        Object[][] tableContent = new Object[contextualTargets.size()][2];
-        Iterator it = contextualTargets.iterator();
-        int ctr = 0;
-        while (it.hasNext()) {
-            Entity[] tuple = (Entity[]) it.next();
-            tableContent[ctr][0] = ((Resource)tuple[0]).getName();
-            if (tuple[1] instanceof Resource) {
-                Resource cntx = (Resource)tuple[1];
-                if (cntx.isConcrete()) {
-                    tableContent[ctr][1] = ((Resource)tuple[1]).getName();
-                } else {
-                    String content = "";
-                    Iterator cntx_it = cntx.getArcs().keySet().iterator();
-                    while (cntx_it.hasNext()) {
-                        Resource cntx_prop = (Resource)cntx_it.next();
-                        content += cntx_prop.getName() + " = ";
-                        content += cntx.getTargets(cntx_prop);
-                        if (cntx_it.hasNext()) {
-                            content += "\n";
-                        }
-                    }
-                    tableContent[ctr][1] = content;
-                }
-            } else if (tuple[1] instanceof StringValue) {
-                tableContent[ctr][1] = ((StringValue)tuple[1]).getValue();
-                
-            }
-            ctr++;
-        }
-        JTable p = new JTable(tableContent, columnTitles);
-        panel.add(p, BorderLayout.WEST);
-
+        // TODO implement a correct processing for this mathod
+//        Set contextualTargets;
+//        try {
+//            contextualTargets = resource.getContextualTargets(prop);
+//        } catch (AllontoException e) {
+//            return;
+//        }
+//        if (contextualTargets == null) {
+//            return;
+//        }
+//        String[] columnTitles = { "context", "target" };
+//        Object[][] tableContent = new Object[contextualTargets.size()][2];
+//        Iterator it = contextualTargets.iterator();
+//        int ctr = 0;
+//        while (it.hasNext()) {
+//            Entity[] tuple = (Entity[]) it.next();
+//            tableContent[ctr][0] = ((Resource)tuple[0]).getName();
+//            if (tuple[1] instanceof Resource) {
+//                Resource cntx = (Resource)tuple[1];
+//                if (cntx.isConcrete()) {
+//                    tableContent[ctr][1] = ((Resource)tuple[1]).getName();
+//                } else {
+//                    String content = "";
+//                    Iterator cntx_it = cntx.getProperties().iterator();
+//                    while (cntx_it.hasNext()) {
+//                        Resource cntx_prop = (Resource)cntx_it.next();
+//                        content += cntx_prop.getName() + " = ";
+//                        content += cntx.getTargets(cntx_prop);
+//                        if (cntx_it.hasNext()) {
+//                            content += "\n";
+//                        }
+//                    }
+//                    tableContent[ctr][1] = content;
+//                }
+//            } else if (tuple[1] instanceof StringValue) {
+//                tableContent[ctr][1] = ((StringValue)tuple[1]).getValue();
+//                
+//            }
+//            ctr++;
+//        }
+//        JTable p = new JTable(tableContent, columnTitles);
+//        panel.add(p, BorderLayout.WEST);
     }
 
 }

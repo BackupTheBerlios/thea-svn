@@ -1,7 +1,8 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
+import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
+import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.util.ImportTask;
-import fr.unice.bioinfo.util.OwlFastReader;
 import fr.unice.bioinfo.util.SWReader;
 import java.io.File;
 import java.io.IOException;
@@ -9,8 +10,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
 import java.util.ResourceBundle;
-
-import net.sf.hibernate.HibernateException;
 
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.openide.DialogDisplayer;
@@ -21,7 +20,6 @@ import org.openide.util.NbBundle;
 import org.openide.util.actions.NodeAction;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
-import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
@@ -62,6 +60,7 @@ public class InitializeKnowledgeBaseAction extends NodeAction {
         }
 
         DatabaseConnection dbc = ((OntologyNode) node).getConnection();
+        ResourceFactory resourceFactory = AllontoFactory.getResourceFactory(((OntologyNode) node).getConnection().getName());
 
             Properties prop = new Properties();
             prop.setProperty("hibernate.connection.driver_class", dbc
@@ -71,42 +70,21 @@ public class InitializeKnowledgeBaseAction extends NodeAction {
             prop
                     .setProperty("hibernate.connectino.password", dbc
                             .getPassword());
-            net.sf.hibernate.tool.hbm2ddl.SchemaExport se = null;
-            try {
-                se = new net.sf.hibernate.tool.hbm2ddl.SchemaExport(HibernateUtil.getConfiguration(), prop);
-            } catch (HibernateException ex) {
-                ex.printStackTrace();
-            }
-            se.drop(false, true);
-            se.create(false, true);
+            // code to create the database
             // Load standard RDF, RDFS and OWL descriptions
             String rdfFile = this.getClass().getResource("/fr/unice/bioinfo/thea/resources/rdf.rdf").toString();
             String rdfsFile = this.getClass().getResource("/fr/unice/bioinfo/thea/resources/rdfs.rdf").toString();
             String owlFile = this.getClass().getResource("/fr/unice/bioinfo/thea/resources/owl.rdf").toString();
             try {
 //                fr.unice.bioinfo.util.ImportTask parser = new fr.unice.bioinfo.util.ImportTask();
-                fr.unice.bioinfo.util.OwlReader parser = new fr.unice.bioinfo.util.OwlReader();
-                HibernateUtil.createSession(dbc.getConnection());
-                net.sf.hibernate.Session sess = HibernateUtil.currentSession();
-                ImportTask.updateSchema();
+                fr.unice.bioinfo.util.OwlReader parser = new fr.unice.bioinfo.util.OwlReader(resourceFactory);
                 parser.parse(rdfFile, new CompositeConfiguration(), true, false);
                 parser.parse(rdfsFile, new CompositeConfiguration(),true, false);
                 parser.parse(owlFile, new CompositeConfiguration(),true, false);
-                sess.flush();
             } catch (AllontoException ae) {
                 ae.printStackTrace();
                 // TODO handle this exception
-            } catch (HibernateException he) {
-                he.printStackTrace();
             }
-            finally {
-                try {
-                    HibernateUtil.closeSession();
-                } catch (HibernateException he) {
-                    he.printStackTrace(System.out);
-                }
-            }
-            
 
         ((OntologyNode) node).getChildren().remove(
                 ((OntologyNode) node).getChildren().getNodes());

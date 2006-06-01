@@ -1,5 +1,6 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.nodes;
 
+import fr.unice.bioinfo.allonto.datamodel.expression.Expression;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -18,8 +19,6 @@ import org.openide.util.RequestProcessor;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
-import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
-import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.TheaConfiguration;
 
 /**
@@ -101,8 +100,6 @@ public class GeneNodeChildren extends Children.Array {
                 // children.clear();
                 // }
                 String propertyName;
-                ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-                        .getResourceFactory();
                 Configuration con = TheaConfiguration.getDefault()
                         .getConfiguration();
                 propertyName = (String) con
@@ -110,10 +107,9 @@ public class GeneNodeChildren extends Children.Array {
 
                 TreeSet children = new TreeSet();
 
-                Set genes = null;
+                Collection genes = null;
                 try {
-                    genes = resource.getTargets(resourceFactory
-                            .getResource(propertyName));
+                    genes = resource.getTargets(propertyName);
                 } catch (AllontoException ae) {
                 }
                 if (genes != null) {

@@ -1,5 +1,6 @@
 package fr.unice.bioinfo.thea.ontologyexplorer;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -7,15 +8,9 @@ import java.util.ResourceBundle;
 
 import javax.swing.table.AbstractTableModel;
 
-import net.sf.hibernate.HibernateException;
-import net.sf.hibernate.Session;
-
 import org.openide.util.NbBundle;
 
-import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
-import fr.unice.bioinfo.allonto.datamodel.StringValue;
-import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 
 /**
@@ -41,36 +36,22 @@ public class ResourceNodePropertiesTableModel extends AbstractTableModel {
         columnNames[0] = bundle.getString("LBL_PropertiesName");
         columnNames[1] = bundle.getString("LBL_PropertiesValue");
 
-        try {
-            HibernateUtil.createSession(node.getConnection().getConnection());
-            Session sess = HibernateUtil.currentSession();
-            sess.update(node.getResource());
-        } catch (HibernateException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-
         // get the configuration
         // Configuration con = node.getConfiguration();
         Resource resource = node.getResource();
 
-        Iterator mapIt = resource.getArcs().entrySet().iterator();
+        Iterator propIt = resource.getProperties().iterator();
         Map propname2value = new HashMap();
-        while (mapIt.hasNext()) {
-            Map.Entry entry = (Map.Entry) mapIt.next();
-            Entity val = (Entity) entry.getValue();
+        while (propIt.hasNext()) {
+            Resource property = (Resource)propIt.next();
+            Collection targets = resource.getTargets(property);
+            if (targets.size() == 1) {
+                Resource res = (Resource)targets.iterator().next();
             // Since values in the Map are not all instances of
             // StringValue,
             // do tests using the instanceof operator
-            if (val instanceof StringValue) {
-                Resource property = (Resource) entry.getKey();
-                propname2value.put(property.getAcc(), ((StringValue) val)
-                        .getValue());
-            } else if ((val instanceof Resource)
-                    && ((Resource) val).isConcrete()) {
-                Resource property = (Resource) entry.getKey();
                 propname2value
-                        .put(property.getAcc(), ((Resource) val).getAcc());
+                        .put(property.getAcc(), res.getAcc());
 
             }
         }
@@ -79,20 +60,15 @@ public class ResourceNodePropertiesTableModel extends AbstractTableModel {
         if (!propname2value.isEmpty()) {
             data = new Object[propname2value.size()][2];
             int counter = 0;
-            Iterator propIt = propname2value.entrySet().iterator();
-            while (propIt.hasNext()) {
-                Map.Entry entry = (Map.Entry) propIt.next();
+            Iterator propnameIt = propname2value.entrySet().iterator();
+            while (propnameIt.hasNext()) {
+                Map.Entry entry = (Map.Entry) propnameIt.next();
                 String propName = (String) entry.getKey();
                 String propValue = (String) entry.getValue();
                 data[counter][0] = propName;
                 data[counter][1] = propValue;
                 counter++;
             }
-        }
-        try {
-            HibernateUtil.closeSession();
-        } catch (HibernateException he) {
-            he.printStackTrace();
         }
     }
 

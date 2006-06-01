@@ -6,9 +6,6 @@ import java.util.Map;
 
 import javax.swing.Action;
 
-import net.sf.hibernate.HibernateException;
-import net.sf.hibernate.Session;
-
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.openide.nodes.AbstractNode;
@@ -19,12 +16,7 @@ import org.openide.nodes.Sheet;
 import org.openide.util.actions.SystemAction;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
-import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
-import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
-import fr.unice.bioinfo.allonto.datamodel.StringValue;
-import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
-import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyProperties;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowAnnotatedGenesAction;

@@ -8,9 +8,6 @@ import javax.swing.ImageIcon;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
-import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
-import fr.unice.bioinfo.allonto.datamodel.StringValue;
-import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.classification.Node;
 import fr.unice.bioinfo.thea.classification.editor.DrawableClassification;
 import fr.unice.bioinfo.thea.util.OWLProperties;
@@ -49,16 +46,11 @@ public class KeepAnnotationAction extends GenericAction {
         }
         List param = new Vector();
         Resource r = (Resource) aNode.getProperty(Node.ASSOC_TERM);
-        ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-                .getResourceFactory();
         try {
-            StringValue sv = (StringValue) r.getTarget(resourceFactory
-                    .getResource(OWLProperties.getInstance()
-                            .getNodeNameProperty()));
-            if (sv != null) {
-                param.add(sv.getValue());
-            }
-        } catch (AllontoException ae) {
+            param.add(r.getTarget(OWLProperties.getInstance()
+                                .getNodeNameProperty()));
+        } catch (AllontoException ex) {
+            ex.printStackTrace();
         }
         param.add(aNode.getLayoutSupport());
         l.add(param);

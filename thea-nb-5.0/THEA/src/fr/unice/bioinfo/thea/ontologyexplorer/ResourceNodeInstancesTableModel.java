@@ -6,16 +6,12 @@ import java.util.Set;
 
 import javax.swing.table.AbstractTableModel;
 
-import net.sf.hibernate.HibernateException;
-import net.sf.hibernate.Session;
 
 import org.openide.util.NbBundle;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
-import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
-import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ResourceNode;
 
 /**
@@ -40,23 +36,13 @@ public class ResourceNodeInstancesTableModel extends AbstractTableModel {
         columnNames[0] = bundle.getString("LBL_InstancesName");
         columnNames[1] = bundle.getString("LBL_InstancesValue");
 
-        try {
-            HibernateUtil.createSession(node
-                    .getConnection().getConnection());
-            Session sess = HibernateUtil.currentSession();
-            sess.update(node.getResource());
-        } catch (HibernateException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
 
         // get the configuration
 //        Configuration con = node.getConfiguration();
 //        Resource resource = node.getResource();
         
         // Get the annotated genes list
-        ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-                .getResourceFactory();
+        ResourceFactory resourceFactory = node.getResource().getResourceFactory();
         
         try {
             Set instances = resourceFactory.getResourcesOfType(node.getResource(), true);
@@ -75,11 +61,6 @@ public class ResourceNodeInstancesTableModel extends AbstractTableModel {
         } catch (AllontoException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
-        try {
-            HibernateUtil.closeSession();
-        } catch (HibernateException he) {
-            he.printStackTrace();
         }
 
     }

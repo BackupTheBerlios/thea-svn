@@ -1,5 +1,6 @@
 package fr.unice.bioinfo.thea.classification;
 
+import fr.unice.bioinfo.allonto.datamodel.Resource;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Collection;
@@ -11,7 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
-import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.thea.classification.editor.util.Discretization;
 import fr.unice.bioinfo.thea.classification.settings.CESettings;
 
@@ -180,8 +180,8 @@ public class Node {
         this.children = children;
     }
 
-    /** Correspending {@link Entity}to this node. */
-    private Entity entity;
+    /** Correspending {@link Resource}to this node. */
+    private Resource resource;
 
     /** Creates a node. */
     public Node() {
@@ -191,14 +191,14 @@ public class Node {
         this.layoutSupport = new NodeLayoutSupport();
     }
 
-    /** Associate an {@link Entity}to this node. */
-    public void setEntity(Entity entity) {
-        this.entity = entity;
+    /** Associate an {@link Resource}to this node. */
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
     /** Returns the {@link Entity}associated to this node. */
-    public Entity getEntity() {
-        return entity;
+    public Resource getResource() {
+        return resource;
     }
 
     /** Returns <i>True </i> if this node is collapsed. <i>False </i>otherwise. */

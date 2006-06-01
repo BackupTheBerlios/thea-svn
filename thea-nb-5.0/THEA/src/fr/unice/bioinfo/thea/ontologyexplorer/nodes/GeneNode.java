@@ -1,18 +1,18 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.nodes;
 
+import fr.unice.bioinfo.allonto.datamodel.expression.Expression;
+import fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection;
 import java.util.Hashtable;
 import java.util.ResourceBundle;
 
 import org.apache.commons.configuration.Configuration;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
+import org.openide.nodes.Node;
 import org.openide.util.NbBundle;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
-import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
-import fr.unice.bioinfo.allonto.datamodel.StringValue;
-import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.TheaConfiguration;
 
 /**
@@ -25,9 +25,6 @@ public class GeneNode extends AbstractNode {
 
     /***/
     private Resource resource;
-
-    private ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-            .getResourceFactory();
 
     static {
         Configuration con = TheaConfiguration.getDefault().getConfiguration();
@@ -53,25 +50,23 @@ public class GeneNode extends AbstractNode {
         super(new Children.Array());
         // fix the resource
         this.resource = resource;
-        StringValue sv = null;
+        Resource res = null;
         try {
-            sv = (StringValue) resource.getTarget(resourceFactory
-                    .getResource(nodeNameProperty));
+            res = resource.getTarget(nodeNameProperty);
         } catch (AllontoException ae) {
         }
-        if (sv != null) {
-            displayName = sv.getValue();
+        if (res != null) {
+            displayName = res.getAcc();
         } else {
-            displayName = "" + resource.getId();// NOI18N
+            displayName = "" + resource.getResource_id();// NOI18N
         }
-        StringValue tt = null;
+        Resource tt = null;
         try {
-            tt = (StringValue) resource.getTarget(resourceFactory
-                    .getResource(fullNameProperty));
+            tt = resource.getTarget(fullNameProperty);
         } catch (AllontoException ae) {
         }
         if (tt != null) {
-            toolTip = tt.getValue();
+            toolTip = tt.getAcc();
         } else {
             toolTip = "The full name of this gene is not available";// NOI18N
         }
@@ -92,4 +87,21 @@ public class GeneNode extends AbstractNode {
     public void setResource(Resource resource) {
         this.resource = resource;
     }
+
+    protected ClassificationNode getClassificationNode() {
+        Node ancestor = getParentNode();
+        while ((ancestor != null) && !(ancestor instanceof ClassificationNode)) {
+            ancestor = ancestor.getParentNode();
+        }
+        if (ancestor == null) {
+            System.out.println("problem when calling getClassificationNode for class="+getClass());
+            System.out.println("resource="+resource.getAcc());
+        }
+        return (ClassificationNode) ancestor;
+    }
+
+    protected DatabaseConnection getConnection() {
+        return ((OntologyNode)getClassificationNode().getInfo().getLinkedOntologyNode()).getConnection();
+    }
+    
 }

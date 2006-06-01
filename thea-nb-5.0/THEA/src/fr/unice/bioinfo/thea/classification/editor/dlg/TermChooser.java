@@ -1,8 +1,10 @@
 package fr.unice.bioinfo.thea.classification.editor.dlg;
 
+import fr.unice.bioinfo.thea.TheaConfiguration;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -29,9 +31,7 @@ import com.jgoodies.forms.layout.Sizes;
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
-import fr.unice.bioinfo.allonto.datamodel.StringValue;
 import fr.unice.bioinfo.allonto.datamodel.expression.Criterion;
-import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.classification.Node;
 import fr.unice.bioinfo.thea.classification.NodeLayoutSupport;
 import fr.unice.bioinfo.thea.classification.Score;
@@ -152,40 +152,35 @@ public class TermChooser extends JPanel {
         if (aNode.isLeaf()) {
             return;
         }
+        
+        ResourceFactory resourceFactory = aNode.getResource().getResourceFactory();
         List scores = (List) (aNode.getProperty(Node.TERM_AND_SCORE));
         if ((scores != null) && (scores.size() > 1)) {
             Iterator scoresIt = scores.iterator();
             while (scoresIt.hasNext()) {
                 final Score score = (Score) scoresIt.next();
-                ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-                        .getResourceFactory();
-                Set set = createWholeBranchTermsList(resourceFactory, score
+                Set set = createWholeBranchTermsList(resourceFactory,score
                         .getTerm());
                 set.add(score.getTerm());
                 if (set.contains(score.getTerm())) {
                     String label = "";
                     if (CESettings.getInstance().isShowTermID()) {
-                        label += score.getTerm().getId();
+                        label += score.getTerm().getResource_id();
                     }
 
                     if (CESettings.getInstance().isShowTermName()) {
                         if (!"".equals(label)) {
                             label += ":";
                         }
-                        // label += (termAndScore.getTerm().getTerm() + " ");
+                        String l = null;
                         try {
-                            StringValue sv = (StringValue) score
-                                    .getTerm()
-                                    .getTarget(
-                                            resourceFactory
-                                                    .getResource(OWLProperties
-                                                            .getInstance()
-                                                            .getNodeNameProperty()));
-                            if (sv != null) {
-                                label += (sv.getValue() + " ");
-                            }
-                        } catch (AllontoException ae) {
+                            l = score.getTerm().getTarget(OWLProperties.getInstance().getNodeNameProperty()).getAcc();
+                        } catch (AllontoException ex) {
+                            ex.printStackTrace();
                         }
+                            if (l != null) {
+                                label += l + " ";
+                            }
                     }
                     label += "(+)";
                     if (updateLabel) {
@@ -232,8 +227,8 @@ public class TermChooser extends JPanel {
         Set descendants = new HashSet();
         // Get direct children of the the resource:
         Set children = new HashSet();
-        java.util.Map hierarchyDescription = OWLProperties.getInstance()
-                .getHierarchyDescription();
+        java.util.Map hierarchyDescription = fr.unice.bioinfo.thea.ontologyexplorer.OntologyProperties.getInstance()
+                .getHierarchyDescription(resourceFactory,TheaConfiguration.getDefault().getConfiguration());
 
         Iterator it = hierarchyDescription.values().iterator();
 
@@ -244,7 +239,7 @@ public class TermChooser extends JPanel {
             Criterion crit = (Criterion) tuple[1];
 
             try {
-                Set targets = aResource.getTargets(prop, crit);
+                Collection targets = aResource.getTargets(prop, crit);
 
                 if (targets != null) {
                     children.addAll(targets);

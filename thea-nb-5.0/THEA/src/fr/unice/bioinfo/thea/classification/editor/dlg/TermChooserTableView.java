@@ -16,9 +16,6 @@ import javax.swing.table.AbstractTableModel;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
-import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
-import fr.unice.bioinfo.allonto.datamodel.StringValue;
-import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.api.components.TableSorter;
 import fr.unice.bioinfo.thea.classification.Score;
 import fr.unice.bioinfo.thea.util.OWLProperties;
@@ -100,23 +97,20 @@ public class TermChooserTableView extends JPanel {
                 i++;
                 Score s = (Score) scoresIt.next();
                 Resource aResource = s.getTerm();
-                ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-                        .getResourceFactory();
-                data[i][j] = aResource.getDisplayAcc();
+                data[i][j] = aResource.getAcc();
                 vector.add(i, aResource);
+                String l = null;
                 try {
-                    StringValue sv = (StringValue) aResource
-                            .getTarget(resourceFactory
-                                    .getResource(OWLProperties.getInstance()
-                                            .getNodeNameProperty()));
+                    l = aResource.getTarget(OWLProperties.getInstance().getNodeNameProperty()).getAcc();
+                } catch (AllontoException ex) {
+                    ex.printStackTrace();
+                }
 
-                    if (sv != null) {
-                        data[i][j + 1] = new String(sv.getValue());
+                    if (l != null) {
+                        data[i][j + 1] = new String(l);
                     } else {
                         data[i][j + 1] = new String("");// NOI18N
                     }
-                } catch (AllontoException ae) {
-                }
                 String score = s.getFormattedScore();
                 data[i][j + 2] = score;
                 String expression = String.valueOf(s.isOverexpressed());

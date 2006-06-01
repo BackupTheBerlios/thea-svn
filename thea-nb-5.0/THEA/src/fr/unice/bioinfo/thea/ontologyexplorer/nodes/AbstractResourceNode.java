@@ -6,9 +6,6 @@ import java.util.Map;
 
 import javax.swing.Action;
 
-import net.sf.hibernate.HibernateException;
-import net.sf.hibernate.Session;
-
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.openide.nodes.AbstractNode;
@@ -19,12 +16,8 @@ import org.openide.nodes.Sheet;
 import org.openide.util.actions.SystemAction;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
-import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
-import fr.unice.bioinfo.allonto.datamodel.StringValue;
-import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
-import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyProperties;
 import fr.unice.bioinfo.thea.ontologyexplorer.actions.ShowAnnotatedGenesAction;
@@ -43,10 +36,6 @@ public abstract class AbstractResourceNode extends AbstractNode implements Node.
 
     private ResourceNodeInfo info;
 
-    private ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-            .getResourceFactory();
-
-
     /** A resource associated with a node in the Ontology Explorer. */
     private Resource resource;
 
@@ -59,40 +48,24 @@ public abstract class AbstractResourceNode extends AbstractNode implements Node.
         if ((n != null) && !n.equals("")) return n; 
         // Build the display name:
         try {
-            HibernateUtil.createSession(getConnection().getConnection());
-            Session sess = HibernateUtil.currentSession();
-            sess.update(resource);
-            resourceFactory.setMemoryCached(true);
             String nodeName = OntologyProperties.getInstance()
                     .getNodeNameProperty(getConfiguration());
             Resource nodeNameProperty = null;
+            
             if (nodeName != null) {
-                nodeNameProperty = resourceFactory.getResource(nodeName);
+                nodeNameProperty = getResourceFactory().getResource(nodeName);
             }
 
-            resourceFactory.setMemoryCached(false);
             if (nodeNameProperty != null) {
-                StringValue sv = (StringValue) resource
+                Resource sv = resource
                         .getTarget(nodeNameProperty);
                 if (sv != null) {
-                    n = sv.getValue();
+                    n = sv.getAcc();
                 } else {
                     n = resource.getAcc();// NOI18N
                 }
             }
-        } catch (HibernateException e1) {
-            System.out.println("Hibernate exception when updating resource");
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
         } catch (AllontoException ae) {
-            resourceFactory.setMemoryCached(false);
-        }
-        finally {
-            try {
-                HibernateUtil.closeSession();
-            } catch (HibernateException he) {
-                he.printStackTrace(System.out);
-            }
         }
         
         setName(n);
@@ -114,21 +87,17 @@ public abstract class AbstractResourceNode extends AbstractNode implements Node.
     }
 
     private void processNodeInfo(final ResourceNodeInfo info) {
-        Iterator mapIt = ((Resource) resource).getArcs().entrySet().iterator();
+        Iterator mapIt = resource.getProperties().iterator();
         String accessor;
-        Resource resource;
-        Entity e;
+        Resource r;
         Map.Entry entry;
         while (mapIt.hasNext()) {
             entry = (Map.Entry) mapIt.next();
-            e = (Entity) entry.getValue();
-            // Since values in the Map are not all instances of
-            // StringValue,
-            // do tests using the instanceof operator
-            if (e instanceof StringValue) {
+            r = (Resource) entry.getValue();
+            if (r.isLitteral()) {
                 resource = (Resource) entry.getKey();
                 accessor = resource.getAcc();
-                info.setProperty(accessor, ((StringValue) e).getValue());
+                info.setProperty(accessor, r.getAcc());
             }
         }
     }
@@ -226,6 +195,10 @@ public abstract class AbstractResourceNode extends AbstractNode implements Node.
     public DatabaseConnection getConnection() {
         return getOntologyNode().getConnection();
     }
+    protected ResourceFactory getResourceFactory() {
+        return getResource().getResourceFactory();
+    }
+    
 
     public Configuration getConfiguration() {
 

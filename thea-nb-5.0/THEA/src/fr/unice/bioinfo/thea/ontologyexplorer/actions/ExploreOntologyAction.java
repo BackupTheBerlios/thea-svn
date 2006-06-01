@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import net.sf.hibernate.HibernateException;
-
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.openide.DialogDisplayer;
@@ -21,7 +19,6 @@ import org.openide.util.actions.NodeAction;
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
-import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
@@ -133,13 +130,6 @@ public class ExploreOntologyAction extends NodeAction {
         }
         DatabaseConnection dbc = ((OntologyNode) node).getConnection();
 
-        try {
-            HibernateUtil.createSession(dbc.getConnection());
-        } catch (HibernateException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-
         Resource[] roots = null;
         try {
 
@@ -156,7 +146,7 @@ public class ExploreOntologyAction extends NodeAction {
             }
 
             ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-                    .getResourceFactory();
+                    .getResourceFactory(((OntologyNode)node).getConnection().getName());
             Collection rootsNotFound = new ArrayList();
             Collection rootList = null;
             Collection c = OntologyProperties.getInstance()
@@ -237,12 +227,6 @@ public class ExploreOntologyAction extends NodeAction {
             rootNodes[cnt]
                     .setIconBase("fr/unice/bioinfo/thea/ontologyexplorer/resources/RootResourceIcon16");
             node.getChildren().add(new Node[] { rootNodes[cnt] });
-        }
-        try {
-            HibernateUtil.closeSession();
-        } catch (HibernateException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
         }
     }
 

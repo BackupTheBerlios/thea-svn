@@ -1,5 +1,6 @@
 package fr.unice.bioinfo.thea.classification.editor.actions;
 
+import fr.unice.bioinfo.thea.ontologyexplorer.nodes.ClassificationNode;
 import java.awt.event.ActionEvent;
 import java.util.Collection;
 import java.util.Iterator;
@@ -10,9 +11,6 @@ import javax.swing.ImageIcon;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
-import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
-import fr.unice.bioinfo.allonto.datamodel.StringValue;
-import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.classification.Node;
 import fr.unice.bioinfo.thea.classification.editor.DrawableClassification;
 import fr.unice.bioinfo.thea.util.OWLProperties;
@@ -53,17 +51,14 @@ public class KeepAllAnnotationsAction extends GenericAction {
 
                 List param = new Vector();
                 Resource r = (Resource) aNode.getProperty(Node.ASSOC_TERM);
-                ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-                        .getResourceFactory();
                 try {
-                    StringValue sv = (StringValue) r.getTarget(resourceFactory
-                            .getResource(OWLProperties.getInstance()
-                                    .getNodeNameProperty()));
-                    if (sv != null) {
-                        param.add(sv.getValue());
-                    }
-                } catch (AllontoException ae) {
+                    param.add(r.getTarget(OWLProperties.getInstance()
+                                .getNodeNameProperty()));
+                } catch (AllontoException ex) {
+                    ex.printStackTrace();
                 }
+//                param.add(r.getDisplayName()); replaced by the following line
+                param.add(null);
                 param.add(nextNode.getLayoutSupport());
                 nodeAnnots.add(param);
                 nextNode.addProperty(Node.USER_ANNOTATIONS, nodeAnnots);

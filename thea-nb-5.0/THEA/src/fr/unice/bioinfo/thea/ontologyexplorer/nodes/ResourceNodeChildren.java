@@ -1,6 +1,7 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.nodes;
 
 import java.net.MalformedURLException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -8,23 +9,15 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import net.sf.hibernate.HibernateException;
-import net.sf.hibernate.LockMode;
-import net.sf.hibernate.Session;
-
 import org.openide.awt.HtmlBrowser;
 import org.openide.nodes.Children;
 import org.openide.nodes.Node;
 import org.openide.util.NbBundle;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
-import fr.unice.bioinfo.allonto.datamodel.Connector;
-import fr.unice.bioinfo.allonto.datamodel.ContextSwitch;
-import fr.unice.bioinfo.allonto.datamodel.Entity;
 import fr.unice.bioinfo.allonto.datamodel.Resource;
 import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
 import fr.unice.bioinfo.allonto.datamodel.expression.Criterion;
-import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyProperties;
 import fr.unice.bioinfo.thea.ontologyexplorer.infos.ResourceNodeInfo;
@@ -43,9 +36,6 @@ public class ResourceNodeChildren extends Children.Keys {
     /** Resource Bundle */
     private ResourceBundle bundle = NbBundle
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.nodes.Bundle"); // NOI18N;
-
-    private ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-            .getResourceFactory();
 
     /** Creates new ResourceChildren. */
     public ResourceNodeChildren() {
@@ -113,21 +103,11 @@ public class ResourceNodeChildren extends Children.Keys {
      */
     private Set findSubResources() {
         Resource resource = ((ResourceNode) getNode()).getResource();
-        try {
-            HibernateUtil.createSession(((ResourceNode) getNode())
-                    .getConnection().getConnection());
-            Session sess = HibernateUtil.currentSession();
-            //sess.update(resource);
-            //sess.lock(resource, LockMode.READ);
-            sess.load(resource, new Integer(resource.getId()));
-        } catch (HibernateException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-
         Set allTargets = new HashSet();
+        ResourceFactory resourceFactory = ((ResourceNode)getNode()).getResourceFactory();
+        
         java.util.Map hierarchyDescription = OntologyProperties.getInstance()
-                .getHierarchyDescription(
+                .getHierarchyDescription(resourceFactory,
                         ((ResourceNode) getNode()).getConfiguration());
 
         Iterator it = hierarchyDescription.values().iterator();
@@ -144,7 +124,7 @@ public class ResourceNodeChildren extends Children.Keys {
             }
             Criterion crit = (Criterion) tuple[1];
             String iconUrl = (String) tuple[2];
-            Set targets = null;
+            Collection targets = null;
             try {
                 targets = resource.getTargets(prop, crit);
             } catch (AllontoException ae) {
@@ -160,13 +140,6 @@ public class ResourceNodeChildren extends Children.Keys {
         if (allTargets.isEmpty()) {
             allTargets = null;
         }
-        try {
-            HibernateUtil.closeSession();
-        } catch (HibernateException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-
         return allTargets;
     }
 }

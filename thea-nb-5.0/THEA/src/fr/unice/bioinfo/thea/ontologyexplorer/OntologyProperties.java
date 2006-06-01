@@ -17,8 +17,6 @@ import fr.unice.bioinfo.allonto.datamodel.expression.Expression;
 import fr.unice.bioinfo.allonto.util.AllontoFactory;
 
 public class OntologyProperties {
-    private static ResourceFactory resourceFactory = (ResourceFactory) AllontoFactory
-            .getResourceFactory();
 
     private ResourceBundle bundle = NbBundle
     .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.Bundle"); // NOI18N
@@ -34,7 +32,7 @@ public class OntologyProperties {
     }
 
     public synchronized String getNodeNameProperty(Configuration config) {
-        if (config.isEmpty()) return bundle.getString("PROP_name");
+        if (config.isEmpty()) return bundle.getString("PROP_NodeName");
         return config.getString("ontologyexplorer.nodes.nodename");// NOI18N;
     }
 
@@ -47,14 +45,14 @@ public class OntologyProperties {
         }
     }
 
-    public synchronized Hashtable getHierarchyDescription(Configuration config) {
+    public synchronized Hashtable getHierarchyDescription(ResourceFactory resourceFactory, Configuration config) {
         Hashtable hierarchyDescription = new Hashtable();
         if (config.isEmpty()) {
             String name = bundle.getString("PROP_IsAName");
             Resource property = null;
             try {
                 property = resourceFactory
-                .getResource(bundle.getString("PROP_subclass")).getInverse();
+                .getResource(bundle.getString("PROP_subclass"));
             } catch (AllontoException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -88,7 +86,7 @@ public class OntologyProperties {
                         Resource valueOfResource = resourceFactory
                                 .getResource((String) valueOf);
                         if (equals == null) {
-                            criterion = Expression.alwaysTrue();
+                            criterion = Expression.alwaysTrue(resourceFactory);
                         } else {
                             Resource equalsResource = resourceFactory
                                     .getResource((String) equals);

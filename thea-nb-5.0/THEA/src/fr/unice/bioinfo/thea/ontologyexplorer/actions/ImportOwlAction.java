@@ -1,5 +1,7 @@
 package fr.unice.bioinfo.thea.ontologyexplorer.actions;
 
+import fr.unice.bioinfo.allonto.datamodel.ResourceFactory;
+import fr.unice.bioinfo.allonto.util.AllontoFactory;
 import java.awt.Frame;
 import java.io.File;
 import java.sql.Connection;
@@ -12,8 +14,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import jjtraveler.OnceBottomUp;
 
-import net.sf.hibernate.HibernateException;
-
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.openide.nodes.Node;
@@ -23,7 +23,6 @@ import org.openide.util.actions.NodeAction;
 import org.openide.windows.WindowManager;
 
 import fr.unice.bioinfo.allonto.datamodel.AllontoException;
-import fr.unice.bioinfo.allonto.persistence.HibernateUtil;
 import fr.unice.bioinfo.thea.TheaConfiguration;
 import fr.unice.bioinfo.thea.ontologyexplorer.OntologyExplorer;
 import fr.unice.bioinfo.thea.ontologyexplorer.nodes.OntologyNode;
@@ -42,6 +41,7 @@ public class ImportOwlAction extends NodeAction {
             .getBundle("fr.unice.bioinfo.thea.ontologyexplorer.actions.Bundle"); // NOI18N
     
     private Connection connection = null;
+    ResourceFactory resourceFactory = null;
     
     /*
      * (non-Javadoc)
@@ -62,6 +62,7 @@ public class ImportOwlAction extends NodeAction {
                 fr.unice.bioinfo.thea.ontologyexplorer.db.DatabaseConnection dbc = ((OntologyNode) node).getConnection();
 
         connection = ((OntologyNode) node).getConnection().getConnection();
+        resourceFactory = AllontoFactory.getResourceFactory(((OntologyNode) node).getConnection().getName());
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File(OESettings.getInstance()
         .getLastBrowsedOwlDirectory()));
@@ -126,48 +127,34 @@ public class ImportOwlAction extends NodeAction {
                 for (int counter = 0; counter < files.length; counter++) {
                     String filePath = files[counter].toURI().toString();
                     try {
-                            HibernateUtil.createSession(connection);
-                            net.sf.hibernate.Session sess = HibernateUtil.currentSession();
                         if (useInference) {
-                            fr.unice.bioinfo.util.OwlReader parser = new fr.unice.bioinfo.util.OwlReader();
+                            fr.unice.bioinfo.util.OwlReader parser = new fr.unice.bioinfo.util.OwlReader(resourceFactory);
                             parser
                                     .addOwlParsingListener((fr.unice.bioinfo.util.OwlParsingListener) importProgressDialog);
-                            parser.parse(filePath, configuration, useInference, processImports);
+                                parser.parse(filePath, new CompositeConfiguration(), useInference, processImports);
                             parser
                                     .removeOwlParsingListener((fr.unice.bioinfo.util.OwlParsingListener) importProgressDialog);
-                        } else if (processImports){
-                            fr.unice.bioinfo.util.OwlFastReader parser = new fr.unice.bioinfo.util.OwlFastReader();
-                            parser
-                                    .addOwlParsingListener((fr.unice.bioinfo.util.OwlParsingListener) importProgressDialog);
-                            parser.parse(filePath, configuration, processImports);
-                            parser
-                                    .removeOwlParsingListener((fr.unice.bioinfo.util.OwlParsingListener) importProgressDialog);
+//                        } else if (processImports){
+//                            fr.unice.bioinfo.util.OwlFastReader parser = new fr.unice.bioinfo.util.OwlFastReader();
+//                            parser
+//                                    .addOwlParsingListener((fr.unice.bioinfo.util.OwlParsingListener) importProgressDialog);
+//                            parser.parse(filePath, configuration, processImports);
+//                            parser
+//                                    .removeOwlParsingListener((fr.unice.bioinfo.util.OwlParsingListener) importProgressDialog);
                         } else{
-                            fr.unice.bioinfo.util.RdfReader parser = new fr.unice.bioinfo.util.RdfReader();
+                            fr.unice.bioinfo.util.RdfReader parser = new fr.unice.bioinfo.util.RdfReader(resourceFactory);
                             parser
                                     .addOwlParsingListener((fr.unice.bioinfo.util.OwlParsingListener) importProgressDialog);
                             parser.parse(filePath, configuration);
                             parser
                                     .removeOwlParsingListener((fr.unice.bioinfo.util.OwlParsingListener) importProgressDialog);
                         }
-                            sess.flush();
-                        } catch (HibernateException e1) {
-                            // TODO Auto-generated catch block
-                            e1.printStackTrace();
                     } catch (AllontoException ae) {
                         ae.printStackTrace();
                         System.out.println("error in the processing of file: "
                                 + filePath);
                         // TODO handle this exception
                     }
-                    finally {
-                        try {
-                            HibernateUtil.closeSession();
-                        } catch (HibernateException he) {
-                            he.printStackTrace(System.out);
-                        }
-                    }
-                    
                 }
             }
         };

@@ -96,7 +96,7 @@ public class SelectOntologyAction extends NodeAction {
                     final DatabaseConnection dbc = ontologyNode.getConnection();
                     cni.setLinkedOntologyNode(ontologyNode);
                     cni.getClassification().createGeneProducts(
-                            dbc.getConnection());
+                            dbc);
                 }
             }
         };
