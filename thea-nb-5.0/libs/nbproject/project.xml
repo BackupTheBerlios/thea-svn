@@ -12,12 +12,10 @@
                 <package>org.apache.commons.collections.buffer</package>
                 <package>org.apache.commons.lang.exception</package>
                 <package>org.apache.commons.configuration.reloading</package>
-                <package>net.sf.hibernate.exception</package>
                 <package>com.lre.utils</package>
                 <package>com.ibm.icu.math</package>
                 <package>org.apache.log4j.jdbc</package>
                 <package>junit.runner</package>
-                <package>net.sf.hibernate.hql</package>
                 <package>com.hp.hpl.jena.reasoner.test</package>
                 <package>org.apache.xerces.jaxp</package>
                 <package>unit.src</package>
@@ -31,17 +29,14 @@
                 <package>org.dom4j.io</package>
                 <package>org.dom4j.swing</package>
                 <package>com.hp.hpl.jena.graph.compose</package>
-                <package>net.sf.hibernate.proxy</package>
                 <package>org.apache.xerces.impl</package>
                 <package>com.hp.hpl.jena.graph.impl</package>
                 <package>org.apache.log4j.xml</package>
                 <package>net.sf.cglib.util</package>
                 <package>javax.transaction.xa</package>
                 <package>com.hp.hpl.jena.reasoner.dig</package>
-                <package>net.sf.hibernate.expression</package>
                 <package>com.hp.hpl.jena.graph.compose.test</package>
                 <package>junit.swingui</package>
-                <package>net.sf.hibernate.util</package>
                 <package>com.hp.hpl.jena.graph</package>
                 <package>com.jgoodies.plaf.windows</package>
                 <package>com.hp.hpl.jena.reasoner.rulesys.builtins</package>
@@ -57,7 +52,6 @@
                 <package>org.w3c.dom.ls</package>
                 <package>com.jgoodies.plaf.plastic</package>
                 <package>org.dom4j.rule.pattern</package>
-                <package>net.sf.hibernate.mapping</package>
                 <package>org.apache.xerces.parsers</package>
                 <package>org.apache.commons.digester</package>
                 <package>org.apache.commons.digester.xmlrules</package>
@@ -70,7 +64,6 @@
                 <package>org.mindswap.pellet</package>
                 <package>org.apache.commons.logging.impl</package>
                 <package>net.sf.cglib.transform.impl</package>
-                <package>net.sf.hibernate.connection</package>
                 <package>net.sf.cglib.proxy</package>
                 <package>com.hp.hpl.jena.util.xml</package>
                 <package>org.mindswap.pellet.owlapi</package>
@@ -81,7 +74,6 @@
                 <package>org.apache.commons.beanutils.locale</package>
                 <package>hep.aida.bin</package>
                 <package>com.werken.saxpath</package>
-                <package>net.sf.hibernate.lob</package>
                 <package>org.apache.xerces.impl.xs.opti</package>
                 <package>junit.extensions</package>
                 <package>com.jgoodies.forms.debug</package>
@@ -93,7 +85,6 @@
                 <package>org.apache.xerces.impl.xs.identity</package>
                 <package>org.apache.xerces.dom3</package>
                 <package>org.dom4j</package>
-                <package>net.sf.hibernate</package>
                 <package>com.mysql.jdbc.jdbc2.optional</package>
                 <package>org.apache.commons.collections.comparators</package>
                 <package>com.hp.hpl.jena.util.iterator</package>
@@ -120,7 +111,6 @@
                 <package>com.hp.hpl.jena.graph.query.regexptrees.test</package>
                 <package>com.ibm.icu.util</package>
                 <package>org.apache.xerces.xni</package>
-                <package>net.sf.hibernate.id</package>
                 <package>com.hp.hpl.jena.util</package>
                 <package>org.dom4j.datatype</package>
                 <package>org.apache.commons.discovery.resource.names</package>
@@ -135,27 +125,21 @@
                 <package>org.apache.commons.configuration</package>
                 <package>org.apache.xerces.impl.xpath</package>
                 <package>org.apache.commons.lang</package>
-                <package>net.sf.hibernate.cfg</package>
                 <package>com.hp.hpl.jena.reasoner.rulesys.impl.oldCode</package>
                 <package>cern.colt.list</package>
                 <package>cern.colt.io</package>
                 <package>com.hp.hpl.jena.graph.test</package>
                 <package>com.hp.hpl.jena.shared.wg</package>
                 <package>cern.colt.matrix.impl</package>
-                <package>net.sf.hibernate.property</package>
-                <package>net.sf.hibernate.loader</package>
-                <package>net.sf.hibernate.transform</package>
                 <package>com.hp.hpl.jena.reasoner.rdfsReasoner1</package>
                 <package>net.sf.cglib.transform.hook</package>
                 <package>org.apache.xerces.impl.validation</package>
-                <package>net.sf.hibernate.persister</package>
                 <package>com.hp.hpl.jena.enhanced</package>
                 <package>org.apache.commons.digester.rss</package>
                 <package>cern.colt.matrix.bench</package>
                 <package>org.apache.commons.lang.enum</package>
                 <package>com.hp.hpl.jena.ontology.daml.impl</package>
                 <package>org.apache.commons.discovery.log</package>
-                <package>net.sf.ehcache.hibernate</package>
                 <package>corejava</package>
                 <package>jjtraveler.graph</package>
                 <package>org.dom4j.tree</package>
@@ -200,7 +184,6 @@
                 <package>org.gjt.mm.mysql</package>
                 <package>cern.colt.map</package>
                 <package>com.ibm.icu.lang</package>
-                <package>net.sf.hibernate.sql</package>
                 <package>com.hp.hpl.jena.shared</package>
                 <package>org.apache.xerces.xni.grammars</package>
                 <package>edu.oswego.cs.dl.util.concurrent</package>
@@ -210,14 +193,11 @@
                 <package>org.apache.commons.lang.math</package>
                 <package>fr.unice.bioinfo.util</package>
                 <package>com.hp.hpl.jena.xmloutput</package>
-                <package>net.sf.hibernate.collection</package>
                 <package>org.apache.log4j.jmx</package>
-                <package>net.sf.hibernate.odmg</package>
                 <package>org.apache.xerces.xni.parser</package>
                 <package>com.hp.hpl.jena.enhanced.test</package>
                 <package>org.apache.log4j.lf5.viewer.categoryexplorer</package>
                 <package>com.hp.hpl.jena.vocabulary</package>
-                <package>net.sf.hibernate.metadata</package>
                 <package>org.apache.log4j.net</package>
                 <package>aterm</package>
                 <package>cern.jet.random.sampling</package>
@@ -227,7 +207,6 @@
                 <package>net.sf.cglib.reflect</package>
                 <package>com.ibm.icu.impl.data</package>
                 <package>fr.unice.bioinfo.allonto.util</package>
-                <package>net.sf.hibernate.tool.hbm2ddl</package>
                 <package>com.hp.hpl.jena.rdql.parser</package>
                 <package>jal.Object</package>
                 <package>org.apache.commons.configuration.beanutils</package>
@@ -245,12 +224,9 @@
                 <package>com.jgoodies.forms.factories</package>
                 <package>junit.textui</package>
                 <package>com.hp.hpl.jena.rdql</package>
-                <package>net.sf.hibernate.jmx</package>
                 <package>com.hp.hpl.jena.util.test</package>
                 <package>org.jaxen.util</package>
-                <package>net.sf.hibernate.dialect</package>
                 <package>com.hp.hpl.jena.reasoner.rulesys.impl</package>
-                <package>net.sf.hibernate.engine</package>
                 <package>com.imsl.math</package>
                 <package>com.hp.hpl.jena.shared.test</package>
                 <package>org.jaxen.function</package>
@@ -284,10 +260,8 @@
                 <package>net.sf.cglib.core</package>
                 <package>org.jaxen.pattern</package>
                 <package>cern.colt</package>
-                <package>net.sf.hibernate.impl</package>
                 <package>cern.jet.stat</package>
                 <package>com.hp.hpl.jena.n3.test</package>
-                <package>net.sf.hibernate.jca</package>
                 <package>org.saxpath</package>
                 <package>org.dom4j.bean</package>
                 <package>cern.colt.matrix</package>
@@ -303,9 +277,7 @@
                 <package>net.sf.ehcache</package>
                 <package>com.hp.hpl.jena.test</package>
                 <package>hep.aida.ref</package>
-                <package>net.sf.hibernate.cache</package>
                 <package>org.apache.commons.collections.functors</package>
-                <package>net.sf.hibernate.type</package>
                 <package>org.mindswap.pellet.query</package>
                 <package>org.apache.commons.collections.map</package>
                 <package>com.hp.hpl.jena.shared.impl</package>
@@ -323,13 +295,11 @@
                 <package>jena</package>
                 <package>org.apache.commons.discovery.tools</package>
                 <package>com.hp.hpl.jena.util.cache</package>
-                <package>net.sf.hibernate.xml</package>
                 <package>com.hp.hpl.jena.reasoner.rulesys</package>
                 <package>com.hp.hpl.jena.mem.test</package>
                 <package>com.hp.hpl.jena.rdf.model.test</package>
                 <package>cern.clhep</package>
                 <package>com.hp.hpl.jena.ontology.daml</package>
-                <package>net.sf.hibernate.transaction</package>
                 <package>com.jgoodies.clearlook</package>
                 <package>org.mindswap.pellet.swrl</package>
                 <package>org.apache.log4j.lf5.viewer</package>
@@ -342,6 +312,7 @@
                 <package>com.lre.graph</package>
                 <package>com.hp.hpl.jena.rdf.arp.lang</package>
                 <package>org.apache.log4j.helpers</package>
+		<package>org.apache.commons.dbcp.ConnectionFactory</package>
             </public-packages>
             <class-path-extension>
                 <runtime-relative-path>ext/jena.jar</runtime-relative-path>
@@ -352,8 +323,8 @@
                 <binary-origin>release/modules/ext/aterm-java-1.6.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/dom4j-1.4.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/dom4j-1.4.jar</binary-origin>
+                <runtime-relative-path>ext/dom4j-1.5.2.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/dom4j-1.5.2.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/commons-logging-1.0.4.jar</runtime-relative-path>
@@ -364,32 +335,32 @@
                 <binary-origin>release/modules/ext/junit.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/mysql-connector-java-3.1.6-bin.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/mysql-connector-java-3.1.6-bin.jar</binary-origin>
+                <runtime-relative-path>ext/mysql-connector-java-3.1.12-bin.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/mysql-connector-java-3.1.12-bin.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/commons-beanutils-core-1.7.0.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/commons-beanutils-core-1.7.0.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/log4j-1.2.8.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/log4j-1.2.8.jar</binary-origin>
+                <runtime-relative-path>ext/log4j-1.2.11.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/log4j-1.2.11.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/commons-digester-1.5.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/commons-digester-1.5.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/commons-collections-2.1.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/commons-collections-2.1.jar</binary-origin>
+                <runtime-relative-path>ext/commons-collections-3.0.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/commons-collections-3.0.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/colt.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/colt.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/xercesImpl.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/xercesImpl.jar</binary-origin>
+                <runtime-relative-path>ext/xerces-2.6.2.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/xerces-2.6.2.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/jta.jar</runtime-relative-path>
@@ -408,10 +379,6 @@
                 <binary-origin>release/modules/ext/forms-1.0.5.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/hibernate2.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/hibernate2.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
                 <runtime-relative-path>ext/odmg-3.0.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/odmg-3.0.jar</binary-origin>
             </class-path-extension>
@@ -424,20 +391,12 @@
                 <binary-origin>release/modules/ext/icu4j.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
-                <runtime-relative-path>ext/cglib-full-2.0.2.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/cglib-full-2.0.2.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
                 <runtime-relative-path>ext/commons-lang-2.0.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/commons-lang-2.0.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/allonto.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/allonto.jar</binary-origin>
-            </class-path-extension>
-            <class-path-extension>
-                <runtime-relative-path>ext/commons-collections-3.0.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/commons-collections-3.0.jar</binary-origin>
             </class-path-extension>
             <class-path-extension>
                 <runtime-relative-path>ext/ehcache-1.2beta5.jar</runtime-relative-path>
@@ -447,6 +406,18 @@
                 <runtime-relative-path>ext/looks-1.2.2.jar</runtime-relative-path>
                 <binary-origin>release/modules/ext/looks-1.2.2.jar</binary-origin>
             </class-path-extension>
+	    <class-path-extension>
+		    <runtime-relative-path>ext/commons-dbcp-1.2.1.jar</runtime-relative-path>
+		    <binary-origin>release/modules/ext/commons-dbcp-1.2.1.jar</binary-origin>
+	    </class-path-extension>
+	    <class-path-extension>
+		    <runtime-relative-path>ext/commons-dbutils-1.0.jar</runtime-relative-path>
+		    <binary-origin>release/modules/ext/commons-dbutils-1.0.jar</binary-origin>
+	    </class-path-extension>
+	    <class-path-extension>
+		    <runtime-relative-path>ext/commons-pool-1.3.jar</runtime-relative-path>
+		    <binary-origin>release/modules/ext/commons-pool-1.3.jar</binary-origin>
+	    </class-path-extension>
         </data>
     </configuration>
 </project>
